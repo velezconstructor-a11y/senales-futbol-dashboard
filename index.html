@@ -1,0 +1,551 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Señales BTTS — Marcador</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>⚽</text></svg>">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+<style>
+  :root{
+    --pitch-950:#0a2118;
+    --pitch-900:#0f2818;
+    --pitch-800:#153524;
+    --pitch-700:#1c4530;
+    --line:#2b4a38;
+    --chalk:#f4f7f2;
+    --chalk-dim:#b9c9bd;
+    --amber:#e8a33d;
+    --amber-dim:#7a5a26;
+    --win:#4cb56d;
+    --win-bg:rgba(76,181,109,0.12);
+    --loss:#e2564c;
+    --loss-bg:rgba(226,86,76,0.12);
+    --mono: ui-monospace, "SF Mono", "Cascadia Code", Consolas, monospace;
+    --sans: -apple-system, "Segoe UI", Roboto, system-ui, sans-serif;
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{
+    background:
+      radial-gradient(ellipse 900px 500px at 50% -10%, var(--pitch-800), transparent),
+      repeating-linear-gradient(90deg, transparent 0 79px, rgba(244,247,242,0.025) 79px 80px),
+      var(--pitch-950);
+    color:var(--chalk);
+    font-family:var(--sans);
+    min-height:100vh;
+    padding:0 0 64px;
+  }
+  a{color:var(--amber);}
+
+  .wrap{max-width:980px;margin:0 auto;padding:0 20px;}
+
+  /* ---------- Hero / scoreboard ---------- */
+  .hero{
+    padding:48px 20px 32px;
+    text-align:center;
+    border-bottom:1px solid var(--line);
+    margin-bottom:36px;
+  }
+  .eyebrow{
+    font-family:var(--mono);
+    letter-spacing:.18em;
+    text-transform:uppercase;
+    font-size:12px;
+    color:var(--amber);
+    margin:0 0 18px;
+  }
+  .score-big{
+    font-family:var(--mono);
+    font-weight:700;
+    font-size:clamp(64px,16vw,128px);
+    line-height:1;
+    letter-spacing:-0.02em;
+    margin:0;
+    background:linear-gradient(180deg, var(--chalk) 0%, var(--chalk-dim) 100%);
+    -webkit-background-clip:text;
+    background-clip:text;
+    -webkit-text-fill-color:transparent;
+  }
+  .score-sub{
+    font-family:var(--mono);
+    font-size:14px;
+    color:var(--chalk-dim);
+    margin-top:8px;
+  }
+  .score-sub b{color:var(--chalk);font-weight:600;}
+  .updated{
+    font-size:12px;
+    color:var(--chalk-dim);
+    margin-top:20px;
+    font-family:var(--mono);
+  }
+  .dot{display:inline-block;width:7px;height:7px;border-radius:50%;background:var(--win);margin-right:6px;vertical-align:1px;
+    box-shadow:0 0 8px var(--win);}
+
+  /* ---------- Section headers ---------- */
+  .section-title{
+    font-family:var(--mono);
+    text-transform:uppercase;
+    letter-spacing:.12em;
+    font-size:12px;
+    color:var(--chalk-dim);
+    display:flex;
+    align-items:center;
+    gap:12px;
+    margin:0 0 16px;
+  }
+  .section-title::after{content:"";flex:1;height:1px;background:var(--line);}
+
+  section{margin-bottom:44px;}
+
+  /* ---------- Pronosticos de hoy (destacado) ---------- */
+  .hoy-card{
+    background:linear-gradient(160deg, var(--pitch-800), var(--pitch-900));
+    border:1px solid var(--amber-dim);
+    border-radius:12px;
+    padding:0;
+    overflow:hidden;
+  }
+  .hoy-pick{
+    display:grid;
+    grid-template-columns:1fr auto auto;
+    gap:14px;
+    align-items:center;
+    padding:16px 18px;
+    border-bottom:1px solid var(--line);
+  }
+  .hoy-pick:last-child{border-bottom:none;}
+  .hoy-teams{font-weight:600;font-size:15px;}
+  .hoy-liga{font-size:11px;color:var(--chalk-dim);text-transform:uppercase;letter-spacing:.05em;margin-top:2px;}
+  .hoy-tier{
+    text-align:center;
+    font-family:var(--mono);
+  }
+  .hoy-tier-label{font-size:10px;color:var(--chalk-dim);text-transform:uppercase;letter-spacing:.05em;}
+  .hoy-tier-val{font-weight:700;font-size:15px;color:var(--amber);}
+  .hoy-cuota{font-family:var(--mono);font-size:12px;color:var(--chalk-dim);margin-top:2px;}
+  .hoy-badges{display:flex;gap:6px;flex-wrap:wrap;justify-content:flex-end;}
+  .hoy-badge{
+    font-size:10px;font-family:var(--mono);
+    padding:3px 7px;border-radius:20px;
+    border:1px solid var(--amber-dim);color:var(--amber);
+    white-space:nowrap;
+  }
+  @media (max-width:600px){
+    .hoy-pick{grid-template-columns:1fr;text-align:left;}
+    .hoy-badges{justify-content:flex-start;}
+  }
+
+  /* ---------- Ticket-stub market cards ---------- */
+  .tickets{
+    display:grid;
+    grid-template-columns:repeat(auto-fit, minmax(200px,1fr));
+    gap:16px;
+  }
+  .ticket{
+    position:relative;
+    background:var(--pitch-800);
+    border:1px solid var(--line);
+    border-radius:10px;
+    padding:20px 18px 16px;
+    overflow:visible;
+  }
+  .ticket::before,.ticket::after{
+    content:"";
+    position:absolute;
+    width:16px;height:16px;
+    background:var(--pitch-950);
+    border:1px solid var(--line);
+    border-radius:50%;
+    top:50%;
+    transform:translateY(-50%);
+  }
+  .ticket::before{left:-9px;}
+  .ticket::after{right:-9px;}
+  .ticket-name{
+    font-size:12px;
+    text-transform:uppercase;
+    letter-spacing:.08em;
+    color:var(--chalk-dim);
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-bottom:10px;
+  }
+  .ticket-status{width:9px;height:9px;border-radius:50%;flex-shrink:0;}
+  .ticket-status.win{background:var(--win);box-shadow:0 0 6px var(--win);}
+  .ticket-status.loss{background:var(--loss);box-shadow:0 0 6px var(--loss);}
+  .ticket-status.none{background:#445c4e;}
+  .ticket-pct{
+    font-family:var(--mono);
+    font-weight:700;
+    font-size:34px;
+    line-height:1;
+  }
+  .ticket-meta{
+    font-family:var(--mono);
+    font-size:12px;
+    color:var(--chalk-dim);
+    margin-top:8px;
+    display:flex;
+    justify-content:space-between;
+    border-top:1px dashed var(--line);
+    padding-top:10px;
+  }
+  .ticket-units{font-weight:600;}
+  .ticket-units.win{color:var(--win);}
+  .ticket-units.loss{color:var(--loss);}
+
+  /* ---------- Comparative table ---------- */
+  .cmp-table{width:100%;border-collapse:collapse;font-size:14px;}
+  .cmp-table th{
+    text-align:left;
+    font-family:var(--mono);
+    font-size:11px;
+    text-transform:uppercase;
+    letter-spacing:.06em;
+    color:var(--chalk-dim);
+    font-weight:500;
+    padding:0 10px 10px;
+    border-bottom:1px solid var(--line);
+  }
+  .cmp-table th.num, .cmp-table td.num{text-align:right;font-family:var(--mono);}
+  .cmp-table td{padding:10px;border-bottom:1px solid var(--line);}
+  .cmp-table tr:last-child td{border-bottom:none;}
+  .cmp-table td.name{display:flex;align-items:center;gap:8px;}
+  .badge-warn{font-size:12px;}
+  .row-alt td{background:rgba(244,247,242,0.015);}
+
+  /* ---------- Chart ---------- */
+  .chart-card{
+    background:var(--pitch-800);
+    border:1px solid var(--line);
+    border-radius:10px;
+    padding:20px;
+  }
+  .chart-wrap{position:relative;height:220px;}
+
+  /* ---------- Category / motive lists ---------- */
+  .bars{display:flex;flex-direction:column;gap:10px;}
+  .bar-row{display:grid;grid-template-columns:140px 1fr 90px;align-items:center;gap:12px;font-size:13px;}
+  .bar-label{color:var(--chalk-dim);font-family:var(--mono);font-size:12px;}
+  .bar-track{height:8px;background:var(--pitch-700);border-radius:4px;overflow:hidden;}
+  .bar-fill{height:100%;border-radius:4px;}
+  .bar-fill.win{background:var(--win);}
+  .bar-fill.loss{background:var(--loss);}
+  .bar-num{font-family:var(--mono);font-size:12px;text-align:right;color:var(--chalk-dim);}
+
+  .grid2{display:grid;grid-template-columns:1fr 1fr;gap:32px;}
+  @media (max-width:700px){.grid2{grid-template-columns:1fr;gap:28px;}}
+
+  /* ---------- Recent picks ---------- */
+  .picks{display:flex;flex-direction:column;border:1px solid var(--line);border-radius:10px;overflow:hidden;}
+  .pick{
+    display:grid;
+    grid-template-columns:70px 1fr auto auto;
+    gap:10px;
+    align-items:center;
+    padding:12px 16px;
+    border-bottom:1px solid var(--line);
+    font-size:13px;
+  }
+  .pick:last-child{border-bottom:none;}
+  .pick:nth-child(even){background:rgba(244,247,242,0.015);}
+  .pick-date{font-family:var(--mono);font-size:11px;color:var(--chalk-dim);}
+  .pick-teams{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+  .pick-tier{
+    font-family:var(--mono);font-size:11px;
+    padding:2px 8px;border-radius:20px;
+    border:1px solid var(--amber-dim);color:var(--amber);
+    white-space:nowrap;
+  }
+  .pick-result{width:22px;height:22px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;flex-shrink:0;}
+  .pick-result.win{background:var(--win-bg);color:var(--win);}
+  .pick-result.loss{background:var(--loss-bg);color:var(--loss);}
+  .pick-result.pending{background:var(--pitch-700);color:var(--chalk-dim);}
+
+  footer{
+    text-align:center;
+    font-family:var(--mono);
+    font-size:12px;
+    color:var(--chalk-dim);
+    padding-top:24px;
+    line-height:1.7;
+  }
+
+  .empty, .loading, .error{
+    text-align:center;
+    padding:60px 20px;
+    color:var(--chalk-dim);
+    font-family:var(--mono);
+    font-size:13px;
+  }
+  .error{color:var(--loss);}
+
+  ::selection{background:var(--amber);color:var(--pitch-950);}
+  :focus-visible{outline:2px solid var(--amber);outline-offset:2px;}
+
+  @media (prefers-reduced-motion: reduce){*{animation:none !important;transition:none !important;}}
+</style>
+</head>
+<body>
+
+<div id="app">
+  <div class="loading">Cargando marcador…</div>
+</div>
+
+<script>
+const DATA_URL = "./dashboard_data.json";
+
+const MERCADO_ORDEN = ["BTTS", "Over 1.5", "Over 2.5", "BTTS + Over 2.5 (VIP)"];
+const CATEGORIA_ORDEN = ["VIP+","VIP","Fuerte","ORO_FUERTE","ORO_BTTS","ÉLITE","PLATA","BRONCE","VIP ELITE"];
+
+function pctTxt(s, conN){
+  if(!s) return "—";
+  const n = s.bets ?? s.total ?? 0;
+  if(n === 0) return "—";
+  const wins = s.wins ?? s.ganados ?? 0;
+  const pct = s.acierto_pct.toFixed(0) + "%";
+  return conN ? `${pct} (${wins}/${n})` : pct;
+}
+function nOf(s){ return s ? (s.bets ?? s.total ?? 0) : 0; }
+function statusClass(s){
+  if(!s || nOf(s) === 0) return "none";
+  return (s.profit_u ?? 0) >= 0 ? "win" : "loss";
+}
+function caidaFuerte(reciente, historico){
+  if(!reciente || !historico) return false;
+  const nR = nOf(reciente);
+  if(nR < 5) return false;
+  const ar = reciente.acierto_pct, ah = historico.acierto_pct;
+  if(ar == null || ah == null) return false;
+  return (ah - ar) >= 10;
+}
+
+function renderTickets(comparativo){
+  const hist = comparativo.historico.mercados;
+  return MERCADO_ORDEN.map(nombre => {
+    const s = hist[nombre];
+    const cls = statusClass(s);
+    const n = nOf(s);
+    const units = n ? `${s.profit_u >= 0 ? "+" : ""}${s.profit_u.toFixed(1)}u` : "—";
+    return `
+      <div class="ticket">
+        <div class="ticket-name">
+          <span>${nombre}</span>
+          <span class="ticket-status ${cls}"></span>
+        </div>
+        <div class="ticket-pct">${pctTxt(s)}</div>
+        <div class="ticket-meta">
+          <span>${n} caso${n===1?"":"s"}</span>
+          <span class="ticket-units ${cls}">${units}</span>
+        </div>
+      </div>`;
+  }).join("");
+}
+
+function renderCmpTable(comparativo){
+  const {hoy, recientes, historico} = comparativo;
+  const filas = MERCADO_ORDEN.map((nombre, i) => {
+    const sh = hoy.mercados[nombre], sr = recientes.mercados[nombre], st = historico.mercados[nombre];
+    const warn = caidaFuerte(sr, st) ? ' <span class="badge-warn" title="Caida fuerte reciente">⚠️</span>' : "";
+    return `
+      <tr class="${i%2? 'row-alt':''}">
+        <td class="name"><span class="ticket-status ${statusClass(st)}"></span>${nombre}${warn}</td>
+        <td class="num">${pctTxt(sh)}</td>
+        <td class="num">${pctTxt(sr)}</td>
+        <td class="num"><b>${pctTxt(st, true)}</b></td>
+      </tr>`;
+  }).join("");
+
+  return `
+    <table class="cmp-table">
+      <thead><tr><th>Mercado</th><th class="num">Hoy</th><th class="num">7 días</th><th class="num">Histórico</th></tr></thead>
+      <tbody>${filas}</tbody>
+    </table>`;
+}
+
+function renderBars(dictHoy, dictReciente, dictHist, orden){
+  const nombres = orden.filter(n => dictHist[n] && nOf(dictHist[n]) > 0);
+  if(nombres.length === 0) return '<div class="empty">Sin datos todavía en esta sección.</div>';
+  return '<div class="bars">' + nombres.map(nombre => {
+    const st = dictHist[nombre];
+    const pct = st.acierto_pct ?? 0;
+    const cls = statusClass(st);
+    return `
+      <div class="bar-row">
+        <span class="bar-label">${nombre}</span>
+        <div class="bar-track"><div class="bar-fill ${cls}" style="width:${pct}%"></div></div>
+        <span class="bar-num">${pctTxt(st, true)}</span>
+      </div>`;
+  }).join("") + '</div>';
+}
+
+function renderPicksHoy(picks){
+  if(!picks || picks.length === 0){
+    return '<div class="empty">Todavía no hay pronósticos nuevos hoy. Vuelve más tarde.</div>';
+  }
+  const filas = picks.map(p => {
+    const badges = [];
+    if(p.vip_elite) badges.push(`<span class="hoy-badge">⭐ ${p.vip_elite}</span>`);
+    if(p.nivel_confianza) badges.push(`<span class="hoy-badge">🏅 ${p.nivel_confianza}</span>`);
+    if(p.senal_btts_o25 && p.senal_btts_o25 !== "—") badges.push(`<span class="hoy-badge">🎁 Combo ${p.senal_btts_o25}</span>`);
+    return `
+      <div class="hoy-pick">
+        <div>
+          <div class="hoy-teams">${p.local} vs ${p.visitante}</div>
+          <div class="hoy-liga">${p.liga || ""}</div>
+        </div>
+        <div class="hoy-tier">
+          <div class="hoy-tier-label">BTTS</div>
+          <div class="hoy-tier-val">${p.senal_btts_optimizada || "—"}</div>
+          <div class="hoy-cuota">${p.cuota_btts != null ? p.cuota_btts.toFixed(2) : "—"}</div>
+        </div>
+        <div class="hoy-badges">${badges.join("")}</div>
+      </div>`;
+  }).join("");
+  return `<div class="hoy-card">${filas}</div>`;
+}
+
+function renderPicks(picks){
+  if(!picks || picks.length === 0) return '<div class="empty">Todavía no hay picks registrados.</div>';
+  return '<div class="picks">' + picks.slice(0, 25).map(p => {
+    let resClass = "pending", resTxt = "?";
+    if(p.resultado_btts === true){ resClass = "win"; resTxt = "✓"; }
+    else if(p.resultado_btts === false){ resClass = "loss"; resTxt = "✕"; }
+    const fecha = (p.fecha || "").split(" ")[0].slice(5); // MM-DD
+    return `
+      <div class="pick">
+        <span class="pick-date">${fecha}</span>
+        <span class="pick-teams" title="${p.local} vs ${p.visitante} — ${p.liga}">${p.local} vs ${p.visitante}</span>
+        <span class="pick-tier">${p.senal_btts_optimizada || "—"}</span>
+        <span class="pick-result ${resClass}">${resTxt}</span>
+      </div>`;
+  }).join("") + '</div>';
+}
+
+function renderChart(serie){
+  if(!serie || serie.length === 0) return;
+  const ctx = document.getElementById("trendChart");
+  if(!ctx) return;
+  new Chart(ctx, {
+    type: "line",
+    data: {
+      labels: serie.map(d => d.fecha.slice(5)),
+      datasets: [{
+        label: "% acierto BTTS por día",
+        data: serie.map(d => d.acierto_pct),
+        borderColor: "#e8a33d",
+        backgroundColor: "rgba(232,163,61,0.12)",
+        borderWidth: 2,
+        tension: 0.3,
+        fill: true,
+        pointRadius: 3,
+        pointBackgroundColor: "#e8a33d",
+      }]
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      plugins: { legend: { display:false } },
+      scales: {
+        y: { min:0, max:100, ticks:{ color:"#b9c9bd", callback:v=>v+"%" }, grid:{ color:"#2b4a38" } },
+        x: { ticks:{ color:"#b9c9bd" }, grid:{ display:false } },
+      }
+    }
+  });
+}
+
+function render(data){
+  const comparativo = data.comparativo;
+  const totalHist = comparativo.historico.total_partidos_evaluados;
+
+  if(totalHist === 0){
+    document.getElementById("app").innerHTML = `
+      <div class="wrap">
+        <div class="hero">
+          <p class="eyebrow">Señales BTTS</p>
+          <p class="score-big">—</p>
+          <p class="score-sub">Todavía no hay partidos evaluados. Vuelve pronto.</p>
+        </div>
+      </div>`;
+    return;
+  }
+
+  const btts = comparativo.historico.mercados["BTTS"];
+
+  document.getElementById("app").innerHTML = `
+    <div class="hero">
+      <p class="eyebrow">Señales BTTS · Marcador histórico</p>
+      <p class="score-big">${pctTxt(btts)}</p>
+      <p class="score-sub">acierto en <b>${nOf(btts)}</b> señales BTTS jugadas · ${totalHist} partidos evaluados en total</p>
+      <p class="updated"><span class="dot"></span>Actualizado ${new Date(data.actualizado).toLocaleString("es-CO", {dateStyle:"medium", timeStyle:"short"})}</p>
+    </div>
+
+    <div class="wrap">
+      <section>
+        <p class="section-title">🎯 Pronósticos de hoy</p>
+        ${renderPicksHoy(data.picks_hoy)}
+      </section>
+
+      <section>
+        <p class="section-title">Por mercado</p>
+        <div class="tickets">${renderTickets(comparativo)}</div>
+      </section>
+
+      <section>
+        <p class="section-title">Hoy · 7 días · histórico</p>
+        ${renderCmpTable(comparativo)}
+      </section>
+
+      ${data.serie_diaria && data.serie_diaria.length > 1 ? `
+      <section>
+        <p class="section-title">Tendencia diaria — BTTS</p>
+        <div class="chart-card"><div class="chart-wrap"><canvas id="trendChart"></canvas></div></div>
+      </section>` : ""}
+
+      <section>
+        <p class="section-title">Detalle</p>
+        <div class="grid2">
+          <div>
+            <p class="bar-label" style="margin-bottom:10px;">Por categoría BTTS</p>
+            ${renderBars(comparativo.hoy.categorias, comparativo.recientes.categorias, comparativo.historico.categorias, CATEGORIA_ORDEN)}
+          </div>
+          <div>
+            <p class="bar-label" style="margin-bottom:10px;">Por qué se activó JUGAR</p>
+            ${renderBars({}, comparativo.recientes.motivos || {}, comparativo.historico.motivos || {}, Object.keys(comparativo.historico.motivos || {}))}
+          </div>
+        </div>
+      </section>
+
+      <section>
+        <p class="section-title">Historial de picks (resueltos)</p>
+        ${renderPicks(data.picks_recientes)}
+      </section>
+
+      <footer>
+        🟢 gana unidades · 🔴 pierde unidades · ⚠️ caída fuerte reciente (5+ casos)<br/>
+        Con pocos partidos, un solo resultado mueve el % mucho — cautela por debajo de ~15-20 casos.
+      </footer>
+    </div>
+  `;
+
+  renderChart(data.serie_diaria);
+}
+
+fetch(DATA_URL, {cache:"no-store"})
+  .then(r => { if(!r.ok) throw new Error("HTTP " + r.status); return r.json(); })
+  .then(render)
+  .catch(err => {
+    document.getElementById("app").innerHTML = `
+      <div class="error">
+        No se pudo cargar dashboard_data.json.<br/>
+        (${err.message})<br/><br/>
+        Si acabas de configurar esto, corre el workflow de GitHub Actions una vez para generar el archivo.
+      </div>`;
+  });
+</script>
+
+</body>
+</html>
