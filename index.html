@@ -324,6 +324,17 @@ function statusClass(s){
   return (s.profit_u ?? 0) >= 0 ? "win" : "loss";
 }
 
+function badgesExtra(p){
+  const badges = [];
+  if(p.vip_elite) badges.push(`<span class="pick-tier">⭐ ${p.vip_elite}</span>`);
+  if(p.nivel_confianza){
+    const emoji = {"ÉLITE":"🥇","PLATA":"🥈","BRONCE":"🥉"}[p.nivel_confianza] || "🏅";
+    badges.push(`<span class="pick-tier">${emoji} ${p.nivel_confianza}</span>`);
+  }
+  if(p.oro) badges.push(`<span class="pick-tier">🟡 ${p.oro}</span>`);
+  return badges.length ? `<div style="margin-top:4px;display:flex;gap:6px;flex-wrap:wrap;">${badges.join("")}</div>` : "";
+}
+
 function renderMercado(picks, probKey, senalKey, tierKey, cuotaKey, resultadoDeseado, resultKey){
   // "Mayor confianza" = decision JUGAR Y el nivel es un nivel real de confianza
   // (VIP+/VIP/Fuerte) - NO incluye señales "Evitar" rescatadas a JUGAR por una
@@ -331,18 +342,27 @@ function renderMercado(picks, probKey, senalKey, tierKey, cuotaKey, resultadoDes
   const conSenal = picks.filter(p => p[senalKey] === "JUGAR" && p[tierKey] && p[tierKey] !== "Evitar");
   const confianzaHtml = conSenal.length === 0
     ? '<div class="empty">Sin señales de mayor confianza hoy todavía.</div>'
-    : conSenal.map(p => `
+    : conSenal.map(p => {
+        const resultado = resultKey ? p[resultKey] : null;
+        const resultadoHtml = resultado === true
+          ? `<div class="conf-prob" style="color:var(--win);font-size:15px;">✓ Ganada</div>`
+          : resultado === false
+          ? `<div class="conf-prob" style="color:var(--loss);font-size:15px;">✕ Perdida</div>`
+          : `<div class="conf-prob">${p[probKey] != null ? (p[probKey]*100).toFixed(0)+"%" : "—"}</div>`;
+        return `
         <div class="conf-card">
           <div>
             <div class="conf-teams">${p.local} vs ${p.visitante}</div>
             <div class="conf-liga">${p.liga || ""} · ${diaBadge(p)}</div>
+            ${badgesExtra(p)}
           </div>
           <div class="conf-tier">
             <div class="conf-tier-val">${p[tierKey] || "JUGAR"}</div>
             <div class="conf-cuota">cuota ${p[cuotaKey] ? p[cuotaKey].toFixed(2) : "—"}</div>
           </div>
-          <div class="conf-prob">${p[probKey] != null ? (p[probKey]*100).toFixed(0)+"%" : "—"}</div>
-        </div>`).join("");
+          ${resultadoHtml}
+        </div>`;
+      }).join("");
 
   // Top probabilidad: independiente de si el modelo disparo formalmente "JUGAR"
   // (que es un criterio estricto de VIP+/VIP/Fuerte) - esto muestra los
@@ -360,6 +380,7 @@ function renderMercado(picks, probKey, senalKey, tierKey, cuotaKey, resultadoDes
           <div>
             <div class="conf-teams">${p.local} vs ${p.visitante}</div>
             <div class="conf-liga">${p.liga || ""} · ${diaBadge(p)}</div>
+            ${badgesExtra(p)}
           </div>
           <div class="conf-tier">
             <div class="conf-tier-val" style="color:var(--chalk-dim);font-size:12px;">${p[tierKey] || "sin señal formal"}</div>
@@ -383,11 +404,13 @@ function renderMercado(picks, probKey, senalKey, tierKey, cuotaKey, resultadoDes
           badgeClass = siNo || "";
           badgeTxt = siNo === "si" ? "Sí" : siNo === "no" ? "No" : "Sin datos";
         }
+        const tierTxt = (p[tierKey] && p[tierKey] !== "Evitar") ? `<span style="color:var(--amber);">${p[tierKey]}</span> · ` : "";
         return `
           <div class="match-row">
             <div>
               <div class="match-teams">${p.local} vs ${p.visitante}</div>
-              <div class="match-liga">${p.liga || ""} · ${diaBadge(p)}</div>
+              <div class="match-liga">${tierTxt}${p.liga || ""} · ${diaBadge(p)}</div>
+              ${badgesExtra(p)}
             </div>
             <span class="match-pct">cuota ${cuotaTxt} · ${pctT}</span>
             <span class="match-badge ${badgeClass}">${badgeTxt}</span>
@@ -614,16 +637,22 @@ function renderHeroPick(picks){
   candidatos.sort((a,b) => b.score - a.score);
   const top = candidatos[0];
   const prob = top.mkt === "Over 1.5" ? top.p.prob_o15 : top.mkt === "Over 2.5" ? top.p.prob_o25 : top.p.prob_btts;
+  const resultado = top.mkt === "Over 1.5" ? top.p.resultado_o15 : top.mkt === "Over 2.5" ? top.p.resultado_o25 : top.p.resultado_btts;
+  const rightHtml = resultado === true
+    ? `<div class="hero-pick-pct" style="color:var(--win);">✓ Ganada</div>`
+    : resultado === false
+    ? `<div class="hero-pick-pct" style="color:var(--loss);">✕ Perdida</div>`
+    : `<div class="hero-pick-pct">${prob != null ? (prob*100).toFixed(0)+"%" : "—"}</div>`;
 
   el.innerHTML = `
     <div class="hero-pick-card">
       <div>
         <span class="hero-pick-badge">🔥 Pick del día · ${top.tier}</span>
         <div class="hero-pick-teams">${top.p.local} vs ${top.p.visitante}</div>
-        <div class="hero-pick-liga">${top.p.liga || ""}</div>
+        <div class="hero-pick-liga">${top.p.liga || ""} · ${diaBadge(top.p)}</div>
       </div>
       <div class="hero-pick-right">
-        <div class="hero-pick-pct">${prob != null ? (prob*100).toFixed(0)+"%" : "—"}</div>
+        ${rightHtml}
         <div class="hero-pick-mkt">${top.mkt}</div>
       </div>
     </div>`;
