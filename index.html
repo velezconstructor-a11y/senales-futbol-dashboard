@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>ReyBetIA — El Rey de Ambos Marcan</title>
+<link rel="icon" href="./favicon.png">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+<style>
+  :root{
+    --pitch-950:#0a1f1f;
+    --pitch-900:#0f2a2a;
+    --pitch-800:#163a3a;
+    --pitch-700:#1e4a4a;
+    --line:#2b4f4f;
+    --chalk:#f4f7f2;
+    --chalk-dim:#b9c9bd;
+    --amber:#d19a3d;
+    --amber-dim:#6b4a1a;
+    --win:#4cb56d;
+    --win-bg:rgba(76,181,109,0.12);
+    --loss:#e2564c;
+    --loss-bg:rgba(226,86,76,0.12);
+    --mono: ui-monospace, "SF Mono", "Cascadia Code", Consolas, monospace;
+    --sans: -apple-system, "Segoe UI", Roboto, system-ui, sans-serif;
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{
+    background:
+      radial-gradient(ellipse 900px 500px at 50% -10%, var(--pitch-800), transparent),
+      repeating-linear-gradient(90deg, transparent 0 79px, rgba(244,247,242,0.025) 79px 80px),
+      var(--pitch-950);
+    color:var(--chalk);
+    font-family:var(--sans);
+    min-height:100vh;
+    padding:0 0 64px;
+  }
+  a{color:var(--amber);}
+  .wrap{max-width:980px;margin:0 auto;padding:0 20px;}
+
+  header.top{
+    padding:28px 20px 20px;
+    text-align:center;
+    border-bottom:1px solid var(--line);
+    margin-bottom:0;
+    background: radial-gradient(ellipse 500px 200px at 50% 0%, rgba(209,154,61,0.08), transparent);
+  }
+  .logo-img{
+    width:64px;height:64px;border-radius:50%;
+    border:2px solid var(--amber-dim);
+    box-shadow:0 0 24px rgba(209,154,61,0.25);
+    margin-bottom:10px;
+  }
+  .brand{
+    font-family:var(--mono);
+    font-weight:700;
+    font-size:24px;
+    letter-spacing:.02em;
+    margin:0;
+  }
+  .brand span{color:var(--amber);}
+  .tagline{
+    font-size:11px;
+    color:var(--chalk-dim);
+    text-transform:uppercase;
+    letter-spacing:.15em;
+    margin:4px 0 0;
+    font-family:var(--mono);
+  }
+  .updated{
+    font-size:11px;
+    color:var(--chalk-dim);
+    margin-top:8px;
+    font-family:var(--mono);
+  }
+  .dot{display:inline-block;width:6px;height:6px;border-radius:50%;background:var(--win);margin-right:6px;vertical-align:1px;
+    box-shadow:0 0 8px var(--win);}
+
+  .hero-pick{
+    max-width:980px;margin:20px auto 0;padding:0 20px;
+  }
+  .hero-pick-card{
+    position:relative;
+    background:linear-gradient(135deg, var(--pitch-800) 0%, var(--pitch-900) 60%);
+    border:1px solid var(--amber-dim);
+    border-radius:14px;
+    padding:20px 24px;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:16px;
+    flex-wrap:wrap;
+    box-shadow:0 0 40px rgba(209,154,61,0.08);
+  }
+  .hero-pick-badge{
+    font-family:var(--mono);font-size:11px;font-weight:700;
+    color:var(--pitch-950);background:var(--amber);
+    padding:4px 10px;border-radius:20px;letter-spacing:.05em;
+    display:inline-block;margin-bottom:8px;
+  }
+  .hero-pick-teams{font-size:19px;font-weight:700;}
+  .hero-pick-liga{font-size:12px;color:var(--chalk-dim);text-transform:uppercase;letter-spacing:.05em;margin-top:2px;}
+  .hero-pick-right{text-align:right;font-family:var(--mono);}
+  .hero-pick-pct{font-size:32px;font-weight:700;color:var(--amber);line-height:1;}
+  .hero-pick-mkt{font-size:11px;color:var(--chalk-dim);margin-top:4px;text-transform:uppercase;letter-spacing:.05em;}
+  @media (max-width:600px){.hero-pick-card{flex-direction:column;align-items:flex-start;}.hero-pick-right{text-align:left;}}
+
+  .tabs{
+    display:flex;
+    overflow-x:auto;
+    gap:4px;
+    padding:14px 20px 0;
+    border-bottom:1px solid var(--line);
+    -ms-overflow-style:none;
+    scrollbar-width:none;
+  }
+  .tabs::-webkit-scrollbar{display:none;}
+  .tab-btn{
+    flex-shrink:0;
+    background:transparent;
+    border:none;
+    color:var(--chalk-dim);
+    font-family:var(--mono);
+    font-size:12px;
+    text-transform:uppercase;
+    letter-spacing:.05em;
+    padding:10px 16px;
+    cursor:pointer;
+    border-bottom:2px solid transparent;
+    transition:color .15s;
+  }
+  .tab-btn:hover{color:var(--chalk);}
+  .tab-btn.active{color:var(--amber);border-bottom-color:var(--amber);}
+  .tab-panel{display:none;padding-top:28px;}
+  .tab-panel.active{display:block;}
+
+  .section-title{
+    font-family:var(--mono);
+    text-transform:uppercase;
+    letter-spacing:.12em;
+    font-size:12px;
+    color:var(--chalk-dim);
+    display:flex;
+    align-items:center;
+    gap:12px;
+    margin:0 0 16px;
+  }
+  .section-title::after{content:"";flex:1;height:1px;background:var(--line);}
+  section{margin-bottom:40px;}
+
+  .market-hero{text-align:center;padding:20px 0 8px;}
+  .market-hero .big{
+    font-family:var(--mono);
+    font-weight:700;
+    font-size:clamp(40px,10vw,64px);
+    line-height:1;
+    background:linear-gradient(180deg, var(--chalk) 0%, var(--chalk-dim) 100%);
+    -webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;
+    margin:0;
+  }
+  .market-hero .sub{font-size:13px;color:var(--chalk-dim);margin-top:6px;font-family:var(--mono);}
+
+  .conf-card{
+    position:relative;
+    background:linear-gradient(160deg, var(--pitch-800), var(--pitch-900));
+    border:1px solid var(--amber-dim);
+    border-radius:10px;
+    padding:16px 18px;
+    margin-bottom:10px;
+    display:grid;
+    grid-template-columns:1fr auto auto;
+    gap:14px;
+    align-items:center;
+  }
+  .conf-teams{font-weight:600;font-size:15px;}
+  .conf-liga{font-size:11px;color:var(--chalk-dim);text-transform:uppercase;letter-spacing:.05em;margin-top:2px;}
+  .conf-tier{text-align:center;font-family:var(--mono);}
+  .conf-tier-val{font-weight:700;font-size:15px;color:var(--amber);}
+  .conf-cuota{font-family:var(--mono);font-size:12px;color:var(--chalk-dim);margin-top:2px;}
+  .conf-prob{font-family:var(--mono);font-size:20px;font-weight:700;text-align:right;}
+  @media (max-width:600px){.conf-card{grid-template-columns:1fr;text-align:left;}.conf-prob{text-align:left;}}
+
+  .match-list{border:1px solid var(--line);border-radius:10px;overflow:hidden;}
+  .match-row{
+    display:grid;
+    grid-template-columns:1fr auto auto;
+    gap:12px;
+    align-items:center;
+    padding:12px 16px;
+    border-bottom:1px solid var(--line);
+    font-size:13px;
+  }
+  .match-row:last-child{border-bottom:none;}
+  .match-row:nth-child(even){background:rgba(244,247,242,0.015);}
+  .match-teams{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+  .match-liga{font-size:10px;color:var(--chalk-dim);text-transform:uppercase;}
+  .match-pct{font-family:var(--mono);font-size:13px;color:var(--chalk-dim);text-align:right;min-width:48px;}
+  .match-badge{
+    font-family:var(--mono);font-size:11px;font-weight:700;
+    padding:3px 10px;border-radius:20px;text-align:center;min-width:34px;
+  }
+  .match-badge.si{background:var(--win-bg);color:var(--win);}
+  .match-badge.no{background:var(--loss-bg);color:var(--loss);}
+  .match-badge.score{background:var(--pitch-700);color:var(--amber);min-width:44px;}
+
+  .empty{text-align:center;padding:40px 20px;color:var(--chalk-dim);font-family:var(--mono);font-size:13px;}
+
+  .tickets{display:grid;grid-template-columns:repeat(auto-fit, minmax(200px,1fr));gap:16px;}
+  .ticket{position:relative;background:var(--pitch-800);border:1px solid var(--line);border-radius:10px;padding:2
