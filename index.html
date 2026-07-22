@@ -200,6 +200,8 @@
     font-family:var(--mono);font-size:11px;font-weight:700;
     padding:3px 10px;border-radius:20px;text-align:center;min-width:34px;
   }
+  .match-badge.ganada{background:var(--win-bg);color:var(--win);}
+  .match-badge.perdida{background:var(--loss-bg);color:var(--loss);}
   .match-badge.si{background:var(--win-bg);color:var(--win);}
   .match-badge.no{background:var(--loss-bg);color:var(--loss);}
   .match-badge.score{background:var(--pitch-700);color:var(--amber);min-width:44px;}
@@ -294,6 +296,14 @@ const TABS = [
 ];
 
 let DATA = null;
+let HOY_STR = "";
+
+function diaBadge(p){
+  if(!p.fecha) return "";
+  const fechaSolo = p.fecha.split(" ")[0];
+  if(fechaSolo === HOY_STR) return '<span style="color:var(--win);">HOY</span>';
+  return '<span style="color:var(--amber);">MAÑANA</span>';
+}
 
 function pctTxt(s, conN){
   if(!s) return "—";
@@ -309,15 +319,15 @@ function statusClass(s){
   return (s.profit_u ?? 0) >= 0 ? "win" : "loss";
 }
 
-function renderMercado(picks, probKey, senalKey, tierKey, cuotaKey, resultadoDeseado){
-  const conSenal = picks.filter(p => p[senalKey] === "JUGAR");
+function renderMercado(picks, probKey, senalKey, tierKey, cuotaKey, resultadoDeseado, resultKey){
+  const conSenal = picks.filter(p => p[senalKey] === "JUGAR" && p[tierKey] && p[tierKey] !== "Evitar");
   const confianzaHtml = conSenal.length === 0
     ? '<div class="empty">Sin señales de mayor confianza hoy todavía.</div>'
     : conSenal.map(p => `
         <div class="conf-card">
           <div>
             <div class="conf-teams">${p.local} vs ${p.visitante}</div>
-            <div class="conf-liga">${p.liga || ""}</div>
+            <div class="conf-liga">${p.liga || ""} · ${diaBadge(p)}</div>
           </div>
           <div class="conf-tier">
             <div class="conf-tier-val">${p[tierKey] || "JUGAR"}</div>
@@ -330,17 +340,24 @@ function renderMercado(picks, probKey, senalKey, tierKey, cuotaKey, resultadoDes
     ? '<div class="empty">Todavía no hay partidos analizados hoy.</div>'
     : '<div class="match-list">' + picks.map(p => {
         const prob = p[probKey];
-        const pctT = prob != null ? (prob*100).toFixed(0)+"%" : "—";
-        const siNo = prob == null ? null : (prob >= 0.5 ? "si" : "no");
-        const badgeTxt = siNo === "si" ? "Sí" : siNo === "no" ? "No" : "—";
+        const pctT = prob != null ? (prob*100).toFixed(0)+"%" : "s/d";
+        const resultado = resultKey ? p[resultKey] : null;
+        let badgeClass, badgeTxt;
+        if(resultado === true){ badgeClass = "ganada"; badgeTxt = "✓ Ganada"; }
+        else if(resultado === false){ badgeClass = "perdida"; badgeTxt = "✕ Perdida"; }
+        else {
+          const siNo = prob == null ? null : (prob >= 0.5 ? "si" : "no");
+          badgeClass = siNo || "";
+          badgeTxt = siNo === "si" ? "Sí" : siNo === "no" ? "No" : "Sin datos";
+        }
         return `
           <div class="match-row">
             <div>
               <div class="match-teams">${p.local} vs ${p.visitante}</div>
-              <div class="match-liga">${p.liga || ""}</div>
+              <div class="match-liga">${p.liga || ""} · ${diaBadge(p)}</div>
             </div>
             <span class="match-pct">${pctT}</span>
-            <span class="match-badge ${siNo || ''}">${badgeTxt}</span>
+            <span class="match-badge ${badgeClass}">${badgeTxt}</span>
           </div>`;
       }).join("") + '</div>';
 
@@ -366,7 +383,7 @@ function renderCombo(picks){
       <div class="match-row">
         <div>
           <div class="match-teams">${p.local} vs ${p.visitante}</div>
-          <div class="match-liga">${p.liga || ""}</div>
+          <div class="match-liga">${p.liga || ""} · ${diaBadge(p)}</div>
         </div>
         <span class="match-pct">cuota ${cuotaCombo}</span>
         <span class="match-badge ${p.senal_btts_o25 === 'VIP' ? 'si' : 'no'}">${p.senal_btts_o25}</span>
@@ -387,14 +404,21 @@ function renderMarcadorExacto(picks, stats){
 
   const listaHtml = conPred.length === 0
     ? '<div class="empty">Sin pronósticos de marcador para hoy.</div>'
-    : '<div class="match-list">' + conPred.map(p => `
+    : '<div class="match-list">' + conPred.map(p => {
+        const real = p.marcador_exacto_real;
+        const acerto = real ? (real === p.marcador_exacto_sugerido) : null;
+        const badgeHtml = real
+          ? `<span class="match-badge ${acerto ? 'ganada' : 'perdida'}">${p.marcador_exacto_sugerido} ${acerto ? '✓' : `(real ${real})`}</span>`
+          : `<span class="match-badge score">${p.marcador_exacto_sugerido}</span>`;
+        return `
         <div class="match-row" style="grid-template-columns:1fr auto;">
           <div>
             <div class="match-teams">${p.local} vs ${p.visitante}</div>
-            <div class="match-liga">${p.liga || ""}</div>
+            <div class="match-liga">${p.liga || ""} · ${diaBadge(p)}</div>
           </div>
-          <span class="match-badge score">${p.marcador_exacto_sugerido}</span>
-        </div>`).join("") + '</div>';
+          ${badgeHtml}
+        </div>`;
+      }).join("") + '</div>';
 
   return heroHtml + `<section><p class="section-title">Pronósticos de hoy</p>${listaHtml}</section>`;
 }
@@ -539,6 +563,7 @@ function renderHeroPick(picks){
 
 function render(data){
   DATA = data;
+  HOY_STR = data.hoy_referencia || "";
   const totalHist = data.comparativo.historico.total_partidos_evaluados;
   const picks = data.picks_hoy || [];
 
@@ -552,9 +577,9 @@ function render(data){
   ).join("");
 
   const panels = {
-    btts: renderMercado(picks, "prob_btts", "nivel_final", "senal_btts_optimizada", "cuota_btts", "¿Ambos equipos marcan?"),
-    o15: renderMercado(picks, "prob_o15", "sug_o15", "senal_o15_tier", "cuota_o15", "¿Más de 1.5 goles?"),
-    o25: renderMercado(picks, "prob_o25", "sug_o25", "senal_o25", "cuota_o25", "¿Más de 2.5 goles?"),
+    btts: renderMercado(picks, "prob_btts", "nivel_final", "senal_btts_optimizada", "cuota_btts", "¿Ambos equipos marcan?", "resultado_btts"),
+    o15: renderMercado(picks, "prob_o15", "sug_o15", "senal_o15_tier", "cuota_o15", "¿Más de 1.5 goles?", "resultado_o15"),
+    o25: renderMercado(picks, "prob_o25", "sug_o25", "senal_o25", "cuota_o25", "¿Más de 2.5 goles?", "resultado_o25"),
     combo: `<section><p class="section-title">BTTS + Over 2.5</p>${renderCombo(picks)}</section>`,
     score: renderMarcadorExacto(picks, data.comparativo.historico.marcador_exacto),
     stats: renderEstadisticas(data),
