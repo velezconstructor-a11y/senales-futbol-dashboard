@@ -325,6 +325,9 @@ function statusClass(s){
 }
 
 function renderMercado(picks, probKey, senalKey, tierKey, cuotaKey, resultadoDeseado, resultKey){
+  // "Mayor confianza" = decision JUGAR Y el nivel es un nivel real de confianza
+  // (VIP+/VIP/Fuerte) - NO incluye señales "Evitar" rescatadas a JUGAR por una
+  // regla especial, porque esas no son de alta confianza aunque tecnicamente jueguen.
   const conSenal = picks.filter(p => p[senalKey] === "JUGAR" && p[tierKey] && p[tierKey] !== "Evitar");
   const confianzaHtml = conSenal.length === 0
     ? '<div class="empty">Sin señales de mayor confianza hoy todavía.</div>'
@@ -336,11 +339,15 @@ function renderMercado(picks, probKey, senalKey, tierKey, cuotaKey, resultadoDes
           </div>
           <div class="conf-tier">
             <div class="conf-tier-val">${p[tierKey] || "JUGAR"}</div>
-            <div class="conf-cuota">cuota ${p[cuotaKey] != null ? p[cuotaKey].toFixed(2) : "—"}</div>
+            <div class="conf-cuota">cuota ${p[cuotaKey] ? p[cuotaKey].toFixed(2) : "—"}</div>
           </div>
           <div class="conf-prob">${p[probKey] != null ? (p[probKey]*100).toFixed(0)+"%" : "—"}</div>
         </div>`).join("");
 
+  // Top probabilidad: independiente de si el modelo disparo formalmente "JUGAR"
+  // (que es un criterio estricto de VIP+/VIP/Fuerte) - esto muestra los
+  // partidos con la probabilidad mas alta de este mercado, punto, para que
+  // siempre haya algo que ver aunque hoy no haya ninguna señal formal.
   const idsConSenal = new Set(conSenal.map(p => p.local + "|" + p.visitante + "|" + p.fecha));
   const topProb = picks
     .filter(p => p[probKey] != null && !idsConSenal.has(p.local + "|" + p.visitante + "|" + p.fecha))
@@ -356,7 +363,7 @@ function renderMercado(picks, probKey, senalKey, tierKey, cuotaKey, resultadoDes
           </div>
           <div class="conf-tier">
             <div class="conf-tier-val" style="color:var(--chalk-dim);font-size:12px;">${p[tierKey] || "sin señal formal"}</div>
-            <div class="conf-cuota">cuota ${p[cuotaKey] != null ? p[cuotaKey].toFixed(2) : "—"}</div>
+            <div class="conf-cuota">cuota ${p[cuotaKey] ? p[cuotaKey].toFixed(2) : "—"}</div>
           </div>
           <div class="conf-prob">${(p[probKey]*100).toFixed(0)}%</div>
         </div>`).join("");
@@ -365,7 +372,7 @@ function renderMercado(picks, probKey, senalKey, tierKey, cuotaKey, resultadoDes
     ? '<div class="empty">Todavía no hay partidos analizados hoy.</div>'
     : '<div class="match-list">' + picks.map(p => {
         const prob = p[probKey];
-        const cuotaTxt = p[cuotaKey] != null ? p[cuotaKey].toFixed(2) : "—";
+        const cuotaTxt = p[cuotaKey] ? p[cuotaKey].toFixed(2) : "—";
         const pctT = prob != null ? `${(prob*100).toFixed(0)}%` : "s/d";
         const resultado = resultKey ? p[resultKey] : null;
         let badgeClass, badgeTxt;
@@ -408,7 +415,7 @@ function renderCombo(picks){
     return '<div class="empty">Hoy ningún partido cumple el criterio para la combinada BTTS + Over 2.5.</div>';
   }
   return '<div class="match-list">' + elegibles.map(p => {
-    const cuotaCombo = (p.cuota_btts != null && p.cuota_o25 != null) ? (p.cuota_btts * p.cuota_o25).toFixed(2) : "—";
+    const cuotaCombo = (p.cuota_btts && p.cuota_o25) ? (p.cuota_btts * p.cuota_o25).toFixed(2) : "—";
     return `
       <div class="match-row">
         <div>
@@ -534,6 +541,32 @@ function renderChart(serie){
   });
 }
 
+function renderCalibracion(calibracion){
+  const mercados = Object.keys(calibracion || {}).filter(m => calibracion[m] && calibracion[m].length > 0);
+  if(mercados.length === 0) return '<div class="empty">Todavía no hay suficientes datos para medir la calibración (necesita partidos ya jugados con probabilidad calculada).</div>';
+
+  return mercados.map(mercado => {
+    const filas = calibracion[mercado].map(b => {
+      const diff = b.diferencia;
+      const emoji = Math.abs(diff) <= 5 ? "✅" : (diff < -5 ? "⚠️" : "💪");
+      const diffTxt = (diff >= 0 ? "+" : "") + diff.toFixed(0) + "pp";
+      return `
+        <tr>
+          <td class="name">${emoji} ${b.rango}</td>
+          <td class="num">${b.total}</td>
+          <td class="num">${b.acierto_pct.toFixed(0)}%</td>
+          <td class="num">${diffTxt}</td>
+        </tr>`;
+    }).join("");
+    return `
+      <p class="bar-label" style="margin:16px 0 8px;">${mercado}</p>
+      <table class="cmp-table">
+        <thead><tr><th>Dijimos</th><th class="num">n</th><th class="num">Acertó</th><th class="num">Diferencia</th></tr></thead>
+        <tbody>${filas}</tbody>
+      </table>`;
+  }).join("");
+}
+
 function renderEstadisticas(data){
   const comparativo = data.comparativo;
   return `
@@ -547,6 +580,10 @@ function renderEstadisticas(data){
         <div><p class="bar-label" style="margin-bottom:10px;">Por categoría BTTS</p>${renderBars(comparativo.historico.categorias, CATEGORIA_ORDEN)}</div>
         <div><p class="bar-label" style="margin-bottom:10px;">Por qué se activó JUGAR</p>${renderBars(comparativo.historico.motivos || {}, Object.keys(comparativo.historico.motivos || {}))}</div>
       </div>
+    </section>
+    <section>
+      <p class="section-title">📐 Calibración (probabilidad dicha vs acierto real)</p>
+      ${renderCalibracion(comparativo.historico.calibracion)}
     </section>
     <section><p class="section-title">Historial de picks (resueltos)</p>${renderPicksResueltos(data.picks_recientes)}</section>
     <footer class="note">🟢 gana unidades · 🔴 pierde unidades<br/>Con pocos partidos, un solo resultado mueve el % mucho — cautela por debajo de ~15-20 casos.</footer>
@@ -563,6 +600,7 @@ function renderHeroPick(picks){
   const el = document.getElementById("heroPick");
   if(!el) return;
 
+  // Prioridad: VIP ELITE > VIP+ BTTS > VIP+ O1.5/O2.5 > VIP BTTS con mayor probabilidad
   const candidatos = [];
   picks.forEach(p => {
     if(p.vip_elite) candidatos.push({p, score: 1000 + (p.prob_btts||0), tier: p.vip_elite, mkt: "Ambos Marcan"});
