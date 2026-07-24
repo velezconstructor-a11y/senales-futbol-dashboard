@@ -311,8 +311,13 @@ function diaBadge(p){
 }
 
 function respaldoBadge(p){
-  if(!p.usa_temporada_anterior) return "";
-  return ' · <span title="Uno de los equipos tiene pocos partidos esta temporada, se usaron datos de la temporada anterior" style="color:var(--chalk-dim);">🔄 temp. anterior</span>';
+  if(p.usa_temporada_anterior){
+    return ' · <span title="Uno de los equipos no tiene suficiente muestra ni de su lado ni en general esta temporada, se usaron datos de la temporada anterior" style="color:var(--chalk-dim);">🔄 temp. anterior</span>';
+  }
+  if(p.usa_promedio_general){
+    return ' · <span title="Uno de los equipos todavia no tiene suficientes partidos como local/visitante, se uso el promedio general de la temporada" style="color:var(--chalk-dim);">📊 promedio general</span>';
+  }
+  return "";
 }
 
 function pctTxt(s, conN){
