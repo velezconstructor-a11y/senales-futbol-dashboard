@@ -320,6 +320,15 @@ function respaldoBadge(p){
   return "";
 }
 
+function confirmacionCuotaBadge(p, mercado){
+  // mercado: "btts" | "o15" | "o25"
+  const confirmada = p["cuota_confirmada_" + mercado];
+  if(!confirmada) return "";
+  const original = p["cuota_" + (mercado === "btts" ? "btts" : mercado)];
+  const actual = p["cuota_" + (mercado === "btts" ? "btts" : mercado) + "_actual"];
+  return ` · <span title="Cuando avisamos este partido la cuota era ${original != null ? original.toFixed(2) : '?'} (de valor). Desde entonces el mercado la bajo a ${actual != null ? actual.toFixed(2) : '?'}, confirmando que la probabilidad subio." style="color:var(--win);">📉 cuota confirmada</span>`;
+}
+
 function pctTxt(s, conN){
   if(!s) return "—";
   const n = s.bets ?? s.total ?? 0;
@@ -345,7 +354,7 @@ function badgesExtra(p){
   return badges.length ? `<div style="margin-top:4px;display:flex;gap:6px;flex-wrap:wrap;">${badges.join("")}</div>` : "";
 }
 
-function renderMercado(picks, probKey, senalKey, tierKey, cuotaKey, resultadoDeseado, resultKey){
+function renderMercado(picks, probKey, senalKey, tierKey, cuotaKey, resultadoDeseado, resultKey, mercadoKey){
   // "Mayor confianza" = decision JUGAR Y el nivel es un nivel real de confianza
   // (VIP+/VIP/Fuerte) - NO incluye señales "Evitar" rescatadas a JUGAR por una
   // regla especial, porque esas no son de alta confianza aunque tecnicamente jueguen.
@@ -363,7 +372,7 @@ function renderMercado(picks, probKey, senalKey, tierKey, cuotaKey, resultadoDes
         <div class="conf-card">
           <div>
             <div class="conf-teams">${p.local} vs ${p.visitante}</div>
-            <div class="conf-liga">${p.liga || ""} · ${diaBadge(p)}${respaldoBadge(p)}</div>
+            <div class="conf-liga">${p.liga || ""} · ${diaBadge(p)}${respaldoBadge(p)}${confirmacionCuotaBadge(p, mercadoKey)}</div>
             ${badgesExtra(p)}
           </div>
           <div class="conf-tier">
@@ -389,7 +398,7 @@ function renderMercado(picks, probKey, senalKey, tierKey, cuotaKey, resultadoDes
         <div class="conf-card">
           <div>
             <div class="conf-teams">${p.local} vs ${p.visitante}</div>
-            <div class="conf-liga">${p.liga || ""} · ${diaBadge(p)}${respaldoBadge(p)}</div>
+            <div class="conf-liga">${p.liga || ""} · ${diaBadge(p)}${respaldoBadge(p)}${confirmacionCuotaBadge(p, mercadoKey)}</div>
             ${badgesExtra(p)}
           </div>
           <div class="conf-tier">
@@ -419,7 +428,7 @@ function renderMercado(picks, probKey, senalKey, tierKey, cuotaKey, resultadoDes
           <div class="match-row">
             <div>
               <div class="match-teams">${p.local} vs ${p.visitante}</div>
-              <div class="match-liga">${tierTxt}${p.liga || ""} · ${diaBadge(p)}${respaldoBadge(p)}</div>
+              <div class="match-liga">${tierTxt}${p.liga || ""} · ${diaBadge(p)}${respaldoBadge(p)}${confirmacionCuotaBadge(p, mercadoKey)}</div>
               ${badgesExtra(p)}
             </div>
             <span class="match-pct">cuota ${cuotaTxt} · ${pctT}</span>
@@ -705,9 +714,9 @@ function render(data){
   ).join("");
 
   const panels = {
-    btts: renderMercado(picks, "prob_btts", "nivel_final", "senal_btts_optimizada", "cuota_btts", "¿Ambos equipos marcan?", "resultado_btts"),
-    o15: renderMercado(picks, "prob_o15", "sug_o15", "senal_o15_tier", "cuota_o15", "¿Más de 1.5 goles?", "resultado_o15"),
-    o25: renderMercado(picks, "prob_o25", "sug_o25", "senal_o25", "cuota_o25", "¿Más de 2.5 goles?", "resultado_o25"),
+    btts: renderMercado(picks, "prob_btts", "nivel_final", "senal_btts_optimizada", "cuota_btts", "¿Ambos equipos marcan?", "resultado_btts", "btts"),
+    o15: renderMercado(picks, "prob_o15", "sug_o15", "senal_o15_tier", "cuota_o15", "¿Más de 1.5 goles?", "resultado_o15", "o15"),
+    o25: renderMercado(picks, "prob_o25", "sug_o25", "senal_o25", "cuota_o25", "¿Más de 2.5 goles?", "resultado_o25", "o25"),
     combo: `<section><p class="section-title">BTTS + Over 2.5</p>${renderCombo(picks)}</section>`,
     score: renderMarcadorExacto(picks, data.comparativo.historico.marcador_exacto),
     stats: renderEstadisticas(data),
