@@ -310,6 +310,11 @@ function diaBadge(p){
   return '<span style="color:var(--amber);">MAÑANA</span>';
 }
 
+function respaldoBadge(p){
+  if(!p.usa_temporada_anterior) return "";
+  return ' · <span title="Uno de los equipos tiene pocos partidos esta temporada, se usaron datos de la temporada anterior" style="color:var(--chalk-dim);">🔄 temp. anterior</span>';
+}
+
 function pctTxt(s, conN){
   if(!s) return "—";
   const n = s.bets ?? s.total ?? 0;
@@ -353,7 +358,7 @@ function renderMercado(picks, probKey, senalKey, tierKey, cuotaKey, resultadoDes
         <div class="conf-card">
           <div>
             <div class="conf-teams">${p.local} vs ${p.visitante}</div>
-            <div class="conf-liga">${p.liga || ""} · ${diaBadge(p)}</div>
+            <div class="conf-liga">${p.liga || ""} · ${diaBadge(p)}${respaldoBadge(p)}</div>
             ${badgesExtra(p)}
           </div>
           <div class="conf-tier">
@@ -379,7 +384,7 @@ function renderMercado(picks, probKey, senalKey, tierKey, cuotaKey, resultadoDes
         <div class="conf-card">
           <div>
             <div class="conf-teams">${p.local} vs ${p.visitante}</div>
-            <div class="conf-liga">${p.liga || ""} · ${diaBadge(p)}</div>
+            <div class="conf-liga">${p.liga || ""} · ${diaBadge(p)}${respaldoBadge(p)}</div>
             ${badgesExtra(p)}
           </div>
           <div class="conf-tier">
@@ -409,7 +414,7 @@ function renderMercado(picks, probKey, senalKey, tierKey, cuotaKey, resultadoDes
           <div class="match-row">
             <div>
               <div class="match-teams">${p.local} vs ${p.visitante}</div>
-              <div class="match-liga">${tierTxt}${p.liga || ""} · ${diaBadge(p)}</div>
+              <div class="match-liga">${tierTxt}${p.liga || ""} · ${diaBadge(p)}${respaldoBadge(p)}</div>
               ${badgesExtra(p)}
             </div>
             <span class="match-pct">cuota ${cuotaTxt} · ${pctT}</span>
@@ -443,7 +448,7 @@ function renderCombo(picks){
       <div class="match-row">
         <div>
           <div class="match-teams">${p.local} vs ${p.visitante}</div>
-          <div class="match-liga">${p.liga || ""} · ${diaBadge(p)}</div>
+          <div class="match-liga">${p.liga || ""} · ${diaBadge(p)}${respaldoBadge(p)}</div>
         </div>
         <span class="match-pct">cuota ${cuotaCombo}</span>
         <span class="match-badge ${p.senal_btts_o25 === 'VIP' ? 'si' : 'no'}">${p.senal_btts_o25}</span>
@@ -474,7 +479,7 @@ function renderMarcadorExacto(picks, stats){
         <div class="match-row" style="grid-template-columns:1fr auto;">
           <div>
             <div class="match-teams">${p.local} vs ${p.visitante}</div>
-            <div class="match-liga">${p.liga || ""} · ${diaBadge(p)}</div>
+            <div class="match-liga">${p.liga || ""} · ${diaBadge(p)}${respaldoBadge(p)}</div>
           </div>
           ${badgeHtml}
         </div>`;
@@ -590,6 +595,23 @@ function renderCalibracion(calibracion){
   }).join("");
 }
 
+function renderPorLiga(porLiga){
+  if(!porLiga || porLiga.length === 0){
+    return '<div class="empty">Todavía no hay suficiente muestra por liga (mínimo 3 partidos jugados por liga).</div>';
+  }
+  const filas = porLiga.map((l, i) => {
+    const cls = l.profit_u >= 0 ? "win" : "loss";
+    return `
+      <tr class="${i%2? 'row-alt':''}">
+        <td class="name"><span class="ticket-status ${cls}"></span>${l.liga}</td>
+        <td class="num">${l.total}</td>
+        <td class="num">${l.acierto_pct.toFixed(0)}% (${l.ganados}/${l.total})</td>
+        <td class="num">${l.profit_u >= 0 ? "+" : ""}${l.profit_u.toFixed(1)}u</td>
+      </tr>`;
+  }).join("");
+  return `<table class="cmp-table"><thead><tr><th>Liga</th><th class="num">n</th><th class="num">Acierto BTTS</th><th class="num">Unidades</th></tr></thead><tbody>${filas}</tbody></table>`;
+}
+
 function renderEstadisticas(data){
   const comparativo = data.comparativo;
   return `
@@ -603,6 +625,10 @@ function renderEstadisticas(data){
         <div><p class="bar-label" style="margin-bottom:10px;">Por categoría BTTS</p>${renderBars(comparativo.historico.categorias, CATEGORIA_ORDEN)}</div>
         <div><p class="bar-label" style="margin-bottom:10px;">Por qué se activó JUGAR</p>${renderBars(comparativo.historico.motivos || {}, Object.keys(comparativo.historico.motivos || {}))}</div>
       </div>
+    </section>
+    <section>
+      <p class="section-title">🌍 Acierto por liga (BTTS)</p>
+      ${renderPorLiga(comparativo.historico.por_liga)}
     </section>
     <section>
       <p class="section-title">📐 Calibración (probabilidad dicha vs acierto real)</p>
