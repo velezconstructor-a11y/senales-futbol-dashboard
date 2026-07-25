@@ -610,6 +610,21 @@ function renderCalibracion(calibracion){
   }).join("");
 }
 
+function renderMovimientoValidacion(mv){
+  const con = mv?.con_movimiento, sin = mv?.sin_movimiento;
+  if((!con || con.total === 0) && (!sin || sin.total === 0)){
+    return '<div class="empty">Todavía no hay partidos jugados con suficiente historial de movimiento de cuota.</div>';
+  }
+  const fila = (etiqueta, s) => {
+    if(!s || s.total === 0) return `<tr><td class="name">${etiqueta}</td><td class="num" colspan="2">Sin casos todavía</td></tr>`;
+    return `<tr><td class="name">${etiqueta}</td><td class="num">${s.total}</td><td class="num">${s.acierto_pct.toFixed(0)}% (${s.aciertos}/${s.total})</td></tr>`;
+  };
+  return `<table class="cmp-table"><thead><tr><th>Grupo</th><th class="num">n</th><th class="num">Acierto</th></tr></thead><tbody>
+    ${fila("Con +4pp de movimiento", con)}
+    ${fila("Sin ese movimiento", sin)}
+  </tbody></table>`;
+}
+
 function renderPorLiga(porLiga){
   if(!porLiga || porLiga.length === 0){
     return '<div class="empty">Todavía no hay suficiente muestra por liga (mínimo 3 partidos jugados por liga).</div>';
@@ -644,6 +659,10 @@ function renderEstadisticas(data){
     <section>
       <p class="section-title">🌍 Acierto por liga (BTTS)</p>
       ${renderPorLiga(comparativo.historico.por_liga)}
+    </section>
+    <section>
+      <p class="section-title">📉 ¿Sirve la señal de movimiento?</p>
+      ${renderMovimientoValidacion(comparativo.historico.movimiento_validacion)}
     </section>
     <section>
       <p class="section-title">📐 Calibración (probabilidad dicha vs acierto real)</p>
