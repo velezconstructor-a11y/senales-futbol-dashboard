@@ -241,7 +241,7 @@
   .chart-wrap{position:relative;height:220px;}
 
   .bars{display:flex;flex-direction:column;gap:10px;}
-  .bar-row{display:grid;grid-template-columns:140px 1fr 90px;align-items:center;gap:12px;font-size:13px;}
+  .bar-row{display:grid;grid-template-columns:140px 1fr auto;align-items:center;gap:12px;font-size:13px;}
   .bar-label{color:var(--chalk-dim);font-family:var(--mono);font-size:12px;}
   .bar-track{height:8px;background:var(--pitch-700);border-radius:4px;overflow:hidden;}
   .bar-fill{height:100%;border-radius:4px;}
@@ -289,7 +289,6 @@
 </div>
 
 <script>
-const DATA_URL = "./dashboard_data.json";
 
 const TABS = [
   {id:"btts",  label:"Ambos Marcan"},
@@ -463,14 +462,19 @@ function renderCombo(picks){
   }
   return '<div class="match-list">' + elegibles.map(p => {
     const cuotaCombo = (p.cuota_btts && p.cuota_o25) ? (p.cuota_btts * p.cuota_o25).toFixed(2) : "—";
+    const resultado = p.resultado_combo;
+    let badgeClass, badgeTxt;
+    if(resultado === true){ badgeClass = "ganada"; badgeTxt = "✓ Ganada"; }
+    else if(resultado === false){ badgeClass = "perdida"; badgeTxt = "✕ Perdida"; }
+    else { badgeClass = p.senal_btts_o25 === 'VIP' ? 'si' : 'no'; badgeTxt = p.senal_btts_o25; }
     return `
       <div class="match-row">
         <div>
           <div class="match-teams">${p.local} vs ${p.visitante}</div>
           <div class="match-liga">${p.liga || ""} · ${diaBadge(p)}${respaldoBadge(p)}</div>
         </div>
-        <span class="match-pct">cuota ${cuotaCombo}</span>
-        <span class="match-badge ${p.senal_btts_o25 === 'VIP' ? 'si' : 'no'}">${p.senal_btts_o25}</span>
+        <span class="match-pct">cuota ${cuotaCombo} · ${p.senal_btts_o25}</span>
+        <span class="match-badge ${badgeClass}">${badgeTxt}</span>
       </div>`;
   }).join("") + '</div>';
 }
@@ -542,13 +546,19 @@ function renderCmpTable(comparativo){
 }
 
 function renderBars(dictHist, orden){
-  const nombres = orden.filter(n => dictHist[n] && nOf(dictHist[n]) > 0);
+  const nombres = orden.filter(n => dictHist[n] && (dictHist[n].total_detectado ?? nOf(dictHist[n])) > 0);
   if(nombres.length === 0) return '<div class="empty">Sin datos todavía en esta sección.</div>';
   return '<div class="bars">' + nombres.map(nombre => {
     const st = dictHist[nombre];
+    const totalDetectado = st.total_detectado ?? nOf(st);
+    const pendientes = totalDetectado - nOf(st);
+    const notaPend = pendientes > 0 ? ` <span style="color:var(--chalk-dim);">(+${pendientes} pend.)</span>` : "";
+    if(nOf(st) === 0){
+      return `<div class="bar-row"><span class="bar-label">${nombre}</span><div class="bar-track"></div><span class="bar-num">sin resultado${notaPend}</span></div>`;
+    }
     const pct = st.acierto_pct ?? 0;
     const cls = statusClass(st);
-    return `<div class="bar-row"><span class="bar-label">${nombre}</span><div class="bar-track"><div class="bar-fill ${cls}" style="width:${pct}%"></div></div><span class="bar-num">${pctTxt(st, true)}</span></div>`;
+    return `<div class="bar-row"><span class="bar-label">${nombre}</span><div class="bar-track"><div class="bar-fill ${cls}" style="width:${pct}%"></div></div><span class="bar-num">${pctTxt(st, true)}${notaPend}</span></div>`;
   }).join("") + '</div>';
 }
 
@@ -733,8 +743,13 @@ function render(data){
 
   renderHeroPick(picks);
 
-  document.getElementById("tabs").innerHTML = TABS.map((t,i) =>
-    `<button class="tab-btn ${i===0?'active':''}" data-tab="${t.id}" onclick="switchTab('${t.id}')">${t.label}</button>`
+  // Mantener la pestaña que el usuario ya tenia abierta (importante ahora
+  // que la pagina se refresca sola cada 5 min - sin esto, cada refresco
+  // te sacaba de vuelta a la primera pestaña).
+  const tabActivaAntes = document.querySelector(".tab-btn.active")?.dataset.tab || TABS[0].id;
+
+  document.getElementById("tabs").innerHTML = TABS.map((t) =>
+    `<button class="tab-btn ${t.id===tabActivaAntes?'active':''}" data-tab="${t.id}" onclick="switchTab('${t.id}')">${t.label}</button>`
   ).join("");
 
   const panels = {
@@ -746,25 +761,42 @@ function render(data){
     stats: renderEstadisticas(data),
   };
 
-  document.getElementById("app").innerHTML = TABS.map((t,i) =>
-    `<div class="tab-panel ${i===0?'active':''}" id="panel-${t.id}">${panels[t.id]}</div>`
+  document.getElementById("app").innerHTML = TABS.map((t) =>
+    `<div class="tab-panel ${t.id===tabActivaAntes?'active':''}" id="panel-${t.id}">${panels[t.id]}</div>`
   ).join("");
+
+  document.querySelectorAll(".tab-btn").forEach(b => b.classList.toggle("active", b.dataset.tab === tabActivaAntes));
+
+  if(tabActivaAntes === "stats"){
+    renderChart(data.serie_diaria);
+  }
 
   if(totalHist === 0 && picks.length === 0){
     document.getElementById("app").innerHTML = '<div class="empty">Todavía no hay partidos evaluados. Vuelve pronto.</div>';
   }
 }
 
-fetch(DATA_URL, {cache:"no-store"})
-  .then(r => { if(!r.ok) throw new Error("HTTP " + r.status); return r.json(); })
-  .then(render)
-  .catch(err => {
-    document.getElementById("app").innerHTML = `
-      <div class="error">
-        No se pudo cargar dashboard_data.json.<br/>(${err.message})<br/><br/>
-        Si acabas de configurar esto, corre el workflow de GitHub Actions una vez para generar el archivo.
-      </div>`;
-  });
+function cargarDatos(){
+  const url = "./dashboard_data.json?t=" + Date.now();
+  fetch(url, {cache:"no-store"})
+    .then(r => { if(!r.ok) throw new Error("HTTP " + r.status); return r.json(); })
+    .then(render)
+    .catch(err => {
+      // Si ya habia datos cargados antes, no reemplaces la pagina con el
+      // error solo porque un refresco automatico fallo una vez - se
+      // reintenta solo en el proximo ciclo.
+      if(!DATA){
+        document.getElementById("app").innerHTML = `
+          <div class="error">
+            No se pudo cargar dashboard_data.json.<br/>(${err.message})<br/><br/>
+            Si acabas de configurar esto, corre el workflow de GitHub Actions una vez para generar el archivo.
+          </div>`;
+      }
+    });
+}
+
+cargarDatos();
+setInterval(cargarDatos, 5 * 60 * 1000); // se refresca solo cada 5 minutos
 </script>
 
 </body>
