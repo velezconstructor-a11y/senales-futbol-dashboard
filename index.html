@@ -303,8 +303,8 @@ let DATA = null;
 let HOY_STR = "";
 
 function diaBadge(p){
-  if(!p.fecha) return "";
-  const fechaSolo = p.fecha.split(" ")[0];
+  const fechaSolo = (p.fecha_partido || p.fecha || "").split(" ")[0];
+  if(!fechaSolo) return "";
   if(fechaSolo === HOY_STR) return '<span style="color:var(--win);">HOY</span>';
   return '<span style="color:var(--amber);">MAÑANA</span>';
 }
@@ -568,8 +568,35 @@ function renderPicksResueltos(picks){
     let resClass = "pending", resTxt = "?";
     if(p.resultado_btts === true){ resClass = "win"; resTxt = "✓"; }
     else if(p.resultado_btts === false){ resClass = "loss"; resTxt = "✕"; }
-    const fecha = (p.fecha || "").split(" ")[0].slice(5);
+    const fecha = (p.fecha_partido || p.fecha || "").split(" ")[0].slice(5);
     return `<div class="pick"><span class="pick-date">${fecha}</span><span class="pick-teams">${p.local} vs ${p.visitante}</span><span class="pick-tier">${p.senal_btts_optimizada || "—"}</span><span class="pick-result ${resClass}">${resTxt}</span></div>`;
+  }).join("") + '</div>';
+}
+
+function renderHistorialMercado(picksRecientes, señalKey, tierKey, resultadoKey, cuotaKey, esCombo){
+  // Historial dia a dia de un mercado especifico: solo señales JUGAR (o
+  // elegibles para la combinada), mas recientes primero, con su resultado
+  // cuando ya se conozca. Esto es lo que se mantiene visible aunque el
+  // partido ya haya salido de la ventana "hoy/mañana".
+  const filtrados = esCombo
+    ? picksRecientes.filter(p => p.senal_btts_o25 && p.senal_btts_o25 !== "—")
+    : picksRecientes.filter(p => p[señalKey] === "JUGAR");
+
+  if(filtrados.length === 0){
+    return '<div class="empty">Todavía no hay historial en este mercado.</div>';
+  }
+
+  return '<div class="picks">' + filtrados.slice(0, 30).map(p => {
+    const resultado = esCombo ? p.resultado_combo : p[resultadoKey];
+    let resClass = "pending", resTxt = "?";
+    if(resultado === true){ resClass = "win"; resTxt = "✓"; }
+    else if(resultado === false){ resClass = "loss"; resTxt = "✕"; }
+    const fecha = (p.fecha_partido || p.fecha || "").split(" ")[0].slice(5);
+    const etiqueta = esCombo ? p.senal_btts_o25 : (p[tierKey] || "—");
+    const cuotaTxt = esCombo
+      ? (p.cuota_combo != null ? p.cuota_combo.toFixed(2) : "—")
+      : (p[cuotaKey] != null ? p[cuotaKey].toFixed(2) : "—");
+    return `<div class="pick"><span class="pick-date">${fecha}</span><span class="pick-teams">${p.local} vs ${p.visitante}</span><span class="pick-tier" title="cuota ${cuotaTxt}">${etiqueta}</span><span class="pick-result ${resClass}">${resTxt}</span></div>`;
   }).join("") + '</div>';
 }
 
@@ -752,11 +779,16 @@ function render(data){
     `<button class="tab-btn ${t.id===tabActivaAntes?'active':''}" data-tab="${t.id}" onclick="switchTab('${t.id}')">${t.label}</button>`
   ).join("");
 
+  const historialBtts = `<section><p class="section-title">📅 Historial de picks — Ambos Marcan</p>${renderHistorialMercado(data.picks_recientes, "nivel_final", "senal_btts_optimizada", "resultado_btts", "cuota_btts", false)}</section>`;
+  const historialO15 = `<section><p class="section-title">📅 Historial de picks — Over 1.5</p>${renderHistorialMercado(data.picks_recientes, "sug_o15", "senal_o15_tier", "resultado_o15", "cuota_o15", false)}</section>`;
+  const historialO25 = `<section><p class="section-title">📅 Historial de picks — Over 2.5</p>${renderHistorialMercado(data.picks_recientes, "sug_o25", "senal_o25", "resultado_o25", "cuota_o25", false)}</section>`;
+  const historialCombo = `<section><p class="section-title">📅 Historial de picks — BTTS+O2.5</p>${renderHistorialMercado(data.picks_recientes, null, null, null, null, true)}</section>`;
+
   const panels = {
-    btts: renderMercado(picks, "prob_btts", "nivel_final", "senal_btts_optimizada", "cuota_btts", "¿Ambos equipos marcan?", "resultado_btts", "btts"),
-    o15: renderMercado(picks, "prob_o15", "sug_o15", "senal_o15_tier", "cuota_o15", "¿Más de 1.5 goles?", "resultado_o15", "o15"),
-    o25: renderMercado(picks, "prob_o25", "sug_o25", "senal_o25", "cuota_o25", "¿Más de 2.5 goles?", "resultado_o25", "o25"),
-    combo: `<section><p class="section-title">BTTS + Over 2.5</p>${renderCombo(picks)}</section>`,
+    btts: renderMercado(picks, "prob_btts", "nivel_final", "senal_btts_optimizada", "cuota_btts", "¿Ambos equipos marcan?", "resultado_btts", "btts") + historialBtts,
+    o15: renderMercado(picks, "prob_o15", "sug_o15", "senal_o15_tier", "cuota_o15", "¿Más de 1.5 goles?", "resultado_o15", "o15") + historialO15,
+    o25: renderMercado(picks, "prob_o25", "sug_o25", "senal_o25", "cuota_o25", "¿Más de 2.5 goles?", "resultado_o25", "o25") + historialO25,
+    combo: `<section><p class="section-title">BTTS + Over 2.5</p>${renderCombo(picks)}</section>` + historialCombo,
     score: renderMarcadorExacto(picks, data.comparativo.historico.marcador_exacto),
     stats: renderEstadisticas(data),
   };
