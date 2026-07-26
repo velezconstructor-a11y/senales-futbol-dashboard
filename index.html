@@ -666,6 +666,37 @@ function renderMovimientoValidacion(mv){
   </tbody></table>`;
 }
 
+function renderMovimientoLista(picksRecientes, umbral){
+  // Lista, partido por partido, de todas las señales JUGAR (en cualquiera
+  // de los 3 mercados) que tuvieron +4pp de movimiento - para que quede
+  // un registro navegable de CUALES fueron, no solo el numero agregado.
+  const combos = [
+    ["btts", "movimiento_btts_pp", "nivel_final", "senal_btts_optimizada", "resultado_btts", "Ambos Marcan"],
+    ["o15", "movimiento_o15_pp", "sug_o15", "senal_o15_tier", "resultado_o15", "Over 1.5"],
+    ["o25", "movimiento_o25_pp", "sug_o25", "senal_o25", "resultado_o25", "Over 2.5"],
+  ];
+  const encontrados = [];
+  picksRecientes.forEach(p => {
+    combos.forEach(([key, movKey, señalKey, tierKey, resKey, nombreMercado]) => {
+      const mov = p[movKey];
+      if(mov != null && mov >= umbral && p[señalKey] === "JUGAR"){
+        encontrados.push({p, mov, tier: p[tierKey], resultado: p[resKey], mercado: nombreMercado});
+      }
+    });
+  });
+  if(encontrados.length === 0){
+    return '<div class="empty">Todavía no hay partidos individuales con +4pp de movimiento en el historial reciente.</div>';
+  }
+  encontrados.sort((a,b) => (b.p.fecha_partido || "").localeCompare(a.p.fecha_partido || ""));
+  return '<div class="picks">' + encontrados.map(e => {
+    let resClass = "pending", resTxt = "?";
+    if(e.resultado === true){ resClass = "win"; resTxt = "✓"; }
+    else if(e.resultado === false){ resClass = "loss"; resTxt = "✕"; }
+    const fecha = (e.p.fecha_partido || e.p.fecha || "").split(" ")[0].slice(5);
+    return `<div class="pick"><span class="pick-date">${fecha}</span><span class="pick-teams">${e.p.local} vs ${e.p.visitante} <span style="color:var(--chalk-dim);">(${e.mercado})</span></span><span class="pick-tier">+${e.mov.toFixed(1)}pp</span><span class="pick-result ${resClass}">${resTxt}</span></div>`;
+  }).join("") + '</div>';
+}
+
 function renderPorLiga(porLiga){
   if(!porLiga || porLiga.length === 0){
     return '<div class="empty">Todavía no hay suficiente muestra por liga (mínimo 3 partidos jugados por liga).</div>';
@@ -704,6 +735,8 @@ function renderEstadisticas(data){
     <section>
       <p class="section-title">📉 ¿Sirve la señal de movimiento?</p>
       ${renderMovimientoValidacion(comparativo.historico.movimiento_validacion)}
+      <p class="bar-label" style="margin:16px 0 8px;">Partidos con +${(data.umbral_movimiento_pp||4)}pp de movimiento (más reciente primero)</p>
+      ${renderMovimientoLista(data.picks_recientes, data.umbral_movimiento_pp||4)}
     </section>
     <section>
       <p class="section-title">📐 Calibración (probabilidad dicha vs acierto real)</p>
