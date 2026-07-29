@@ -737,7 +737,8 @@ function renderEstadisticas(data){
       <p class="section-title">Detalle</p>
       <div class="grid2">
         <div><p class="bar-label" style="margin-bottom:10px;">Por categoría BTTS</p>${renderBars(comparativo.historico.categorias, CATEGORIA_ORDEN)}</div>
-        <div><p class="bar-label" style="margin-bottom:10px;">Por qué se activó JUGAR</p>${renderBars(comparativo.historico.motivos || {}, Object.keys(comparativo.historico.motivos || {}))}</div>
+        <div><p class="bar-label" style="margin-bottom:10px;">Por qué se activó JUGAR (BTTS)</p>${renderBars(comparativo.historico.motivos || {}, Object.keys(comparativo.historico.motivos || {}))}</div>
+        <div><p class="bar-label" style="margin-bottom:10px;">Por qué se activó JUGAR (Over 2.5)</p>${renderBars(comparativo.historico.motivos_o25 || {}, Object.keys(comparativo.historico.motivos_o25 || {}))}</div>
       </div>
     </section>
     <section>
