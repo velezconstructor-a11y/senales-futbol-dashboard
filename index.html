@@ -410,7 +410,14 @@ function renderMercado(picks, probKey, senalKey, tierKey, cuotaKey, resultadoDes
     .slice(0, 5);
   const topProbHtml = topProb.length === 0
     ? '<div class="empty">Sin datos suficientes todavía.</div>'
-    : topProb.map(p => `
+    : topProb.map(p => {
+        const resultado = resultKey ? p[resultKey] : null;
+        const resultadoHtml = resultado === true
+          ? `<div class="conf-prob" style="color:var(--win);font-size:15px;">✓ Ganada</div>`
+          : resultado === false
+          ? `<div class="conf-prob" style="color:var(--loss);font-size:15px;">✕ Perdida</div>`
+          : `<div class="conf-prob">${(p[probKey]*100).toFixed(0)}%</div>`;
+        return `
         <div class="conf-card">
           <div>
             <div class="conf-teams">${p.local} vs ${p.visitante}</div>
@@ -421,8 +428,9 @@ function renderMercado(picks, probKey, senalKey, tierKey, cuotaKey, resultadoDes
             <div class="conf-tier-val" style="color:var(--chalk-dim);font-size:12px;">${p[tierKey] || "sin señal formal"}</div>
             <div class="conf-cuota">cuota ${p[cuotaKey] ? p[cuotaKey].toFixed(2) : "—"}${edgeTxt(p[probKey], p[cuotaKey])}</div>
           </div>
-          <div class="conf-prob">${(p[probKey]*100).toFixed(0)}%</div>
-        </div>`).join("");
+          ${resultadoHtml}
+        </div>`;
+      }).join("");
 
   const todosHtml = picks.length === 0
     ? '<div class="empty">Todavía no hay partidos analizados hoy.</div>'
