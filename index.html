@@ -297,6 +297,7 @@ const TABS = [
   {id:"o15",   label:"Over 1.5"},
   {id:"o25",   label:"Over 2.5"},
   {id:"combo", label:"BTTS+O2.5"},
+  {id:"ht05",  label:"1er Tiempo O0.5"},
   {id:"score", label:"Marcador Exacto"},
   {id:"stats", label:"Estadísticas"},
 ];
@@ -531,7 +532,7 @@ function renderMarcadorExacto(picks, stats){
   return heroHtml + `<section><p class="section-title">Pronósticos de hoy</p>${listaHtml}</section>`;
 }
 
-const MERCADO_ORDEN = ["BTTS", "Over 1.5", "Over 2.5", "BTTS + Over 2.5 (VIP)"];
+const MERCADO_ORDEN = ["BTTS", "Over 1.5", "Over 2.5", "BTTS + Over 2.5 (VIP)", "Over 0.5 1er tiempo"];
 const CATEGORIA_ORDEN = ["Stake10","VIP+","VIP","Fuerte","ORO_FUERTE","ORO_BTTS","ÉLITE","PLATA","BRONCE","VIP ELITE"];
 
 function renderTickets(comparativo){
@@ -747,6 +748,7 @@ function renderEstadisticas(data){
         <div><p class="bar-label" style="margin-bottom:10px;">Por categoría BTTS</p>${renderBars(comparativo.historico.categorias, CATEGORIA_ORDEN)}</div>
         <div><p class="bar-label" style="margin-bottom:10px;">Por qué se activó JUGAR (BTTS)</p>${renderBars(comparativo.historico.motivos || {}, Object.keys(comparativo.historico.motivos || {}))}</div>
         <div><p class="bar-label" style="margin-bottom:10px;">Por qué se activó JUGAR (Over 2.5)</p>${renderBars(comparativo.historico.motivos_o25 || {}, Object.keys(comparativo.historico.motivos_o25 || {}))}</div>
+        <div><p class="bar-label" style="margin-bottom:10px;">Por qué se activó JUGAR (1er tiempo O0.5)</p>${renderBars(comparativo.historico.motivos_ht05 || {}, Object.keys(comparativo.historico.motivos_ht05 || {}))}</div>
       </div>
     </section>
     <section>
@@ -852,12 +854,16 @@ function render(data){
   const historialO15 = `<section><p class="section-title">📅 Historial de picks — Over 1.5</p>${renderHistorialMercado(data.picks_recientes, "sug_o15", "senal_o15_tier", "resultado_o15", "cuota_o15", false)}</section>`;
   const historialO25 = `<section><p class="section-title">📅 Historial de picks — Over 2.5</p>${renderHistorialMercado(data.picks_recientes, "sug_o25", "senal_o25", "resultado_o25", "cuota_o25", false)}</section>`;
   const historialCombo = `<section><p class="section-title">📅 Historial de picks — BTTS+O2.5</p>${renderHistorialMercado(data.picks_recientes, null, null, null, null, true)}</section>`;
+  const historialHt05 = `<section><p class="section-title">📅 Historial de picks — 1er Tiempo O0.5</p>${renderHistorialMercado(data.picks_recientes, "sug_ht05", "senal_ht05_tier", "resultado_ht05", "cuota_ht_over05", false)}</section>`;
+
+  const notaHt05 = `<div class="empty" style="margin-bottom:16px;">⚠️ Mercado nuevo (agosto 2026) — todavía no hay suficiente historial para confirmar en qué franja de cuota da ganancia real. Revisa esto con cuidado hasta que se acumule más muestra.</div>`;
 
   const panels = {
     btts: renderMercado(picks, "prob_btts", "nivel_final", "senal_btts_optimizada", "cuota_btts", "¿Ambos equipos marcan?", "resultado_btts", "btts") + historialBtts,
     o15: renderMercado(picks, "prob_o15", "sug_o15", "senal_o15_tier", "cuota_o15", "¿Más de 1.5 goles?", "resultado_o15", "o15") + historialO15,
     o25: renderMercado(picks, "prob_o25", "sug_o25", "senal_o25", "cuota_o25", "¿Más de 2.5 goles?", "resultado_o25", "o25") + historialO25,
     combo: `<section><p class="section-title">BTTS + Over 2.5</p>${renderCombo(picks)}</section>` + historialCombo,
+    ht05: notaHt05 + renderMercado(picks, "prob_over05_ht", "sug_ht05", "senal_ht05_tier", "cuota_ht_over05", "¿Gol antes del descanso?", "resultado_ht05", "ht05") + historialHt05,
     score: renderMarcadorExacto(picks, data.comparativo.historico.marcador_exacto),
     stats: renderEstadisticas(data),
   };
