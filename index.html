@@ -305,6 +305,16 @@ const TABS = [
 let DATA = null;
 let HOY_STR = "";
 
+function notaOver15Ht(p){
+  // Nota informativa (no es una señal propia, no tiene JUGAR/EVITAR ni
+  // cuota asociada) - destaca los partidos donde ademas de superar el
+  // umbral de 0.5 goles en el primer tiempo, la probabilidad de que sean
+  // 2+ goles en el primer tiempo tambien es alta.
+  const prob15 = p.prob_over15_ht;
+  if(prob15 == null || prob15 < 0.5) return "";
+  return ` · <span title="Probabilidad de 2+ goles en el primer tiempo (informativo, no es señal propia)" style="color:var(--amber);">🔥 +${(prob15*100).toFixed(0)}% de 2+ goles en el 1T</span>`;
+}
+
 function edgeTxt(prob, cuota){
   // Edge = probabilidad que decimos - probabilidad que ya implica la cuota
   // del mercado. Solo se muestra cuando es positivo (creemos tener ventaja
@@ -389,7 +399,7 @@ function renderMercado(picks, probKey, senalKey, tierKey, cuotaKey, resultadoDes
         <div class="conf-card">
           <div>
             <div class="conf-teams">${p.local} vs ${p.visitante}</div>
-            <div class="conf-liga">${p.liga || ""} · ${diaBadge(p)}${respaldoBadge(p)}${confirmacionCuotaBadge(p, mercadoKey)}</div>
+            <div class="conf-liga">${p.liga || ""} · ${diaBadge(p)}${respaldoBadge(p)}${confirmacionCuotaBadge(p, mercadoKey)}${mercadoKey === 'ht05' ? notaOver15Ht(p) : ''}</div>
             ${badgesExtra(p)}
           </div>
           <div class="conf-tier">
@@ -422,7 +432,7 @@ function renderMercado(picks, probKey, senalKey, tierKey, cuotaKey, resultadoDes
         <div class="conf-card">
           <div>
             <div class="conf-teams">${p.local} vs ${p.visitante}</div>
-            <div class="conf-liga">${p.liga || ""} · ${diaBadge(p)}${respaldoBadge(p)}${confirmacionCuotaBadge(p, mercadoKey)}</div>
+            <div class="conf-liga">${p.liga || ""} · ${diaBadge(p)}${respaldoBadge(p)}${confirmacionCuotaBadge(p, mercadoKey)}${mercadoKey === 'ht05' ? notaOver15Ht(p) : ''}</div>
             ${badgesExtra(p)}
           </div>
           <div class="conf-tier">
@@ -453,7 +463,7 @@ function renderMercado(picks, probKey, senalKey, tierKey, cuotaKey, resultadoDes
           <div class="match-row">
             <div>
               <div class="match-teams">${p.local} vs ${p.visitante}</div>
-              <div class="match-liga">${tierTxt}${p.liga || ""} · ${diaBadge(p)}${respaldoBadge(p)}${confirmacionCuotaBadge(p, mercadoKey)}</div>
+              <div class="match-liga">${tierTxt}${p.liga || ""} · ${diaBadge(p)}${respaldoBadge(p)}${confirmacionCuotaBadge(p, mercadoKey)}${mercadoKey === 'ht05' ? notaOver15Ht(p) : ''}</div>
               ${badgesExtra(p)}
             </div>
             <span class="match-pct">cuota ${cuotaTxt} · ${pctT}${edgeTxt(prob, p[cuotaKey])}</span>
