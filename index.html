@@ -305,6 +305,30 @@ const TABS = [
 let DATA = null;
 let HOY_STR = "";
 
+function notaRescateBtts(p){
+  // Muestra que camino especifico produjo el JUGAR de BTTS - especialmente
+  // util para distinguir un rescate (partido que el modelo normal
+  // marcaba Evitar, pero otra regla lo convirtio a JUGAR) de un camino
+  // normal (VIP+/VIP/Fuerte/Stake10 directo).
+  const motivo = p.motivo_btts;
+  if(!motivo || p.nivel_final !== "JUGAR") return "";
+  const esRescate = motivo.startsWith("rescate_");
+  const etiquetas = {
+    "camino_normal_VIP+": "camino normal (VIP+)",
+    "camino_normal_Stake10": "camino normal (Stake10)",
+    "camino_normal_VIP_Fuerte_edge_ok": "camino normal (VIP/Fuerte)",
+    "rescate_evitar_edge_bajo_prob_baja": "🔄 rescate: edge + prob baja",
+    "rescate_evitar_lambda_moderado": "🔄 rescate: lambda moderado",
+    "rescate_oro_btts": "🔄 rescate: oro BTTS",
+    "rescate_plata": "🔄 rescate: plata",
+    "rescate_xg_alto_btts_historico_alto": "🔄 rescate: xG e histórico altos",
+    "rescate_cuota_favorable_1X2": "🔄 rescate: cuota 1X2 favorable",
+  };
+  const texto = etiquetas[motivo] || motivo;
+  const color = esRescate ? "var(--amber)" : "var(--chalk-dim)";
+  return ` · <span title="Por que se activo esta señal de BTTS" style="color:${color};">${texto}</span>`;
+}
+
 function notaOver15Ht(p){
   // Nota informativa (no es una señal propia, no tiene JUGAR/EVITAR ni
   // cuota asociada) - destaca los partidos donde ademas de superar el
@@ -399,7 +423,7 @@ function renderMercado(picks, probKey, senalKey, tierKey, cuotaKey, resultadoDes
         <div class="conf-card">
           <div>
             <div class="conf-teams">${p.local} vs ${p.visitante}</div>
-            <div class="conf-liga">${p.liga || ""} · ${diaBadge(p)}${respaldoBadge(p)}${confirmacionCuotaBadge(p, mercadoKey)}${mercadoKey === 'ht05' ? notaOver15Ht(p) : ''}</div>
+            <div class="conf-liga">${p.liga || ""} · ${diaBadge(p)}${respaldoBadge(p)}${confirmacionCuotaBadge(p, mercadoKey)}${mercadoKey === 'ht05' ? notaOver15Ht(p) : ''}${mercadoKey === 'btts' ? notaRescateBtts(p) : ''}</div>
             ${badgesExtra(p)}
           </div>
           <div class="conf-tier">
@@ -432,7 +456,7 @@ function renderMercado(picks, probKey, senalKey, tierKey, cuotaKey, resultadoDes
         <div class="conf-card">
           <div>
             <div class="conf-teams">${p.local} vs ${p.visitante}</div>
-            <div class="conf-liga">${p.liga || ""} · ${diaBadge(p)}${respaldoBadge(p)}${confirmacionCuotaBadge(p, mercadoKey)}${mercadoKey === 'ht05' ? notaOver15Ht(p) : ''}</div>
+            <div class="conf-liga">${p.liga || ""} · ${diaBadge(p)}${respaldoBadge(p)}${confirmacionCuotaBadge(p, mercadoKey)}${mercadoKey === 'ht05' ? notaOver15Ht(p) : ''}${mercadoKey === 'btts' ? notaRescateBtts(p) : ''}</div>
             ${badgesExtra(p)}
           </div>
           <div class="conf-tier">
@@ -463,7 +487,7 @@ function renderMercado(picks, probKey, senalKey, tierKey, cuotaKey, resultadoDes
           <div class="match-row">
             <div>
               <div class="match-teams">${p.local} vs ${p.visitante}</div>
-              <div class="match-liga">${tierTxt}${p.liga || ""} · ${diaBadge(p)}${respaldoBadge(p)}${confirmacionCuotaBadge(p, mercadoKey)}${mercadoKey === 'ht05' ? notaOver15Ht(p) : ''}</div>
+              <div class="match-liga">${tierTxt}${p.liga || ""} · ${diaBadge(p)}${respaldoBadge(p)}${confirmacionCuotaBadge(p, mercadoKey)}${mercadoKey === 'ht05' ? notaOver15Ht(p) : ''}${mercadoKey === 'btts' ? notaRescateBtts(p) : ''}</div>
               ${badgesExtra(p)}
             </div>
             <span class="match-pct">cuota ${cuotaTxt} · ${pctT}${edgeTxt(prob, p[cuotaKey])}</span>
