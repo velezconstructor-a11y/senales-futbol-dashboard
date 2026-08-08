@@ -305,6 +305,21 @@ const TABS = [
 let DATA = null;
 let HOY_STR = "";
 
+function notaLigaConfianza(p){
+  // Nota dinamica de confianza por liga (calculada en vivo por backtest.py
+  // segun el ROI real acumulado de BTTS en esa liga - no es una lista
+  // fija, se recalcula sola en cada corrida). Se muestra en TODOS los
+  // mercados, no solo BTTS, porque el riesgo de la liga en si aplica
+  // igual sin importar el mercado que se este mirando.
+  if(p.liga_confianza === "alta"){
+    return ' · <span title="Esta liga viene con ROI positivo real en BTTS (minimo 15 casos)" style="color:var(--win);">🟢 liga de confianza alta</span>';
+  }
+  if(p.liga_confianza === "baja"){
+    return ' · <span title="Esta liga viene con perdidas fuertes reales en BTTS (minimo 15 casos)" style="color:var(--loss);">🔴 liga de riesgo alto</span>';
+  }
+  return "";
+}
+
 function notaRescateBtts(p){
   // Muestra que camino especifico produjo el JUGAR de BTTS - especialmente
   // util para distinguir un rescate (partido que el modelo normal
@@ -423,7 +438,7 @@ function renderMercado(picks, probKey, senalKey, tierKey, cuotaKey, resultadoDes
         <div class="conf-card">
           <div>
             <div class="conf-teams">${p.local} vs ${p.visitante}</div>
-            <div class="conf-liga">${p.liga || ""} · ${diaBadge(p)}${respaldoBadge(p)}${confirmacionCuotaBadge(p, mercadoKey)}${mercadoKey === 'ht05' ? notaOver15Ht(p) : ''}${mercadoKey === 'btts' ? notaRescateBtts(p) : ''}</div>
+            <div class="conf-liga">${p.liga || ""} · ${diaBadge(p)}${respaldoBadge(p)}${confirmacionCuotaBadge(p, mercadoKey)}${notaLigaConfianza(p)}${mercadoKey === 'ht05' ? notaOver15Ht(p) : ''}${mercadoKey === 'btts' ? notaRescateBtts(p) : ''}</div>
             ${badgesExtra(p)}
           </div>
           <div class="conf-tier">
@@ -456,7 +471,7 @@ function renderMercado(picks, probKey, senalKey, tierKey, cuotaKey, resultadoDes
         <div class="conf-card">
           <div>
             <div class="conf-teams">${p.local} vs ${p.visitante}</div>
-            <div class="conf-liga">${p.liga || ""} · ${diaBadge(p)}${respaldoBadge(p)}${confirmacionCuotaBadge(p, mercadoKey)}${mercadoKey === 'ht05' ? notaOver15Ht(p) : ''}${mercadoKey === 'btts' ? notaRescateBtts(p) : ''}</div>
+            <div class="conf-liga">${p.liga || ""} · ${diaBadge(p)}${respaldoBadge(p)}${confirmacionCuotaBadge(p, mercadoKey)}${notaLigaConfianza(p)}${mercadoKey === 'ht05' ? notaOver15Ht(p) : ''}${mercadoKey === 'btts' ? notaRescateBtts(p) : ''}</div>
             ${badgesExtra(p)}
           </div>
           <div class="conf-tier">
@@ -487,7 +502,7 @@ function renderMercado(picks, probKey, senalKey, tierKey, cuotaKey, resultadoDes
           <div class="match-row">
             <div>
               <div class="match-teams">${p.local} vs ${p.visitante}</div>
-              <div class="match-liga">${tierTxt}${p.liga || ""} · ${diaBadge(p)}${respaldoBadge(p)}${confirmacionCuotaBadge(p, mercadoKey)}${mercadoKey === 'ht05' ? notaOver15Ht(p) : ''}${mercadoKey === 'btts' ? notaRescateBtts(p) : ''}</div>
+              <div class="match-liga">${tierTxt}${p.liga || ""} · ${diaBadge(p)}${respaldoBadge(p)}${confirmacionCuotaBadge(p, mercadoKey)}${notaLigaConfianza(p)}${mercadoKey === 'ht05' ? notaOver15Ht(p) : ''}${mercadoKey === 'btts' ? notaRescateBtts(p) : ''}</div>
               ${badgesExtra(p)}
             </div>
             <span class="match-pct">cuota ${cuotaTxt} · ${pctT}${edgeTxt(prob, p[cuotaKey])}</span>
@@ -526,7 +541,7 @@ function renderCombo(picks){
       <div class="match-row">
         <div>
           <div class="match-teams">${p.local} vs ${p.visitante}</div>
-          <div class="match-liga">${p.liga || ""} · ${diaBadge(p)}${respaldoBadge(p)}</div>
+          <div class="match-liga">${p.liga || ""} · ${diaBadge(p)}${respaldoBadge(p)}${notaLigaConfianza(p)}</div>
         </div>
         <span class="match-pct">cuota ${cuotaCombo} · ${p.senal_btts_o25}</span>
         <span class="match-badge ${badgeClass}">${badgeTxt}</span>
