@@ -421,6 +421,22 @@ function badgesExtra(p){
 }
 
 function renderMercado(picks, probKey, senalKey, tierKey, cuotaKey, resultadoDeseado, resultKey, mercadoKey){
+  // Lee la probabilidad, RECALIBRANDO al vuelo los partidos viejos: los
+  // registrados antes de que existiera prob_btts_calibrada tienen ese
+  // campo vacio para siempre (el sistema no recalcula partidos ya
+  // guardados). Como la calibracion es una formula fija, se le puede
+  // aplicar aqui mismo a la probabilidad cruda y asi TODOS los partidos
+  // de la pagina quedan en la misma escala, comparables entre si.
+  //   calibrada = 0.329 + 0.355 * cruda   (ver signals.py)
+  const P = (p) => {
+    const v = p[probKey];
+    if(v != null) return v;
+    if(probKey === "prob_btts_calibrada" && p.prob_btts != null){
+      return Math.max(0, Math.min(1, 0.329 + 0.355 * p.prob_btts));
+    }
+    return null;
+  };
+
   // "Mayor confianza" = decision JUGAR Y el nivel es un nivel real de confianza
   // (VIP+/VIP/Fuerte) - NO incluye señales "Evitar" rescatadas a JUGAR por una
   // regla especial, porque esas no son de alta confianza aunque tecnicamente jueguen.
@@ -433,7 +449,7 @@ function renderMercado(picks, probKey, senalKey, tierKey, cuotaKey, resultadoDes
           ? `<div class="conf-prob" style="color:var(--win);font-size:15px;">✓ Ganada</div>`
           : resultado === false
           ? `<div class="conf-prob" style="color:var(--loss);font-size:15px;">✕ Perdida</div>`
-          : `<div class="conf-prob">${p[probKey] != null ? (p[probKey]*100).toFixed(0)+"%" : "—"}</div>`;
+          : `<div class="conf-prob">${P(p) != null ? (P(p)*100).toFixed(0)+"%" : "—"}</div>`;
         return `
         <div class="conf-card">
           <div>
@@ -443,7 +459,7 @@ function renderMercado(picks, probKey, senalKey, tierKey, cuotaKey, resultadoDes
           </div>
           <div class="conf-tier">
             <div class="conf-tier-val">${p[tierKey] || "JUGAR"}</div>
-            <div class="conf-cuota">cuota ${p[cuotaKey] ? p[cuotaKey].toFixed(2) : "—"}${edgeTxt(p[probKey], p[cuotaKey])}</div>
+            <div class="conf-cuota">cuota ${p[cuotaKey] ? p[cuotaKey].toFixed(2) : "—"}${edgeTxt(P(p), p[cuotaKey])}</div>
           </div>
           ${resultadoHtml}
         </div>`;
@@ -455,8 +471,8 @@ function renderMercado(picks, probKey, senalKey, tierKey, cuotaKey, resultadoDes
   // siempre haya algo que ver aunque hoy no haya ninguna señal formal.
   const idsConSenal = new Set(conSenal.map(p => p.local + "|" + p.visitante + "|" + p.fecha));
   const topProb = picks
-    .filter(p => p[probKey] != null && !idsConSenal.has(p.local + "|" + p.visitante + "|" + p.fecha))
-    .sort((a, b) => b[probKey] - a[probKey])
+    .filter(p => P(p) != null && !idsConSenal.has(p.local + "|" + p.visitante + "|" + p.fecha))
+    .sort((a, b) => P(b) - P(a))
     .slice(0, 5);
   const topProbHtml = topProb.length === 0
     ? '<div class="empty">Sin datos suficientes todavía.</div>'
@@ -466,7 +482,7 @@ function renderMercado(picks, probKey, senalKey, tierKey, cuotaKey, resultadoDes
           ? `<div class="conf-prob" style="color:var(--win);font-size:15px;">✓ Ganada</div>`
           : resultado === false
           ? `<div class="conf-prob" style="color:var(--loss);font-size:15px;">✕ Perdida</div>`
-          : `<div class="conf-prob">${(p[probKey]*100).toFixed(0)}%</div>`;
+          : `<div class="conf-prob">${(P(p)*100).toFixed(0)}%</div>`;
         return `
         <div class="conf-card">
           <div>
@@ -476,7 +492,7 @@ function renderMercado(picks, probKey, senalKey, tierKey, cuotaKey, resultadoDes
           </div>
           <div class="conf-tier">
             <div class="conf-tier-val" style="color:var(--chalk-dim);font-size:12px;">${p[tierKey] || "sin señal formal"}</div>
-            <div class="conf-cuota">cuota ${p[cuotaKey] ? p[cuotaKey].toFixed(2) : "—"}${edgeTxt(p[probKey], p[cuotaKey])}</div>
+            <div class="conf-cuota">cuota ${p[cuotaKey] ? p[cuotaKey].toFixed(2) : "—"}${edgeTxt(P(p), p[cuotaKey])}</div>
           </div>
           ${resultadoHtml}
         </div>`;
@@ -485,7 +501,7 @@ function renderMercado(picks, probKey, senalKey, tierKey, cuotaKey, resultadoDes
   // Ordenados de MAYOR a MENOR probabilidad. Los que no tienen
   // probabilidad calculada (s/d) van al final, no revueltos en el medio.
   const picksOrdenados = [...picks].sort((a, b) => {
-    const pa = a[probKey], pb = b[probKey];
+    const pa = P(a), pb = P(b);
     if(pa == null && pb == null) return 0;
     if(pa == null) return 1;
     if(pb == null) return -1;
@@ -495,7 +511,7 @@ function renderMercado(picks, probKey, senalKey, tierKey, cuotaKey, resultadoDes
   const todosHtml = picksOrdenados.length === 0
     ? '<div class="empty">Todavía no hay partidos analizados hoy.</div>'
     : '<div class="match-list">' + picksOrdenados.map(p => {
-        const prob = p[probKey];
+        const prob = P(p);
         const cuotaTxt = p[cuotaKey] ? p[cuotaKey].toFixed(2) : "—";
         const pctT = prob != null ? `${(prob*100).toFixed(0)}%` : "s/d";
         const resultado = resultKey ? p[resultKey] : null;
