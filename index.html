@@ -482,9 +482,19 @@ function renderMercado(picks, probKey, senalKey, tierKey, cuotaKey, resultadoDes
         </div>`;
       }).join("");
 
-  const todosHtml = picks.length === 0
+  // Ordenados de MAYOR a MENOR probabilidad. Los que no tienen
+  // probabilidad calculada (s/d) van al final, no revueltos en el medio.
+  const picksOrdenados = [...picks].sort((a, b) => {
+    const pa = a[probKey], pb = b[probKey];
+    if(pa == null && pb == null) return 0;
+    if(pa == null) return 1;
+    if(pb == null) return -1;
+    return pb - pa;
+  });
+
+  const todosHtml = picksOrdenados.length === 0
     ? '<div class="empty">Todavía no hay partidos analizados hoy.</div>'
-    : '<div class="match-list">' + picks.map(p => {
+    : '<div class="match-list">' + picksOrdenados.map(p => {
         const prob = p[probKey];
         const cuotaTxt = p[cuotaKey] ? p[cuotaKey].toFixed(2) : "—";
         const pctT = prob != null ? `${(prob*100).toFixed(0)}%` : "s/d";
@@ -908,7 +918,7 @@ function render(data){
   const notaHt05 = `<div class="empty" style="margin-bottom:16px;">⚠️ Mercado nuevo (agosto 2026) — todavía no hay suficiente historial para confirmar en qué franja de cuota da ganancia real. Revisa esto con cuidado hasta que se acumule más muestra.</div>`;
 
   const panels = {
-    btts: renderMercado(picks, "prob_btts", "nivel_final", "senal_btts_optimizada", "cuota_btts", "¿Ambos equipos marcan?", "resultado_btts", "btts") + historialBtts,
+    btts: renderMercado(picks, "prob_btts_calibrada", "nivel_final", "senal_btts_optimizada", "cuota_btts", "¿Ambos equipos marcan?", "resultado_btts", "btts") + historialBtts,
     o15: renderMercado(picks, "prob_o15", "sug_o15", "senal_o15_tier", "cuota_o15", "¿Más de 1.5 goles?", "resultado_o15", "o15") + historialO15,
     o25: renderMercado(picks, "prob_o25", "sug_o25", "senal_o25", "cuota_o25", "¿Más de 2.5 goles?", "resultado_o25", "o25") + historialO25,
     combo: `<section><p class="section-title">BTTS + Over 2.5</p>${renderCombo(picks)}</section>` + historialCombo,
