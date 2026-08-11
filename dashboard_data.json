@@ -1,5 +1,5 @@
 {
-  "actualizado": "2026-08-11T06:13:46.508243-05:00",
+  "actualizado": "2026-08-11T09:48:01.047640-05:00",
   "hoy_referencia": "2026-08-11",
   "umbral_movimiento_pp": 4.0,
   "confianza_por_liga": {
@@ -171,20 +171,20 @@
     "recientes": {
       "mercados": {
         "BTTS": {
-          "bets": 132,
-          "wins": 70,
-          "acierto_pct": 53.03030303030303,
-          "profit_u": -22.389999999999993,
-          "roi_pct": -16.962121212121207,
-          "cuota_prom": 1.582121212121212
+          "bets": 133,
+          "wins": 71,
+          "acierto_pct": 53.383458646616546,
+          "profit_u": -21.669999999999995,
+          "roi_pct": -16.293233082706763,
+          "cuota_prom": 1.5831578947368419
         },
         "Over 1.5": {
-          "bets": 112,
-          "wins": 78,
-          "acierto_pct": 69.64285714285714,
-          "profit_u": -12.250000000000007,
-          "roi_pct": -10.937500000000007,
-          "cuota_prom": 1.280892857142857
+          "bets": 113,
+          "wins": 79,
+          "acierto_pct": 69.91150442477876,
+          "profit_u": -12.000000000000007,
+          "roi_pct": -10.61946902654868,
+          "cuota_prom": 1.2806194690265484
         },
         "Over 2.5": {
           "bets": 121,
@@ -309,10 +309,10 @@
           "activa": true
         },
         "rescate_evitar_lambda_moderado": {
-          "total": 4,
-          "ganados": 3,
-          "acierto_pct": 75.0,
-          "profit_u": 0,
+          "total": 5,
+          "ganados": 4,
+          "acierto_pct": 80.0,
+          "profit_u": 0.72,
           "total_detectado": 5,
           "activa": true
         },
@@ -367,9 +367,9 @@
       },
       "motivos_o25": {
         "ninguno_evitar_o25": {
-          "total": 615,
-          "ganados": 302,
-          "acierto_pct": 49.105691056910565,
+          "total": 617,
+          "ganados": 304,
+          "acierto_pct": 49.270664505672606,
           "profit_u": 0.0,
           "total_detectado": 666,
           "activa": false
@@ -409,9 +409,9 @@
       },
       "motivos_ht05": {
         "ninguno_evitar_ht05": {
-          "total": 475,
-          "ganados": 312,
-          "acierto_pct": 65.6842105263158,
+          "total": 477,
+          "ganados": 314,
+          "acierto_pct": 65.82809224318659,
           "profit_u": 0.0,
           "total_detectado": 517,
           "activa": false
@@ -434,19 +434,19 @@
         }
       },
       "marcador_exacto": {
-        "total": 760,
+        "total": 762,
         "aciertos": 86,
-        "acierto_pct": 11.31578947368421
+        "acierto_pct": 11.286089238845145
       },
       "calibracion": {
         "BTTS": [
           {
             "rango": "50-60%",
-            "total": 299,
-            "aciertos": 145,
-            "acierto_pct": 48.49498327759198,
-            "prob_dicha_prom": 55.6953414150516,
-            "diferencia": -7.200358137459624
+            "total": 301,
+            "aciertos": 147,
+            "acierto_pct": 48.837209302325576,
+            "prob_dicha_prom": 55.70272532202274,
+            "diferencia": -6.865516019697161
           },
           {
             "rango": "60-70%",
@@ -492,19 +492,19 @@
           },
           {
             "rango": "70-80%",
-            "total": 219,
-            "aciertos": 150,
-            "acierto_pct": 68.4931506849315,
-            "prob_dicha_prom": 76.36685735679269,
-            "diferencia": -7.873706671861186
+            "total": 220,
+            "aciertos": 151,
+            "acierto_pct": 68.63636363636364,
+            "prob_dicha_prom": 76.3780195230096,
+            "diferencia": -7.741655886645958
           },
           {
             "rango": "80-90%",
-            "total": 361,
-            "aciertos": 285,
-            "acierto_pct": 78.94736842105263,
-            "prob_dicha_prom": 83.91592967424461,
-            "diferencia": -4.968561253191979
+            "total": 362,
+            "aciertos": 286,
+            "acierto_pct": 79.00552486187846,
+            "prob_dicha_prom": 83.90521736698454,
+            "diferencia": -4.8996925051060884
           },
           {
             "rango": "90-100%",
@@ -518,11 +518,11 @@
         "Over 2.5": [
           {
             "rango": "50-60%",
-            "total": 245,
-            "aciertos": 117,
-            "acierto_pct": 47.755102040816325,
-            "prob_dicha_prom": 55.73153222433178,
-            "diferencia": -7.976430183515454
+            "total": 247,
+            "aciertos": 119,
+            "acierto_pct": 48.178137651821864,
+            "prob_dicha_prom": 55.73946967225388,
+            "diferencia": -7.561332020432019
           },
           {
             "rango": "60-70%",
@@ -735,30 +735,30 @@
           "acierto_pct": 57.14285714285714
         },
         "sin_movimiento": {
-          "total": 351,
-          "aciertos": 207,
-          "acierto_pct": 58.97435897435898
+          "total": 353,
+          "aciertos": 209,
+          "acierto_pct": 59.20679886685553
         }
       },
-      "total_partidos_evaluados": 760
+      "total_partidos_evaluados": 762
     },
     "historico": {
       "mercados": {
         "BTTS": {
-          "bets": 390,
-          "wins": 211,
-          "acierto_pct": 54.1025641025641,
-          "profit_u": -51.79999999999999,
-          "roi_pct": -13.28205128205128,
-          "cuota_prom": 1.6189743589743593
+          "bets": 391,
+          "wins": 212,
+          "acierto_pct": 54.21994884910486,
+          "profit_u": -51.07999999999999,
+          "roi_pct": -13.06393861892583,
+          "cuota_prom": 1.6192327365728902
         },
         "Over 1.5": {
-          "bets": 611,
-          "wins": 452,
-          "acierto_pct": 73.97708674304418,
-          "profit_u": -66.34000000000005,
-          "roi_pct": -10.857610474631759,
-          "cuota_prom": 1.2125859247135842
+          "bets": 612,
+          "wins": 453,
+          "acierto_pct": 74.01960784313727,
+          "profit_u": -66.09000000000005,
+          "roi_pct": -10.799019607843146,
+          "cuota_prom": 1.2126470588235294
         },
         "Over 2.5": {
           "bets": 263,
@@ -899,10 +899,10 @@
           "activa": true
         },
         "rescate_evitar_lambda_moderado": {
-          "total": 23,
-          "ganados": 15,
-          "acierto_pct": 65.21739130434783,
-          "profit_u": 0,
+          "total": 24,
+          "ganados": 16,
+          "acierto_pct": 66.66666666666666,
+          "profit_u": 0.72,
           "total_detectado": 24,
           "activa": true
         },
@@ -949,9 +949,9 @@
       },
       "motivos_o25": {
         "ninguno_evitar_o25": {
-          "total": 1091,
-          "ganados": 557,
-          "acierto_pct": 51.05407882676444,
+          "total": 1093,
+          "ganados": 559,
+          "acierto_pct": 51.14364135407137,
           "profit_u": 0.0,
           "total_detectado": 1142,
           "activa": false
@@ -999,9 +999,9 @@
           "activa": true
         },
         "ninguno_evitar_ht05": {
-          "total": 595,
-          "ganados": 389,
-          "acierto_pct": 65.3781512605042,
+          "total": 597,
+          "ganados": 391,
+          "acierto_pct": 65.49413735343383,
           "profit_u": 0.0,
           "total_detectado": 637,
           "activa": false
@@ -1016,19 +1016,19 @@
         }
       },
       "marcador_exacto": {
-        "total": 1807,
+        "total": 1809,
         "aciertos": 201,
-        "acierto_pct": 11.123408965135583
+        "acierto_pct": 11.11111111111111
       },
       "calibracion": {
         "BTTS": [
           {
             "rango": "50-60%",
-            "total": 700,
-            "aciertos": 353,
-            "acierto_pct": 50.42857142857143,
-            "prob_dicha_prom": 55.72563057512306,
-            "diferencia": -5.297059146551632
+            "total": 702,
+            "aciertos": 355,
+            "acierto_pct": 50.56980056980057,
+            "prob_dicha_prom": 55.72871031540535,
+            "diferencia": -5.158909745604781
           },
           {
             "rango": "60-70%",
@@ -1074,19 +1074,19 @@
           },
           {
             "rango": "70-80%",
-            "total": 550,
-            "aciertos": 372,
-            "acierto_pct": 67.63636363636364,
-            "prob_dicha_prom": 76.36356613522294,
-            "diferencia": -8.727202498859299
+            "total": 551,
+            "aciertos": 373,
+            "acierto_pct": 67.69509981851179,
+            "prob_dicha_prom": 76.36802887168263,
+            "diferencia": -8.672929053170833
           },
           {
             "rango": "80-90%",
-            "total": 834,
-            "aciertos": 665,
-            "acierto_pct": 79.73621103117506,
-            "prob_dicha_prom": 83.88995304099653,
-            "diferencia": -4.153742009821471
+            "total": 835,
+            "aciertos": 666,
+            "acierto_pct": 79.76047904191617,
+            "prob_dicha_prom": 83.88534001273916,
+            "diferencia": -4.1248609708229935
           },
           {
             "rango": "90-100%",
@@ -1100,11 +1100,11 @@
         "Over 2.5": [
           {
             "rango": "50-60%",
-            "total": 597,
-            "aciertos": 294,
-            "acierto_pct": 49.246231155778894,
-            "prob_dicha_prom": 55.58589240375179,
-            "diferencia": -6.339661247972899
+            "total": 599,
+            "aciertos": 296,
+            "acierto_pct": 49.41569282136895,
+            "prob_dicha_prom": 55.5896517180722,
+            "diferencia": -6.1739588967032475
           },
           {
             "rango": "60-70%",
@@ -1740,12 +1740,12 @@
           "acierto_pct": 66.66666666666666
         },
         "sin_movimiento": {
-          "total": 1080,
-          "aciertos": 705,
-          "acierto_pct": 65.27777777777779
+          "total": 1082,
+          "aciertos": 707,
+          "acierto_pct": 65.34195933456563
         }
       },
-      "total_partidos_evaluados": 1865
+      "total_partidos_evaluados": 1867
     }
   },
   "serie_diaria": [
@@ -1891,10 +1891,10 @@
     },
     {
       "fecha": "2026-08-10",
-      "bets": 1,
-      "wins": false,
-      "profit_u": -1.0,
-      "acierto_pct": 0.0
+      "bets": 2,
+      "wins": 1,
+      "profit_u": -0.28,
+      "acierto_pct": 50.0
     }
   ],
   "picks_hoy": [
@@ -3208,28 +3208,28 @@
       "cuota_btts": 1.72,
       "cuota_btts_actual": 1.73,
       "movimiento_btts_pp": -0.3360666756284436,
-      "resultado_btts": null,
+      "resultado_btts": true,
       "senal_o15_tier": "VIP",
       "sug_o15": "JUGAR",
       "prob_o15": 0.8003807444609258,
       "cuota_o15": 1.25,
       "cuota_o15_actual": 1.28,
       "movimiento_o15_pp": -1.8750000000000044,
-      "resultado_o15": null,
+      "resultado_o15": true,
       "senal_o25": "Evitar",
       "sug_o25": "EVITAR",
       "prob_o25": 0.5761038167998874,
       "cuota_o25": 1.9,
       "cuota_o25_actual": 1.92,
       "movimiento_o25_pp": null,
-      "resultado_o25": null,
+      "resultado_o25": true,
       "senal_btts_o25": "—",
-      "resultado_combo": null,
+      "resultado_combo": true,
       "vip_elite": null,
       "oro": null,
       "nivel_confianza": null,
       "marcador_exacto_sugerido": "1-1",
-      "marcador_exacto_real": null,
+      "marcador_exacto_real": "2-2",
       "usa_temporada_anterior": true,
       "usa_promedio_general": false,
       "es_equipo_filial": false,
@@ -3240,7 +3240,7 @@
       "cuota_ht_over05": 1.36,
       "cuota_ht_over05_actual": 1.38,
       "movimiento_ht05_pp": null,
-      "resultado_ht05": null
+      "resultado_ht05": true
     },
     {
       "fecha": "2026-08-10",
@@ -3304,28 +3304,28 @@
       "cuota_btts": 1.69,
       "cuota_btts_actual": 1.7,
       "movimiento_btts_pp": null,
-      "resultado_btts": null,
+      "resultado_btts": true,
       "senal_o15_tier": "Fuerte",
       "sug_o15": "EVITAR",
       "prob_o15": 0.7882253392451268,
       "cuota_o15": 1.23,
       "cuota_o15_actual": 1.25,
       "movimiento_o15_pp": null,
-      "resultado_o15": null,
+      "resultado_o15": true,
       "senal_o25": "Evitar",
       "sug_o25": "EVITAR",
       "prob_o25": 0.5581323240543603,
       "cuota_o25": 1.82,
       "cuota_o25_actual": 1.85,
       "movimiento_o25_pp": null,
-      "resultado_o25": null,
+      "resultado_o25": true,
       "senal_btts_o25": "—",
-      "resultado_combo": null,
+      "resultado_combo": true,
       "vip_elite": null,
       "oro": null,
       "nivel_confianza": null,
       "marcador_exacto_sugerido": "1-1",
-      "marcador_exacto_real": null,
+      "marcador_exacto_real": "2-3",
       "usa_temporada_anterior": true,
       "usa_promedio_general": false,
       "es_equipo_filial": false,
@@ -3336,7 +3336,7 @@
       "cuota_ht_over05": 1.35,
       "cuota_ht_over05_actual": 1.37,
       "movimiento_ht05_pp": null,
-      "resultado_ht05": null
+      "resultado_ht05": true
     },
     {
       "fecha": "2026-08-10",
@@ -4646,21 +4646,21 @@
       "motivo_btts": "ninguno_evitar_final",
       "prob_btts": 0.2680970802527435,
       "cuota_btts": 1.73,
-      "cuota_btts_actual": 1.73,
+      "cuota_btts_actual": 1.69,
       "movimiento_btts_pp": null,
       "resultado_btts": null,
       "senal_o15_tier": "Evitar",
       "sug_o15": "EVITAR",
       "prob_o15": 0.0,
       "cuota_o15": 0.0,
-      "cuota_o15_actual": 0.0,
+      "cuota_o15_actual": 1.15,
       "movimiento_o15_pp": null,
       "resultado_o15": null,
       "senal_o25": "Evitar",
       "sug_o25": "EVITAR",
       "prob_o25": 0.0,
       "cuota_o25": 0.0,
-      "cuota_o25_actual": 0.0,
+      "cuota_o25_actual": 1.6,
       "movimiento_o25_pp": null,
       "resultado_o25": null,
       "senal_btts_o25": "—",
@@ -4678,7 +4678,7 @@
       "prob_over05_ht": 0.0,
       "prob_over15_ht": 0.0,
       "cuota_ht_over05": 1.3,
-      "cuota_ht_over05_actual": 1.3,
+      "cuota_ht_over05_actual": 1.28,
       "movimiento_ht05_pp": null,
       "resultado_ht05": null
     }
@@ -5501,25 +5501,25 @@
       "nivel_final": "EVITAR",
       "motivo_btts": "ninguno_evitar_final",
       "cuota_btts": 1.69,
-      "resultado_btts": null,
+      "resultado_btts": true,
       "movimiento_btts_pp": null,
       "senal_o15_tier": "Fuerte",
       "sug_o15": "EVITAR",
       "cuota_o15": 1.23,
-      "resultado_o15": null,
+      "resultado_o15": true,
       "movimiento_o15_pp": null,
       "senal_o25": "Evitar",
       "sug_o25": "EVITAR",
       "cuota_o25": 1.82,
-      "resultado_o25": null,
+      "resultado_o25": true,
       "movimiento_o25_pp": null,
       "senal_btts_o25": "—",
       "cuota_combo": 3.0758,
-      "resultado_combo": null,
+      "resultado_combo": true,
       "senal_ht05_tier": "Evitar",
       "sug_ht05": "EVITAR",
       "cuota_ht_over05": 1.35,
-      "resultado_ht05": null
+      "resultado_ht05": true
     },
     {
       "fecha": "2026-08-10",
@@ -5532,25 +5532,25 @@
       "nivel_final": "JUGAR",
       "motivo_btts": "rescate_evitar_lambda_moderado",
       "cuota_btts": 1.72,
-      "resultado_btts": null,
+      "resultado_btts": true,
       "movimiento_btts_pp": -0.3360666756284436,
       "senal_o15_tier": "VIP",
       "sug_o15": "JUGAR",
       "cuota_o15": 1.25,
-      "resultado_o15": null,
+      "resultado_o15": true,
       "movimiento_o15_pp": -1.8750000000000044,
       "senal_o25": "Evitar",
       "sug_o25": "EVITAR",
       "cuota_o25": 1.9,
-      "resultado_o25": null,
+      "resultado_o25": true,
       "movimiento_o25_pp": null,
       "senal_btts_o25": "—",
       "cuota_combo": 3.268,
-      "resultado_combo": null,
+      "resultado_combo": true,
       "senal_ht05_tier": "Evitar",
       "sug_ht05": "EVITAR",
       "cuota_ht_over05": 1.36,
-      "resultado_ht05": null
+      "resultado_ht05": true
     },
     {
       "fecha": "2026-08-10",
