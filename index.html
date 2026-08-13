@@ -424,15 +424,19 @@ function renderMercado(picks, probKey, senalKey, tierKey, cuotaKey, resultadoDes
   // Lee la probabilidad, RECALIBRANDO al vuelo los partidos viejos: los
   // registrados antes de que existiera prob_btts_calibrada tienen ese
   // campo vacio para siempre (el sistema no recalcula partidos ya
-  // guardados). Como la calibracion es una formula fija, se le puede
-  // aplicar aqui mismo a la probabilidad cruda y asi TODOS los partidos
-  // de la pagina quedan en la misma escala, comparables entre si.
-  //   calibrada = 0.329 + 0.355 * cruda   (ver signals.py)
+  // guardados). ANTES este respaldo aplicaba una formula lineal fija
+  // (0.329 + 0.355*cruda), pero esa formula quedo OBSOLETA cuando el
+  // modelo de signals.py cambio (primero a tabla por categoria, despues
+  // al modelo continuo Stake10+cs_max) - aplicarla ahora daria un numero
+  // INVENTADO, no una recalibracion real. Es mas honesto mostrar la
+  // probabilidad cruda tal cual para esos partidos viejos, que inventar
+  // una recalibracion con una formula que ya no corresponde al modelo
+  // actual.
   const P = (p) => {
     const v = p[probKey];
     if(v != null) return v;
     if(probKey === "prob_btts_calibrada" && p.prob_btts != null){
-      return Math.max(0, Math.min(1, 0.329 + 0.355 * p.prob_btts));
+      return p.prob_btts;
     }
     return null;
   };
@@ -852,13 +856,18 @@ function switchTab(id){
 }
 
 function elegirMejorCandidato(picks){
+  // Usa la probabilidad CALIBRADA de BTTS (con respaldo a la cruda solo
+  // para partidos muy viejos que no la tengan) - antes esta funcion usaba
+  // prob_btts sin calibrar directamente, por eso la tarjeta destacada
+  // mostraba un numero distinto (mas alto) que el resto de la pagina.
+  const probBtts = (p) => p.prob_btts_calibrada != null ? p.prob_btts_calibrada : p.prob_btts;
   const candidatos = [];
   picks.forEach(p => {
-    if(p.vip_elite) candidatos.push({p, score: 1000 + (p.prob_btts||0), tier: p.vip_elite, mkt: "Ambos Marcan"});
-    else if(p.senal_btts_optimizada === "VIP+" && p.nivel_final === "JUGAR") candidatos.push({p, score: 900 + (p.prob_btts||0), tier: "VIP+", mkt: "Ambos Marcan"});
+    if(p.vip_elite) candidatos.push({p, score: 1000 + (probBtts(p)||0), tier: p.vip_elite, mkt: "Ambos Marcan"});
+    else if(p.senal_btts_optimizada === "VIP+" && p.nivel_final === "JUGAR") candidatos.push({p, score: 900 + (probBtts(p)||0), tier: "VIP+", mkt: "Ambos Marcan"});
     else if(p.senal_o15_tier === "VIP" && p.sug_o15 === "JUGAR") candidatos.push({p, score: 800 + (p.prob_o15||0), tier: "VIP", mkt: "Over 1.5"});
     else if(p.senal_o25 === "VIP" && p.sug_o25 === "JUGAR") candidatos.push({p, score: 800 + (p.prob_o25||0), tier: "VIP", mkt: "Over 2.5"});
-    else if(p.senal_btts_optimizada === "VIP" && p.nivel_final === "JUGAR") candidatos.push({p, score: 700 + (p.prob_btts||0), tier: "VIP", mkt: "Ambos Marcan"});
+    else if(p.senal_btts_optimizada === "VIP" && p.nivel_final === "JUGAR") candidatos.push({p, score: 700 + (probBtts(p)||0), tier: "VIP", mkt: "Ambos Marcan"});
   });
   if(candidatos.length === 0) return null;
   candidatos.sort((a,b) => b.score - a.score);
@@ -866,7 +875,8 @@ function elegirMejorCandidato(picks){
 }
 
 function renderTarjetaPick(top, etiquetaDia){
-  const prob = top.mkt === "Over 1.5" ? top.p.prob_o15 : top.mkt === "Over 2.5" ? top.p.prob_o25 : top.p.prob_btts;
+  const probBtts = (p) => p.prob_btts_calibrada != null ? p.prob_btts_calibrada : p.prob_btts;
+  const prob = top.mkt === "Over 1.5" ? top.p.prob_o15 : top.mkt === "Over 2.5" ? top.p.prob_o25 : probBtts(top.p);
   const resultado = top.mkt === "Over 1.5" ? top.p.resultado_o15 : top.mkt === "Over 2.5" ? top.p.resultado_o25 : top.p.resultado_btts;
   const rightHtml = resultado === true
     ? `<div class="hero-pick-pct" style="color:var(--win);">✓ Ganada</div>`
