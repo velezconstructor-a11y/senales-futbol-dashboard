@@ -392,7 +392,16 @@ function confirmacionCuotaBadge(p, mercado){
   const mov = p["movimiento_" + mercado + "_pp"];
   const umbral = (DATA && DATA.umbral_movimiento_pp) || 4;
   if(mov == null || mov < umbral) return "";
-  return ` · <span title="La probabilidad implicita de este mercado subio ${mov.toFixed(1)} puntos porcentuales desde que se detecto la señal (cuota bajando = el mercado confirma mas probabilidad)." style="color:var(--win);">📉 probabilidad subiendo (+${mov.toFixed(1)}pp)</span>`;
+  // Se muestran las dos cuotas (original -> actual) ademas del porcentaje,
+  // para que se pueda verificar a simple vista que cuota mas baja =
+  // porcentaje positivo (antes solo se veia el %, y sin la cuota original
+  // visible en ningun lado era facil confundirse sobre que subio o bajo).
+  const cuotaOrig = p["cuota_" + mercado];
+  const cuotaAct = p["cuota_" + mercado + "_actual"];
+  const cuotasTxt = (cuotaOrig != null && cuotaAct != null)
+    ? ` (${cuotaOrig.toFixed(2)} → ${cuotaAct.toFixed(2)})`
+    : "";
+  return ` · <span title="La probabilidad implicita de este mercado subio ${mov.toFixed(1)} puntos porcentuales desde que se detecto la señal (cuota bajando = el mercado confirma mas probabilidad)." style="color:var(--win);">📉 probabilidad subiendo (+${mov.toFixed(1)}pp)${cuotasTxt}</span>`;
 }
 
 function pctTxt(s, conN){
@@ -560,18 +569,32 @@ function renderCombo(picks){
   if(elegibles.length === 0){
     return '<div class="empty">Hoy ningún partido cumple el criterio para la combinada BTTS + Over 2.5.</div>';
   }
+  // Descuento por correlacion (27.5%) - los dos mercados no son
+  // independientes (si se da BTTS, Over 2.5 se vuelve mucho mas probable),
+  // asi que multiplicar las cuotas sin mas da un precio que ninguna casa
+  // paga. Mismo descuento que ya se aplica en signals.py
+  // (DESCUENTO_CORRELACION_COMBO) - antes esta pestaña mostraba la cuota
+  // ficticia sin descontar.
+  const DESCUENTO_CORRELACION = 0.275;
+  const motivoTxt = {
+    "combo_btts_vipmas": "BTTS es VIP+",
+    "combo_original_revisar": "revisar (cuota 2.3-2.6)",
+    "combo_original_vip": "VIP original",
+  };
   return '<div class="match-list">' + elegibles.map(p => {
-    const cuotaCombo = (p.cuota_btts && p.cuota_o25) ? (p.cuota_btts * p.cuota_o25).toFixed(2) : "—";
+    const cuotaProducto = (p.cuota_btts && p.cuota_o25) ? (p.cuota_btts * p.cuota_o25) : null;
+    const cuotaCombo = cuotaProducto ? (1 + (cuotaProducto - 1) * (1 - DESCUENTO_CORRELACION)).toFixed(2) : "—";
     const resultado = p.resultado_combo;
     let badgeClass, badgeTxt;
     if(resultado === true){ badgeClass = "ganada"; badgeTxt = "✓ Ganada"; }
     else if(resultado === false){ badgeClass = "perdida"; badgeTxt = "✕ Perdida"; }
     else { badgeClass = p.senal_btts_o25 === 'VIP' ? 'si' : 'no'; badgeTxt = p.senal_btts_o25; }
+    const motivo = motivoTxt[p.motivo_combo] ? ` · <span style="color:var(--amber);">${motivoTxt[p.motivo_combo]}</span>` : "";
     return `
       <div class="match-row">
         <div>
           <div class="match-teams">${p.local} vs ${p.visitante}</div>
-          <div class="match-liga">${p.liga || ""} · ${diaBadge(p)}${respaldoBadge(p)}${notaLigaConfianza(p)}</div>
+          <div class="match-liga">${p.liga || ""} · ${diaBadge(p)}${respaldoBadge(p)}${notaLigaConfianza(p)}${motivo}</div>
         </div>
         <span class="match-pct">cuota ${cuotaCombo} · ${p.senal_btts_o25}</span>
         <span class="match-badge ${badgeClass}">${badgeTxt}</span>
@@ -828,6 +851,7 @@ function renderEstadisticas(data){
         <div><p class="bar-label" style="margin-bottom:10px;">Por qué se activó JUGAR (BTTS)</p>${renderBars(comparativo.historico.motivos || {}, Object.keys(comparativo.historico.motivos || {}))}</div>
         <div><p class="bar-label" style="margin-bottom:10px;">Por qué se activó JUGAR (Over 2.5)</p>${renderBars(comparativo.historico.motivos_o25 || {}, Object.keys(comparativo.historico.motivos_o25 || {}))}</div>
         <div><p class="bar-label" style="margin-bottom:10px;">Por qué se activó JUGAR (1er tiempo O0.5)</p>${renderBars(comparativo.historico.motivos_ht05 || {}, Object.keys(comparativo.historico.motivos_ht05 || {}))}</div>
+        <div><p class="bar-label" style="margin-bottom:10px;">Por qué se activó JUGAR (Combinada BTTS+O2.5)</p>${renderBars(comparativo.historico.motivos_combo || {}, Object.keys(comparativo.historico.motivos_combo || {}))}</div>
       </div>
     </section>
     <section>
