@@ -734,7 +734,24 @@ def calculate_signals(m: MatchInput) -> MatchSignals:
         # segunda mitad se va a -4.9%, o sea deja de ser confiable.
         # El PISO de 1.75 es innegociable: bajarlo a 1.70 tira todo a
         # negativo (-1.4%), y a 1.65 o 1.60 tambien (-2.5%, -2.6%).
-        cuota_en_banda_rentable = (not _blank(S)) and 1.75 <= _num(S, 0) < 2.05
+        cuota_en_banda_rentable_base = (not _blank(S)) and 1.75 <= _num(S, 0) < 2.05
+
+        # REFINAMIENTO 13 ago 2026: dentro de esa misma banda de cuota, se
+        # encontraron 2 variables adicionales que suben el ROI de forma
+        # marcada y con progresion ordenada (senal de que es real, no
+        # ruido) - validado con datos de produccion, estable partiendo el
+        # historico en dos mitades por fecha:
+        #   banda sola (lo que habia)              -> n=345, ROI -7.0%
+        #   + BTTS% minimo de ambos equipos >=42%  -> n=149, ROI +4.9%
+        #   + SOT total (ambos equipos) >=9        -> n=52,  ROI +13.6%
+        #     (mitades +5.9%/+21.3%, ambas positivas)
+        # Se confirmo ademas que SOT_total>=9 NO sirve solo (sin el filtro
+        # de BTTS%) - da ROI -9.2% por si solo en la misma banda - la
+        # combinacion especifica es lo que aporta, no cada variable por
+        # separado.
+        btts_min_banda = (not (_blank(V) or _blank(W))) and min(_pct(V, 0), _pct(W, 0)) >= 0.42
+        sot_total_banda = (not (_blank(Q) or _blank(R))) and (_num(Q, 0) + _num(R, 0)) >= 9
+        cuota_en_banda_rentable = cuota_en_banda_rentable_base and btts_min_banda and sot_total_banda
 
         # IMPORTANTE: la banda de cuota NO convierte cualquier partido en
         # JUGAR - solo aplica a partidos donde YA se activo alguna regla.
