@@ -344,6 +344,15 @@ function notaRescateBtts(p){
   return ` · <span title="Por que se activo esta señal de BTTS" style="color:${color};">${texto}</span>`;
 }
 
+function notaBttsMinAlto(p){
+  // Nota informativa (NO genera JUGAR por si sola, ver comentario en
+  // signals.py) - marca cuando el MENOR de los dos BTTS% de temporada es
+  // >=42%, dentro de un partido que ya es JUGAR por otra razon. Se mide
+  // aparte para saber si algun dia conviene activarla como filtro real.
+  if(p.btts_min_alto !== true || p.nivel_final !== "JUGAR") return "";
+  return ` · <span title="El menor de los dos BTTS% de temporada es 42% o mas - nota en seguimiento, no genera la señal por si sola." style="color:var(--chalk-dim);">⭐ BTTS% parejo</span>`;
+}
+
 function notaOver15Ht(p){
   // Nota informativa (no es una señal propia, no tiene JUGAR/EVITAR ni
   // cuota asociada) - destaca los partidos donde ademas de superar el
@@ -352,6 +361,17 @@ function notaOver15Ht(p){
   const prob15 = p.prob_over15_ht;
   if(prob15 == null || prob15 < 0.5) return "";
   return ` · <span title="Probabilidad de 2+ goles en el primer tiempo (informativo, no es señal propia)" style="color:var(--amber);">🔥 +${(prob15*100).toFixed(0)}% de 2+ goles en el 1T</span>`;
+}
+
+function notaBttsMinAlto(p){
+  // Nota informativa (13 ago 2026) - NO genera JUGAR por si sola todavia,
+  // solo se muestra y se mide con el tiempo. Marca los partidos JUGAR de
+  // BTTS donde ademas el MENOR de los dos BTTS% de temporada es >=42% -
+  // dentro de la banda de cuota rentable esto subio el ROI historico de
+  // -7.0% a +4.9%, estable en las dos mitades del historico. Si con mas
+  // datos se confirma, se puede activar como filtro real mas adelante.
+  if(p.nivel_final !== "JUGAR" || p.btts_min_alto !== true) return "";
+  return ` · <span title="El menor de los dos BTTS% de temporada es >=42% - en el historico esto se asocio con mejor ROI dentro de la banda de cuota rentable (nota informativa, todavia no filtra)" style="color:var(--win);">⭐ BTTS% ambos altos</span>`;
 }
 
 function edgeTxt(prob, cuota){
@@ -467,7 +487,7 @@ function renderMercado(picks, probKey, senalKey, tierKey, cuotaKey, resultadoDes
         <div class="conf-card">
           <div>
             <div class="conf-teams">${p.local} vs ${p.visitante}</div>
-            <div class="conf-liga">${p.liga || ""} · ${diaBadge(p)}${respaldoBadge(p)}${confirmacionCuotaBadge(p, mercadoKey)}${notaLigaConfianza(p)}${mercadoKey === 'ht05' ? notaOver15Ht(p) : ''}${mercadoKey === 'btts' ? notaRescateBtts(p) : ''}</div>
+            <div class="conf-liga">${p.liga || ""} · ${diaBadge(p)}${respaldoBadge(p)}${confirmacionCuotaBadge(p, mercadoKey)}${notaLigaConfianza(p)}${mercadoKey === 'ht05' ? notaOver15Ht(p) : ''}${mercadoKey === 'btts' ? notaRescateBtts(p) : ''}${mercadoKey === 'btts' ? notaBttsMinAlto(p) : ''}</div>
             ${badgesExtra(p)}
           </div>
           <div class="conf-tier">
@@ -500,7 +520,7 @@ function renderMercado(picks, probKey, senalKey, tierKey, cuotaKey, resultadoDes
         <div class="conf-card">
           <div>
             <div class="conf-teams">${p.local} vs ${p.visitante}</div>
-            <div class="conf-liga">${p.liga || ""} · ${diaBadge(p)}${respaldoBadge(p)}${confirmacionCuotaBadge(p, mercadoKey)}${notaLigaConfianza(p)}${mercadoKey === 'ht05' ? notaOver15Ht(p) : ''}${mercadoKey === 'btts' ? notaRescateBtts(p) : ''}</div>
+            <div class="conf-liga">${p.liga || ""} · ${diaBadge(p)}${respaldoBadge(p)}${confirmacionCuotaBadge(p, mercadoKey)}${notaLigaConfianza(p)}${mercadoKey === 'ht05' ? notaOver15Ht(p) : ''}${mercadoKey === 'btts' ? notaRescateBtts(p) : ''}${mercadoKey === 'btts' ? notaBttsMinAlto(p) : ''}</div>
             ${badgesExtra(p)}
           </div>
           <div class="conf-tier">
@@ -541,7 +561,7 @@ function renderMercado(picks, probKey, senalKey, tierKey, cuotaKey, resultadoDes
           <div class="match-row">
             <div>
               <div class="match-teams">${p.local} vs ${p.visitante}</div>
-              <div class="match-liga">${tierTxt}${p.liga || ""} · ${diaBadge(p)}${respaldoBadge(p)}${confirmacionCuotaBadge(p, mercadoKey)}${notaLigaConfianza(p)}${mercadoKey === 'ht05' ? notaOver15Ht(p) : ''}${mercadoKey === 'btts' ? notaRescateBtts(p) : ''}</div>
+              <div class="match-liga">${tierTxt}${p.liga || ""} · ${diaBadge(p)}${respaldoBadge(p)}${confirmacionCuotaBadge(p, mercadoKey)}${notaLigaConfianza(p)}${mercadoKey === 'ht05' ? notaOver15Ht(p) : ''}${mercadoKey === 'btts' ? notaRescateBtts(p) : ''}${mercadoKey === 'btts' ? notaBttsMinAlto(p) : ''}</div>
               ${badgesExtra(p)}
             </div>
             <span class="match-pct">cuota ${cuotaTxt} · ${pctT}${edgeTxt(prob, p[cuotaKey])}</span>
@@ -824,7 +844,11 @@ function renderPorLiga(porLiga){
   if(!porLiga || porLiga.length === 0){
     return '<div class="empty">Todavía no hay suficiente muestra por liga (mínimo 3 partidos jugados por liga).</div>';
   }
-  const filas = porLiga.map((l, i) => {
+  // Ordenado de MAYOR a MENOR acierto (el backend las manda de peor a
+  // mejor) - se ordena aqui mismo en el navegador para no depender de
+  // resetear pendientes solo por un cambio de orden visual.
+  const ordenadas = [...porLiga].sort((a, b) => b.acierto_pct - a.acierto_pct);
+  const filas = ordenadas.map((l, i) => {
     const cls = l.profit_u >= 0 ? "win" : "loss";
     return `
       <tr class="${i%2? 'row-alt':''}">
@@ -852,6 +876,7 @@ function renderEstadisticas(data){
         <div><p class="bar-label" style="margin-bottom:10px;">Por qué se activó JUGAR (Over 2.5)</p>${renderBars(comparativo.historico.motivos_o25 || {}, Object.keys(comparativo.historico.motivos_o25 || {}))}</div>
         <div><p class="bar-label" style="margin-bottom:10px;">Por qué se activó JUGAR (1er tiempo O0.5)</p>${renderBars(comparativo.historico.motivos_ht05 || {}, Object.keys(comparativo.historico.motivos_ht05 || {}))}</div>
         <div><p class="bar-label" style="margin-bottom:10px;">Por qué se activó JUGAR (Combinada BTTS+O2.5)</p>${renderBars(comparativo.historico.motivos_combo || {}, Object.keys(comparativo.historico.motivos_combo || {}))}</div>
+        <div><p class="bar-label" style="margin-bottom:10px;">Nota: BTTS% ambos altos (⭐, todavía no filtra) — dentro de partidos JUGAR de BTTS</p>${renderBars(comparativo.historico.nota_btts_min_alto || {}, ["cumple_nota","no_cumple_nota"])}</div>
       </div>
     </section>
     <section>
