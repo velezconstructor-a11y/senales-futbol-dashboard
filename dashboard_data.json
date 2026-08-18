@@ -1,5 +1,5 @@
 {
-  "actualizado": "2026-08-18T07:56:47.336335-05:00",
+  "actualizado": "2026-08-18T08:48:08.962419-05:00",
   "hoy_referencia": "2026-08-18",
   "umbral_movimiento_pp": 4.0,
   "confianza_por_liga": {},
@@ -39,20 +39,20 @@
           "cuota_prom": null
         },
         "Over 0.5 1er tiempo": {
-          "bets": 0,
-          "wins": 0,
-          "acierto_pct": null,
-          "profit_u": 0.0,
-          "roi_pct": null,
-          "cuota_prom": null
+          "bets": 1,
+          "wins": 1,
+          "acierto_pct": 100.0,
+          "profit_u": 0.1799999999999999,
+          "roi_pct": 17.99999999999999,
+          "cuota_prom": 1.18
         }
       },
       "categorias": {
         "Stake10": {
-          "total": 0,
+          "total": 1,
           "ganados": 0,
-          "acierto_pct": null,
-          "profit_u": 0.0,
+          "acierto_pct": 0.0,
+          "profit_u": -1.0,
           "total_detectado": 1
         },
         "VIP+": {
@@ -121,12 +121,12 @@
       },
       "motivos": {
         "camino_normal_Stake10": {
-          "total": 0,
+          "total": 1,
           "ganados": 0,
-          "acierto_pct": null,
-          "profit_u": 0.0,
+          "acierto_pct": 0.0,
+          "profit_u": -1.0,
           "total_detectado": 1,
-          "activa": null
+          "activa": false
         },
         "camino_normal_VIP+": {
           "total": 0,
@@ -163,12 +163,12 @@
       },
       "motivos_o25": {
         "edge_insuficiente_o25": {
-          "total": 0,
-          "ganados": 0,
-          "acierto_pct": null,
+          "total": 1,
+          "ganados": 1,
+          "acierto_pct": 100.0,
           "profit_u": 0.0,
           "total_detectado": 3,
-          "activa": null
+          "activa": false
         },
         "camino_normal_o25": {
           "total": 0,
@@ -197,19 +197,19 @@
       },
       "motivos_ht05": {
         "camino_normal_ht05": {
-          "total": 0,
-          "ganados": 0,
-          "acierto_pct": null,
-          "profit_u": 0.0,
+          "total": 1,
+          "ganados": 1,
+          "acierto_pct": 100.0,
+          "profit_u": 0.1799999999999999,
           "total_detectado": 9,
-          "activa": null
+          "activa": true
         },
         "ninguno_evitar_ht05": {
           "total": 0,
           "ganados": 0,
           "acierto_pct": null,
           "profit_u": 0.0,
-          "total_detectado": 59,
+          "total_detectado": 60,
           "activa": null
         },
         "candado_sin_cuota": {
@@ -237,15 +237,51 @@
         }
       },
       "marcador_exacto": {
-        "total": 0,
+        "total": 1,
         "aciertos": 0,
-        "acierto_pct": null
+        "acierto_pct": 0.0
       },
       "calibracion": {
-        "BTTS": [],
-        "Over 1.5": [],
-        "Over 2.5": [],
-        "Over 0.5 1er tiempo": []
+        "BTTS": [
+          {
+            "rango": "70-80%",
+            "total": 1,
+            "aciertos": 0,
+            "acierto_pct": 0.0,
+            "prob_dicha_prom": 70.35520309612284,
+            "diferencia": -70.35520309612284
+          }
+        ],
+        "Over 1.5": [
+          {
+            "rango": "80-90%",
+            "total": 1,
+            "aciertos": 1,
+            "acierto_pct": 100.0,
+            "prob_dicha_prom": 87.20845882857921,
+            "diferencia": 12.79154117142079
+          }
+        ],
+        "Over 2.5": [
+          {
+            "rango": "60-70%",
+            "total": 1,
+            "aciertos": 1,
+            "acierto_pct": 100.0,
+            "prob_dicha_prom": 69.32583648306753,
+            "diferencia": 30.674163516932467
+          }
+        ],
+        "Over 0.5 1er tiempo": [
+          {
+            "rango": "70-80%",
+            "total": 1,
+            "aciertos": 1,
+            "acierto_pct": 100.0,
+            "prob_dicha_prom": 74.20527055481743,
+            "diferencia": 25.79472944518257
+          }
+        ]
       },
       "por_liga": [],
       "movimiento_validacion": {
@@ -260,7 +296,7 @@
           "acierto_pct": null
         }
       },
-      "total_partidos_evaluados": 0
+      "total_partidos_evaluados": 1
     },
     "recientes": {
       "mercados": {
@@ -297,20 +333,20 @@
           "cuota_prom": 2.383904166666667
         },
         "Over 0.5 1er tiempo": {
-          "bets": 267,
-          "wins": 203,
-          "acierto_pct": 76.02996254681648,
-          "profit_u": -7.670000000000011,
-          "roi_pct": -2.8726591760299667,
-          "cuota_prom": 1.2828838951310861
+          "bets": 268,
+          "wins": 204,
+          "acierto_pct": 76.11940298507463,
+          "profit_u": -7.490000000000011,
+          "roi_pct": -2.794776119402989,
+          "cuota_prom": 1.2825
         }
       },
       "categorias": {
         "Stake10": {
-          "total": 44,
+          "total": 45,
           "ganados": 34,
-          "acierto_pct": 77.27272727272727,
-          "profit_u": 2.6499999999999995,
+          "acierto_pct": 75.55555555555556,
+          "profit_u": 1.6499999999999995,
           "total_detectado": 45
         },
         "VIP+": {
@@ -387,10 +423,10 @@
           "activa": true
         },
         "camino_normal_Stake10": {
-          "total": 44,
+          "total": 45,
           "ganados": 34,
-          "acierto_pct": 77.27272727272727,
-          "profit_u": 2.649999999999999,
+          "acierto_pct": 75.55555555555556,
+          "profit_u": 1.649999999999999,
           "total_detectado": 45,
           "activa": false
         },
@@ -485,9 +521,9 @@
           "activa": false
         },
         "edge_insuficiente_o25": {
-          "total": 12,
-          "ganados": 9,
-          "acierto_pct": 75.0,
+          "total": 13,
+          "ganados": 10,
+          "acierto_pct": 76.92307692307693,
           "profit_u": 0.0,
           "total_detectado": 15,
           "activa": false
@@ -499,14 +535,14 @@
           "ganados": 311,
           "acierto_pct": 70.20316027088036,
           "profit_u": 0.0,
-          "total_detectado": 502,
+          "total_detectado": 503,
           "activa": false
         },
         "camino_normal_ht05": {
-          "total": 267,
-          "ganados": 203,
-          "acierto_pct": 76.02996254681648,
-          "profit_u": -7.670000000000011,
+          "total": 268,
+          "ganados": 204,
+          "acierto_pct": 76.11940298507463,
+          "profit_u": -7.490000000000011,
           "total_detectado": 276,
           "activa": true
         },
@@ -560,9 +596,9 @@
         }
       },
       "marcador_exacto": {
-        "total": 759,
+        "total": 760,
         "aciertos": 74,
-        "acierto_pct": 9.749670619235836
+        "acierto_pct": 9.736842105263158
       },
       "calibracion": {
         "BTTS": [
@@ -584,11 +620,11 @@
           },
           {
             "rango": "70-80%",
-            "total": 35,
+            "total": 36,
             "aciertos": 23,
-            "acierto_pct": 65.71428571428571,
-            "prob_dicha_prom": 73.54401488635415,
-            "diferencia": -7.82972917206844
+            "acierto_pct": 63.888888888888886,
+            "prob_dicha_prom": 73.45543678106993,
+            "diferencia": -9.566547892181049
           },
           {
             "rango": "80-90%",
@@ -626,11 +662,11 @@
           },
           {
             "rango": "80-90%",
-            "total": 352,
-            "aciertos": 288,
-            "acierto_pct": 81.81818181818183,
-            "prob_dicha_prom": 83.63713950812053,
-            "diferencia": -1.8189576899386992
+            "total": 353,
+            "aciertos": 289,
+            "acierto_pct": 81.86968838526913,
+            "prob_dicha_prom": 83.64725656001983,
+            "diferencia": -1.777568174750698
           },
           {
             "rango": "90-100%",
@@ -652,11 +688,11 @@
           },
           {
             "rango": "60-70%",
-            "total": 222,
-            "aciertos": 151,
-            "acierto_pct": 68.01801801801803,
-            "prob_dicha_prom": 64.36099072546955,
-            "diferencia": 3.6570272925484772
+            "total": 223,
+            "aciertos": 152,
+            "acierto_pct": 68.16143497757847,
+            "prob_dicha_prom": 64.3832546077906,
+            "diferencia": 3.7781803697878615
           },
           {
             "rango": "70-80%",
@@ -694,11 +730,11 @@
           },
           {
             "rango": "70-80%",
-            "total": 175,
-            "aciertos": 130,
-            "acierto_pct": 74.28571428571429,
-            "prob_dicha_prom": 75.3911681273039,
-            "diferencia": -1.1054538415896076
+            "total": 176,
+            "aciertos": 131,
+            "acierto_pct": 74.43181818181817,
+            "prob_dicha_prom": 75.38443007291478,
+            "diferencia": -0.952611891096609
           },
           {
             "rango": "80-90%",
@@ -786,7 +822,7 @@
           "acierto_pct": 72.39819004524887
         }
       },
-      "total_partidos_evaluados": 759
+      "total_partidos_evaluados": 760
     },
     "historico": {
       "mercados": {
@@ -823,20 +859,20 @@
           "cuota_prom": 1.7706417352941173
         },
         "Over 0.5 1er tiempo": {
-          "bets": 580,
-          "wins": 422,
-          "acierto_pct": 72.75862068965517,
-          "profit_u": -42.40000000000008,
-          "roi_pct": -7.31034482758622,
-          "cuota_prom": 1.2812931034482757
+          "bets": 581,
+          "wins": 423,
+          "acierto_pct": 72.80550774526678,
+          "profit_u": -42.22000000000008,
+          "roi_pct": -7.266781411359738,
+          "cuota_prom": 1.281118760757315
         }
       },
       "categorias": {
         "Stake10": {
-          "total": 95,
+          "total": 96,
           "ganados": 68,
-          "acierto_pct": 71.57894736842105,
-          "profit_u": -2.8400000000000007,
+          "acierto_pct": 70.83333333333334,
+          "profit_u": -3.840000000000001,
           "total_detectado": 96
         },
         "VIP+": {
@@ -961,10 +997,10 @@
           "activa": false
         },
         "camino_normal_Stake10": {
-          "total": 95,
+          "total": 96,
           "ganados": 68,
-          "acierto_pct": 71.57894736842105,
-          "profit_u": 3.379999999999999,
+          "acierto_pct": 70.83333333333334,
+          "profit_u": 2.379999999999999,
           "total_detectado": 96,
           "activa": true
         },
@@ -1043,9 +1079,9 @@
           "activa": false
         },
         "edge_insuficiente_o25": {
-          "total": 12,
-          "ganados": 9,
-          "acierto_pct": 75.0,
+          "total": 13,
+          "ganados": 10,
+          "acierto_pct": 76.92307692307693,
           "profit_u": 0.0,
           "total_detectado": 15,
           "activa": false
@@ -1053,10 +1089,10 @@
       },
       "motivos_ht05": {
         "camino_normal_ht05": {
-          "total": 580,
-          "ganados": 422,
-          "acierto_pct": 72.75862068965517,
-          "profit_u": -42.40000000000008,
+          "total": 581,
+          "ganados": 423,
+          "acierto_pct": 72.80550774526678,
+          "profit_u": -42.22000000000008,
           "total_detectado": 589,
           "activa": true
         },
@@ -1065,7 +1101,7 @@
           "ganados": 700,
           "acierto_pct": 67.4373795761079,
           "profit_u": 0.0,
-          "total_detectado": 1097,
+          "total_detectado": 1098,
           "activa": false
         },
         "candado_sin_cuota": {
@@ -1118,9 +1154,9 @@
         }
       },
       "marcador_exacto": {
-        "total": 2566,
+        "total": 2567,
         "aciertos": 275,
-        "acierto_pct": 10.717069368667186
+        "acierto_pct": 10.712894429294897
       },
       "calibracion": {
         "BTTS": [
@@ -1142,11 +1178,11 @@
           },
           {
             "rango": "70-80%",
-            "total": 106,
+            "total": 107,
             "aciertos": 65,
-            "acierto_pct": 61.32075471698113,
-            "prob_dicha_prom": 73.3793825343328,
-            "diferencia": -12.058627817351677
+            "acierto_pct": 60.747663551401864,
+            "prob_dicha_prom": 73.35111917509721,
+            "diferencia": -12.603455623695346
           },
           {
             "rango": "80-90%",
@@ -1184,11 +1220,11 @@
           },
           {
             "rango": "80-90%",
-            "total": 1186,
-            "aciertos": 953,
-            "acierto_pct": 80.35413153456999,
-            "prob_dicha_prom": 83.81491900763031,
-            "diferencia": -3.4607874730603214
+            "total": 1187,
+            "aciertos": 954,
+            "acierto_pct": 80.37068239258636,
+            "prob_dicha_prom": 83.81777792913067,
+            "diferencia": -3.4470955365443103
           },
           {
             "rango": "90-100%",
@@ -1210,11 +1246,11 @@
           },
           {
             "rango": "60-70%",
-            "total": 781,
-            "aciertos": 473,
-            "acierto_pct": 60.56338028169014,
-            "prob_dicha_prom": 64.22907760351578,
-            "diferencia": -3.6656973218256397
+            "total": 782,
+            "aciertos": 474,
+            "acierto_pct": 60.61381074168798,
+            "prob_dicha_prom": 64.23559519799092,
+            "diferencia": -3.62178445630294
           },
           {
             "rango": "70-80%",
@@ -1260,11 +1296,11 @@
           },
           {
             "rango": "70-80%",
-            "total": 398,
-            "aciertos": 285,
-            "acierto_pct": 71.60804020100502,
-            "prob_dicha_prom": 75.22869005088702,
-            "diferencia": -3.6206498498819997
+            "total": 399,
+            "aciertos": 286,
+            "acierto_pct": 71.67919799498746,
+            "prob_dicha_prom": 75.226125089744,
+            "diferencia": -3.5469270947565406
           },
           {
             "rango": "80-90%",
@@ -1928,7 +1964,7 @@
           "acierto_pct": 66.48731744811684
         }
       },
-      "total_partidos_evaluados": 2624
+      "total_partidos_evaluados": 2625
     }
   },
   "serie_diaria": [
@@ -2387,29 +2423,29 @@
       "cuota_btts": 1.33,
       "cuota_btts_actual": 1.33,
       "movimiento_btts_pp": null,
-      "resultado_btts": null,
+      "resultado_btts": false,
       "senal_o15_tier": "VIP",
       "sug_o15": "EVITAR",
       "prob_o15": 0.8720845882857922,
       "cuota_o15": 1.08,
       "cuota_o15_actual": 1.06,
       "movimiento_o15_pp": null,
-      "resultado_o15": null,
+      "resultado_o15": true,
       "senal_o25": "VIP",
       "sug_o25": "EVITAR",
       "prob_o25": 0.6932583648306753,
       "cuota_o25": 1.36,
       "cuota_o25_actual": 1.33,
       "movimiento_o25_pp": null,
-      "resultado_o25": null,
+      "resultado_o25": true,
       "senal_btts_o25": "—",
       "motivo_combo": "ninguno_evitar_combo",
-      "resultado_combo": null,
+      "resultado_combo": false,
       "vip_elite": null,
       "oro": null,
       "nivel_confianza": null,
       "marcador_exacto_sugerido": "2-1",
-      "marcador_exacto_real": null,
+      "marcador_exacto_real": "0-3",
       "usa_temporada_anterior": false,
       "usa_promedio_general": false,
       "es_equipo_filial": false,
@@ -2420,7 +2456,7 @@
       "cuota_ht_over05": 1.18,
       "cuota_ht_over05_actual": 1.18,
       "movimiento_ht05_pp": 0.0,
-      "resultado_ht05": null
+      "resultado_ht05": true
     },
     {
       "fecha": "2026-08-18",
@@ -2443,14 +2479,14 @@
       "sug_o15": "EVITAR",
       "prob_o15": 0.838116014331183,
       "cuota_o15": 1.13,
-      "cuota_o15_actual": 1.13,
+      "cuota_o15_actual": 1.1,
       "movimiento_o15_pp": null,
       "resultado_o15": null,
       "senal_o25": "Evitar",
       "sug_o25": "EVITAR",
       "prob_o25": 0.6351730757746883,
       "cuota_o25": 1.39,
-      "cuota_o25_actual": 1.39,
+      "cuota_o25_actual": 1.44,
       "movimiento_o25_pp": null,
       "resultado_o25": null,
       "senal_btts_o25": "—",
@@ -2469,8 +2505,8 @@
       "prob_over05_ht": 0.7341970409110734,
       "prob_over15_ht": 0.3820081201182457,
       "cuota_ht_over05": 1.21,
-      "cuota_ht_over05_actual": 1.21,
-      "movimiento_ht05_pp": 0.0,
+      "cuota_ht_over05_actual": 1.2,
+      "movimiento_ht05_pp": 0.688705234159781,
       "resultado_ht05": null
     },
     {
@@ -4922,6 +4958,57 @@
       "resultado_ht05": null
     },
     {
+      "fecha": "2026-08-18",
+      "fecha_partido": "2026-08-19",
+      "liga": "Poland 3 Liga Group 1",
+      "liga_confianza": null,
+      "local": "ŁKS Łódź II",
+      "visitante": "KTS Weszło Warszawa",
+      "senal_btts_optimizada": "Evitar",
+      "nivel_final": "EVITAR",
+      "motivo_btts": "ninguno_evitar_final",
+      "prob_btts": 0.3174898031334798,
+      "prob_btts_calibrada": 0.1950896379342237,
+      "btts_min_alto": null,
+      "cuota_btts": 0.0,
+      "cuota_btts_actual": 0.0,
+      "movimiento_btts_pp": null,
+      "resultado_btts": null,
+      "senal_o15_tier": "Evitar",
+      "sug_o15": "EVITAR",
+      "prob_o15": 0.6968980687754194,
+      "cuota_o15": 0.0,
+      "cuota_o15_actual": 0.0,
+      "movimiento_o15_pp": null,
+      "resultado_o15": null,
+      "senal_o25": "Evitar",
+      "sug_o25": "EVITAR",
+      "prob_o25": 0.4367310748377324,
+      "cuota_o25": 0.0,
+      "cuota_o25_actual": 0.0,
+      "movimiento_o25_pp": null,
+      "resultado_o25": null,
+      "senal_btts_o25": "—",
+      "motivo_combo": "ninguno_evitar_combo",
+      "resultado_combo": null,
+      "vip_elite": null,
+      "oro": null,
+      "nivel_confianza": null,
+      "marcador_exacto_sugerido": "1-1",
+      "marcador_exacto_real": null,
+      "usa_temporada_anterior": false,
+      "usa_promedio_general": false,
+      "es_equipo_filial": true,
+      "senal_ht05_tier": "Evitar",
+      "sug_ht05": "EVITAR",
+      "prob_over05_ht": 0.3934693402873666,
+      "prob_over15_ht": 0.0902040104310498,
+      "cuota_ht_over05": 0.0,
+      "cuota_ht_over05_actual": 0.0,
+      "movimiento_ht05_pp": null,
+      "resultado_ht05": null
+    },
+    {
       "fecha": "2026-08-17",
       "fecha_partido": "2026-08-18",
       "liga": "Bolivia Copa de la División Profesional",
@@ -5997,6 +6084,41 @@
     {
       "fecha": "2026-08-18",
       "fecha_partido": "2026-08-19",
+      "liga": "Poland 3 Liga Group 1",
+      "liga_confianza": null,
+      "local": "ŁKS Łódź II",
+      "visitante": "KTS Weszło Warszawa",
+      "senal_btts_optimizada": "Evitar",
+      "nivel_final": "EVITAR",
+      "motivo_btts": "ninguno_evitar_final",
+      "prob_btts": 0.3174898031334798,
+      "prob_btts_calibrada": 0.1950896379342237,
+      "cuota_btts": 0.0,
+      "resultado_btts": null,
+      "movimiento_btts_pp": null,
+      "senal_o15_tier": "Evitar",
+      "sug_o15": "EVITAR",
+      "cuota_o15": 0.0,
+      "resultado_o15": null,
+      "movimiento_o15_pp": null,
+      "senal_o25": "Evitar",
+      "sug_o25": "EVITAR",
+      "cuota_o25": 0.0,
+      "resultado_o25": null,
+      "movimiento_o25_pp": null,
+      "senal_btts_o25": "—",
+      "motivo_combo": "ninguno_evitar_combo",
+      "btts_min_alto": null,
+      "cuota_combo": 0.275,
+      "resultado_combo": null,
+      "senal_ht05_tier": "Evitar",
+      "sug_ht05": "EVITAR",
+      "cuota_ht_over05": 0.0,
+      "resultado_ht05": null
+    },
+    {
+      "fecha": "2026-08-18",
+      "fecha_partido": "2026-08-19",
       "liga": "Poland 3 Liga Group 3",
       "liga_confianza": null,
       "local": "KS Raków Częstochowa II",
@@ -6734,34 +6856,34 @@
       "fecha_partido": "2026-08-18",
       "liga": "Sweden Svenska Cupen",
       "liga_confianza": null,
-      "local": "AFC Eskilstuna City",
-      "visitante": "IK Oddevold",
+      "local": "Sollentuna FK",
+      "visitante": "Örebro SK",
       "senal_btts_optimizada": "Evitar",
       "nivel_final": "EVITAR",
       "motivo_btts": "ninguno_evitar_final",
-      "prob_btts": 0.2997280859434025,
-      "prob_btts_calibrada": 0.5699329228935558,
-      "cuota_btts": 1.47,
+      "prob_btts": 0.2686572819253455,
+      "prob_btts_calibrada": 0.5566542201291079,
+      "cuota_btts": 1.55,
       "resultado_btts": null,
       "movimiento_btts_pp": null,
       "senal_o15_tier": "Evitar",
       "sug_o15": "EVITAR",
-      "cuota_o15": 1.1,
+      "cuota_o15": 1.22,
       "resultado_o15": null,
       "movimiento_o15_pp": null,
       "senal_o25": "Evitar",
       "sug_o25": "EVITAR",
-      "cuota_o25": 1.4,
+      "cuota_o25": 1.7,
       "resultado_o25": null,
       "movimiento_o25_pp": null,
       "senal_btts_o25": "—",
       "motivo_combo": "ninguno_evitar_combo",
       "btts_min_alto": null,
-      "cuota_combo": 1.7670499999999998,
+      "cuota_combo": 2.1853749999999996,
       "resultado_combo": null,
       "senal_ht05_tier": "Evitar",
       "sug_ht05": "EVITAR",
-      "cuota_ht_over05": 1.2,
+      "cuota_ht_over05": 1.28,
       "resultado_ht05": null
     },
     {
@@ -6802,36 +6924,36 @@
     {
       "fecha": "2026-08-17",
       "fecha_partido": "2026-08-18",
-      "liga": "England National League North",
+      "liga": "Sweden Svenska Cupen",
       "liga_confianza": null,
-      "local": "Hednesford Town FC",
-      "visitante": "Southport FC",
+      "local": "AFC Eskilstuna City",
+      "visitante": "IK Oddevold",
       "senal_btts_optimizada": "Evitar",
       "nivel_final": "EVITAR",
       "motivo_btts": "ninguno_evitar_final",
-      "prob_btts": 0.8060305229468265,
-      "prob_btts_calibrada": 0.3658648532628375,
-      "cuota_btts": 0.0,
+      "prob_btts": 0.2997280859434025,
+      "prob_btts_calibrada": 0.5699329228935558,
+      "cuota_btts": 1.47,
       "resultado_btts": null,
       "movimiento_btts_pp": null,
       "senal_o15_tier": "Evitar",
       "sug_o15": "EVITAR",
-      "cuota_o15": 0.0,
+      "cuota_o15": 1.1,
       "resultado_o15": null,
       "movimiento_o15_pp": null,
-      "senal_o25": "VIP",
-      "sug_o25": "JUGAR",
-      "cuota_o25": 1.72,
+      "senal_o25": "Evitar",
+      "sug_o25": "EVITAR",
+      "cuota_o25": 1.4,
       "resultado_o25": null,
-      "movimiento_o25_pp": 0.0,
+      "movimiento_o25_pp": null,
       "senal_btts_o25": "—",
       "motivo_combo": "ninguno_evitar_combo",
       "btts_min_alto": null,
-      "cuota_combo": 0.275,
+      "cuota_combo": 1.7670499999999998,
       "resultado_combo": null,
-      "senal_ht05_tier": "VIP",
+      "senal_ht05_tier": "Evitar",
       "sug_ht05": "EVITAR",
-      "cuota_ht_over05": 0.0,
+      "cuota_ht_over05": 1.2,
       "resultado_ht05": null
     },
     {
@@ -6846,28 +6968,28 @@
       "motivo_btts": "camino_normal_Stake10",
       "prob_btts": 0.7035520309612283,
       "prob_btts_calibrada": 0.5980619604019768,
-      "cuota_btts": 1.33,
-      "resultado_btts": null,
+      "cuota_btts": 1.36,
+      "resultado_btts": false,
       "movimiento_btts_pp": null,
       "senal_o15_tier": "VIP",
       "sug_o15": "EVITAR",
       "cuota_o15": 1.08,
-      "resultado_o15": null,
+      "resultado_o15": true,
       "movimiento_o15_pp": null,
       "senal_o25": "VIP",
       "sug_o25": "EVITAR",
       "cuota_o25": 1.36,
-      "resultado_o25": null,
+      "resultado_o25": true,
       "movimiento_o25_pp": null,
       "senal_btts_o25": "—",
       "motivo_combo": "ninguno_evitar_combo",
       "btts_min_alto": null,
       "cuota_combo": 1.6159600000000003,
-      "resultado_combo": null,
+      "resultado_combo": false,
       "senal_ht05_tier": "Fuerte",
       "sug_ht05": "JUGAR",
       "cuota_ht_over05": 1.18,
-      "resultado_ht05": null
+      "resultado_ht05": true
     },
     {
       "fecha": "2026-08-17",
@@ -7327,36 +7449,36 @@
     {
       "fecha": "2026-08-17",
       "fecha_partido": "2026-08-18",
-      "liga": "Sweden Svenska Cupen",
+      "liga": "England National League North",
       "liga_confianza": null,
-      "local": "Sollentuna FK",
-      "visitante": "Örebro SK",
+      "local": "Hednesford Town FC",
+      "visitante": "Southport FC",
       "senal_btts_optimizada": "Evitar",
       "nivel_final": "EVITAR",
       "motivo_btts": "ninguno_evitar_final",
-      "prob_btts": 0.2686572819253455,
-      "prob_btts_calibrada": 0.5566542201291079,
-      "cuota_btts": 1.55,
+      "prob_btts": 0.8060305229468265,
+      "prob_btts_calibrada": 0.3658648532628375,
+      "cuota_btts": 0.0,
       "resultado_btts": null,
       "movimiento_btts_pp": null,
       "senal_o15_tier": "Evitar",
       "sug_o15": "EVITAR",
-      "cuota_o15": 1.22,
+      "cuota_o15": 0.0,
       "resultado_o15": null,
       "movimiento_o15_pp": null,
-      "senal_o25": "Evitar",
-      "sug_o25": "EVITAR",
-      "cuota_o25": 1.7,
+      "senal_o25": "VIP",
+      "sug_o25": "JUGAR",
+      "cuota_o25": 1.72,
       "resultado_o25": null,
-      "movimiento_o25_pp": null,
+      "movimiento_o25_pp": 0.0,
       "senal_btts_o25": "—",
       "motivo_combo": "ninguno_evitar_combo",
       "btts_min_alto": null,
-      "cuota_combo": 2.1853749999999996,
+      "cuota_combo": 0.275,
       "resultado_combo": null,
-      "senal_ht05_tier": "Evitar",
+      "senal_ht05_tier": "VIP",
       "sug_ht05": "EVITAR",
-      "cuota_ht_over05": 1.28,
+      "cuota_ht_over05": 0.0,
       "resultado_ht05": null
     },
     {
@@ -9042,36 +9164,36 @@
     {
       "fecha": "2026-08-17",
       "fecha_partido": "2026-08-17",
-      "liga": "Iceland Úrvalsdeild",
+      "liga": "Sweden Division 2 Norra Gotaland",
       "liga_confianza": null,
-      "local": "Valur Reykjavík",
-      "visitante": "KA Akureyri",
-      "senal_btts_optimizada": "Stake10",
+      "local": "Vänersborgs IF",
+      "visitante": "Vänersborgs FK",
+      "senal_btts_optimizada": "Evitar",
       "nivel_final": "EVITAR",
-      "motivo_btts": "camino_normal_Stake10",
-      "prob_btts": 0.7782655504904687,
-      "prob_btts_calibrada": 0.6651030937496852,
-      "cuota_btts": 1.2,
-      "resultado_btts": true,
+      "motivo_btts": "ninguno_evitar_final",
+      "prob_btts": 0.6307445352618645,
+      "prob_btts_calibrada": 0.5869328247785814,
+      "cuota_btts": 1.4,
+      "resultado_btts": false,
       "movimiento_btts_pp": null,
-      "senal_o15_tier": "VIP",
+      "senal_o15_tier": "Evitar",
       "sug_o15": "EVITAR",
-      "cuota_o15": 1.11,
+      "cuota_o15": 1.08,
       "resultado_o15": true,
       "movimiento_o15_pp": null,
       "senal_o25": "Evitar",
       "sug_o25": "EVITAR",
-      "cuota_o25": 1.26,
-      "resultado_o25": true,
+      "cuota_o25": 1.47,
+      "resultado_o25": false,
       "movimiento_o25_pp": null,
       "senal_btts_o25": "—",
       "motivo_combo": "ninguno_evitar_combo",
       "btts_min_alto": null,
-      "cuota_combo": 1.3712,
-      "resultado_combo": true,
-      "senal_ht05_tier": "VIP",
+      "cuota_combo": 1.7670499999999998,
+      "resultado_combo": false,
+      "senal_ht05_tier": "Fuerte",
       "sug_ht05": "JUGAR",
-      "cuota_ht_over05": 1.17,
+      "cuota_ht_over05": 1.2,
       "resultado_ht05": true
     },
     {
@@ -9322,36 +9444,36 @@
     {
       "fecha": "2026-08-17",
       "fecha_partido": "2026-08-17",
-      "liga": "Sweden Division 2 Norra Gotaland",
+      "liga": "Iceland Úrvalsdeild",
       "liga_confianza": null,
-      "local": "Vänersborgs IF",
-      "visitante": "Vänersborgs FK",
-      "senal_btts_optimizada": "Evitar",
+      "local": "Valur Reykjavík",
+      "visitante": "KA Akureyri",
+      "senal_btts_optimizada": "Stake10",
       "nivel_final": "EVITAR",
-      "motivo_btts": "ninguno_evitar_final",
-      "prob_btts": 0.6307445352618645,
-      "prob_btts_calibrada": 0.5869328247785814,
-      "cuota_btts": 1.4,
-      "resultado_btts": false,
+      "motivo_btts": "camino_normal_Stake10",
+      "prob_btts": 0.7782655504904687,
+      "prob_btts_calibrada": 0.6651030937496852,
+      "cuota_btts": 1.2,
+      "resultado_btts": true,
       "movimiento_btts_pp": null,
-      "senal_o15_tier": "Evitar",
+      "senal_o15_tier": "VIP",
       "sug_o15": "EVITAR",
-      "cuota_o15": 1.08,
+      "cuota_o15": 1.11,
       "resultado_o15": true,
       "movimiento_o15_pp": null,
       "senal_o25": "Evitar",
       "sug_o25": "EVITAR",
-      "cuota_o25": 1.47,
-      "resultado_o25": false,
+      "cuota_o25": 1.26,
+      "resultado_o25": true,
       "movimiento_o25_pp": null,
       "senal_btts_o25": "—",
       "motivo_combo": "ninguno_evitar_combo",
       "btts_min_alto": null,
-      "cuota_combo": 1.7670499999999998,
-      "resultado_combo": false,
-      "senal_ht05_tier": "Fuerte",
+      "cuota_combo": 1.3712,
+      "resultado_combo": true,
+      "senal_ht05_tier": "VIP",
       "sug_ht05": "JUGAR",
-      "cuota_ht_over05": 1.2,
+      "cuota_ht_over05": 1.17,
       "resultado_ht05": true
     },
     {
@@ -9777,6 +9899,41 @@
     {
       "fecha": "2026-08-17",
       "fecha_partido": "2026-08-17",
+      "liga": "Chile Primera B",
+      "liga_confianza": null,
+      "local": "Deportes Santa Cruz",
+      "visitante": "CD San Luis de Quillota",
+      "senal_btts_optimizada": "Evitar",
+      "nivel_final": "EVITAR",
+      "motivo_btts": "ninguno_evitar_final",
+      "prob_btts": 0.6020038456269823,
+      "prob_btts_calibrada": 0.5464023550224776,
+      "cuota_btts": 1.75,
+      "resultado_btts": false,
+      "movimiento_btts_pp": null,
+      "senal_o15_tier": "VIP",
+      "sug_o15": "JUGAR",
+      "cuota_o15": 1.3,
+      "resultado_o15": true,
+      "movimiento_o15_pp": 0.0,
+      "senal_o25": "Evitar",
+      "sug_o25": "JUGAR",
+      "cuota_o25": 2.02,
+      "resultado_o25": false,
+      "movimiento_o25_pp": 1.777100787001784,
+      "senal_btts_o25": "—",
+      "motivo_combo": "ninguno_evitar_combo",
+      "btts_min_alto": null,
+      "cuota_combo": 2.8378750000000004,
+      "resultado_combo": false,
+      "senal_ht05_tier": "VIP",
+      "sug_ht05": "JUGAR",
+      "cuota_ht_over05": 1.35,
+      "resultado_ht05": true
+    },
+    {
+      "fecha": "2026-08-17",
+      "fecha_partido": "2026-08-17",
       "liga": "Paraguay Division Intermedia",
       "liga_confianza": null,
       "local": "Club 3 de Noviembre",
@@ -9947,41 +10104,6 @@
       "senal_ht05_tier": "VIP",
       "sug_ht05": "JUGAR",
       "cuota_ht_over05": 1.23,
-      "resultado_ht05": true
-    },
-    {
-      "fecha": "2026-08-17",
-      "fecha_partido": "2026-08-17",
-      "liga": "Chile Primera B",
-      "liga_confianza": null,
-      "local": "Deportes Santa Cruz",
-      "visitante": "CD San Luis de Quillota",
-      "senal_btts_optimizada": "Evitar",
-      "nivel_final": "EVITAR",
-      "motivo_btts": "ninguno_evitar_final",
-      "prob_btts": 0.6020038456269823,
-      "prob_btts_calibrada": 0.5464023550224776,
-      "cuota_btts": 1.75,
-      "resultado_btts": false,
-      "movimiento_btts_pp": null,
-      "senal_o15_tier": "VIP",
-      "sug_o15": "JUGAR",
-      "cuota_o15": 1.3,
-      "resultado_o15": true,
-      "movimiento_o15_pp": 0.0,
-      "senal_o25": "Evitar",
-      "sug_o25": "JUGAR",
-      "cuota_o25": 2.02,
-      "resultado_o25": false,
-      "movimiento_o25_pp": 1.777100787001784,
-      "senal_btts_o25": "—",
-      "motivo_combo": "ninguno_evitar_combo",
-      "btts_min_alto": null,
-      "cuota_combo": 2.8378750000000004,
-      "resultado_combo": false,
-      "senal_ht05_tier": "VIP",
-      "sug_ht05": "JUGAR",
-      "cuota_ht_over05": 1.35,
       "resultado_ht05": true
     },
     {
@@ -10302,41 +10424,6 @@
     {
       "fecha": "2026-08-15",
       "fecha_partido": "2026-08-16",
-      "liga": "Sweden Ettan North",
-      "liga_confianza": null,
-      "local": "FBK Karlstad",
-      "visitante": "Enköpings SK FK",
-      "senal_btts_optimizada": "Evitar",
-      "nivel_final": "EVITAR",
-      "motivo_btts": "ninguno_evitar_final",
-      "prob_btts": 0.5854889575258013,
-      "prob_btts_calibrada": null,
-      "cuota_btts": 1.52,
-      "resultado_btts": false,
-      "movimiento_btts_pp": null,
-      "senal_o15_tier": "Fuerte",
-      "sug_o15": "EVITAR",
-      "cuota_o15": 1.15,
-      "resultado_o15": true,
-      "movimiento_o15_pp": null,
-      "senal_o25": "Evitar",
-      "sug_o25": "EVITAR",
-      "cuota_o25": 1.57,
-      "resultado_o25": false,
-      "movimiento_o25_pp": null,
-      "senal_btts_o25": "—",
-      "motivo_combo": "ninguno_evitar_combo",
-      "btts_min_alto": 0.0,
-      "cuota_combo": 2.00514,
-      "resultado_combo": false,
-      "senal_ht05_tier": "Fuerte",
-      "sug_ht05": "JUGAR",
-      "cuota_ht_over05": 1.29,
-      "resultado_ht05": false
-    },
-    {
-      "fecha": "2026-08-15",
-      "fecha_partido": "2026-08-16",
       "liga": "Brazil Serie B",
       "liga_confianza": null,
       "local": "Operário Ferroviário EC",
@@ -10367,6 +10454,41 @@
       "senal_ht05_tier": "Evitar",
       "sug_ht05": "EVITAR",
       "cuota_ht_over05": 1.45,
+      "resultado_ht05": false
+    },
+    {
+      "fecha": "2026-08-15",
+      "fecha_partido": "2026-08-16",
+      "liga": "Sweden Ettan North",
+      "liga_confianza": null,
+      "local": "FBK Karlstad",
+      "visitante": "Enköpings SK FK",
+      "senal_btts_optimizada": "Evitar",
+      "nivel_final": "EVITAR",
+      "motivo_btts": "ninguno_evitar_final",
+      "prob_btts": 0.5854889575258013,
+      "prob_btts_calibrada": null,
+      "cuota_btts": 1.52,
+      "resultado_btts": false,
+      "movimiento_btts_pp": null,
+      "senal_o15_tier": "Fuerte",
+      "sug_o15": "EVITAR",
+      "cuota_o15": 1.15,
+      "resultado_o15": true,
+      "movimiento_o15_pp": null,
+      "senal_o25": "Evitar",
+      "sug_o25": "EVITAR",
+      "cuota_o25": 1.57,
+      "resultado_o25": false,
+      "movimiento_o25_pp": null,
+      "senal_btts_o25": "—",
+      "motivo_combo": "ninguno_evitar_combo",
+      "btts_min_alto": 0.0,
+      "cuota_combo": 2.00514,
+      "resultado_combo": false,
+      "senal_ht05_tier": "Fuerte",
+      "sug_ht05": "JUGAR",
+      "cuota_ht_over05": 1.29,
       "resultado_ht05": false
     },
     {
@@ -11387,37 +11509,37 @@
     {
       "fecha": "2026-08-15",
       "fecha_partido": "2026-08-16",
-      "liga": "Portugal LigaPro",
+      "liga": "Hungary NB I",
       "liga_confianza": null,
-      "local": "Leixões SC",
-      "visitante": "CD Tondela",
-      "senal_btts_optimizada": "Evitar",
+      "local": "Debreceni VSC",
+      "visitante": "ETO FC",
+      "senal_btts_optimizada": "VIP",
       "nivel_final": "EVITAR",
       "motivo_btts": "ninguno_evitar_final",
-      "prob_btts": 0.4021093620972801,
+      "prob_btts": 0.6533316943344363,
       "prob_btts_calibrada": null,
-      "cuota_btts": 1.7,
-      "resultado_btts": false,
+      "cuota_btts": 1.5,
+      "resultado_btts": true,
       "movimiento_btts_pp": null,
-      "senal_o15_tier": "Evitar",
+      "senal_o15_tier": "VIP",
       "sug_o15": "EVITAR",
-      "cuota_o15": 1.29,
-      "resultado_o15": false,
+      "cuota_o15": 1.16,
+      "resultado_o15": true,
       "movimiento_o15_pp": null,
       "senal_o25": "Evitar",
-      "sug_o25": "EVITAR",
-      "cuota_o25": 1.99,
+      "sug_o25": "JUGAR",
+      "cuota_o25": 1.61,
       "resultado_o25": false,
-      "movimiento_o25_pp": null,
+      "movimiento_o25_pp": 0.0,
       "senal_btts_o25": "—",
       "motivo_combo": "ninguno_evitar_combo",
-      "btts_min_alto": 0.0,
-      "cuota_combo": 2.7276749999999996,
+      "btts_min_alto": 1.0,
+      "cuota_combo": 2.025875,
       "resultado_combo": false,
       "senal_ht05_tier": "Evitar",
       "sug_ht05": "EVITAR",
-      "cuota_ht_over05": 1.47,
-      "resultado_ht05": false
+      "cuota_ht_over05": 1.25,
+      "resultado_ht05": true
     },
     {
       "fecha": "2026-08-15",
@@ -12957,41 +13079,6 @@
       "senal_ht05_tier": "Evitar",
       "sug_ht05": "EVITAR",
       "cuota_ht_over05": 1.3,
-      "resultado_ht05": true
-    },
-    {
-      "fecha": "2026-08-15",
-      "fecha_partido": "2026-08-16",
-      "liga": "Netherlands Eredivisie",
-      "liga_confianza": null,
-      "local": "Feyenoord Rotterdam",
-      "visitante": "Go Ahead Eagles",
-      "senal_btts_optimizada": "Evitar",
-      "nivel_final": "EVITAR",
-      "motivo_btts": "ninguno_evitar_final",
-      "prob_btts": 0.640292076971864,
-      "prob_btts_calibrada": null,
-      "cuota_btts": 1.53,
-      "resultado_btts": true,
-      "movimiento_btts_pp": null,
-      "senal_o15_tier": "VIP",
-      "sug_o15": "EVITAR",
-      "cuota_o15": 1.06,
-      "resultado_o15": true,
-      "movimiento_o15_pp": null,
-      "senal_o25": "Evitar",
-      "sug_o25": "EVITAR",
-      "cuota_o25": 1.35,
-      "resultado_o25": true,
-      "movimiento_o25_pp": null,
-      "senal_btts_o25": "—",
-      "motivo_combo": "ninguno_evitar_combo",
-      "btts_min_alto": 1.0,
-      "cuota_combo": 1.7724875,
-      "resultado_combo": true,
-      "senal_ht05_tier": "Evitar",
-      "sug_ht05": "EVITAR",
-      "cuota_ht_over05": 1.17,
       "resultado_ht05": true
     }
   ]
