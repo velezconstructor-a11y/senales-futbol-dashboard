@@ -298,6 +298,7 @@ const TABS = [
   {id:"o25",   label:"Over 2.5"},
   {id:"combo", label:"BTTS+O2.5"},
   {id:"ht05",  label:"1er Tiempo O0.5"},
+  {id:"ht15",  label:"1er Tiempo O1.5 (nota)"},
   {id:"score", label:"Marcador Exacto"},
   {id:"stats", label:"Estadísticas"},
 ];
@@ -556,9 +557,17 @@ function renderMercado(picks, probKey, senalKey, tierKey, cuotaKey, resultadoDes
         if(resultado === true){ badgeClass = "ganada"; badgeTxt = "✓ Ganada"; }
         else if(resultado === false){ badgeClass = "perdida"; badgeTxt = "✕ Perdida"; }
         else {
-          const siNo = prob == null ? null : (prob >= 0.5 ? "si" : "no");
-          badgeClass = siNo || "";
-          badgeTxt = siNo === "si" ? "Sí" : siNo === "no" ? "No" : "Sin datos";
+          // CORREGIDO 17 ago 2026: antes mostraba "Si/No" solo por
+          // probabilidad >=50%, sin importar la señal real del sistema
+          // (senalKey / JUGAR-EVITAR) - con reglas cada vez mas
+          // especificas (que no dependen solo de probabilidad alta, sino
+          // de condiciones puntuales como cuota+fallo%), esto podia
+          // mostrar "No" en un partido que el sistema SI jugaria, o "Si"
+          // en uno que el sistema descarta. Ahora usa la señal real.
+          const senalReal = p[senalKey];
+          if(senalReal === "JUGAR"){ badgeClass = "si"; badgeTxt = "JUGAR"; }
+          else if(senalReal === "EVITAR"){ badgeClass = "no"; badgeTxt = "Evitar"; }
+          else { badgeClass = ""; badgeTxt = "Sin datos"; }
         }
         const tierTxt = (p[tierKey] && p[tierKey] !== "Evitar") ? `<span style="color:var(--amber);">${p[tierKey]}</span> · ` : "";
         return `
@@ -625,6 +634,44 @@ function renderCombo(picks){
         <span class="match-badge ${badgeClass}">${badgeTxt}</span>
       </div>`;
   }).join("") + '</div>';
+}
+
+function renderHt15Nota(picks){
+  // Pestaña de SOLO SEGUIMIENTO para "1er tiempo Over 1.5" - mercado
+  // nuevo (17 ago 2026), formula sin validar (usa AVGHT, variable que se
+  // empezo a capturar hoy mismo). NO tiene boton JUGAR/EVITAR porque
+  // todavia no hay ninguna decision real - solo se muestra la
+  // probabilidad estimada y, cuando el partido ya se jugo, si acerto o
+  // no. La calibracion completa (bucket por bucket) esta en la pestaña
+  // de Estadisticas, que ya la recoge sola.
+  const nota = `<div class="empty" style="margin-bottom:16px;">⚠️ Solo seguimiento, sin señal de apuesta todavía — mercado nuevo, fórmula sin validar con resultados reales. Revisa la calibración en la pestaña Estadísticas antes de confiar en este número.</div>`;
+
+  const conProb = picks.filter(p => p.prob_over15_ht_v2 != null)
+    .sort((a, b) => b.prob_over15_ht_v2 - a.prob_over15_ht_v2);
+
+  if(conProb.length === 0){
+    return nota + '<div class="empty">Todavía no hay partidos con este dato (requiere AVGHT, variable nueva).</div>';
+  }
+
+  const filas = conProb.map(p => {
+    const pct = (p.prob_over15_ht_v2 * 100).toFixed(0) + "%";
+    const cuotaTxt = p.cuota_ht_over15 != null ? p.cuota_ht_over15.toFixed(2) : "—";
+    const resultado = p.resultado_over15_ht;
+    let badgeClass = "", badgeTxt = "Pendiente";
+    if(resultado === true){ badgeClass = "ganada"; badgeTxt = "✓ Ganada"; }
+    else if(resultado === false){ badgeClass = "perdida"; badgeTxt = "✕ Perdida"; }
+    return `
+      <div class="match-row">
+        <div>
+          <div class="match-teams">${p.local} vs ${p.visitante}</div>
+          <div class="match-liga">${p.liga || ""} · ${diaBadge(p)}</div>
+        </div>
+        <span class="match-pct">cuota ${cuotaTxt} · ${pct}</span>
+        <span class="match-badge ${badgeClass}">${badgeTxt}</span>
+      </div>`;
+  }).join("");
+
+  return nota + `<div class="match-list">${filas}</div>`;
 }
 
 function renderMarcadorExacto(picks, stats){
@@ -1003,6 +1050,7 @@ function render(data){
     o25: renderMercado(picks, "prob_o25", "sug_o25", "senal_o25", "cuota_o25", "¿Más de 2.5 goles?", "resultado_o25", "o25") + historialO25,
     combo: `<section><p class="section-title">BTTS + Over 2.5</p>${renderCombo(picks)}</section>` + historialCombo,
     ht05: notaHt05 + renderMercado(picks, "prob_over05_ht", "sug_ht05", "senal_ht05_tier", "cuota_ht_over05", "¿Gol antes del descanso?", "resultado_ht05", "ht05") + historialHt05,
+    ht15: renderHt15Nota(picks),
     score: renderMarcadorExacto(picks, data.comparativo.historico.marcador_exacto),
     stats: renderEstadisticas(data),
   };
