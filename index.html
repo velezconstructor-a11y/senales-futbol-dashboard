@@ -338,6 +338,10 @@ function notaRescateBtts(p){
     "rescate_plata": "🔄 rescate: plata",
     "rescate_xg_alto_btts_historico_alto": "🔄 rescate: xG e histórico altos",
     "rescate_cuota_favorable_1X2": "🔄 rescate: cuota 1X2 favorable",
+    "rescate_elite": "🔄 rescate: ÉLITE",
+    "rescate_oro_fuerte": "🔄 rescate: ORO_FUERTE",
+    "rescate_ataque_balanceado_alta": "🔄 rescate: ataque balanceado (alta)",
+    "rescate_ataque_balanceado_media": "🔄 rescate: ataque balanceado (media)",
   };
   const texto = etiquetas[motivo] || motivo;
   const color = esRescate ? "var(--amber)" : "var(--chalk-dim)";
@@ -600,6 +604,7 @@ function renderCombo(picks){
     "combo_btts_vipmas": "BTTS es VIP+",
     "combo_original_revisar": "revisar (cuota 2.3-2.6)",
     "combo_original_vip": "VIP original",
+    "regla_estable_combo": "franja estable (2.2-3.0)",
   };
   return '<div class="match-list">' + elegibles.map(p => {
     const cuotaProducto = (p.cuota_btts && p.cuota_o25) ? (p.cuota_btts * p.cuota_o25) : null;
@@ -609,7 +614,7 @@ function renderCombo(picks){
     if(resultado === true){ badgeClass = "ganada"; badgeTxt = "✓ Ganada"; }
     else if(resultado === false){ badgeClass = "perdida"; badgeTxt = "✕ Perdida"; }
     else { badgeClass = p.senal_btts_o25 === 'VIP' ? 'si' : 'no'; badgeTxt = p.senal_btts_o25; }
-    const motivo = motivoTxt[p.motivo_combo] ? ` · <span style="color:var(--amber);">${motivoTxt[p.motivo_combo]}</span>` : "";
+    const motivo = motivoTxt[p.motivo_combo] ? ` · <span style="color:var(--amber);">${motivoTxt[p.motivo_combo]}</span>` : (p.motivo_combo && p.motivo_combo !== "ninguno_evitar_combo" ? ` · <span style="color:var(--amber);">${p.motivo_combo}</span>` : "");
     return `
       <div class="match-row">
         <div>
