@@ -613,7 +613,9 @@ function renderCombo(picks){
     "combo_btts_vipmas": "BTTS es VIP+",
     "combo_original_revisar": "revisar (cuota 2.3-2.6)",
     "combo_original_vip": "VIP original",
-    "regla_estable_combo": "franja estable (2.2-3.0)",
+    "combo_banda_baja": "banda baja (2.2-2.6, BTTS%≥55%)",
+    "combo_banda_media": "banda media (2.6-3.0, fallo≤20%)",
+    "combo_banda_alta": "banda alta (3.0-3.5, BTTS%≥55%)",
   };
   return '<div class="match-list">' + elegibles.map(p => {
     const cuotaProducto = (p.cuota_btts && p.cuota_o25) ? (p.cuota_btts * p.cuota_o25) : null;
