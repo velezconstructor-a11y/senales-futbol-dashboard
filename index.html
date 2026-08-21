@@ -454,7 +454,24 @@ function badgesExtra(p){
   return badges.length ? `<div style="margin-top:4px;display:flex;gap:6px;flex-wrap:wrap;">${badges.join("")}</div>` : "";
 }
 
-function renderMercado(picks, probKey, senalKey, tierKey, cuotaKey, resultadoDeseado, resultKey, mercadoKey){
+// Motivos con evidencia REAL confirmada (estabilidad partiendo el
+// historico en dos mitades por fecha, no solo promedio). Todo lo demas
+// que genera JUGAR (incluyendo reglas activadas por decision explicita
+// del usuario pese a muestra insuficiente, como ELITE/ORO_FUERTE/Ataque
+// Balanceado Alta) cae en "En seguimiento" por defecto - diseño a
+// proposito: una regla nueva sin clasificar aqui nunca se muestra como
+// "validada" por accidente.
+const MOTIVOS_VALIDADOS = new Set([
+  "camino_normal_VIP+",
+  "rescate_evitar_lambda_moderado",
+  "regla_estable_o15",
+  "regla_estable_o25",
+  "combo_banda_baja",
+  "combo_banda_media",
+  "combo_banda_alta",
+]);
+
+function renderMercado(picks, probKey, senalKey, tierKey, cuotaKey, resultadoDeseado, resultKey, mercadoKey, motivoKey){
   // Lee la probabilidad, RECALIBRANDO al vuelo los partidos viejos: los
   // registrados antes de que existiera prob_btts_calibrada tienen ese
   // campo vacio para siempre (el sistema no recalcula partidos ya
@@ -475,13 +492,19 @@ function renderMercado(picks, probKey, senalKey, tierKey, cuotaKey, resultadoDes
     return null;
   };
 
-  // "Mayor confianza" = decision JUGAR Y el nivel es un nivel real de confianza
-  // (VIP+/VIP/Fuerte) - NO incluye señales "Evitar" rescatadas a JUGAR por una
-  // regla especial, porque esas no son de alta confianza aunque tecnicamente jueguen.
+  // "Validadas" / "En seguimiento" = decision JUGAR Y el nivel es un
+  // nivel real de confianza (VIP+/VIP/Fuerte) - dentro de eso, se separa
+  // por si el motivo especifico tiene evidencia de estabilidad
+  // confirmada o no. NO incluye señales "Evitar" rescatadas a JUGAR por
+  // la banda de cuota, porque esas no son de alta confianza aunque
+  // tecnicamente jueguen.
   const conSenal = picks.filter(p => p[senalKey] === "JUGAR" && p[tierKey] && p[tierKey] !== "Evitar");
-  const confianzaHtml = conSenal.length === 0
-    ? '<div class="empty">Sin señales de mayor confianza hoy todavía.</div>'
-    : conSenal.map(p => {
+  const validadas = conSenal.filter(p => MOTIVOS_VALIDADOS.has(p[motivoKey]));
+  const enSeguimiento = conSenal.filter(p => !MOTIVOS_VALIDADOS.has(p[motivoKey]));
+
+  const renderCardsConfianza = (lista, vacioTxt) => lista.length === 0
+    ? `<div class="empty">${vacioTxt}</div>`
+    : lista.map(p => {
         const resultado = resultKey ? p[resultKey] : null;
         const resultadoHtml = resultado === true
           ? `<div class="conf-prob" style="color:var(--win);font-size:15px;">✓ Ganada</div>`
@@ -502,6 +525,9 @@ function renderMercado(picks, probKey, senalKey, tierKey, cuotaKey, resultadoDes
           ${resultadoHtml}
         </div>`;
       }).join("");
+
+  const validadasHtml = renderCardsConfianza(validadas, "Sin señales validadas hoy todavía.");
+  const enSeguimientoHtml = renderCardsConfianza(enSeguimiento, "Nada en seguimiento hoy.");
 
   // Top probabilidad: independiente de si el modelo disparo formalmente "JUGAR"
   // (que es un criterio estricto de VIP+/VIP/Fuerte) - esto muestra los
@@ -584,8 +610,12 @@ function renderMercado(picks, probKey, senalKey, tierKey, cuotaKey, resultadoDes
 
   return `
     <section>
-      <p class="section-title">⭐ Mayor confianza</p>
-      ${confianzaHtml}
+      <p class="section-title">✅ Validadas</p>
+      ${validadasHtml}
+    </section>
+    <section>
+      <p class="section-title">🔍 En seguimiento</p>
+      ${enSeguimientoHtml}
     </section>
     <section>
       <p class="section-title">🔝 Mayor probabilidad</p>
@@ -617,7 +647,7 @@ function renderCombo(picks){
     "combo_banda_media": "banda media (2.6-3.0, fallo≤20%)",
     "combo_banda_alta": "banda alta (3.0-3.5, BTTS%≥55%)",
   };
-  return '<div class="match-list">' + elegibles.map(p => {
+  const fila = (p) => {
     const cuotaProducto = (p.cuota_btts && p.cuota_o25) ? (p.cuota_btts * p.cuota_o25) : null;
     const cuotaCombo = cuotaProducto ? (1 + (cuotaProducto - 1) * (1 - DESCUENTO_CORRELACION)).toFixed(2) : "—";
     const resultado = p.resultado_combo;
@@ -635,7 +665,21 @@ function renderCombo(picks){
         <span class="match-pct">cuota ${cuotaCombo} · ${p.senal_btts_o25}</span>
         <span class="match-badge ${badgeClass}">${badgeTxt}</span>
       </div>`;
-  }).join("") + '</div>';
+  };
+  const validadas = elegibles.filter(p => MOTIVOS_VALIDADOS.has(p.motivo_combo));
+  const enSeguimiento = elegibles.filter(p => !MOTIVOS_VALIDADOS.has(p.motivo_combo));
+  const bloque = (lista, vacioTxt) => lista.length === 0
+    ? `<div class="empty">${vacioTxt}</div>`
+    : '<div class="match-list">' + lista.map(fila).join("") + '</div>';
+  return `
+    <section>
+      <p class="section-title">✅ Validadas</p>
+      ${bloque(validadas, "Sin señales validadas hoy todavía.")}
+    </section>
+    <section>
+      <p class="section-title">🔍 En seguimiento</p>
+      ${bloque(enSeguimiento, "Nada en seguimiento hoy.")}
+    </section>`;
 }
 
 function renderHt15Nota(picks){
@@ -1047,11 +1091,11 @@ function render(data){
   const notaHt05 = `<div class="empty" style="margin-bottom:16px;">⚠️ Mercado nuevo (agosto 2026) — todavía no hay suficiente historial para confirmar en qué franja de cuota da ganancia real. Revisa esto con cuidado hasta que se acumule más muestra.</div>`;
 
   const panels = {
-    btts: renderMercado(picks, "prob_btts_calibrada", "nivel_final", "senal_btts_optimizada", "cuota_btts", "¿Ambos equipos marcan?", "resultado_btts", "btts") + historialBtts,
-    o15: renderMercado(picks, "prob_o15", "sug_o15", "senal_o15_tier", "cuota_o15", "¿Más de 1.5 goles?", "resultado_o15", "o15") + historialO15,
-    o25: renderMercado(picks, "prob_o25", "sug_o25", "senal_o25", "cuota_o25", "¿Más de 2.5 goles?", "resultado_o25", "o25") + historialO25,
+    btts: renderMercado(picks, "prob_btts_calibrada", "nivel_final", "senal_btts_optimizada", "cuota_btts", "¿Ambos equipos marcan?", "resultado_btts", "btts", "motivo_btts") + historialBtts,
+    o15: renderMercado(picks, "prob_o15", "sug_o15", "senal_o15_tier", "cuota_o15", "¿Más de 1.5 goles?", "resultado_o15", "o15", "motivo_o15") + historialO15,
+    o25: renderMercado(picks, "prob_o25", "sug_o25", "senal_o25", "cuota_o25", "¿Más de 2.5 goles?", "resultado_o25", "o25", "motivo_o25") + historialO25,
     combo: `<section><p class="section-title">BTTS + Over 2.5</p>${renderCombo(picks)}</section>` + historialCombo,
-    ht05: notaHt05 + renderMercado(picks, "prob_over05_ht", "sug_ht05", "senal_ht05_tier", "cuota_ht_over05", "¿Gol antes del descanso?", "resultado_ht05", "ht05") + historialHt05,
+    ht05: notaHt05 + renderMercado(picks, "prob_over05_ht", "sug_ht05", "senal_ht05_tier", "cuota_ht_over05", "¿Gol antes del descanso?", "resultado_ht05", "ht05", "motivo_ht05") + historialHt05,
     ht15: renderHt15Nota(picks),
     score: renderMarcadorExacto(picks, data.comparativo.historico.marcador_exacto),
     stats: renderEstadisticas(data),
