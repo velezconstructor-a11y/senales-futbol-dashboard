@@ -345,6 +345,10 @@ function notaRescateBtts(p){
     "rescate_ataque_balanceado_media": "🔄 rescate: ataque balanceado (media)",
     "rescate_cuota_alta_fallo_bajo": "🔄 rescate: cuota 1.9-2.2 + fallo≤18%",
     "rescate_cuota_alta_btts_parejo": "🔄 rescate: cuota 1.9-2.2 + BTTS%≥45%",
+    "franja1.8-1.9_bronce": "🥉 franja 1.8-1.9: BTTS%≥55%",
+    "franja1.8-1.9_plata": "🥈 franja 1.8-1.9: +SOT≥7",
+    "franja1.8-1.9_oro": "🥇 franja 1.8-1.9: +SOT≥9",
+    "franja1.8-1.9_elite": "💎 franja 1.8-1.9: +SOT≥10 (muestra chica)",
   };
   const texto = etiquetas[motivo] || motivo;
   const color = esRescate ? "var(--amber)" : "var(--chalk-dim)";
@@ -468,6 +472,9 @@ const MOTIVOS_VALIDADOS = new Set([
   "rescate_evitar_lambda_moderado",
   "rescate_cuota_alta_fallo_bajo",
   "rescate_cuota_alta_btts_parejo",
+  "franja1.8-1.9_bronce",
+  "franja1.8-1.9_plata",
+  "franja1.8-1.9_oro",
   "regla_estable_o15",
   "regla_estable_o25",
   "combo_banda_baja",
