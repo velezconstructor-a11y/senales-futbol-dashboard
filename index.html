@@ -388,6 +388,26 @@ function notaBttsMinAlto(p){
   return ` · <span title="El menor de los dos BTTS% de temporada es >=42% - en el historico esto se asocio con mejor ROI dentro de la banda de cuota rentable (nota informativa, todavia no filtra)" style="color:var(--win);">⭐ BTTS% ambos altos</span>`;
 }
 
+function mejorCasaBadge(p, mercado){
+  // Muestra en que casa colombiana conviene apostar este pick.
+  // Medido con datos reales (23 ago 2026): apostar en la casa que mejor
+  // paga da ~+7.6% mas de ganancia por apuesta que hacerlo en la peor,
+  // sin cambiar nada de las señales. Solo aparece en partidos de ligas
+  // que las casas colombianas cotizan (las menores no las cotizan).
+  const casa = p["mejor_casa_" + mercado];
+  const cuota = p["mejor_cuota_" + mercado];
+  const mejora = p["mejora_" + mercado + "_pct"];
+  if(!casa || cuota == null) return "";
+  const nombres = {
+    "betplay":"BetPlay", "betsson":"Betsson", "betano":"Betano",
+    "bet365":"bet365", "bwin":"bwin", "stake":"Stake", "codere.es":"Codere",
+  };
+  const bonito = nombres[casa] || casa;
+  const txtMejora = (mejora != null && mejora > 0.5)
+    ? ` <span style="color:var(--win);">+${mejora.toFixed(1)}%</span>` : "";
+  return ` · <span title="Casa colombiana que mejor paga este mercado">💰 ${bonito} ${cuota.toFixed(2)}${txtMejora}</span>`;
+}
+
 function edgeTxt(prob, cuota){
   // Edge = probabilidad que decimos - probabilidad que ya implica la cuota
   // del mercado. Solo se muestra cuando es positivo (creemos tener ventaja
@@ -547,7 +567,7 @@ function renderMercado(picks, probKey, senalKey, tierKey, cuotaKey, resultadoDes
           </div>
           <div class="conf-tier">
             <div class="conf-tier-val">${p[tierKey] || "JUGAR"}</div>
-            <div class="conf-cuota">cuota ${p[cuotaKey] ? p[cuotaKey].toFixed(2) : "—"}${edgeTxt(P(p), p[cuotaKey])}</div>
+            <div class="conf-cuota">cuota ${p[cuotaKey] ? p[cuotaKey].toFixed(2) : "—"}${edgeTxt(P(p), p[cuotaKey])}${mercadoKey === "btts" ? mejorCasaBadge(p, "btts") : (mercadoKey === "o25" ? mejorCasaBadge(p, "o25") : "")}</div>
           </div>
           ${resultadoHtml}
         </div>`;
@@ -583,7 +603,7 @@ function renderMercado(picks, probKey, senalKey, tierKey, cuotaKey, resultadoDes
           </div>
           <div class="conf-tier">
             <div class="conf-tier-val" style="color:var(--chalk-dim);font-size:12px;">${p[tierKey] || "sin señal formal"}</div>
-            <div class="conf-cuota">cuota ${p[cuotaKey] ? p[cuotaKey].toFixed(2) : "—"}${edgeTxt(P(p), p[cuotaKey])}</div>
+            <div class="conf-cuota">cuota ${p[cuotaKey] ? p[cuotaKey].toFixed(2) : "—"}${edgeTxt(P(p), p[cuotaKey])}${mercadoKey === "btts" ? mejorCasaBadge(p, "btts") : (mercadoKey === "o25" ? mejorCasaBadge(p, "o25") : "")}</div>
           </div>
           ${resultadoHtml}
         </div>`;
