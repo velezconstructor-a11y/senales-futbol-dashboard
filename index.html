@@ -350,6 +350,7 @@ function notaRescateBtts(p){
     "franja1.8-1.9_oro": "🥇 franja 1.8-1.9: +SOT≥9",
     "franja1.8-1.9_elite": "💎 franja 1.8-1.9: +SOT≥10 (muestra chica)",
     "franja1.55-1.65_base": "🎯 franja 1.55-1.65: xGA máx≥1.8 + GF≥2.5",
+    "perfil_goleador": "⚽ perfil goleador (CS≤15% + FTS≤15% + BTTS≥60%)",
     "franja1.55-1.65_nota3var": "🎯 franja 1.55-1.65: +SOT≥9 (nota, muestra chica)",
   };
   const texto = etiquetas[motivo] || motivo;
@@ -478,6 +479,9 @@ const MOTIVOS_VALIDADOS = new Set([
   "franja1.8-1.9_plata",
   "franja1.8-1.9_oro",
   "franja1.55-1.65_base",
+  "perfil_goleador",
+  "perfil_goleador_o25",
+  "perfil_goleador_combo",
   "regla_estable_o15",
   "regla_estable_o25",
   "combo_banda_baja",
@@ -669,6 +673,7 @@ function renderCombo(picks){
     "combo_banda_baja": "banda baja (2.2-2.6, BTTS%≥55%)",
     "combo_banda_media": "banda media (2.6-3.0, fallo≤20%)",
     "combo_banda_alta": "banda alta (3.0-3.5, BTTS%≥55%)",
+    "perfil_goleador_combo": "⚽ perfil goleador (CS≤15% + FTS≤15% + BTTS≥60%)",
   };
   const fila = (p) => {
     const cuotaProducto = (p.cuota_btts && p.cuota_o25) ? (p.cuota_btts * p.cuota_o25) : null;
