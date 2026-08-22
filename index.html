@@ -343,6 +343,8 @@ function notaRescateBtts(p){
     "rescate_oro_fuerte": "🔄 rescate: ORO_FUERTE",
     "rescate_ataque_balanceado_alta": "🔄 rescate: ataque balanceado (alta)",
     "rescate_ataque_balanceado_media": "🔄 rescate: ataque balanceado (media)",
+    "rescate_cuota_alta_fallo_bajo": "🔄 rescate: cuota 1.9-2.2 + fallo≤18%",
+    "rescate_cuota_alta_btts_parejo": "🔄 rescate: cuota 1.9-2.2 + BTTS%≥45%",
   };
   const texto = etiquetas[motivo] || motivo;
   const color = esRescate ? "var(--amber)" : "var(--chalk-dim)";
@@ -464,6 +466,8 @@ function badgesExtra(p){
 const MOTIVOS_VALIDADOS = new Set([
   "camino_normal_VIP+",
   "rescate_evitar_lambda_moderado",
+  "rescate_cuota_alta_fallo_bajo",
+  "rescate_cuota_alta_btts_parejo",
   "regla_estable_o15",
   "regla_estable_o25",
   "combo_banda_baja",
