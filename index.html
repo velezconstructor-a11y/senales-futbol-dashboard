@@ -500,9 +500,18 @@ function renderMercado(picks, probKey, senalKey, tierKey, cuotaKey, resultadoDes
   const P = (p) => {
     const v = p[probKey];
     if(v != null) return v;
-    if(probKey === "prob_btts_calibrada" && p.prob_btts != null){
-      return p.prob_btts;
-    }
+    // Respaldo para partidos VIEJOS, guardados antes de que existiera la
+    // columna calibrada correspondiente (el sistema no recalcula partidos
+    // ya guardados). Se muestra la cruda tal cual - es mas honesto que
+    // inventar una recalibracion. Generalizado 23 ago 2026 al agregar las
+    // calibradas de Over 1.5, Over 2.5 y 1er tiempo.
+    const respaldoCrudo = {
+      "prob_btts_calibrada": "prob_btts",
+      "prob_o15_calibrada": "prob_o15",
+      "prob_o25_calibrada": "prob_o25",
+      "prob_over05_ht_calibrada": "prob_over05_ht",
+    }[probKey];
+    if(respaldoCrudo && p[respaldoCrudo] != null) return p[respaldoCrudo];
     return null;
   };
 
@@ -813,7 +822,16 @@ function renderBars(dictHist, orden){
     }
     const pct = st.acierto_pct ?? 0;
     const cls = statusClass(st);
-    return `<div class="bar-row"><span class="bar-label">${nombre}</span><div class="bar-track"><div class="bar-fill ${cls}" style="width:${pct}%"></div></div><span class="bar-num">${pctTxt(st, true)}${notaPend}</span></div>`;
+    // AGREGADO 22 ago 2026: antes esta barra solo mostraba % de acierto -
+    // con tantas señales nuevas hoy, cada una con su propio ROI real
+    // (no siempre correlacionado con el % de acierto, como vimos varias
+    // veces - una señal puede acertar mucho y perder plata si la cuota
+    // es muy corta), hacia falta ver el ROI aqui mismo, no solo en el
+    // resumen general del mercado.
+    const roiTxt = (st.profit_u != null && nOf(st) > 0)
+      ? ` · <span style="color:${st.profit_u >= 0 ? 'var(--win)' : 'var(--loss)'};">${st.profit_u >= 0 ? '+' : ''}${st.profit_u.toFixed(1)}u (${(st.profit_u/nOf(st)*100).toFixed(0)}%)</span>`
+      : "";
+    return `<div class="bar-row"><span class="bar-label">${nombre}</span><div class="bar-track"><div class="bar-fill ${cls}" style="width:${pct}%"></div></div><span class="bar-num">${pctTxt(st, true)}${roiTxt}${notaPend}</span></div>`;
   }).join("") + '</div>';
 }
 
@@ -985,6 +1003,7 @@ function renderEstadisticas(data){
       <div class="grid2">
         <div><p class="bar-label" style="margin-bottom:10px;">Por categoría BTTS</p>${renderBars(comparativo.historico.categorias, CATEGORIA_ORDEN)}</div>
         <div><p class="bar-label" style="margin-bottom:10px;">Por qué se activó JUGAR (BTTS)</p>${renderBars(comparativo.historico.motivos || {}, Object.keys(comparativo.historico.motivos || {}))}</div>
+        <div><p class="bar-label" style="margin-bottom:10px;">Por qué se activó JUGAR (Over 1.5)</p>${renderBars(comparativo.historico.motivos_o15 || {}, Object.keys(comparativo.historico.motivos_o15 || {}))}</div>
         <div><p class="bar-label" style="margin-bottom:10px;">Por qué se activó JUGAR (Over 2.5)</p>${renderBars(comparativo.historico.motivos_o25 || {}, Object.keys(comparativo.historico.motivos_o25 || {}))}</div>
         <div><p class="bar-label" style="margin-bottom:10px;">Por qué se activó JUGAR (1er tiempo O0.5)</p>${renderBars(comparativo.historico.motivos_ht05 || {}, Object.keys(comparativo.historico.motivos_ht05 || {}))}</div>
         <div><p class="bar-label" style="margin-bottom:10px;">Por qué se activó JUGAR (Combinada BTTS+O2.5)</p>${renderBars(comparativo.historico.motivos_combo || {}, Object.keys(comparativo.historico.motivos_combo || {}))}</div>
@@ -1106,10 +1125,10 @@ function render(data){
 
   const panels = {
     btts: renderMercado(picks, "prob_btts_calibrada", "nivel_final", "senal_btts_optimizada", "cuota_btts", "¿Ambos equipos marcan?", "resultado_btts", "btts", "motivo_btts") + historialBtts,
-    o15: renderMercado(picks, "prob_o15", "sug_o15", "senal_o15_tier", "cuota_o15", "¿Más de 1.5 goles?", "resultado_o15", "o15", "motivo_o15") + historialO15,
-    o25: renderMercado(picks, "prob_o25", "sug_o25", "senal_o25", "cuota_o25", "¿Más de 2.5 goles?", "resultado_o25", "o25", "motivo_o25") + historialO25,
+    o15: renderMercado(picks, "prob_o15_calibrada", "sug_o15", "senal_o15_tier", "cuota_o15", "¿Más de 1.5 goles?", "resultado_o15", "o15", "motivo_o15") + historialO15,
+    o25: renderMercado(picks, "prob_o25_calibrada", "sug_o25", "senal_o25", "cuota_o25", "¿Más de 2.5 goles?", "resultado_o25", "o25", "motivo_o25") + historialO25,
     combo: `<section><p class="section-title">BTTS + Over 2.5</p>${renderCombo(picks)}</section>` + historialCombo,
-    ht05: notaHt05 + renderMercado(picks, "prob_over05_ht", "sug_ht05", "senal_ht05_tier", "cuota_ht_over05", "¿Gol antes del descanso?", "resultado_ht05", "ht05", "motivo_ht05") + historialHt05,
+    ht05: notaHt05 + renderMercado(picks, "prob_over05_ht_calibrada", "sug_ht05", "senal_ht05_tier", "cuota_ht_over05", "¿Gol antes del descanso?", "resultado_ht05", "ht05", "motivo_ht05") + historialHt05,
     ht15: renderHt15Nota(picks),
     score: renderMarcadorExacto(picks, data.comparativo.historico.marcador_exacto),
     stats: renderEstadisticas(data),
