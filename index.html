@@ -1221,7 +1221,7 @@ function render(data){
   const DIAS_DEF = [
     {id: "hoy", label: "Hoy", fecha: fechaHoy},
     {id: "manana", label: "Mañana", fecha: fechaManana},
-    {id: "pasado", label: "Pasado mañana", fecha: fechaPasado},
+    {id: "pasado", label: "", fecha: fechaPasado},
   ];
   const contarDia = (fecha) => picksTodas.filter(p => (p.fecha_partido || p.fecha) === fecha).length;
   const diasTabsEl = document.getElementById("diasTabs");
@@ -1230,7 +1230,7 @@ function render(data){
       const n = contarDia(d.fecha);
       const fechaCorta = d.fecha ? d.fecha.slice(5).replace("-", "/") : "";
       return `<button class="dia-btn ${d.id===DIA_SELECCIONADO?'active':''}" onclick="cambiarDia('${d.id}')">
-        ${d.label} <span style="opacity:.6;font-weight:400;">${fechaCorta}</span><span class="dia-count">(${n})</span>
+        ${d.label ? d.label + " " : ""}<span style="opacity:.6;font-weight:400;">${fechaCorta}</span><span class="dia-count">(${n})</span>
       </button>`;
     }).join("");
   }
