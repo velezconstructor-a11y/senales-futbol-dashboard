@@ -705,13 +705,19 @@ function renderCombo(picks){
     else if(resultado === false){ badgeClass = "perdida"; badgeTxt = "✕ Perdida"; }
     else { badgeClass = p.senal_btts_o25 === 'VIP' ? 'si' : 'no'; badgeTxt = p.senal_btts_o25; }
     const motivo = motivoTxt[p.motivo_combo] ? ` · <span style="color:var(--amber);">${motivoTxt[p.motivo_combo]}</span>` : (p.motivo_combo && p.motivo_combo !== "ninguno_evitar_combo" ? ` · <span style="color:var(--amber);">${p.motivo_combo}</span>` : "");
+    // AGREGADO 23 ago 2026: prob_combo_calibrada se calcula y guarda en
+    // el backend desde el 21 ago, pero nunca se mostraba en esta tarjeta
+    // - el usuario solo veia cuota y VIP/—, sin el % de probabilidad.
+    const probCombo = p.prob_combo_calibrada != null ? p.prob_combo_calibrada
+                     : (p.prob_combo_v2 != null ? p.prob_combo_v2 : null);
+    const probTxt = probCombo != null ? ` · ${(probCombo*100).toFixed(0)}%` : "";
     return `
       <div class="match-row">
         <div>
           <div class="match-teams">${p.local} vs ${p.visitante}</div>
           <div class="match-liga">${p.liga || ""} · ${diaBadge(p)}${respaldoBadge(p)}${notaLigaConfianza(p)}${motivo}</div>
         </div>
-        <span class="match-pct">cuota ${cuotaCombo} · ${p.senal_btts_o25}</span>
+        <span class="match-pct">cuota ${cuotaCombo} · ${p.senal_btts_o25}${probTxt}</span>
         <span class="match-badge ${badgeClass}">${badgeTxt}</span>
       </div>`;
   };
