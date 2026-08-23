@@ -342,7 +342,8 @@ function notaRescateBtts(p){
     "rescate_elite": "🔄 rescate: ÉLITE",
     "rescate_oro_fuerte": "🔄 rescate: ORO_FUERTE",
     "rescate_ataque_balanceado_alta": "🔄 rescate: ataque balanceado (alta)",
-    "rescate_ataque_balanceado_media": "🔄 rescate: ataque balanceado (media)",
+    // "rescate_ataque_balanceado_media" eliminada 23 ago 2026 - el patron
+    // ya no puede generarse (ver signals.py), etiqueta descontinuada
     "rescate_cuota_alta_fallo_bajo": "🔄 rescate: cuota 1.9-2.2 + fallo≤18%",
     "rescate_cuota_alta_btts_parejo": "🔄 rescate: cuota 1.9-2.2 + BTTS%≥45%",
     "franja1.8-1.9_bronce": "🥉 franja 1.8-1.9: BTTS%≥55%",
@@ -687,9 +688,9 @@ function renderCombo(picks){
   // ficticia sin descontar.
   const DESCUENTO_CORRELACION = 0.275;
   const motivoTxt = {
-    "combo_btts_vipmas": "BTTS es VIP+",
-    "combo_original_revisar": "revisar (cuota 2.3-2.6)",
-    "combo_original_vip": "VIP original",
+    // "combo_btts_vipmas", "combo_original_revisar", "combo_original_vip"
+    // eliminadas 23 ago 2026 - motivos del diseño anterior a las 3 bandas
+    // (18 ago), el codigo actual ya no las genera
     "combo_banda_baja": "banda baja (2.2-2.6, BTTS%≥55%)",
     "combo_banda_media": "banda media (2.6-3.0, fallo≤20%)",
     "combo_banda_alta": "banda alta (3.0-3.5, BTTS%≥55%)",
