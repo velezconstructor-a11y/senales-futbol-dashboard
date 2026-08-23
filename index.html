@@ -329,7 +329,6 @@ function esValidadaReal(motivo){
   if(!(motivo in REGLAS_ACTIVAS_REAL)) return true;
   return REGLAS_ACTIVAS_REAL[motivo] === true;
 }
-let REGLAS_ACTIVAS_REAL = {};
 
 function notaLigaConfianza(p){
   // Nota dinamica de confianza por liga (calculada en vivo por backtest.py
