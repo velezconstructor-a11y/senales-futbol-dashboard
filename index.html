@@ -305,6 +305,31 @@ const TABS = [
 
 let DATA = null;
 let HOY_STR = "";
+let REGLAS_ACTIVAS_REAL = {};
+
+// AGREGADO 23 ago 2026: una señal se muestra como "Validada" solo si
+// cumple LAS DOS cosas a la vez - son conceptos distintos:
+//   1. MOTIVOS_VALIDADOS (juicio de evidencia): esta señal tuvo
+//      resultados solidos cuando se creo/reviso.
+//   2. REGLAS_ACTIVAS_REAL (estado dinamico de HOY): el sistema, con
+//      datos frescos, la sigue considerando por encima del umbral.
+// Una señal puede tener evidencia historica fuerte pero haberse
+// deteriorado (caso real: combo_banda_baja, +6.3% cuando se creo,
+// -25.7% con datos frescos - el sistema dinamico ya la apago sola,
+// pero seguia marcada "Validada" en la pagina por depender solo de la
+// lista fija). Y al reves: ELITE/ORO_FUERTE estan "activas" (el
+// usuario las prendio a mano pese a evidencia insuficiente) pero
+// nunca deben mostrarse como "Validadas" - por eso se exigen las dos.
+function esValidadaReal(motivo){
+  if(!MOTIVOS_VALIDADOS.has(motivo)) return false;
+  // Si el motivo aun no aparece en el estado dinamico (recien creado,
+  // sin suficiente muestra para que main.py lo evalue todavia), se
+  // confia en el juicio de evidencia original - no hay nada mas fresco
+  // que consultar.
+  if(!(motivo in REGLAS_ACTIVAS_REAL)) return true;
+  return REGLAS_ACTIVAS_REAL[motivo] === true;
+}
+let REGLAS_ACTIVAS_REAL = {};
 
 function notaLigaConfianza(p){
   // Nota dinamica de confianza por liga (calculada en vivo por backtest.py
@@ -547,8 +572,8 @@ function renderMercado(picks, probKey, senalKey, tierKey, cuotaKey, resultadoDes
   // la banda de cuota, porque esas no son de alta confianza aunque
   // tecnicamente jueguen.
   const conSenal = picks.filter(p => p[senalKey] === "JUGAR" && p[tierKey] && p[tierKey] !== "Evitar");
-  const validadas = conSenal.filter(p => MOTIVOS_VALIDADOS.has(p[motivoKey]));
-  const enSeguimiento = conSenal.filter(p => !MOTIVOS_VALIDADOS.has(p[motivoKey]));
+  const validadas = conSenal.filter(p => esValidadaReal(p[motivoKey]));
+  const enSeguimiento = conSenal.filter(p => !esValidadaReal(p[motivoKey]));
 
   const renderCardsConfianza = (lista, vacioTxt) => lista.length === 0
     ? `<div class="empty">${vacioTxt}</div>`
@@ -677,16 +702,17 @@ function renderMercado(picks, probKey, senalKey, tierKey, cuotaKey, resultadoDes
 
 function renderCombo(picks){
   const elegibles = picks.filter(p => p.senal_btts_o25 && p.senal_btts_o25 !== "—");
-  if(elegibles.length === 0){
-    return '<div class="empty">Hoy ningún partido cumple el criterio para la combinada BTTS + Over 2.5.</div>';
-  }
-  // Descuento por correlacion (27.5%) - los dos mercados no son
-  // independientes (si se da BTTS, Over 2.5 se vuelve mucho mas probable),
-  // asi que multiplicar las cuotas sin mas da un precio que ninguna casa
-  // paga. Mismo descuento que ya se aplica en signals.py
-  // (DESCUENTO_CORRELACION_COMBO) - antes esta pestaña mostraba la cuota
-  // ficticia sin descontar.
+  // AGREGADO 23 ago 2026: antes, si NINGUN partido era elegible, la
+  // pestaña entera mostraba un solo mensaje vacio y las secciones de
+  // Validadas/En seguimiento/Todos los partidos ni se dibujaban - eso
+  // ocultaba tambien "Todos los partidos analizados", que deberia
+  // mostrar TODO lo evaluado (elegible o no), igual que hacen BTTS/
+  // Over1.5/Over2.5/1er tiempo. Se separa: el mensaje corto solo
+  // reemplaza Validadas/En seguimiento cuando no hay elegibles, pero
+  // Todos los partidos se construye siempre con la lista completa.
   const DESCUENTO_CORRELACION = 0.275;
+  const probDe = (p) => p.prob_combo_calibrada != null ? p.prob_combo_calibrada
+                       : (p.prob_combo_v2 != null ? p.prob_combo_v2 : null);
   const motivoTxt = {
     // "combo_btts_vipmas", "combo_original_revisar", "combo_original_vip"
     // eliminadas 23 ago 2026 - motivos del diseño anterior a las 3 bandas
@@ -703,13 +729,9 @@ function renderCombo(picks){
     let badgeClass, badgeTxt;
     if(resultado === true){ badgeClass = "ganada"; badgeTxt = "✓ Ganada"; }
     else if(resultado === false){ badgeClass = "perdida"; badgeTxt = "✕ Perdida"; }
-    else { badgeClass = p.senal_btts_o25 === 'VIP' ? 'si' : 'no'; badgeTxt = p.senal_btts_o25; }
+    else { badgeClass = p.senal_btts_o25 === 'VIP' ? 'si' : 'no'; badgeTxt = p.senal_btts_o25 === 'VIP' ? 'VIP' : (p.senal_btts_o25 || 'Sin datos'); }
     const motivo = motivoTxt[p.motivo_combo] ? ` · <span style="color:var(--amber);">${motivoTxt[p.motivo_combo]}</span>` : (p.motivo_combo && p.motivo_combo !== "ninguno_evitar_combo" ? ` · <span style="color:var(--amber);">${p.motivo_combo}</span>` : "");
-    // AGREGADO 23 ago 2026: prob_combo_calibrada se calcula y guarda en
-    // el backend desde el 21 ago, pero nunca se mostraba en esta tarjeta
-    // - el usuario solo veia cuota y VIP/—, sin el % de probabilidad.
-    const probCombo = p.prob_combo_calibrada != null ? p.prob_combo_calibrada
-                     : (p.prob_combo_v2 != null ? p.prob_combo_v2 : null);
+    const probCombo = probDe(p);
     const probTxt = probCombo != null ? ` · ${(probCombo*100).toFixed(0)}%` : "";
     return `
       <div class="match-row">
@@ -717,15 +739,28 @@ function renderCombo(picks){
           <div class="match-teams">${p.local} vs ${p.visitante}</div>
           <div class="match-liga">${p.liga || ""} · ${diaBadge(p)}${respaldoBadge(p)}${notaLigaConfianza(p)}${motivo}</div>
         </div>
-        <span class="match-pct">cuota ${cuotaCombo} · ${p.senal_btts_o25}${probTxt}</span>
+        <span class="match-pct">cuota ${cuotaCombo} · ${badgeTxt}${probTxt}</span>
         <span class="match-badge ${badgeClass}">${badgeTxt}</span>
       </div>`;
   };
-  const validadas = elegibles.filter(p => MOTIVOS_VALIDADOS.has(p.motivo_combo));
-  const enSeguimiento = elegibles.filter(p => !MOTIVOS_VALIDADOS.has(p.motivo_combo));
+  const validadas = elegibles.filter(p => esValidadaReal(p.motivo_combo));
+  const enSeguimiento = elegibles.filter(p => !esValidadaReal(p.motivo_combo));
   const bloque = (lista, vacioTxt) => lista.length === 0
     ? `<div class="empty">${vacioTxt}</div>`
     : '<div class="match-list">' + lista.map(fila).join("") + '</div>';
+
+  // "Todos los partidos analizados": TODOS los picks, elegibles o no,
+  // ordenados de mayor a menor probabilidad (mismo criterio que los
+  // demas mercados) - los sin probabilidad calculada van al final.
+  const picksOrdenados = [...picks].sort((a, b) => {
+    const pa = probDe(a), pb = probDe(b);
+    if(pa == null && pb == null) return 0;
+    if(pa == null) return 1;
+    if(pb == null) return -1;
+    return pb - pa;
+  });
+  const todosHtml = bloque(picksOrdenados, "Todavía no hay partidos analizados hoy.");
+
   return `
     <section>
       <p class="section-title">✅ Validadas</p>
@@ -734,6 +769,10 @@ function renderCombo(picks){
     <section>
       <p class="section-title">🔍 En seguimiento</p>
       ${bloque(enSeguimiento, "Nada en seguimiento hoy.")}
+    </section>
+    <section>
+      <p class="section-title">Todos los partidos analizados — ¿BTTS + Over 2.5 a la vez?</p>
+      ${todosHtml}
     </section>`;
 }
 
@@ -1130,6 +1169,13 @@ function renderHeroPick(picks){
 function render(data){
   DATA = data;
   HOY_STR = data.hoy_referencia || "";
+  // AGREGADO 23 ago 2026: estado REAL y dinamico de cada regla (activa
+  // o no para apostar de verdad AHORA MISMO), calculado por el mismo
+  // motor que main.py - reemplaza depender solo de MOTIVOS_VALIDADOS
+  // (una lista fija mantenida a mano que puede quedar desactualizada;
+  // caso real: combo_banda_baja se veia "Validada" en la pagina mucho
+  // despues de que su ROI real cayera a -25.7%, ya apagada de verdad).
+  REGLAS_ACTIVAS_REAL = data.comparativo?.historico?.reglas_activas_actuales || {};
   const totalHist = data.comparativo.historico.total_partidos_evaluados;
   const picks = data.picks_hoy || [];
 
