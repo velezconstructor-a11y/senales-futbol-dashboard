@@ -118,6 +118,27 @@
     scrollbar-width:none;
   }
   .tabs::-webkit-scrollbar{display:none;}
+  /* Barra de dias (Hoy/Mañana/Pasado mañana): un nivel jerarquico por
+     encima de las pestañas de mercado - mas chica y sutil para que no
+     compita visualmente con la barra principal de abajo. */
+  .dias-tabs{padding:10px 20px 8px;border-bottom:none;gap:6px;}
+  .dia-btn{
+    flex-shrink:0;
+    padding:6px 14px;
+    font-size:12px;
+    font-weight:600;
+    letter-spacing:.03em;
+    text-transform:uppercase;
+    color:var(--chalk-dim);
+    background:var(--surface-2);
+    border:0.5px solid var(--border);
+    border-radius:999px;
+    cursor:pointer;
+    transition:color .15s, background .15s, border-color .15s;
+  }
+  .dia-btn:hover{color:var(--chalk);}
+  .dia-btn.active{color:var(--bg-1, #0a1210);background:var(--amber);border-color:var(--amber);}
+  .dia-btn .dia-count{opacity:.7;font-weight:400;margin-left:4px;}
   .tab-btn{
     flex-shrink:0;
     background:transparent;
@@ -284,6 +305,8 @@
 
 <div class="hero-pick" id="heroPick"></div>
 
+<nav class="tabs dias-tabs" id="diasTabs"></nav>
+
 <nav class="tabs" id="tabs"></nav>
 
 <div class="wrap" id="app">
@@ -306,6 +329,11 @@ const TABS = [
 let DATA = null;
 let HOY_STR = "";
 let REGLAS_ACTIVAS_REAL = {};
+// AGREGADO 23 ago 2026: dia seleccionado para navegar Hoy/Mañana/Pasado
+// mañana. Persiste entre refrescos automaticos, igual que la pestaña de
+// mercado activa (tabActivaAntes) - sin esto, cada refresco de 5 min te
+// devolveria siempre a "Hoy".
+let DIA_SELECCIONADO = "hoy";
 
 // AGREGADO 23 ago 2026: una señal se muestra como "Validada" solo si
 // cumple LAS DOS cosas a la vez - son conceptos distintos:
@@ -1105,6 +1133,11 @@ function switchTab(id){
   if(id === "stats" && DATA) renderChart(DATA.serie_diaria);
 }
 
+function cambiarDia(dia){
+  DIA_SELECCIONADO = dia;
+  if(DATA) render(DATA);
+}
+
 function elegirMejorCandidato(picks){
   // Usa la probabilidad CALIBRADA de BTTS (con respaldo a la cruda solo
   // para partidos muy viejos que no la tengan) - antes esta funcion usaba
@@ -1176,7 +1209,35 @@ function render(data){
   // despues de que su ROI real cayera a -25.7%, ya apagada de verdad).
   REGLAS_ACTIVAS_REAL = data.comparativo?.historico?.reglas_activas_actuales || {};
   const totalHist = data.comparativo.historico.total_partidos_evaluados;
-  const picks = data.picks_hoy || [];
+  const picksTodas = data.picks_hoy || [];
+
+  // AGREGADO 23 ago 2026: barra Hoy/Mañana/Pasado mañana. "picks_hoy"
+  // (pese al nombre historico) ya trae los 3 dias mezclados desde que
+  // se amplio la ventana en backtest.py - aqui se separan por fecha y
+  // se filtra a solo el dia que el usuario tiene seleccionado.
+  const fechaHoy = data.hoy_referencia || "";
+  const fechaManana = data.manana_referencia || "";
+  const fechaPasado = data.pasado_manana_referencia || "";
+  const DIAS_DEF = [
+    {id: "hoy", label: "Hoy", fecha: fechaHoy},
+    {id: "manana", label: "Mañana", fecha: fechaManana},
+    {id: "pasado", label: "Pasado mañana", fecha: fechaPasado},
+  ];
+  const contarDia = (fecha) => picksTodas.filter(p => (p.fecha_partido || p.fecha) === fecha).length;
+  const diasTabsEl = document.getElementById("diasTabs");
+  if(diasTabsEl){
+    diasTabsEl.innerHTML = DIAS_DEF.map(d => {
+      const n = contarDia(d.fecha);
+      const fechaCorta = d.fecha ? d.fecha.slice(5).replace("-", "/") : "";
+      return `<button class="dia-btn ${d.id===DIA_SELECCIONADO?'active':''}" onclick="cambiarDia('${d.id}')">
+        ${d.label} <span style="opacity:.6;font-weight:400;">${fechaCorta}</span><span class="dia-count">(${n})</span>
+      </button>`;
+    }).join("");
+  }
+  const diaElegido = DIAS_DEF.find(d => d.id === DIA_SELECCIONADO) || DIAS_DEF[0];
+  const picks = diaElegido.fecha
+    ? picksTodas.filter(p => (p.fecha_partido || p.fecha) === diaElegido.fecha)
+    : picksTodas;
 
   document.getElementById("updatedTxt").innerHTML =
     `<span class="dot"></span>Actualizado ${new Date(data.actualizado).toLocaleString("es-CO", {dateStyle:"medium", timeStyle:"short"})} · ${totalHist} partidos evaluados en total`;
