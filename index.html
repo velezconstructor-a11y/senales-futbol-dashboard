@@ -556,12 +556,14 @@ const MOTIVOS_VALIDADOS = new Set([
   "perfil_goleador",
   "camino_normal_Stake10_cuota_alta",
   "perfil_goleador_o25",
+  "o25_gf_alto_btts",
   "perfil_goleador_combo",
   "regla_estable_o15",
   "regla_estable_o25",
   "combo_banda_baja",
   "combo_banda_media",
-  "combo_banda_alta",
+  "combo_producto_alto",
+  "combo_producto_alto_sot",
 ]);
 
 function renderMercado(picks, probKey, senalKey, tierKey, cuotaKey, resultadoDeseado, resultKey, mercadoKey, motivoKey){
@@ -749,6 +751,8 @@ function renderCombo(picks){
     "combo_banda_baja": "banda baja (2.2-2.6, BTTS%≥55%)",
     "combo_banda_media": "banda media (2.6-3.0, fallo≤20%)",
     "combo_banda_alta": "banda alta (3.0-3.5, BTTS%≥55%)",
+    "combo_producto_alto": "🎯 producto 3.5-4.5",
+    "combo_producto_alto_sot": "🎯 producto 3.5-4.5 + SOT≥8",
     "perfil_goleador_combo": "⚽ perfil goleador (CS≤15% + FTS≤15% + BTTS≥60%)",
   };
   const fila = (p) => {
