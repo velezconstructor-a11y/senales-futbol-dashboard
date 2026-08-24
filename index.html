@@ -563,13 +563,15 @@ const MOTIVOS_VALIDADOS = new Set([
   "camino_normal_Stake10_cuota_alta",
   "perfil_goleador_o25",
   "o25_gf_alto_btts",
-  "perfil_goleador_combo",
   "regla_estable_o15",
   "regla_estable_o25",
-  "combo_banda_baja",
+  // AJUSTADO 24 ago 2026: por decision explicita del usuario, solo
+  // combo_banda_media se muestra en Picks del Dia por ahora - las demas
+  // (perfil_goleador_combo, combo_banda_baja, combo_producto_alto/sot)
+  // siguen activas y generando JUGAR normalmente, solo que sin
+  // evidencia fresca propia todavia - quedan en "En seguimiento" hasta
+  // que junten track record real. Revisar en unos dias.
   "combo_banda_media",
-  "combo_producto_alto",
-  "combo_producto_alto_sot",
 ]);
 
 function renderMercado(picks, probKey, senalKey, tierKey, cuotaKey, resultadoDeseado, resultKey, mercadoKey, motivoKey){
