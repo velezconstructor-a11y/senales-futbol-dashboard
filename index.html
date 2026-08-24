@@ -415,6 +415,29 @@ function notaRescateBtts(p){
   return ` · <span title="Por que se activo esta señal de BTTS" style="color:${color};">${texto}</span>`;
 }
 
+// AGREGADO 24 ago 2026: equivalente de notaRescateBtts, pero para Over
+// 2.5 - antes esta nota estaba codificada a mostrarse SOLO si
+// mercadoKey==='btts' (ver las 3 llamadas mas abajo), asi que Over 2.5
+// nunca mostraba de donde salia cada señal, aunque el dato (motivo_o25)
+// siempre estuvo disponible en los datos.
+function notaRescateO25(p){
+  const motivo = p.motivo_o25;
+  if(!motivo || p.sug_o25 !== "JUGAR") return "";
+  const esRescate = motivo.startsWith("rescate_") || motivo.startsWith("o25_");
+  const etiquetas = {
+    "camino_normal_o25": "camino normal (VIP/Fuerte)",
+    "rescate_v2_over25": "🔄 rescate v2",
+    "regla_estable_o25": "🎯 cuota 2.1-2.5 + fallo≤18%",
+    "perfil_goleador_o25": "⚽ perfil goleador (CS≤15% + FTS≤15% + BTTS≥60%)",
+    "o25_gf_alto_btts": "🎯 GF total≥4.5 + BTTS%≥50%",
+    "o25_favorito_claro": "⚖️ favorito claro (ratio≥2.6) + fallo≤20% + CS≤15%",
+    "o25_gf_max_btts_xg": "🎯 GF máx≥2.0 + BTTS%≥50% + xG máx≥1.6",
+  };
+  const texto = etiquetas[motivo] || motivo;
+  const color = esRescate ? "var(--amber)" : "var(--chalk-dim)";
+  return ` · <span title="Por que se activo esta señal de Over 2.5" style="color:${color};">${texto}</span>`;
+}
+
 function notaBttsMinAlto(p){
   // Nota informativa (NO genera JUGAR por si sola, ver comentario en
   // signals.py) - marca cuando el MENOR de los dos BTTS% de temporada es
@@ -629,7 +652,7 @@ function renderMercado(picks, probKey, senalKey, tierKey, cuotaKey, resultadoDes
         <div class="conf-card">
           <div>
             <div class="conf-teams">${p.local} vs ${p.visitante}</div>
-            <div class="conf-liga">${p.liga || ""} · ${diaBadge(p)}${respaldoBadge(p)}${confirmacionCuotaBadge(p, mercadoKey)}${notaLigaConfianza(p)}${mercadoKey === 'ht05' ? notaOver15Ht(p) : ''}${mercadoKey === 'btts' ? notaRescateBtts(p) : ''}${mercadoKey === 'btts' ? notaBttsMinAlto(p) : ''}</div>
+            <div class="conf-liga">${p.liga || ""} · ${diaBadge(p)}${respaldoBadge(p)}${confirmacionCuotaBadge(p, mercadoKey)}${notaLigaConfianza(p)}${mercadoKey === 'ht05' ? notaOver15Ht(p) : ''}${mercadoKey === 'btts' ? notaRescateBtts(p) : ''}${mercadoKey === 'o25' ? notaRescateO25(p) : ''}${mercadoKey === 'btts' ? notaBttsMinAlto(p) : ''}</div>
             ${badgesExtra(p)}
           </div>
           <div class="conf-tier">
@@ -665,7 +688,7 @@ function renderMercado(picks, probKey, senalKey, tierKey, cuotaKey, resultadoDes
         <div class="conf-card">
           <div>
             <div class="conf-teams">${p.local} vs ${p.visitante}</div>
-            <div class="conf-liga">${p.liga || ""} · ${diaBadge(p)}${respaldoBadge(p)}${confirmacionCuotaBadge(p, mercadoKey)}${notaLigaConfianza(p)}${mercadoKey === 'ht05' ? notaOver15Ht(p) : ''}${mercadoKey === 'btts' ? notaRescateBtts(p) : ''}${mercadoKey === 'btts' ? notaBttsMinAlto(p) : ''}</div>
+            <div class="conf-liga">${p.liga || ""} · ${diaBadge(p)}${respaldoBadge(p)}${confirmacionCuotaBadge(p, mercadoKey)}${notaLigaConfianza(p)}${mercadoKey === 'ht05' ? notaOver15Ht(p) : ''}${mercadoKey === 'btts' ? notaRescateBtts(p) : ''}${mercadoKey === 'o25' ? notaRescateO25(p) : ''}${mercadoKey === 'btts' ? notaBttsMinAlto(p) : ''}</div>
             ${badgesExtra(p)}
           </div>
           <div class="conf-tier">
@@ -714,7 +737,7 @@ function renderMercado(picks, probKey, senalKey, tierKey, cuotaKey, resultadoDes
           <div class="match-row">
             <div>
               <div class="match-teams">${p.local} vs ${p.visitante}</div>
-              <div class="match-liga">${tierTxt}${p.liga || ""} · ${diaBadge(p)}${respaldoBadge(p)}${confirmacionCuotaBadge(p, mercadoKey)}${notaLigaConfianza(p)}${mercadoKey === 'ht05' ? notaOver15Ht(p) : ''}${mercadoKey === 'btts' ? notaRescateBtts(p) : ''}${mercadoKey === 'btts' ? notaBttsMinAlto(p) : ''}</div>
+              <div class="match-liga">${tierTxt}${p.liga || ""} · ${diaBadge(p)}${respaldoBadge(p)}${confirmacionCuotaBadge(p, mercadoKey)}${notaLigaConfianza(p)}${mercadoKey === 'ht05' ? notaOver15Ht(p) : ''}${mercadoKey === 'btts' ? notaRescateBtts(p) : ''}${mercadoKey === 'o25' ? notaRescateO25(p) : ''}${mercadoKey === 'btts' ? notaBttsMinAlto(p) : ''}</div>
               ${badgesExtra(p)}
             </div>
             <span class="match-pct">cuota ${cuotaTxt} · ${pctT}${edgeTxt(prob, p[cuotaKey])}</span>
