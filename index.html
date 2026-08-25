@@ -79,9 +79,8 @@
 
   .hero-pick{
     max-width:980px;margin:20px auto 0;padding:0 20px;
-    display:grid;grid-template-columns:1fr 1fr;gap:12px;
+    display:grid;grid-template-columns:repeat(auto-fit, minmax(280px, 1fr));gap:12px;
   }
-  @media (max-width:700px){.hero-pick{grid-template-columns:1fr;}}
   .hero-pick-card{
     position:relative;
     background:linear-gradient(135deg, var(--pitch-800) 0%, var(--pitch-900) 60%);
@@ -1207,29 +1206,55 @@ function cambiarDia(dia){
   if(DATA) render(DATA);
 }
 
-function elegirMejorCandidato(picks){
-  // Usa la probabilidad CALIBRADA de BTTS (con respaldo a la cruda solo
-  // para partidos muy viejos que no la tengan) - antes esta funcion usaba
-  // prob_btts sin calibrar directamente, por eso la tarjeta destacada
-  // mostraba un numero distinto (mas alto) que el resto de la pagina.
+function elegirMejoresPorMercado(picks){
+  // REDISEÑADO 24 ago 2026: antes esto elegia UN SOLO ganador entre
+  // todos los mercados (elegirMejorCandidato), descartando el resto -
+  // por eso solo se veia una tarjeta aunque hubiera picks validos en
+  // varios mercados a la vez. Ahora se guarda el mejor candidato POR
+  // MERCADO (BTTS, Over1.5, Over2.5, Combinada, 1er tiempo), y se
+  // devuelven todos los que tengan al menos uno - para que "todos los
+  // picks del dia" se vea de verdad, no solo el mas fuerte de todos.
   const probBtts = (p) => p.prob_btts_calibrada != null ? p.prob_btts_calibrada : p.prob_btts;
-  const candidatos = [];
+  const mejorPorMercado = {};
+  const actualizar = (mkt, score, p, tier) => {
+    if(!mejorPorMercado[mkt] || score > mejorPorMercado[mkt].score){
+      mejorPorMercado[mkt] = {p, score, tier, mkt};
+    }
+  };
   picks.forEach(p => {
-    if(p.vip_elite) candidatos.push({p, score: 1000 + (probBtts(p)||0), tier: p.vip_elite, mkt: "Ambos Marcan"});
-    else if(p.senal_btts_optimizada === "VIP+" && p.nivel_final === "JUGAR") candidatos.push({p, score: 900 + (probBtts(p)||0), tier: "VIP+", mkt: "Ambos Marcan"});
-    else if(p.senal_o15_tier === "VIP" && p.sug_o15 === "JUGAR") candidatos.push({p, score: 800 + (p.prob_o15||0), tier: "VIP", mkt: "Over 1.5"});
-    else if(p.senal_o25 === "VIP" && p.sug_o25 === "JUGAR") candidatos.push({p, score: 800 + (p.prob_o25||0), tier: "VIP", mkt: "Over 2.5"});
-    else if(p.senal_btts_optimizada === "VIP" && p.nivel_final === "JUGAR") candidatos.push({p, score: 700 + (probBtts(p)||0), tier: "VIP", mkt: "Ambos Marcan"});
+    // Ambos Marcan (BTTS)
+    if(p.vip_elite) actualizar("Ambos Marcan", 1000 + (probBtts(p)||0), p, p.vip_elite);
+    else if(p.senal_btts_optimizada === "VIP+" && p.nivel_final === "JUGAR") actualizar("Ambos Marcan", 900 + (probBtts(p)||0), p, "VIP+");
+    else if(p.senal_btts_optimizada === "VIP" && p.nivel_final === "JUGAR") actualizar("Ambos Marcan", 700 + (probBtts(p)||0), p, "VIP");
+    else if(p.nivel_final === "JUGAR" && esValidadaReal(p.motivo_btts)) actualizar("Ambos Marcan", 500 + (probBtts(p)||0), p, "Validada");
+    // Over 1.5
+    if(p.senal_o15_tier === "VIP" && p.sug_o15 === "JUGAR") actualizar("Over 1.5", 800 + (p.prob_o15||0), p, "VIP");
+    else if(p.sug_o15 === "JUGAR" && esValidadaReal(p.motivo_o15)) actualizar("Over 1.5", 500 + (p.prob_o15||0), p, "Validada");
+    // Over 2.5
+    if(p.senal_o25 === "VIP" && p.sug_o25 === "JUGAR") actualizar("Over 2.5", 800 + (p.prob_o25||0), p, "VIP");
+    else if(p.sug_o25 === "JUGAR" && esValidadaReal(p.motivo_o25)) actualizar("Over 2.5", 500 + (p.prob_o25||0), p, "Validada");
+    // Combinada BTTS+O2.5
+    const probCombo = p.prob_combo_calibrada != null ? p.prob_combo_calibrada : p.prob_combo_v2;
+    if(p.senal_btts_o25 === "VIP" && esValidadaReal(p.motivo_combo)) actualizar("BTTS + Over 2.5", 600 + (probCombo||0), p, "VIP");
+    // 1er tiempo Over 0.5
+    if(p.senal_ht05 === "JUGAR" && esValidadaReal(p.motivo_ht05)) actualizar("1er tiempo O0.5", 500 + (p.prob_over05_ht||0), p, "Validada");
   });
-  if(candidatos.length === 0) return null;
-  candidatos.sort((a,b) => b.score - a.score);
-  return candidatos[0];
+  return Object.values(mejorPorMercado).sort((a,b) => b.score - a.score);
 }
 
-function renderTarjetaPick(top, etiquetaDia){
+function renderTarjetaPick(top){
   const probBtts = (p) => p.prob_btts_calibrada != null ? p.prob_btts_calibrada : p.prob_btts;
-  const prob = top.mkt === "Over 1.5" ? top.p.prob_o15 : top.mkt === "Over 2.5" ? top.p.prob_o25 : probBtts(top.p);
-  const resultado = top.mkt === "Over 1.5" ? top.p.resultado_o15 : top.mkt === "Over 2.5" ? top.p.resultado_o25 : top.p.resultado_btts;
+  const probCombo = (p) => p.prob_combo_calibrada != null ? p.prob_combo_calibrada : p.prob_combo_v2;
+  const prob = top.mkt === "Over 1.5" ? top.p.prob_o15
+             : top.mkt === "Over 2.5" ? top.p.prob_o25
+             : top.mkt === "BTTS + Over 2.5" ? probCombo(top.p)
+             : top.mkt === "1er tiempo O0.5" ? top.p.prob_over05_ht
+             : probBtts(top.p);
+  const resultado = top.mkt === "Over 1.5" ? top.p.resultado_o15
+             : top.mkt === "Over 2.5" ? top.p.resultado_o25
+             : top.mkt === "BTTS + Over 2.5" ? top.p.resultado_combo
+             : top.mkt === "1er tiempo O0.5" ? top.p.resultado_over05_ht
+             : top.p.resultado_btts;
   const rightHtml = resultado === true
     ? `<div class="hero-pick-pct" style="color:var(--win);">✓ Ganada</div>`
     : resultado === false
@@ -1239,13 +1264,13 @@ function renderTarjetaPick(top, etiquetaDia){
   return `
     <div class="hero-pick-card">
       <div>
-        <span class="hero-pick-badge">${etiquetaDia} · ${top.tier}</span>
+        <span class="hero-pick-badge">${top.mkt} · ${top.tier}</span>
         <div class="hero-pick-teams">${top.p.local} vs ${top.p.visitante}</div>
         <div class="hero-pick-liga">${top.p.liga || ""}</div>
       </div>
       <div class="hero-pick-right">
         ${rightHtml}
-        <div class="hero-pick-mkt">${top.mkt}</div>
+        <div class="hero-pick-mkt">${diaBadge(top.p)}</div>
       </div>
     </div>`;
 }
@@ -1254,17 +1279,14 @@ function renderHeroPick(picks){
   const el = document.getElementById("heroPick");
   if(!el) return;
 
-  const deHoy = picks.filter(p => (p.fecha_partido || p.fecha || "").split(" ")[0] === HOY_STR);
-  const deManana = picks.filter(p => (p.fecha_partido || p.fecha || "").split(" ")[0] !== HOY_STR);
-
-  const topHoy = elegirMejorCandidato(deHoy);
-  const topManana = elegirMejorCandidato(deManana);
-
-  let html = "";
-  if(topHoy) html += renderTarjetaPick(topHoy, "🔥 Pick de hoy");
-  if(topManana) html += renderTarjetaPick(topManana, "📅 Pick de mañana");
-
-  el.innerHTML = html;
+  // Ya NO separa hoy/mañana por su cuenta - "picks" que llega aqui ya
+  // viene filtrado por la pestaña de dia que el usuario tiene
+  // seleccionada (ver render()), asi que se respeta esa eleccion en vez
+  // de imponer una propia.
+  const mejores = elegirMejoresPorMercado(picks);
+  el.innerHTML = mejores.length
+    ? mejores.map(renderTarjetaPick).join("")
+    : "";
 }
 
 function render(data){
