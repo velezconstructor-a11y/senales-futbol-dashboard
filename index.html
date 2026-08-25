@@ -379,21 +379,30 @@ function notaLigaConfianza(p){
   return "";
 }
 
-function notaRescateBtts(p){
-  // Muestra que camino especifico produjo (o intento producir) la señal
-  // de BTTS. CORREGIDO 24 ago 2026: antes exigia nivel_final==='JUGAR',
-  // pero Estadisticas ("Por que se activo JUGAR") cuenta TODOS los
-  // partidos con ese motivo, hayan llegado a JUGAR o no (una regla puede
-  // estar desactivada y el partido igual queda etiquetado, solo que en
-  // EVITAR) - con la restriccion vieja, esos partidos no mostraban
-  // ninguna nota, haciendo imposible encontrar en la lista de partidos
-  // cuales corresponden a cada linea del resumen. Ahora se muestra
-  // siempre que haya un motivo real, distinguiendo con opacidad si
-  // ademas genero JUGAR o se quedo en EVITAR.
-  const motivo = p.motivo_btts;
-  if(!motivo || motivo === "ninguno_evitar_final" || motivo === "candado_sin_cuota") return "";
-  const esRescate = motivo.startsWith("rescate_");
-  const etiquetas = {
+// AGREGADO 24 ago 2026: sacado de dentro de notaRescateBtts a constante
+// global - antes solo la usaba la nota de cada partido, y la tabla de
+// Estadisticas mostraba el nombre crudo del motivo (ej.
+// "rescate_cuota_alta_fallo_bajo") en vez de este texto legible. Ahora
+// las dos partes usan EXACTAMENTE el mismo diccionario, para que el
+// nombre del resumen y la nota del partido siempre coincidan.
+// Igual que ETIQUETAS_BTTS - sacado a global para que Estadisticas y la
+// nota de cada partido de la combinada usen el mismo texto siempre.
+const ETIQUETAS_COMBO = {
+    // "combo_btts_vipmas", "combo_original_revisar", "combo_original_vip"
+    // eliminadas 23 ago 2026 - motivos del diseño anterior a las 3 bandas
+    // (18 ago), el codigo actual ya no las genera
+    "combo_banda_baja": "banda baja (2.2-2.6, BTTS%≥55%)",
+    "combo_banda_media": "banda media (2.6-3.0, fallo≤20%)",
+    "combo_banda_alta": "banda alta (3.0-3.5, BTTS%≥55%)",
+    "combo_producto_alto": "🎯 producto 3.5-4.5",
+    "combo_producto_alto_sot": "🎯 producto 3.5-4.5 + SOT≥8",
+    "perfil_goleador_combo": "⚽ perfil goleador (CS≤15% + FTS≤15% + BTTS≥60%)",
+    // AGREGADA 24 ago 2026 - faltaba esta etiqueta desde que se creo la
+    // señal (solo seguimiento, nunca genera JUGAR real - ver signals.py)
+    "nueva_cuota_combo": "🔬 nueva cuota: GF≥2.5 + ratio cuotas≥0.95 (en prueba)",
+};
+
+const ETIQUETAS_BTTS = {
     "camino_normal_VIP+": "camino normal (VIP+)",
     "camino_normal_Stake10": "camino normal (Stake10)",
     "camino_normal_Stake10_cuota_alta": "🎯 Stake10 · cuota≥1.40",
@@ -422,8 +431,23 @@ function notaRescateBtts(p){
     "salvacion_cuota_corta": "🆘 cuota 1.44-1.55: fallo≥25% + BTTS≥55% + GC≥3.0 + xG≥2.2",
     "perfil_goleador": "⚽ perfil goleador (CS≤15% + FTS≤15% + BTTS≥60%)",
     "franja1.55-1.65_nota3var": "🎯 franja 1.55-1.65: +SOT≥9 (nota, muestra chica)",
-  };
-  const texto = etiquetas[motivo] || motivo;
+};
+
+function notaRescateBtts(p){
+  // Muestra que camino especifico produjo (o intento producir) la señal
+  // de BTTS. CORREGIDO 24 ago 2026: antes exigia nivel_final==='JUGAR',
+  // pero Estadisticas ("Por que se activo JUGAR") cuenta TODOS los
+  // partidos con ese motivo, hayan llegado a JUGAR o no (una regla puede
+  // estar desactivada y el partido igual queda etiquetado, solo que en
+  // EVITAR) - con la restriccion vieja, esos partidos no mostraban
+  // ninguna nota, haciendo imposible encontrar en la lista de partidos
+  // cuales corresponden a cada linea del resumen. Ahora se muestra
+  // siempre que haya un motivo real, distinguiendo con opacidad si
+  // ademas genero JUGAR o se quedo en EVITAR.
+  const motivo = p.motivo_btts;
+  if(!motivo || motivo === "ninguno_evitar_final" || motivo === "candado_sin_cuota") return "";
+  const esRescate = motivo.startsWith("rescate_");
+  const texto = ETIQUETAS_BTTS[motivo] || motivo;
   const color = esRescate ? "var(--amber)" : "var(--chalk-dim)";
   const opacidad = p.nivel_final === "JUGAR" ? "1" : "0.6";
   return ` · <span title="Por que se activo esta señal de BTTS" style="color:${color};opacity:${opacidad};">${texto}</span>`;
@@ -792,17 +816,6 @@ function renderCombo(picks){
   const DESCUENTO_CORRELACION = 0.275;
   const probDe = (p) => p.prob_combo_calibrada != null ? p.prob_combo_calibrada
                        : (p.prob_combo_v2 != null ? p.prob_combo_v2 : null);
-  const motivoTxt = {
-    // "combo_btts_vipmas", "combo_original_revisar", "combo_original_vip"
-    // eliminadas 23 ago 2026 - motivos del diseño anterior a las 3 bandas
-    // (18 ago), el codigo actual ya no las genera
-    "combo_banda_baja": "banda baja (2.2-2.6, BTTS%≥55%)",
-    "combo_banda_media": "banda media (2.6-3.0, fallo≤20%)",
-    "combo_banda_alta": "banda alta (3.0-3.5, BTTS%≥55%)",
-    "combo_producto_alto": "🎯 producto 3.5-4.5",
-    "combo_producto_alto_sot": "🎯 producto 3.5-4.5 + SOT≥8",
-    "perfil_goleador_combo": "⚽ perfil goleador (CS≤15% + FTS≤15% + BTTS≥60%)",
-  };
   const fila = (p) => {
     const cuotaProducto = (p.cuota_btts && p.cuota_o25) ? (p.cuota_btts * p.cuota_o25) : null;
     const cuotaCombo = cuotaProducto ? (1 + (cuotaProducto - 1) * (1 - DESCUENTO_CORRELACION)).toFixed(2) : "—";
@@ -811,7 +824,7 @@ function renderCombo(picks){
     if(resultado === true){ badgeClass = "ganada"; badgeTxt = "✓ Ganada"; }
     else if(resultado === false){ badgeClass = "perdida"; badgeTxt = "✕ Perdida"; }
     else { badgeClass = p.senal_btts_o25 === 'VIP' ? 'si' : 'no'; badgeTxt = p.senal_btts_o25 === 'VIP' ? 'VIP' : (p.senal_btts_o25 || 'Sin datos'); }
-    const motivo = motivoTxt[p.motivo_combo] ? ` · <span style="color:var(--amber);">${motivoTxt[p.motivo_combo]}</span>` : (p.motivo_combo && p.motivo_combo !== "ninguno_evitar_combo" ? ` · <span style="color:var(--amber);">${p.motivo_combo}</span>` : "");
+    const motivo = ETIQUETAS_COMBO[p.motivo_combo] ? ` · <span style="color:var(--amber);">${ETIQUETAS_COMBO[p.motivo_combo]}</span>` : (p.motivo_combo && p.motivo_combo !== "ninguno_evitar_combo" ? ` · <span style="color:var(--amber);">${p.motivo_combo}</span>` : "");
     const probCombo = probDe(p);
     const probTxt = probCombo != null ? ` · ${(probCombo*100).toFixed(0)}%` : "";
     return `
@@ -961,16 +974,18 @@ function renderCmpTable(comparativo){
   return `<table class="cmp-table"><thead><tr><th>Mercado</th><th class="num">Hoy</th><th class="num">7 días</th><th class="num">Histórico</th></tr></thead><tbody>${filas}</tbody></table>`;
 }
 
-function renderBars(dictHist, orden){
+function renderBars(dictHist, orden, etiquetas){
+  etiquetas = etiquetas || {};
   const nombres = orden.filter(n => dictHist[n] && (dictHist[n].total_detectado ?? nOf(dictHist[n])) > 0);
   if(nombres.length === 0) return '<div class="empty">Sin datos todavía en esta sección.</div>';
   return '<div class="bars">' + nombres.map(nombre => {
     const st = dictHist[nombre];
+    const textoLabel = etiquetas[nombre] || nombre;
     const totalDetectado = st.total_detectado ?? nOf(st);
     const pendientes = totalDetectado - nOf(st);
     const notaPend = pendientes > 0 ? ` <span style="color:var(--chalk-dim);">(+${pendientes} pend.)</span>` : "";
     if(nOf(st) === 0){
-      return `<div class="bar-row"><span class="bar-label">${nombre}</span><div class="bar-track"></div><span class="bar-num">sin resultado${notaPend}</span></div>`;
+      return `<div class="bar-row"><span class="bar-label">${textoLabel}</span><div class="bar-track"></div><span class="bar-num">sin resultado${notaPend}</span></div>`;
     }
     const pct = st.acierto_pct ?? 0;
     const cls = statusClass(st);
@@ -983,7 +998,7 @@ function renderBars(dictHist, orden){
     const roiTxt = (st.profit_u != null && nOf(st) > 0)
       ? ` · <span style="color:${st.profit_u >= 0 ? 'var(--win)' : 'var(--loss)'};">${st.profit_u >= 0 ? '+' : ''}${st.profit_u.toFixed(1)}u (${(st.profit_u/nOf(st)*100).toFixed(0)}%)</span>`
       : "";
-    return `<div class="bar-row"><span class="bar-label">${nombre}</span><div class="bar-track"><div class="bar-fill ${cls}" style="width:${pct}%"></div></div><span class="bar-num">${pctTxt(st, true)}${roiTxt}${notaPend}</span></div>`;
+    return `<div class="bar-row"><span class="bar-label">${textoLabel}</span><div class="bar-track"><div class="bar-fill ${cls}" style="width:${pct}%"></div></div><span class="bar-num">${pctTxt(st, true)}${roiTxt}${notaPend}</span></div>`;
   }).join("") + '</div>';
 }
 
@@ -1154,11 +1169,11 @@ function renderEstadisticas(data){
       <p class="section-title">Detalle</p>
       <div class="grid2">
         <div><p class="bar-label" style="margin-bottom:10px;">Por categoría BTTS</p>${renderBars(comparativo.historico.categorias, CATEGORIA_ORDEN)}</div>
-        <div><p class="bar-label" style="margin-bottom:10px;">Por qué se activó JUGAR (BTTS)</p>${renderBars(comparativo.historico.motivos || {}, Object.keys(comparativo.historico.motivos || {}))}</div>
+        <div><p class="bar-label" style="margin-bottom:10px;">Por qué se activó JUGAR (BTTS)</p>${renderBars(comparativo.historico.motivos || {}, Object.keys(comparativo.historico.motivos || {}), ETIQUETAS_BTTS)}</div>
         <div><p class="bar-label" style="margin-bottom:10px;">Por qué se activó JUGAR (Over 1.5)</p>${renderBars(comparativo.historico.motivos_o15 || {}, Object.keys(comparativo.historico.motivos_o15 || {}))}</div>
         <div><p class="bar-label" style="margin-bottom:10px;">Por qué se activó JUGAR (Over 2.5)</p>${renderBars(comparativo.historico.motivos_o25 || {}, Object.keys(comparativo.historico.motivos_o25 || {}))}</div>
         <div><p class="bar-label" style="margin-bottom:10px;">Por qué se activó JUGAR (1er tiempo O0.5)</p>${renderBars(comparativo.historico.motivos_ht05 || {}, Object.keys(comparativo.historico.motivos_ht05 || {}))}</div>
-        <div><p class="bar-label" style="margin-bottom:10px;">Por qué se activó JUGAR (Combinada BTTS+O2.5)</p>${renderBars(comparativo.historico.motivos_combo || {}, Object.keys(comparativo.historico.motivos_combo || {}))}</div>
+        <div><p class="bar-label" style="margin-bottom:10px;">Por qué se activó JUGAR (Combinada BTTS+O2.5)</p>${renderBars(comparativo.historico.motivos_combo || {}, Object.keys(comparativo.historico.motivos_combo || {}), ETIQUETAS_COMBO)}</div>
         <div><p class="bar-label" style="margin-bottom:10px;">Nota: BTTS% ambos altos (⭐, todavía no filtra) — dentro de partidos JUGAR de BTTS</p>${renderBars(comparativo.historico.nota_btts_min_alto || {}, ["cumple_nota","no_cumple_nota"])}</div>
       </div>
     </section>
