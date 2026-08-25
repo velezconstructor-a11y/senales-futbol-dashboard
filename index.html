@@ -374,12 +374,18 @@ function notaLigaConfianza(p){
 }
 
 function notaRescateBtts(p){
-  // Muestra que camino especifico produjo el JUGAR de BTTS - especialmente
-  // util para distinguir un rescate (partido que el modelo normal
-  // marcaba Evitar, pero otra regla lo convirtio a JUGAR) de un camino
-  // normal (VIP+/VIP/Fuerte/Stake10 directo).
+  // Muestra que camino especifico produjo (o intento producir) la señal
+  // de BTTS. CORREGIDO 24 ago 2026: antes exigia nivel_final==='JUGAR',
+  // pero Estadisticas ("Por que se activo JUGAR") cuenta TODOS los
+  // partidos con ese motivo, hayan llegado a JUGAR o no (una regla puede
+  // estar desactivada y el partido igual queda etiquetado, solo que en
+  // EVITAR) - con la restriccion vieja, esos partidos no mostraban
+  // ninguna nota, haciendo imposible encontrar en la lista de partidos
+  // cuales corresponden a cada linea del resumen. Ahora se muestra
+  // siempre que haya un motivo real, distinguiendo con opacidad si
+  // ademas genero JUGAR o se quedo en EVITAR.
   const motivo = p.motivo_btts;
-  if(!motivo || p.nivel_final !== "JUGAR") return "";
+  if(!motivo || motivo === "ninguno_evitar_final" || motivo === "candado_sin_cuota") return "";
   const esRescate = motivo.startsWith("rescate_");
   const etiquetas = {
     "camino_normal_VIP+": "camino normal (VIP+)",
@@ -413,7 +419,8 @@ function notaRescateBtts(p){
   };
   const texto = etiquetas[motivo] || motivo;
   const color = esRescate ? "var(--amber)" : "var(--chalk-dim)";
-  return ` · <span title="Por que se activo esta señal de BTTS" style="color:${color};">${texto}</span>`;
+  const opacidad = p.nivel_final === "JUGAR" ? "1" : "0.6";
+  return ` · <span title="Por que se activo esta señal de BTTS" style="color:${color};opacity:${opacidad};">${texto}</span>`;
 }
 
 // AGREGADO 24 ago 2026: equivalente de notaRescateBtts, pero para Over
