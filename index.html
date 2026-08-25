@@ -264,9 +264,15 @@
   .chart-wrap{position:relative;height:220px;}
 
   .bars{display:flex;flex-direction:column;gap:10px;}
-  .bar-row{display:grid;grid-template-columns:140px 1fr auto;align-items:center;gap:12px;font-size:13px;}
-  .bar-label{color:var(--chalk-dim);font-family:var(--mono);font-size:12px;}
-  .bar-track{height:8px;background:var(--pitch-700);border-radius:4px;overflow:hidden;}
+  /* CORREGIDO 24 ago 2026: nombres largos (ej. perfil_defensa_doble_floja,
+     rescate_evitar_edge_bajo_prob_baja) desbordaban la columna fija de
+     140px y se montaban sobre la barra de progreso, haciendolos
+     ilegibles. Se ensancha la columna y se permite pasar a 2 lineas en
+     vez de desbordarse, alineando arriba (no al centro) para que se vea
+     bien tanto con nombres cortos como largos. */
+  .bar-row{display:grid;grid-template-columns:170px 1fr auto;align-items:start;gap:12px;font-size:13px;padding:3px 0;}
+  .bar-label{color:var(--chalk-dim);font-family:var(--mono);font-size:12px;white-space:normal;word-break:break-word;line-height:1.35;padding-top:2px;}
+  .bar-track{height:8px;background:var(--pitch-700);border-radius:4px;overflow:hidden;margin-top:6px;}
   .bar-fill{height:100%;border-radius:4px;}
   .bar-fill.win{background:var(--win);}
   .bar-fill.loss{background:var(--loss);}
