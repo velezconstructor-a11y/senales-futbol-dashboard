@@ -1,23 +1,22 @@
 {
-  "actualizado": "2026-08-25T18:51:16.942718-05:00",
+  "actualizado": "2026-08-25T20:43:40.463665-05:00",
   "hoy_referencia": "2026-08-25",
   "manana_referencia": "2026-08-26",
   "pasado_manana_referencia": "2026-08-27",
   "umbral_movimiento_pp": 4.0,
   "confianza_por_liga": {
-    "Bolivia LFPB": "alta",
     "Brazil Serie A": "alta"
   },
   "comparativo": {
     "hoy": {
       "mercados": {
         "BTTS": {
-          "bets": 8,
+          "bets": 9,
           "wins": 4,
-          "acierto_pct": 50.0,
-          "profit_u": -1.0300000000000002,
-          "roi_pct": -12.875000000000004,
-          "cuota_prom": 1.6675
+          "acierto_pct": 44.44444444444444,
+          "profit_u": -2.0300000000000002,
+          "roi_pct": -22.55555555555556,
+          "cuota_prom": 1.6455555555555557
         },
         "Over 1.5": {
           "bets": 3,
@@ -44,12 +43,12 @@
           "cuota_prom": 2.452055588235294
         },
         "Over 0.5 1er tiempo": {
-          "bets": 12,
-          "wins": 10,
-          "acierto_pct": 83.33333333333334,
-          "profit_u": 0.21999999999999945,
-          "roi_pct": 1.8333333333333288,
-          "cuota_prom": 1.2158333333333333
+          "bets": 13,
+          "wins": 11,
+          "acierto_pct": 84.61538461538461,
+          "profit_u": 0.5099999999999995,
+          "roi_pct": 3.923076923076919,
+          "cuota_prom": 1.2215384615384615
         }
       },
       "categorias": {
@@ -190,12 +189,12 @@
           "activa": true
         },
         "salvacion_cuota_corta": {
-          "total": 0,
+          "total": 1,
           "ganados": 0,
-          "acierto_pct": null,
-          "profit_u": 0.0,
+          "acierto_pct": 0.0,
+          "profit_u": -1.0,
           "total_detectado": 1,
-          "activa": null
+          "activa": true
         },
         "franja1.8-1.9_plata": {
           "total": 0,
@@ -324,18 +323,18 @@
           "activa": null
         },
         "ninguno_evitar_ht05": {
-          "total": 35,
-          "ganados": 28,
-          "acierto_pct": 80.0,
+          "total": 37,
+          "ganados": 30,
+          "acierto_pct": 81.08108108108108,
           "profit_u": 0.0,
           "total_detectado": 121,
           "activa": false
         },
         "camino_normal_ht05": {
-          "total": 12,
-          "ganados": 10,
-          "acierto_pct": 83.33333333333334,
-          "profit_u": 0.21999999999999933,
+          "total": 13,
+          "ganados": 11,
+          "acierto_pct": 84.61538461538461,
+          "profit_u": 0.5099999999999993,
           "total_detectado": 38,
           "activa": true
         }
@@ -390,12 +389,12 @@
           "activa": false
         },
         "combo_banda_baja": {
-          "total": 0,
+          "total": 1,
           "ganados": 0,
-          "acierto_pct": null,
+          "acierto_pct": 0.0,
           "profit_u": 0.0,
           "total_detectado": 3,
-          "activa": null
+          "activa": false
         }
       },
       "reglas_activas_actuales": {
@@ -455,19 +454,19 @@
         }
       },
       "marcador_exacto": {
-        "total": 51,
+        "total": 54,
         "aciertos": 2,
-        "acierto_pct": 3.9215686274509802
+        "acierto_pct": 3.7037037037037033
       },
       "calibracion": {
         "BTTS": [
           {
             "rango": "50-60%",
-            "total": 26,
+            "total": 28,
             "aciertos": 16,
-            "acierto_pct": 61.53846153846154,
-            "prob_dicha_prom": 52.29806230570101,
-            "diferencia": 9.24039923276053
+            "acierto_pct": 57.14285714285714,
+            "prob_dicha_prom": 52.36903510456524,
+            "diferencia": 4.773822038291897
           },
           {
             "rango": "60-70%",
@@ -489,19 +488,19 @@
         "Over 1.5": [
           {
             "rango": "60-70%",
-            "total": 4,
-            "aciertos": 3,
-            "acierto_pct": 75.0,
-            "prob_dicha_prom": 64.13698420358106,
-            "diferencia": 10.863015796418935
+            "total": 6,
+            "aciertos": 5,
+            "acierto_pct": 83.33333333333334,
+            "prob_dicha_prom": 65.58671321365483,
+            "diferencia": 17.74662011967851
           },
           {
             "rango": "70-80%",
-            "total": 31,
-            "aciertos": 23,
-            "acierto_pct": 74.19354838709677,
-            "prob_dicha_prom": 76.06815492998025,
-            "diferencia": -1.874606542883484
+            "total": 32,
+            "aciertos": 24,
+            "acierto_pct": 75.0,
+            "prob_dicha_prom": 75.98964007072959,
+            "diferencia": -0.9896400707295925
           },
           {
             "rango": "80-90%",
@@ -557,11 +556,11 @@
         "Over 0.5 1er tiempo": [
           {
             "rango": "60-70%",
-            "total": 16,
-            "aciertos": 12,
-            "acierto_pct": 75.0,
-            "prob_dicha_prom": 67.77425545655834,
-            "diferencia": 7.225744543441664
+            "total": 19,
+            "aciertos": 15,
+            "acierto_pct": 78.94736842105263,
+            "prob_dicha_prom": 67.86934206383636,
+            "diferencia": 11.078026357216274
           },
           {
             "rango": "70-80%",
@@ -609,22 +608,22 @@
           "acierto_pct": null
         },
         "sin_movimiento": {
-          "total": 30,
+          "total": 31,
           "aciertos": 21,
-          "acierto_pct": 70.0
+          "acierto_pct": 67.74193548387096
         }
       },
-      "total_partidos_evaluados": 51
+      "total_partidos_evaluados": 54
     },
     "recientes": {
       "mercados": {
         "BTTS": {
-          "bets": 86,
+          "bets": 87,
           "wins": 44,
-          "acierto_pct": 51.162790697674424,
-          "profit_u": -11.270000000000001,
-          "roi_pct": -13.104651162790699,
-          "cuota_prom": 1.7132558139534881
+          "acierto_pct": 50.57471264367817,
+          "profit_u": -12.270000000000001,
+          "roi_pct": -14.103448275862071,
+          "cuota_prom": 1.7104597701149422
         },
         "Over 1.5": {
           "bets": 30,
@@ -651,12 +650,12 @@
           "cuota_prom": 2.415855089285714
         },
         "Over 0.5 1er tiempo": {
-          "bets": 328,
-          "wins": 242,
-          "acierto_pct": 73.78048780487805,
-          "profit_u": -19.520000000000024,
-          "roi_pct": -5.951219512195129,
-          "cuota_prom": 1.28125
+          "bets": 329,
+          "wins": 243,
+          "acierto_pct": 73.86018237082067,
+          "profit_u": -19.230000000000025,
+          "roi_pct": -5.844984802431618,
+          "cuota_prom": 1.2812765957446808
         }
       },
       "categorias": {
@@ -869,12 +868,12 @@
           "activa": true
         },
         "salvacion_cuota_corta": {
-          "total": 0,
+          "total": 1,
           "ganados": 0,
-          "acierto_pct": null,
-          "profit_u": 0.0,
+          "acierto_pct": 0.0,
+          "profit_u": -1.0,
           "total_detectado": 1,
-          "activa": null
+          "activa": true
         },
         "franja1.65-1.80_base": {
           "total": 0,
@@ -971,17 +970,17 @@
       },
       "motivos_ht05": {
         "camino_normal_ht05": {
-          "total": 328,
-          "ganados": 242,
-          "acierto_pct": 73.78048780487805,
-          "profit_u": -19.520000000000003,
+          "total": 329,
+          "ganados": 243,
+          "acierto_pct": 73.86018237082067,
+          "profit_u": -19.230000000000004,
           "total_detectado": 354,
           "activa": true
         },
         "ninguno_evitar_ht05": {
-          "total": 508,
-          "ganados": 352,
-          "acierto_pct": 69.29133858267717,
+          "total": 510,
+          "ganados": 354,
+          "acierto_pct": 69.41176470588235,
           "profit_u": 0.0,
           "total_detectado": 711,
           "activa": false
@@ -997,9 +996,9 @@
       },
       "motivos_combo": {
         "combo_banda_baja": {
-          "total": 40,
+          "total": 41,
           "ganados": 15,
-          "acierto_pct": 37.5,
+          "acierto_pct": 36.58536585365854,
           "profit_u": -6.433915,
           "total_detectado": 43,
           "activa": false
@@ -1110,19 +1109,19 @@
         }
       },
       "marcador_exacto": {
-        "total": 1025,
+        "total": 1028,
         "aciertos": 94,
-        "acierto_pct": 9.170731707317072
+        "acierto_pct": 9.14396887159533
       },
       "calibracion": {
         "BTTS": [
           {
             "rango": "50-60%",
-            "total": 522,
+            "total": 524,
             "aciertos": 289,
-            "acierto_pct": 55.3639846743295,
-            "prob_dicha_prom": 54.04516018373122,
-            "diferencia": 1.3188244905982813
+            "acierto_pct": 55.152671755725194,
+            "prob_dicha_prom": 54.04228431085362,
+            "diferencia": 1.1103874448715771
           },
           {
             "rango": "60-70%",
@@ -1144,19 +1143,19 @@
         "Over 1.5": [
           {
             "rango": "60-70%",
-            "total": 29,
-            "aciertos": 17,
-            "acierto_pct": 58.620689655172406,
-            "prob_dicha_prom": 66.74987513233238,
-            "diferencia": -8.129185477159972
+            "total": 31,
+            "aciertos": 19,
+            "acierto_pct": 61.29032258064516,
+            "prob_dicha_prom": 66.86189423565303,
+            "diferencia": -5.571571655007865
           },
           {
             "rango": "70-80%",
-            "total": 222,
-            "aciertos": 160,
-            "acierto_pct": 72.07207207207207,
-            "prob_dicha_prom": 75.7802223040264,
-            "diferencia": -3.7081502319543205
+            "total": 223,
+            "aciertos": 161,
+            "acierto_pct": 72.19730941704036,
+            "prob_dicha_prom": 75.77024677546106,
+            "diferencia": -3.5729373584207025
           },
           {
             "rango": "80-90%",
@@ -1212,11 +1211,11 @@
         "Over 0.5 1er tiempo": [
           {
             "rango": "60-70%",
-            "total": 138,
-            "aciertos": 96,
-            "acierto_pct": 69.56521739130434,
-            "prob_dicha_prom": 68.02374997048226,
-            "diferencia": 1.5414674208220873
+            "total": 141,
+            "aciertos": 99,
+            "acierto_pct": 70.2127659574468,
+            "prob_dicha_prom": 68.03125466549298,
+            "diferencia": 2.181511291953825
           },
           {
             "rango": "70-80%",
@@ -1292,6 +1291,15 @@
           "confianza": null
         },
         {
+          "liga": "Bolivia LFPB",
+          "total": 3,
+          "ganados": 2,
+          "acierto_pct": 66.66666666666666,
+          "profit_u": 0.27,
+          "roi_pct": 9.000000000000002,
+          "confianza": null
+        },
+        {
           "liga": "Scotland Challenge Cup",
           "total": 3,
           "ganados": 2,
@@ -1308,22 +1316,22 @@
           "acierto_pct": 60.0
         },
         "sin_movimiento": {
-          "total": 146,
+          "total": 147,
           "aciertos": 88,
-          "acierto_pct": 60.273972602739725
+          "acierto_pct": 59.863945578231295
         }
       },
-      "total_partidos_evaluados": 1025
+      "total_partidos_evaluados": 1028
     },
     "historico": {
       "mercados": {
         "BTTS": {
-          "bets": 566,
+          "bets": 567,
           "wins": 311,
-          "acierto_pct": 54.946996466431095,
-          "profit_u": -60.50999999999998,
-          "roi_pct": -10.690812720848053,
-          "cuota_prom": 1.6411307420494698
+          "acierto_pct": 54.85008818342152,
+          "profit_u": -61.50999999999998,
+          "roi_pct": -10.848324514991177,
+          "cuota_prom": 1.6408289241622576
         },
         "Over 1.5": {
           "bets": 746,
@@ -1350,12 +1358,12 @@
           "cuota_prom": 2.137463540609137
         },
         "Over 0.5 1er tiempo": {
-          "bets": 908,
-          "wins": 664,
-          "acierto_pct": 73.12775330396477,
-          "profit_u": -61.92000000000011,
-          "roi_pct": -6.8193832599119055,
-          "cuota_prom": 1.2812775330396478
+          "bets": 909,
+          "wins": 665,
+          "acierto_pct": 73.15731573157316,
+          "profit_u": -61.63000000000011,
+          "roi_pct": -6.779977997799793,
+          "cuota_prom": 1.2812871287128713
         }
       },
       "categorias": {
@@ -1568,12 +1576,12 @@
           "activa": true
         },
         "salvacion_cuota_corta": {
-          "total": 0,
+          "total": 1,
           "ganados": 0,
-          "acierto_pct": null,
-          "profit_u": 0.0,
+          "acierto_pct": 0.0,
+          "profit_u": -1.0,
           "total_detectado": 1,
-          "activa": null
+          "activa": true
         },
         "franja1.65-1.80_base": {
           "total": 0,
@@ -1670,17 +1678,17 @@
       },
       "motivos_ht05": {
         "camino_normal_ht05": {
-          "total": 908,
-          "ganados": 664,
-          "acierto_pct": 73.12775330396477,
-          "profit_u": -61.920000000000016,
+          "total": 909,
+          "ganados": 665,
+          "acierto_pct": 73.15731573157316,
+          "profit_u": -61.63000000000002,
           "total_detectado": 934,
           "activa": true
         },
         "ninguno_evitar_ht05": {
-          "total": 1383,
-          "ganados": 954,
-          "acierto_pct": 68.98047722342733,
+          "total": 1385,
+          "ganados": 956,
+          "acierto_pct": 69.02527075812274,
           "profit_u": 0.0,
           "total_detectado": 1749,
           "activa": false
@@ -1696,9 +1704,9 @@
       },
       "motivos_combo": {
         "combo_banda_baja": {
-          "total": 40,
+          "total": 41,
           "ganados": 15,
-          "acierto_pct": 37.5,
+          "acierto_pct": 36.58536585365854,
           "profit_u": -6.433915,
           "total_detectado": 43,
           "activa": false
@@ -1809,19 +1817,19 @@
         }
       },
       "marcador_exacto": {
-        "total": 3591,
+        "total": 3594,
         "aciertos": 369,
-        "acierto_pct": 10.275689223057643
+        "acierto_pct": 10.267111853088482
       },
       "calibracion": {
         "BTTS": [
           {
             "rango": "50-60%",
-            "total": 543,
+            "total": 545,
             "aciertos": 301,
-            "acierto_pct": 55.432780847145494,
-            "prob_dicha_prom": 54.09362806570852,
-            "diferencia": 1.3391527814369724
+            "acierto_pct": 55.22935779816513,
+            "prob_dicha_prom": 54.09068514249418,
+            "diferencia": 1.1386726556709519
           },
           {
             "rango": "60-70%",
@@ -1843,19 +1851,19 @@
         "Over 1.5": [
           {
             "rango": "60-70%",
-            "total": 29,
-            "aciertos": 17,
-            "acierto_pct": 58.620689655172406,
-            "prob_dicha_prom": 66.74987513233238,
-            "diferencia": -8.129185477159972
+            "total": 31,
+            "aciertos": 19,
+            "acierto_pct": 61.29032258064516,
+            "prob_dicha_prom": 66.86189423565303,
+            "diferencia": -5.571571655007865
           },
           {
             "rango": "70-80%",
-            "total": 222,
-            "aciertos": 160,
-            "acierto_pct": 72.07207207207207,
-            "prob_dicha_prom": 75.7802223040264,
-            "diferencia": -3.7081502319543205
+            "total": 223,
+            "aciertos": 161,
+            "acierto_pct": 72.19730941704036,
+            "prob_dicha_prom": 75.77024677546106,
+            "diferencia": -3.5729373584207025
           },
           {
             "rango": "80-90%",
@@ -1911,11 +1919,11 @@
         "Over 0.5 1er tiempo": [
           {
             "rango": "60-70%",
-            "total": 138,
-            "aciertos": 96,
-            "acierto_pct": 69.56521739130434,
-            "prob_dicha_prom": 68.02374997048226,
-            "diferencia": 1.5414674208220873
+            "total": 141,
+            "aciertos": 99,
+            "acierto_pct": 70.2127659574468,
+            "prob_dicha_prom": 68.03125466549298,
+            "diferencia": 2.181511291953825
           },
           {
             "rango": "70-80%",
@@ -2540,6 +2548,15 @@
           "confianza": null
         },
         {
+          "liga": "Bolivia LFPB",
+          "total": 17,
+          "ganados": 12,
+          "acierto_pct": 70.58823529411765,
+          "profit_u": 1.0899999999999994,
+          "roi_pct": 6.41176470588235,
+          "confianza": null
+        },
+        {
           "liga": "Netherlands Eerste Divisie",
           "total": 7,
           "ganados": 5,
@@ -2556,15 +2573,6 @@
           "profit_u": 3.88,
           "roi_pct": 35.27272727272727,
           "confianza": null
-        },
-        {
-          "liga": "Bolivia LFPB",
-          "total": 16,
-          "ganados": 12,
-          "acierto_pct": 75.0,
-          "profit_u": 2.0899999999999994,
-          "roi_pct": 13.062499999999996,
-          "confianza": "alta"
         },
         {
           "liga": "Denmark 1st Division",
@@ -2700,12 +2708,12 @@
           "acierto_pct": 67.24137931034483
         },
         "sin_movimiento": {
-          "total": 1447,
+          "total": 1448,
           "aciertos": 953,
-          "acierto_pct": 65.860400829302
+          "acierto_pct": 65.81491712707182
         }
       },
-      "total_partidos_evaluados": 3649
+      "total_partidos_evaluados": 3652
     }
   },
   "serie_diaria": [
@@ -2928,10 +2936,10 @@
     },
     {
       "fecha": "2026-08-25",
-      "bets": 7,
+      "bets": 8,
       "wins": 3,
-      "profit_u": -1.98,
-      "acierto_pct": 42.9
+      "profit_u": -2.98,
+      "acierto_pct": 37.5
     }
   ],
   "picks_hoy": [
@@ -3016,8 +3024,8 @@
       "prob_btts": 0.5115965735259443,
       "prob_btts_calibrada": 0.508748255241056,
       "btts_min_alto": null,
-      "cuota_btts": 1.91,
-      "cuota_btts_actual": 1.91,
+      "cuota_btts": 1.87,
+      "cuota_btts_actual": 1.87,
       "movimiento_btts_pp": null,
       "resultado_btts": null,
       "senal_o15_tier": "Fuerte",
@@ -3033,7 +3041,7 @@
       "motivo_o25": "ninguno_evitar_o25",
       "prob_o25": 0.5412742180975636,
       "cuota_o25": 2.25,
-      "cuota_o25_actual": 2.25,
+      "cuota_o25_actual": 2.31,
       "movimiento_o25_pp": null,
       "resultado_o25": null,
       "senal_btts_o25": "VIP",
@@ -3067,8 +3075,8 @@
       "cuota_ht_over05": 1.46,
       "cuota_ht_over15": 3.18,
       "resultado_over15_ht": null,
-      "cuota_ht_over05_actual": 1.48,
-      "movimiento_ht05_pp": -0.9255831173639373,
+      "cuota_ht_over05_actual": 1.46,
+      "movimiento_ht05_pp": 0.0,
       "resultado_ht05": null
     },
     {
@@ -4311,7 +4319,7 @@
       "cuota_btts": 2.03,
       "cuota_btts_actual": 2.03,
       "movimiento_btts_pp": null,
-      "resultado_btts": null,
+      "resultado_btts": true,
       "senal_o15_tier": "Fuerte",
       "sug_o15": "EVITAR",
       "motivo_o15": "ninguno_evitar_o15",
@@ -4319,7 +4327,7 @@
       "cuota_o15": 1.46,
       "cuota_o15_actual": 1.48,
       "movimiento_o15_pp": null,
-      "resultado_o15": null,
+      "resultado_o15": true,
       "senal_o25": "Evitar",
       "sug_o25": "EVITAR",
       "motivo_o25": "ninguno_evitar_o25",
@@ -4327,15 +4335,15 @@
       "cuota_o25": 2.38,
       "cuota_o25_actual": 2.36,
       "movimiento_o25_pp": null,
-      "resultado_o25": null,
+      "resultado_o25": true,
       "senal_btts_o25": "—",
       "motivo_combo": "ninguno_evitar_combo",
-      "resultado_combo": null,
+      "resultado_combo": true,
       "vip_elite": null,
       "oro": null,
       "nivel_confianza": null,
       "marcador_exacto_sugerido": "1-1",
-      "marcador_exacto_real": null,
+      "marcador_exacto_real": "2-1",
       "usa_temporada_anterior": false,
       "usa_promedio_general": false,
       "es_equipo_filial": false,
@@ -4358,10 +4366,10 @@
       "mejora_o25_pct": null,
       "cuota_ht_over05": 1.47,
       "cuota_ht_over15": 3.3,
-      "resultado_over15_ht": null,
+      "resultado_over15_ht": false,
       "cuota_ht_over05_actual": 1.5,
       "movimiento_ht05_pp": null,
-      "resultado_ht05": null
+      "resultado_ht05": true
     },
     {
       "fecha": "2026-08-25",
@@ -4379,7 +4387,7 @@
       "cuota_btts": 2.05,
       "cuota_btts_actual": 2.05,
       "movimiento_btts_pp": null,
-      "resultado_btts": null,
+      "resultado_btts": false,
       "senal_o15_tier": "Fuerte",
       "sug_o15": "EVITAR",
       "motivo_o15": "ninguno_evitar_o15",
@@ -4387,7 +4395,7 @@
       "cuota_o15": 1.44,
       "cuota_o15_actual": 1.44,
       "movimiento_o15_pp": null,
-      "resultado_o15": null,
+      "resultado_o15": true,
       "senal_o25": "Evitar",
       "sug_o25": "EVITAR",
       "motivo_o25": "ninguno_evitar_o25",
@@ -4395,15 +4403,15 @@
       "cuota_o25": 2.5,
       "cuota_o25_actual": 2.5,
       "movimiento_o25_pp": null,
-      "resultado_o25": null,
+      "resultado_o25": true,
       "senal_btts_o25": "—",
       "motivo_combo": "ninguno_evitar_combo",
-      "resultado_combo": null,
+      "resultado_combo": false,
       "vip_elite": null,
       "oro": null,
       "nivel_confianza": null,
       "marcador_exacto_sugerido": "1-1",
-      "marcador_exacto_real": null,
+      "marcador_exacto_real": "3-0",
       "usa_temporada_anterior": false,
       "usa_promedio_general": false,
       "es_equipo_filial": false,
@@ -4426,10 +4434,10 @@
       "mejora_o25_pct": null,
       "cuota_ht_over05": 1.5,
       "cuota_ht_over15": 3.4,
-      "resultado_over15_ht": null,
+      "resultado_over15_ht": true,
       "cuota_ht_over05_actual": 1.52,
       "movimiento_ht05_pp": null,
-      "resultado_ht05": null
+      "resultado_ht05": true
     },
     {
       "fecha": "2026-08-25",
@@ -9425,7 +9433,7 @@
       "motivo_o25": "ninguno_evitar_o25",
       "prob_o25": 0.5203905760789129,
       "cuota_o25": 0.0,
-      "cuota_o25_actual": 1.84,
+      "cuota_o25_actual": 2.08,
       "movimiento_o25_pp": null,
       "resultado_o25": null,
       "senal_btts_o25": "—",
@@ -9757,7 +9765,7 @@
       "motivo_o15": "ninguno_evitar_o15",
       "prob_o15": 0.7280832735735543,
       "cuota_o15": 0.0,
-      "cuota_o15_actual": 1.4,
+      "cuota_o15_actual": 1.35,
       "movimiento_o15_pp": null,
       "resultado_o15": null,
       "senal_o25": "Evitar",
@@ -9799,7 +9807,7 @@
       "cuota_ht_over05": 0.0,
       "cuota_ht_over15": 0.0,
       "resultado_over15_ht": null,
-      "cuota_ht_over05_actual": 1.52,
+      "cuota_ht_over05_actual": 1.42,
       "movimiento_ht05_pp": null,
       "resultado_ht05": null
     },
@@ -9816,8 +9824,8 @@
       "prob_btts": 0.4468483464716313,
       "prob_btts_calibrada": 0.4583777647236225,
       "btts_min_alto": null,
-      "cuota_btts": 1.73,
-      "cuota_btts_actual": 1.73,
+      "cuota_btts": 1.8,
+      "cuota_btts_actual": 1.8,
       "movimiento_btts_pp": null,
       "resultado_btts": null,
       "senal_o15_tier": "Evitar",
@@ -9825,7 +9833,7 @@
       "motivo_o15": "ninguno_evitar_o15",
       "prob_o15": 0.6700326421062638,
       "cuota_o15": 1.44,
-      "cuota_o15_actual": 1.3,
+      "cuota_o15_actual": 1.28,
       "movimiento_o15_pp": null,
       "resultado_o15": null,
       "senal_o25": "Evitar",
@@ -10691,7 +10699,7 @@
       "fecha": "2026-08-25",
       "fecha_partido": "2026-08-26",
       "liga": "Bolivia LFPB",
-      "liga_confianza": "alta",
+      "liga_confianza": null,
       "local": "Club Real Potosí",
       "visitante": "CD Real Tomayapo",
       "senal_btts_optimizada": "Evitar",
@@ -10759,7 +10767,7 @@
       "fecha": "2026-08-25",
       "fecha_partido": "2026-08-27",
       "liga": "Bolivia LFPB",
-      "liga_confianza": "alta",
+      "liga_confianza": null,
       "local": "Club Independiente Petrolero",
       "visitante": "CD Guabirá",
       "senal_btts_optimizada": "Evitar",
@@ -10827,7 +10835,7 @@
       "fecha": "2026-08-25",
       "fecha_partido": "2026-08-25",
       "liga": "Bolivia LFPB",
-      "liga_confianza": "alta",
+      "liga_confianza": null,
       "local": "Universitario de Vinto",
       "visitante": "CA Nacional Potosí",
       "senal_btts_optimizada": "Evitar",
@@ -10839,7 +10847,7 @@
       "cuota_btts": 1.5,
       "cuota_btts_actual": 1.5,
       "movimiento_btts_pp": -1.3605442176870763,
-      "resultado_btts": null,
+      "resultado_btts": false,
       "senal_o15_tier": "VIP",
       "sug_o15": "EVITAR",
       "motivo_o15": "ninguno_evitar_o15",
@@ -10847,7 +10855,7 @@
       "cuota_o15": 1.17,
       "cuota_o15_actual": 1.17,
       "movimiento_o15_pp": null,
-      "resultado_o15": null,
+      "resultado_o15": true,
       "senal_o25": "Evitar",
       "sug_o25": "EVITAR",
       "motivo_o25": "ninguno_evitar_o25",
@@ -10855,15 +10863,15 @@
       "cuota_o25": 1.55,
       "cuota_o25_actual": 1.61,
       "movimiento_o25_pp": null,
-      "resultado_o25": null,
+      "resultado_o25": false,
       "senal_btts_o25": "—",
       "motivo_combo": "combo_banda_baja",
-      "resultado_combo": null,
+      "resultado_combo": false,
       "vip_elite": null,
       "oro": null,
       "nivel_confianza": null,
       "marcador_exacto_sugerido": "2-1",
-      "marcador_exacto_real": null,
+      "marcador_exacto_real": "2-0",
       "usa_temporada_anterior": false,
       "usa_promedio_general": false,
       "es_equipo_filial": false,
@@ -10886,16 +10894,16 @@
       "mejora_o25_pct": null,
       "cuota_ht_over05": 1.29,
       "cuota_ht_over15": 2.25,
-      "resultado_over15_ht": null,
+      "resultado_over15_ht": false,
       "cuota_ht_over05_actual": 1.25,
       "movimiento_ht05_pp": 2.4806201550387708,
-      "resultado_ht05": null
+      "resultado_ht05": true
     },
     {
       "fecha": "2026-08-25",
       "fecha_partido": "2026-08-26",
       "liga": "Bolivia LFPB",
-      "liga_confianza": "alta",
+      "liga_confianza": null,
       "local": "Club Blooming",
       "visitante": "CDT Real Oruro",
       "senal_btts_optimizada": "Evitar",
@@ -10963,7 +10971,7 @@
       "fecha": "2026-08-25",
       "fecha_partido": "2026-08-26",
       "liga": "Bolivia LFPB",
-      "liga_confianza": "alta",
+      "liga_confianza": null,
       "local": "CD Cultural San Antonio de Bulo Bulo",
       "visitante": "Club The Strongest",
       "senal_btts_optimizada": "Evitar",
@@ -10972,8 +10980,8 @@
       "prob_btts": 0.6329960148705208,
       "prob_btts_calibrada": 0.5250634615042618,
       "btts_min_alto": null,
-      "cuota_btts": 1.44,
-      "cuota_btts_actual": 1.44,
+      "cuota_btts": 1.41,
+      "cuota_btts_actual": 1.41,
       "movimiento_btts_pp": null,
       "resultado_btts": null,
       "senal_o15_tier": "VIP",
@@ -10981,7 +10989,7 @@
       "motivo_o15": "ninguno_evitar_o15",
       "prob_o15": 0.8102591663503305,
       "cuota_o15": 1.12,
-      "cuota_o15_actual": 1.12,
+      "cuota_o15_actual": 1.11,
       "movimiento_o15_pp": null,
       "resultado_o15": null,
       "senal_o25": "Evitar",
@@ -11031,7 +11039,7 @@
       "fecha": "2026-08-25",
       "fecha_partido": "2026-08-25",
       "liga": "Bolivia LFPB",
-      "liga_confianza": "alta",
+      "liga_confianza": null,
       "local": "CD Gualberto Villarroel Deportivo San José",
       "visitante": "CD Oriente Petrolero",
       "senal_btts_optimizada": "Fuerte",
@@ -11099,7 +11107,7 @@
       "fecha": "2026-08-25",
       "fecha_partido": "2026-08-27",
       "liga": "Bolivia LFPB",
-      "liga_confianza": "alta",
+      "liga_confianza": null,
       "local": "Club Bolívar",
       "visitante": "Academia del Balompié Boliviano",
       "senal_btts_optimizada": "Evitar",
@@ -11167,7 +11175,7 @@
       "fecha": "2026-08-25",
       "fecha_partido": "2026-08-27",
       "liga": "Bolivia LFPB",
-      "liga_confianza": "alta",
+      "liga_confianza": null,
       "local": "Club Always Ready",
       "visitante": "Club Aurora",
       "senal_btts_optimizada": "Evitar",
@@ -11176,8 +11184,8 @@
       "prob_btts": 0.5389684671538699,
       "prob_btts_calibrada": 0.5054475200409906,
       "btts_min_alto": null,
-      "cuota_btts": 1.65,
-      "cuota_btts_actual": 1.65,
+      "cuota_btts": 1.6,
+      "cuota_btts_actual": 1.6,
       "movimiento_btts_pp": null,
       "resultado_btts": null,
       "senal_o15_tier": "VIP",
@@ -11185,7 +11193,7 @@
       "motivo_o15": "ninguno_evitar_o15",
       "prob_o15": 0.7835674918629165,
       "cuota_o15": 1.06,
-      "cuota_o15_actual": 1.06,
+      "cuota_o15_actual": 1.07,
       "movimiento_o15_pp": null,
       "resultado_o15": null,
       "senal_o25": "Evitar",
@@ -16422,7 +16430,7 @@
       "fecha": "2026-08-25",
       "fecha_partido": "2026-08-27",
       "liga": "Bolivia LFPB",
-      "liga_confianza": "alta",
+      "liga_confianza": null,
       "local": "Club Independiente Petrolero",
       "visitante": "CD Guabirá",
       "senal_btts_optimizada": "Evitar",
@@ -16677,7 +16685,7 @@
       "fecha": "2026-08-25",
       "fecha_partido": "2026-08-27",
       "liga": "Bolivia LFPB",
-      "liga_confianza": "alta",
+      "liga_confianza": null,
       "local": "Club Bolívar",
       "visitante": "Academia del Balompié Boliviano",
       "senal_btts_optimizada": "Evitar",
@@ -16932,7 +16940,7 @@
       "fecha": "2026-08-25",
       "fecha_partido": "2026-08-27",
       "liga": "Bolivia LFPB",
-      "liga_confianza": "alta",
+      "liga_confianza": null,
       "local": "Club Always Ready",
       "visitante": "Club Aurora",
       "senal_btts_optimizada": "Evitar",
@@ -16940,7 +16948,7 @@
       "motivo_btts": "ninguno_evitar_final",
       "prob_btts": 0.5389684671538699,
       "prob_btts_calibrada": 0.5054475200409906,
-      "cuota_btts": 1.65,
+      "cuota_btts": 1.6,
       "resultado_btts": null,
       "movimiento_btts_pp": null,
       "senal_o15_tier": "VIP",
@@ -17501,7 +17509,7 @@
       "motivo_btts": "ninguno_evitar_final",
       "prob_btts": 0.4468483464716313,
       "prob_btts_calibrada": 0.4583777647236225,
-      "cuota_btts": 1.73,
+      "cuota_btts": 1.8,
       "resultado_btts": null,
       "movimiento_btts_pp": null,
       "senal_o15_tier": "Evitar",
@@ -19847,7 +19855,7 @@
       "motivo_btts": "ninguno_evitar_final",
       "prob_btts": 0.5115965735259443,
       "prob_btts_calibrada": 0.508748255241056,
-      "cuota_btts": 1.91,
+      "cuota_btts": 1.87,
       "resultado_btts": null,
       "movimiento_btts_pp": null,
       "senal_o15_tier": "Fuerte",
@@ -20247,7 +20255,7 @@
       "fecha": "2026-08-25",
       "fecha_partido": "2026-08-26",
       "liga": "Bolivia LFPB",
-      "liga_confianza": "alta",
+      "liga_confianza": null,
       "local": "CD Cultural San Antonio de Bulo Bulo",
       "visitante": "Club The Strongest",
       "senal_btts_optimizada": "Evitar",
@@ -20255,7 +20263,7 @@
       "motivo_btts": "ninguno_evitar_final",
       "prob_btts": 0.6329960148705208,
       "prob_btts_calibrada": 0.5250634615042618,
-      "cuota_btts": 1.44,
+      "cuota_btts": 1.41,
       "resultado_btts": null,
       "movimiento_btts_pp": null,
       "senal_o15_tier": "VIP",
@@ -20349,7 +20357,7 @@
       "fecha": "2026-08-25",
       "fecha_partido": "2026-08-26",
       "liga": "Bolivia LFPB",
-      "liga_confianza": "alta",
+      "liga_confianza": null,
       "local": "Club Real Potosí",
       "visitante": "CD Real Tomayapo",
       "senal_btts_optimizada": "Evitar",
@@ -20553,7 +20561,7 @@
       "fecha": "2026-08-25",
       "fecha_partido": "2026-08-26",
       "liga": "Bolivia LFPB",
-      "liga_confianza": "alta",
+      "liga_confianza": null,
       "local": "Club Blooming",
       "visitante": "CDT Real Oruro",
       "senal_btts_optimizada": "Evitar",
@@ -22644,7 +22652,7 @@
       "fecha": "2026-08-25",
       "fecha_partido": "2026-08-25",
       "liga": "Bolivia LFPB",
-      "liga_confianza": "alta",
+      "liga_confianza": null,
       "local": "Universitario de Vinto",
       "visitante": "CA Nacional Potosí",
       "senal_btts_optimizada": "Evitar",
@@ -22652,33 +22660,33 @@
       "motivo_btts": "salvacion_cuota_corta",
       "prob_btts": 0.6531391585279098,
       "prob_btts_calibrada": 0.5632135356786226,
-      "cuota_btts": 1.5,
-      "resultado_btts": null,
+      "cuota_btts": 1.47,
+      "resultado_btts": false,
       "movimiento_btts_pp": -1.3605442176870763,
       "senal_o15_tier": "VIP",
       "sug_o15": "EVITAR",
       "motivo_o15": "ninguno_evitar_o15",
       "cuota_o15": 1.17,
-      "resultado_o15": null,
+      "resultado_o15": true,
       "movimiento_o15_pp": null,
       "senal_o25": "Evitar",
       "sug_o25": "EVITAR",
       "motivo_o25": "ninguno_evitar_o25",
       "cuota_o25": 1.55,
-      "resultado_o25": null,
+      "resultado_o25": false,
       "movimiento_o25_pp": null,
       "senal_btts_o25": "—",
       "motivo_combo": "combo_banda_baja",
       "btts_min_alto": null,
       "cuota_combo": 1.9269125000000003,
-      "resultado_combo": null,
+      "resultado_combo": false,
       "senal_ht05_tier": "Fuerte",
       "sug_ht05": "JUGAR",
       "cuota_ht_over05": 1.29,
-      "resultado_ht05": null,
+      "resultado_ht05": true,
       "cuota_ht_over15": 2.25,
       "prob_over15_ht_v2": 0.3562593101641236,
-      "resultado_over15_ht": null,
+      "resultado_over15_ht": false,
       "prob_combo_v2": null,
       "prob_combo_calibrada": 0.448396727114789,
       "prob_o15_calibrada": 0.7355567943395885,
@@ -22754,33 +22762,33 @@
       "motivo_btts": "ninguno_evitar_final",
       "prob_btts": 0.467500328772573,
       "prob_btts_calibrada": 0.5026200941173832,
-      "cuota_btts": 2.05,
-      "resultado_btts": null,
+      "cuota_btts": 2.1,
+      "resultado_btts": false,
       "movimiento_btts_pp": null,
       "senal_o15_tier": "Fuerte",
       "sug_o15": "EVITAR",
       "motivo_o15": "ninguno_evitar_o15",
       "cuota_o15": 1.44,
-      "resultado_o15": null,
+      "resultado_o15": true,
       "movimiento_o15_pp": null,
       "senal_o25": "Evitar",
       "sug_o25": "EVITAR",
       "motivo_o25": "ninguno_evitar_o25",
       "cuota_o25": 2.5,
-      "resultado_o25": null,
+      "resultado_o25": true,
       "movimiento_o25_pp": null,
       "senal_btts_o25": "—",
       "motivo_combo": "ninguno_evitar_combo",
       "btts_min_alto": null,
       "cuota_combo": 4.08125,
-      "resultado_combo": null,
+      "resultado_combo": false,
       "senal_ht05_tier": "Evitar",
       "sug_ht05": "EVITAR",
       "cuota_ht_over05": 1.5,
-      "resultado_ht05": null,
+      "resultado_ht05": true,
       "cuota_ht_over15": 3.4,
       "prob_over15_ht_v2": 0.17424458749006,
-      "resultado_over15_ht": null,
+      "resultado_over15_ht": true,
       "prob_combo_v2": null,
       "prob_combo_calibrada": 0.4003885582302365,
       "prob_o15_calibrada": 0.6815694446303336,
@@ -22806,32 +22814,32 @@
       "prob_btts": 0.4321879474304965,
       "prob_btts_calibrada": 0.4015613361033459,
       "cuota_btts": 2.03,
-      "resultado_btts": null,
+      "resultado_btts": true,
       "movimiento_btts_pp": null,
       "senal_o15_tier": "Fuerte",
       "sug_o15": "EVITAR",
       "motivo_o15": "ninguno_evitar_o15",
       "cuota_o15": 1.46,
-      "resultado_o15": null,
+      "resultado_o15": true,
       "movimiento_o15_pp": null,
       "senal_o25": "Evitar",
       "sug_o25": "EVITAR",
       "motivo_o25": "ninguno_evitar_o25",
       "cuota_o25": 2.38,
-      "resultado_o25": null,
+      "resultado_o25": true,
       "movimiento_o25_pp": null,
       "senal_btts_o25": "—",
       "motivo_combo": "ninguno_evitar_combo",
       "btts_min_alto": null,
       "cuota_combo": 3.7777649999999996,
-      "resultado_combo": null,
+      "resultado_combo": true,
       "senal_ht05_tier": "Evitar",
       "sug_ht05": "EVITAR",
       "cuota_ht_over05": 1.47,
-      "resultado_ht05": null,
+      "resultado_ht05": true,
       "cuota_ht_over15": 3.3,
       "prob_over15_ht_v2": 0.2945581288663326,
-      "resultado_over15_ht": null,
+      "resultado_over15_ht": false,
       "prob_combo_v2": null,
       "prob_combo_calibrada": 0.3989138866142636,
       "prob_o15_calibrada": 0.6881539800457138,
@@ -23664,7 +23672,7 @@
       "fecha": "2026-08-25",
       "fecha_partido": "2026-08-25",
       "liga": "Bolivia LFPB",
-      "liga_confianza": "alta",
+      "liga_confianza": null,
       "local": "CD Gualberto Villarroel Deportivo San José",
       "visitante": "CD Oriente Petrolero",
       "senal_btts_optimizada": "Fuerte",
