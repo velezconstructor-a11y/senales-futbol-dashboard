@@ -393,6 +393,9 @@ const ETIQUETAS_COMBO = {
     "combo_banda_baja": "banda baja (2.2-2.6, BTTS%≥55%)",
     "combo_banda_media": "banda media (2.6-3.0, fallo≤20%)",
     "combo_banda_alta": "banda alta (3.0-3.5, BTTS%≥55%)",
+    // Descontinuadas (diseño anterior a las 3 bandas), solo por prolijidad
+    "combo_original_vip": "VIP original [descontinuada]",
+    "combo_btts_vipmas": "BTTS es VIP+ [descontinuada]",
     "combo_producto_alto": "🎯 producto 3.5-4.5",
     "combo_producto_alto_sot": "🎯 producto 3.5-4.5 + SOT≥8",
     "perfil_goleador_combo": "⚽ perfil goleador (CS≤15% + FTS≤15% + BTTS≥60%)",
@@ -415,6 +418,14 @@ const ETIQUETAS_BTTS = {
     "rescate_elite": "🔄 rescate: ÉLITE",
     "rescate_oro_fuerte": "🔄 rescate: ORO_FUERTE",
     "rescate_ataque_balanceado_alta": "🔄 rescate: ataque balanceado (alta)",
+    // Los siguientes 4 son motivos DESCONTINUADOS (el codigo actual ya
+    // no los genera, ver MOTIVOS_DESCONTINUADOS en backtest.py) - se
+    // agregan solo por prolijidad, no por necesidad real (0 partidos
+    // pendientes con estas etiquetas).
+    "rescate_ataque_balanceado_media": "🔄 rescate: ataque balanceado (media) [descontinuada]",
+    "rescate_paridad_ofensiva_alta": "🔄 rescate: paridad ofensiva (alta) [descontinuada]",
+    "rescate_paridad_ofensiva_base": "🔄 rescate: paridad ofensiva (base) [descontinuada]",
+    "rescate_paridad_ofensiva_media": "🔄 rescate: paridad ofensiva (media) [descontinuada]",
     // "rescate_ataque_balanceado_media" eliminada 23 ago 2026 - el patron
     // ya no puede generarse (ver signals.py), etiqueta descontinuada
     "rescate_cuota_alta_fallo_bajo": "🔄 rescate: cuota 1.9-2.2 + fallo≤18%",
@@ -427,6 +438,7 @@ const ETIQUETAS_BTTS = {
     "franja1.65-1.80_base": "🎯 franja 1.65-1.80: SOT≥10 + fallo≤25%",
     "perfil_defensa_floja": "🛡️ defensa floja: xGA≥1.5 + BTTS≥50% + SOT≥10 + GF≥3.0",
     "perfil_defensa_doble_floja": "🛡️ defensa doble floja: GC≥1.8 + xGA≥1.8 + SOT≥9 + GF≥2.5",
+    "perfil_gc_xga_gf": "💎 GF≥3.0 + GC≥2.5 + xGA≥1.8",
     "salvacion_cuota_corta": "🆘 cuota 1.44-1.55: fallo≥25% + BTTS≥55% + GC≥3.0 + xG≥2.2",
     "perfil_goleador": "⚽ perfil goleador (CS≤15% + FTS≤15% + BTTS≥60%)",
     "franja1.55-1.65_nota3var": "🎯 franja 1.55-1.65: +SOT≥9 (nota, muestra chica)",
@@ -457,11 +469,13 @@ function notaRescateBtts(p){
 // mercadoKey==='btts' (ver las 3 llamadas mas abajo), asi que Over 2.5
 // nunca mostraba de donde salia cada señal, aunque el dato (motivo_o25)
 // siempre estuvo disponible en los datos.
-function notaRescateO25(p){
-  const motivo = p.motivo_o25;
-  if(!motivo || p.sug_o25 !== "JUGAR") return "";
-  const esRescate = motivo.startsWith("rescate_") || motivo.startsWith("o25_");
-  const etiquetas = {
+// AGREGADO 24 ago 2026: igual que ETIQUETAS_BTTS/ETIQUETAS_COMBO - sacado
+// a global para que Estadisticas y la nota de cada partido de Over 2.5
+// usen exactamente el mismo texto siempre. Antes la nota tenia su propio
+// diccionario local, pero renderBars() nunca lo recibia - Estadisticas
+// mostraba el nombre crudo del motivo mientras la nota mostraba el texto
+// traducido, sin coincidir nunca.
+const ETIQUETAS_O25 = {
     "camino_normal_o25": "camino normal (VIP/Fuerte)",
     "rescate_v2_over25": "🔄 rescate v2",
     "regla_estable_o25": "🎯 cuota 2.1-2.5 + fallo≤18%",
@@ -469,10 +483,19 @@ function notaRescateO25(p){
     "o25_gf_alto_btts": "🎯 GF total≥4.5 + BTTS%≥50%",
     "o25_favorito_claro": "⚖️ favorito claro (ratio≥2.6) + fallo≤20% + CS≤15%",
     "o25_gf_max_btts_xg": "🎯 GF máx≥2.0 + BTTS%≥50% + xG máx≥1.6",
-  };
-  const texto = etiquetas[motivo] || motivo;
+};
+
+function notaRescateO25(p){
+  // CORREGIDO 24 ago 2026: igual que notaRescateBtts, ya no exige
+  // sug_o25==='JUGAR' para mostrarse - Estadisticas cuenta todos los
+  // partidos con el motivo, hayan llegado a JUGAR o no.
+  const motivo = p.motivo_o25;
+  if(!motivo || motivo === "ninguno_evitar_o25" || motivo === "candado_sin_cuota") return "";
+  const esRescate = motivo.startsWith("rescate_") || motivo.startsWith("o25_");
+  const texto = ETIQUETAS_O25[motivo] || motivo;
   const color = esRescate ? "var(--amber)" : "var(--chalk-dim)";
-  return ` · <span title="Por que se activo esta señal de Over 2.5" style="color:${color};">${texto}</span>`;
+  const opacidad = p.sug_o25 === "JUGAR" ? "1" : "0.6";
+  return ` · <span title="Por que se activo esta señal de Over 2.5" style="color:${color};opacity:${opacidad};">${texto}</span>`;
 }
 
 function notaBttsMinAlto(p){
@@ -619,6 +642,7 @@ const MOTIVOS_VALIDADOS = new Set([
   "franja1.65-1.80_base",
   "perfil_defensa_floja",
   "perfil_defensa_doble_floja",
+  "perfil_gc_xga_gf",
   "salvacion_cuota_corta",
   "perfil_goleador",
   "camino_normal_Stake10_cuota_alta",
@@ -1170,7 +1194,7 @@ function renderEstadisticas(data){
         <div><p class="bar-label" style="margin-bottom:10px;">Por categoría BTTS</p>${renderBars(comparativo.historico.categorias, CATEGORIA_ORDEN)}</div>
         <div><p class="bar-label" style="margin-bottom:10px;">Por qué se activó JUGAR (BTTS)</p>${renderBars(comparativo.historico.motivos || {}, Object.keys(comparativo.historico.motivos || {}), ETIQUETAS_BTTS)}</div>
         <div><p class="bar-label" style="margin-bottom:10px;">Por qué se activó JUGAR (Over 1.5)</p>${renderBars(comparativo.historico.motivos_o15 || {}, Object.keys(comparativo.historico.motivos_o15 || {}))}</div>
-        <div><p class="bar-label" style="margin-bottom:10px;">Por qué se activó JUGAR (Over 2.5)</p>${renderBars(comparativo.historico.motivos_o25 || {}, Object.keys(comparativo.historico.motivos_o25 || {}))}</div>
+        <div><p class="bar-label" style="margin-bottom:10px;">Por qué se activó JUGAR (Over 2.5)</p>${renderBars(comparativo.historico.motivos_o25 || {}, Object.keys(comparativo.historico.motivos_o25 || {}), ETIQUETAS_O25)}</div>
         <div><p class="bar-label" style="margin-bottom:10px;">Por qué se activó JUGAR (1er tiempo O0.5)</p>${renderBars(comparativo.historico.motivos_ht05 || {}, Object.keys(comparativo.historico.motivos_ht05 || {}))}</div>
         <div><p class="bar-label" style="margin-bottom:10px;">Por qué se activó JUGAR (Combinada BTTS+O2.5)</p>${renderBars(comparativo.historico.motivos_combo || {}, Object.keys(comparativo.historico.motivos_combo || {}), ETIQUETAS_COMBO)}</div>
         <div><p class="bar-label" style="margin-bottom:10px;">Nota: BTTS% ambos altos (⭐, todavía no filtra) — dentro de partidos JUGAR de BTTS</p>${renderBars(comparativo.historico.nota_btts_min_alto || {}, ["cumple_nota","no_cumple_nota"])}</div>
