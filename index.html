@@ -475,6 +475,37 @@ function notaRescateBtts(p){
 // diccionario local, pero renderBars() nunca lo recibia - Estadisticas
 // mostraba el nombre crudo del motivo mientras la nota mostraba el texto
 // traducido, sin coincidir nunca.
+// AGREGADO 24 ago 2026: Over 1.5 y 1er tiempo O0.5 nunca habian tenido
+// diccionario ni funcion de nota - Estadisticas mostraba el nombre crudo
+// del motivo, pero en las tarjetas de partido no aparecia NADA (ni
+// siquiera el nombre crudo), un desajuste igual de real que el de
+// BTTS/O25/Combo, solo que en el otro extremo (un lado vacio en vez de
+// mostrar texto distinto).
+const ETIQUETAS_O15 = {
+    "regla_estable_o15": "🎯 cuota 1.35-1.5 + fallo≤25%",
+    "o15_gf_o25btts": "🎯 GF total≥3.5 + over25&btts%≥30",
+};
+
+function notaRescateO15(p){
+  const motivo = p.motivo_o15;
+  if(!motivo || motivo === "ninguno_evitar_o15" || motivo === "candado_sin_cuota") return "";
+  const texto = ETIQUETAS_O15[motivo] || motivo;
+  const opacidad = p.sug_o15 === "JUGAR" ? "1" : "0.6";
+  return ` · <span title="Por que se activo esta señal de Over 1.5" style="color:var(--amber);opacity:${opacidad};">${texto}</span>`;
+}
+
+const ETIQUETAS_HT05 = {
+    "camino_normal_ht05": "camino normal (VIP/Fuerte)",
+};
+
+function notaRescateHt05(p){
+  const motivo = p.motivo_ht05;
+  if(!motivo || motivo === "ninguno_evitar_ht05" || motivo === "candado_sin_cuota") return "";
+  const texto = ETIQUETAS_HT05[motivo] || motivo;
+  const opacidad = p.sug_ht05 === "JUGAR" ? "1" : "0.6";
+  return ` · <span title="Por que se activo esta señal de 1er tiempo O0.5" style="color:var(--chalk-dim);opacity:${opacidad};">${texto}</span>`;
+}
+
 const ETIQUETAS_O25 = {
     "camino_normal_o25": "camino normal (VIP/Fuerte)",
     "rescate_v2_over25": "🔄 rescate v2",
@@ -714,7 +745,7 @@ function renderMercado(picks, probKey, senalKey, tierKey, cuotaKey, resultadoDes
         <div class="conf-card">
           <div>
             <div class="conf-teams">${p.local} vs ${p.visitante}</div>
-            <div class="conf-liga">${p.liga || ""} · ${diaBadge(p)}${respaldoBadge(p)}${confirmacionCuotaBadge(p, mercadoKey)}${notaLigaConfianza(p)}${mercadoKey === 'ht05' ? notaOver15Ht(p) : ''}${mercadoKey === 'btts' ? notaRescateBtts(p) : ''}${mercadoKey === 'o25' ? notaRescateO25(p) : ''}${mercadoKey === 'btts' ? notaBttsMinAlto(p) : ''}</div>
+            <div class="conf-liga">${p.liga || ""} · ${diaBadge(p)}${respaldoBadge(p)}${confirmacionCuotaBadge(p, mercadoKey)}${notaLigaConfianza(p)}${mercadoKey === 'ht05' ? notaOver15Ht(p) : ''}${mercadoKey === 'btts' ? notaRescateBtts(p) : ''}${mercadoKey === 'o25' ? notaRescateO25(p) : ''}${mercadoKey === 'o15' ? notaRescateO15(p) : ''}${mercadoKey === 'ht05' ? notaRescateHt05(p) : ''}${mercadoKey === 'btts' ? notaBttsMinAlto(p) : ''}</div>
             ${badgesExtra(p)}
           </div>
           <div class="conf-tier">
@@ -750,7 +781,7 @@ function renderMercado(picks, probKey, senalKey, tierKey, cuotaKey, resultadoDes
         <div class="conf-card">
           <div>
             <div class="conf-teams">${p.local} vs ${p.visitante}</div>
-            <div class="conf-liga">${p.liga || ""} · ${diaBadge(p)}${respaldoBadge(p)}${confirmacionCuotaBadge(p, mercadoKey)}${notaLigaConfianza(p)}${mercadoKey === 'ht05' ? notaOver15Ht(p) : ''}${mercadoKey === 'btts' ? notaRescateBtts(p) : ''}${mercadoKey === 'o25' ? notaRescateO25(p) : ''}${mercadoKey === 'btts' ? notaBttsMinAlto(p) : ''}</div>
+            <div class="conf-liga">${p.liga || ""} · ${diaBadge(p)}${respaldoBadge(p)}${confirmacionCuotaBadge(p, mercadoKey)}${notaLigaConfianza(p)}${mercadoKey === 'ht05' ? notaOver15Ht(p) : ''}${mercadoKey === 'btts' ? notaRescateBtts(p) : ''}${mercadoKey === 'o25' ? notaRescateO25(p) : ''}${mercadoKey === 'o15' ? notaRescateO15(p) : ''}${mercadoKey === 'ht05' ? notaRescateHt05(p) : ''}${mercadoKey === 'btts' ? notaBttsMinAlto(p) : ''}</div>
             ${badgesExtra(p)}
           </div>
           <div class="conf-tier">
@@ -799,7 +830,7 @@ function renderMercado(picks, probKey, senalKey, tierKey, cuotaKey, resultadoDes
           <div class="match-row">
             <div>
               <div class="match-teams">${p.local} vs ${p.visitante}</div>
-              <div class="match-liga">${tierTxt}${p.liga || ""} · ${diaBadge(p)}${respaldoBadge(p)}${confirmacionCuotaBadge(p, mercadoKey)}${notaLigaConfianza(p)}${mercadoKey === 'ht05' ? notaOver15Ht(p) : ''}${mercadoKey === 'btts' ? notaRescateBtts(p) : ''}${mercadoKey === 'o25' ? notaRescateO25(p) : ''}${mercadoKey === 'btts' ? notaBttsMinAlto(p) : ''}</div>
+              <div class="match-liga">${tierTxt}${p.liga || ""} · ${diaBadge(p)}${respaldoBadge(p)}${confirmacionCuotaBadge(p, mercadoKey)}${notaLigaConfianza(p)}${mercadoKey === 'ht05' ? notaOver15Ht(p) : ''}${mercadoKey === 'btts' ? notaRescateBtts(p) : ''}${mercadoKey === 'o25' ? notaRescateO25(p) : ''}${mercadoKey === 'o15' ? notaRescateO15(p) : ''}${mercadoKey === 'ht05' ? notaRescateHt05(p) : ''}${mercadoKey === 'btts' ? notaBttsMinAlto(p) : ''}</div>
               ${badgesExtra(p)}
             </div>
             <span class="match-pct">cuota ${cuotaTxt} · ${pctT}${edgeTxt(prob, p[cuotaKey])}</span>
@@ -1193,9 +1224,9 @@ function renderEstadisticas(data){
       <div class="grid2">
         <div><p class="bar-label" style="margin-bottom:10px;">Por categoría BTTS</p>${renderBars(comparativo.historico.categorias, CATEGORIA_ORDEN)}</div>
         <div><p class="bar-label" style="margin-bottom:10px;">Por qué se activó JUGAR (BTTS)</p>${renderBars(comparativo.historico.motivos || {}, Object.keys(comparativo.historico.motivos || {}), ETIQUETAS_BTTS)}</div>
-        <div><p class="bar-label" style="margin-bottom:10px;">Por qué se activó JUGAR (Over 1.5)</p>${renderBars(comparativo.historico.motivos_o15 || {}, Object.keys(comparativo.historico.motivos_o15 || {}))}</div>
+        <div><p class="bar-label" style="margin-bottom:10px;">Por qué se activó JUGAR (Over 1.5)</p>${renderBars(comparativo.historico.motivos_o15 || {}, Object.keys(comparativo.historico.motivos_o15 || {}), ETIQUETAS_O15)}</div>
         <div><p class="bar-label" style="margin-bottom:10px;">Por qué se activó JUGAR (Over 2.5)</p>${renderBars(comparativo.historico.motivos_o25 || {}, Object.keys(comparativo.historico.motivos_o25 || {}), ETIQUETAS_O25)}</div>
-        <div><p class="bar-label" style="margin-bottom:10px;">Por qué se activó JUGAR (1er tiempo O0.5)</p>${renderBars(comparativo.historico.motivos_ht05 || {}, Object.keys(comparativo.historico.motivos_ht05 || {}))}</div>
+        <div><p class="bar-label" style="margin-bottom:10px;">Por qué se activó JUGAR (1er tiempo O0.5)</p>${renderBars(comparativo.historico.motivos_ht05 || {}, Object.keys(comparativo.historico.motivos_ht05 || {}), ETIQUETAS_HT05)}</div>
         <div><p class="bar-label" style="margin-bottom:10px;">Por qué se activó JUGAR (Combinada BTTS+O2.5)</p>${renderBars(comparativo.historico.motivos_combo || {}, Object.keys(comparativo.historico.motivos_combo || {}), ETIQUETAS_COMBO)}</div>
         <div><p class="bar-label" style="margin-bottom:10px;">Nota: BTTS% ambos altos (⭐, todavía no filtra) — dentro de partidos JUGAR de BTTS</p>${renderBars(comparativo.historico.nota_btts_min_alto || {}, ["cumple_nota","no_cumple_nota"])}</div>
       </div>
