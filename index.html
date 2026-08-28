@@ -392,6 +392,7 @@ const ETIQUETAS_COMBO = {
     // (18 ago), el codigo actual ya no las genera
     "combo_banda_baja": "banda baja (2.2-2.6, BTTS%≥55%)",
     "combo_banda_media": "banda media (2.6-3.0, fallo≤20%)",
+    "combo_banda_media_gf_max": "🎯 banda media + GF máx≥1.8",
     "combo_banda_alta": "banda alta (3.0-3.5, BTTS%≥55%)",
     // Descontinuadas (diseño anterior a las 3 bandas), solo por prolijidad
     "combo_original_vip": "VIP original [descontinuada]",
@@ -412,6 +413,7 @@ const ETIQUETAS_BTTS = {
     "camino_normal_VIP_Fuerte_edge_ok": "camino normal (VIP/Fuerte)",
     "rescate_evitar_edge_bajo_prob_baja": "🔄 rescate: edge + prob baja",
     "rescate_evitar_lambda_moderado": "🔄 rescate: lambda moderado",
+    "rescate_evitar_lambda_moderado_btts": "🔄 rescate: lambda moderado + BTTS%≥35",
     "rescate_oro_btts": "🔄 rescate: oro BTTS",
     "rescate_plata": "🔄 rescate: plata",
     "rescate_xg_alto_btts_historico_alto": "🔄 rescate: xG e histórico altos",
@@ -667,6 +669,7 @@ function badgesExtra(p){
 const MOTIVOS_VALIDADOS = new Set([
   "camino_normal_VIP+",
   "rescate_evitar_lambda_moderado",
+  "rescate_evitar_lambda_moderado_btts",
   "rescate_cuota_alta_fallo_bajo",
   "rescate_cuota_alta_btts_parejo",
   "franja1.8-1.9_bronce",
@@ -695,6 +698,7 @@ const MOTIVOS_VALIDADOS = new Set([
   // evidencia fresca propia todavia - quedan en "En seguimiento" hasta
   // que junten track record real. Revisar en unos dias.
   "combo_banda_media",
+  "combo_banda_media_gf_max",
 ]);
 
 function renderMercado(picks, probKey, senalKey, tierKey, cuotaKey, resultadoDeseado, resultKey, mercadoKey, motivoKey){
