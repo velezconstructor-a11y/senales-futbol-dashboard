@@ -408,6 +408,7 @@ const ETIQUETAS_BTTS = {
     "camino_normal_VIP+": "camino normal (VIP+)",
     "camino_normal_Stake10": "camino normal (Stake10)",
     "camino_normal_Stake10_cuota_alta": "🎯 Stake10 · cuota≥1.40",
+    "camino_normal_Stake10_cuota_alta_sot": "🎯 Stake10 · cuota≥1.40 + SOT≥9",
     "camino_normal_VIP_Fuerte_edge_ok": "camino normal (VIP/Fuerte)",
     "rescate_evitar_edge_bajo_prob_baja": "🔄 rescate: edge + prob baja",
     "rescate_evitar_lambda_moderado": "🔄 rescate: lambda moderado",
@@ -418,6 +419,7 @@ const ETIQUETAS_BTTS = {
     "rescate_elite": "🔄 rescate: ÉLITE",
     "rescate_oro_fuerte": "🔄 rescate: ORO_FUERTE",
     "rescate_ataque_balanceado_alta": "🔄 rescate: ataque balanceado (alta)",
+    "rescate_ataque_balanceado_alta_gf_btts": "🔄 rescate: ataque balanceado (alta) + GF≥3.0 + BTTS≥45%",
     // Los siguientes 4 son motivos DESCONTINUADOS (el codigo actual ya
     // no los genera, ver MOTIVOS_DESCONTINUADOS en backtest.py) - se
     // agregan solo por prolijidad, no por necesidad real (0 partidos
@@ -678,6 +680,8 @@ const MOTIVOS_VALIDADOS = new Set([
   "salvacion_cuota_corta",
   "perfil_goleador",
   "camino_normal_Stake10_cuota_alta",
+  "camino_normal_Stake10_cuota_alta_sot",
+  "rescate_ataque_balanceado_alta_gf_btts",
   "perfil_goleador_o25",
   "o25_gf_alto_btts",
   "o25_favorito_claro",
