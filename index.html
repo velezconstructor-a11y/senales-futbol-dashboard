@@ -399,6 +399,7 @@ const ETIQUETAS_COMBO = {
     "combo_btts_vipmas": "BTTS es VIP+ [descontinuada]",
     "combo_producto_alto": "🎯 producto 3.5-4.5",
     "combo_producto_alto_sot": "🎯 producto 3.5-4.5 + SOT≥8",
+    "combo_producto_alto_sot_xg": "🎯 producto 3.5-4.5 + SOT≥8 + xG total≥2.5",
     "perfil_goleador_combo": "⚽ perfil goleador (CS≤15% + FTS≤15% + BTTS≥60%)",
     // AGREGADA 24 ago 2026 - faltaba esta etiqueta desde que se creo la
     // señal (solo seguimiento, nunca genera JUGAR real - ver signals.py)
@@ -493,6 +494,7 @@ function notaRescateBtts(p){
 const ETIQUETAS_O15 = {
     "regla_estable_o15": "🎯 cuota 1.35-1.5 + fallo≤25%",
     "o15_gf_o25btts": "🎯 GF total≥3.5 + over25&btts%≥30",
+    "o15_gf_o25btts_xgamax": "🎯 GF total≥3.5 + over25&btts%≥30 + xGA máx≥1.6",
 };
 
 function notaRescateO15(p){
@@ -523,6 +525,7 @@ const ETIQUETAS_O25 = {
     "o25_gf_alto_btts": "🎯 GF total≥4.5 + BTTS%≥50%",
     "o25_favorito_claro": "⚖️ favorito claro (ratio≥2.6) + fallo≤20% + CS≤15%",
     "o25_gf_max_btts_xg": "🎯 GF máx≥2.0 + BTTS%≥50% + xG máx≥1.6",
+    "o25_gf_max_btts_xg_xgamax": "🎯 GF máx + BTTS% + xG máx + xGA máx≥1.6",
 };
 
 function notaRescateO25(p){
@@ -697,6 +700,7 @@ const MOTIVOS_VALIDADOS = new Set([
   "o25_gf_alto_btts",
   "o25_favorito_claro",
   "o25_gf_max_btts_xg",
+  "o25_gf_max_btts_xg_xgamax",
   "regla_estable_o15",
   "regla_estable_o25",
   // AJUSTADO 24 ago 2026: por decision explicita del usuario, solo
@@ -706,6 +710,10 @@ const MOTIVOS_VALIDADOS = new Set([
   // evidencia fresca propia todavia - quedan en "En seguimiento" hasta
   // que junten track record real. Revisar en unos dias.
   "combo_banda_media",
+  "o15_gf_o25btts",
+  "o15_gf_o25btts_xgamax",
+  "combo_producto_alto_sot",
+  "combo_producto_alto_sot_xg",
   "combo_banda_media_gf_max",
 ]);
 
