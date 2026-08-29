@@ -1007,7 +1007,15 @@ const MERCADO_ORDEN = ["BTTS", "Over 1.5", "Over 2.5", "BTTS + Over 2.5 (VIP)", 
 const CATEGORIA_ORDEN = ["Stake10","VIP+","VIP","Fuerte","ORO_FUERTE","ORO_BTTS","ÉLITE","PLATA","BRONCE","VIP ELITE"];
 
 function renderTickets(comparativo){
-  const hist = comparativo.historico.mercados;
+  // CORREGIDO 24 ago 2026: antes usaba comparativo.historico (TODO el
+  // historico, meses de experimentacion incluidos - señales que ya
+  // desactivamos, bugs ya corregidos, etc). El usuario señalo que esto
+  // arrastraba unidades perdidas de ensayos viejos, sin reflejar el
+  // comportamiento real de las señales que estan activas HOY. Se cambia
+  // a comparativo.recientes (ventana de 7 dias, ya calculada por
+  // separado en el backend) para que este resumen sea representativo
+  // del presente, no de toda la historia del proyecto.
+  const hist = comparativo.recientes.mercados;
   return MERCADO_ORDEN.map(nombre => {
     const s = hist[nombre];
     const cls = statusClass(s);
@@ -1224,7 +1232,7 @@ function renderPorLiga(porLiga){
 function renderEstadisticas(data){
   const comparativo = data.comparativo;
   return `
-    <section><p class="section-title">Por mercado</p><div class="tickets">${renderTickets(comparativo)}</div></section>
+    <section><p class="section-title">Por mercado (últimos 7 días)</p><div class="tickets">${renderTickets(comparativo)}</div></section>
     <section><p class="section-title">Hoy · 7 días · histórico</p>${renderCmpTable(comparativo)}</section>
     ${data.serie_diaria && data.serie_diaria.length > 1 ? `
     <section><p class="section-title">Tendencia diaria — BTTS</p><div class="chart-card"><div class="chart-wrap"><canvas id="trendChart"></canvas></div></div></section>` : ""}
