@@ -339,6 +339,11 @@ let REGLAS_ACTIVAS_REAL = {};
 // mercado activa (tabActivaAntes) - sin esto, cada refresco de 5 min te
 // devolveria siempre a "Hoy".
 let DIA_SELECCIONADO = "hoy";
+// AGREGADO 24 ago 2026: modo de orden para las listas de "Detalle" -
+// el usuario pidio poder ver las señales ordenadas de mayor a menor
+// ROI%, o de mas a menos unidades ganadas, en vez del orden fijo
+// (insercion en el JSON) que tenian antes.
+let ORDEN_DETALLE = "roi";
 
 // AGREGADO 23 ago 2026: una señal se muestra como "Validada" solo si
 // cumple LAS DOS cosas a la vez - son conceptos distintos:
@@ -1072,8 +1077,25 @@ function renderCmpTable(comparativo){
 
 function renderBars(dictHist, orden, etiquetas){
   etiquetas = etiquetas || {};
-  const nombres = orden.filter(n => dictHist[n] && (dictHist[n].total_detectado ?? nOf(dictHist[n])) > 0);
+  let nombres = orden.filter(n => dictHist[n] && (dictHist[n].total_detectado ?? nOf(dictHist[n])) > 0);
   if(nombres.length === 0) return '<div class="empty">Sin datos todavía en esta sección.</div>';
+  // AGREGADO 24 ago 2026: ordenar por ROI% o por unidades ganadas
+  // (profit_u), segun lo elegido en el selector - de mayor a menor en
+  // ambos casos. Las señales sin resultado (sin partidos jugados aun)
+  // se van al final, ya que no tienen ROI/unidades que comparar.
+  nombres = [...nombres].sort((a, b) => {
+    const sa = dictHist[a], sb = dictHist[b];
+    const naA = nOf(sa) === 0, naB = nOf(sb) === 0;
+    if(naA && naB) return 0;
+    if(naA) return 1;
+    if(naB) return -1;
+    if(ORDEN_DETALLE === "unidades"){
+      return (sb.profit_u ?? 0) - (sa.profit_u ?? 0);
+    }
+    const roiA = nOf(sa) > 0 ? (sa.profit_u ?? 0) / nOf(sa) : 0;
+    const roiB = nOf(sb) > 0 ? (sb.profit_u ?? 0) / nOf(sb) : 0;
+    return roiB - roiA;
+  });
   return '<div class="bars">' + nombres.map(nombre => {
     const st = dictHist[nombre];
     const textoLabel = etiquetas[nombre] || nombre;
@@ -1263,6 +1285,11 @@ function renderEstadisticas(data){
     <section><p class="section-title">Tendencia diaria — BTTS</p><div class="chart-card"><div class="chart-wrap"><canvas id="trendChart"></canvas></div></div></section>` : ""}
     <section>
       <p class="section-title">Detalle</p>
+      <div style="display:flex;gap:8px;margin-bottom:14px;align-items:center;">
+        <span class="bar-label" style="margin:0;">Ordenar por:</span>
+        <button onclick="cambiarOrdenDetalle('roi')" class="tab-btn ${ORDEN_DETALLE==='roi'?'active':''}" style="padding:4px 12px;font-size:12px;">ROI%</button>
+        <button onclick="cambiarOrdenDetalle('unidades')" class="tab-btn ${ORDEN_DETALLE==='unidades'?'active':''}" style="padding:4px 12px;font-size:12px;">Unidades</button>
+      </div>
       <div class="grid2">
         <div><p class="bar-label" style="margin-bottom:10px;">Por categoría BTTS</p>${renderBars(comparativo.historico.categorias, CATEGORIA_ORDEN)}</div>
         <div><p class="bar-label" style="margin-bottom:10px;">Por qué se activó JUGAR (BTTS)</p>${renderBars(comparativo.historico.motivos || {}, Object.keys(comparativo.historico.motivos || {}), ETIQUETAS_BTTS)}</div>
@@ -1300,6 +1327,11 @@ function switchTab(id){
 
 function cambiarDia(dia){
   DIA_SELECCIONADO = dia;
+  if(DATA) render(DATA);
+}
+
+function cambiarOrdenDetalle(modo){
+  ORDEN_DETALLE = modo;
   if(DATA) render(DATA);
 }
 
