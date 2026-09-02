@@ -1,5 +1,5 @@
 {
-  "actualizado": "2026-09-01T22:25:35.400991-05:00",
+  "actualizado": "2026-09-01T22:41:02.852907-05:00",
   "hoy_referencia": "2026-09-01",
   "manana_referencia": "2026-09-02",
   "pasado_manana_referencia": "2026-09-03",
@@ -137,7 +137,7 @@
           "ganados": 0,
           "acierto_pct": null,
           "profit_u": 0.0,
-          "total_detectado": 4,
+          "total_detectado": 3,
           "activa": null
         },
         "salvacion_cuota_corta": {
@@ -153,7 +153,7 @@
           "ganados": 1,
           "acierto_pct": 100.0,
           "profit_u": 0.1899999999999999,
-          "total_detectado": 4,
+          "total_detectado": 3,
           "activa": true
         },
         "rescate_ataque_balanceado_alta": {
@@ -241,7 +241,7 @@
           "ganados": 0,
           "acierto_pct": null,
           "profit_u": 0.0,
-          "total_detectado": 3,
+          "total_detectado": 4,
           "activa": null
         },
         "perfil_gc_xga_gf": {
@@ -261,6 +261,14 @@
           "activa": null
         },
         "camino_normal_Stake10_cuota_alta_gcmin": {
+          "total": 0,
+          "ganados": 0,
+          "acierto_pct": null,
+          "profit_u": 0.0,
+          "total_detectado": 1,
+          "activa": null
+        },
+        "franja1.8-1.9_elite": {
           "total": 0,
           "ganados": 0,
           "acierto_pct": null,
@@ -935,7 +943,7 @@
           "ganados": 8,
           "acierto_pct": 88.88888888888889,
           "profit_u": 3.1799999999999997,
-          "total_detectado": 13,
+          "total_detectado": 14,
           "activa": true
         },
         "perfil_avg2h_o25btts": {
@@ -975,7 +983,7 @@
           "ganados": 1,
           "acierto_pct": 100.0,
           "profit_u": 0.6499999999999999,
-          "total_detectado": 8,
+          "total_detectado": 7,
           "activa": true
         },
         "franja1.55-1.65_base": {
@@ -991,7 +999,7 @@
           "ganados": 1,
           "acierto_pct": 50.0,
           "profit_u": -0.81,
-          "total_detectado": 7,
+          "total_detectado": 6,
           "activa": true
         },
         "franja1.8-1.9_bronce": {
@@ -1047,7 +1055,7 @@
           "ganados": 1,
           "acierto_pct": 100.0,
           "profit_u": 0.8,
-          "total_detectado": 1,
+          "total_detectado": 2,
           "activa": false
         }
       },
@@ -1933,7 +1941,7 @@
           "ganados": 10,
           "acierto_pct": 66.66666666666666,
           "profit_u": 0.5699999999999998,
-          "total_detectado": 24,
+          "total_detectado": 23,
           "activa": true
         },
         "rescate_evitar_lambda_moderado": {
@@ -2069,7 +2077,7 @@
           "ganados": 8,
           "acierto_pct": 88.88888888888889,
           "profit_u": 3.1799999999999997,
-          "total_detectado": 13,
+          "total_detectado": 14,
           "activa": true
         },
         "perfil_avg2h_o25btts": {
@@ -2101,7 +2109,7 @@
           "ganados": 1,
           "acierto_pct": 100.0,
           "profit_u": 0.6499999999999999,
-          "total_detectado": 8,
+          "total_detectado": 7,
           "activa": true
         },
         "perfil_gc_xga_gf": {
@@ -2149,7 +2157,7 @@
           "ganados": 1,
           "acierto_pct": 100.0,
           "profit_u": 0.8,
-          "total_detectado": 1,
+          "total_detectado": 2,
           "activa": false
         }
       },
@@ -5826,14 +5834,14 @@
       "local": "Independiente Santa Fe SA",
       "visitante": "Millonarios FC SA",
       "senal_btts_optimizada": "Evitar",
-      "nivel_final": "JUGAR",
-      "motivo_btts": "rescate_evitar_lambda_moderado_btts",
+      "nivel_final": "EVITAR",
+      "motivo_btts": "franja1.8-1.9_elite",
       "prob_btts": 0.5667944995314567,
       "prob_btts_calibrada": 0.5538097739088924,
       "btts_min_alto": null,
       "cuota_btts": 1.81,
       "cuota_btts_actual": 1.81,
-      "movimiento_btts_pp": 0.0,
+      "movimiento_btts_pp": null,
       "resultado_btts": null,
       "senal_o15_tier": "VIP",
       "sug_o15": "EVITAR",
@@ -6303,7 +6311,7 @@
       "visitante": "SSA Jagiellonia Białystok",
       "senal_btts_optimizada": "Evitar",
       "nivel_final": "JUGAR",
-      "motivo_btts": "rescate_xg_alto_btts_historico_alto",
+      "motivo_btts": "rescate_ataque_balanceado_alta_gf_btts",
       "prob_btts": 0.6565483397378283,
       "prob_btts_calibrada": 0.5583879653936437,
       "btts_min_alto": null,
@@ -17372,7 +17380,7 @@
       "visitante": "SSA Jagiellonia Białystok",
       "senal_btts_optimizada": "Evitar",
       "nivel_final": "JUGAR",
-      "motivo_btts": "rescate_xg_alto_btts_historico_alto",
+      "motivo_btts": "rescate_ataque_balanceado_alta_gf_btts",
       "prob_btts": 0.6565483397378283,
       "prob_btts_calibrada": 0.5583879653936437,
       "cuota_btts": 1.49,
@@ -22522,13 +22530,13 @@
       "local": "Independiente Santa Fe SA",
       "visitante": "Millonarios FC SA",
       "senal_btts_optimizada": "Evitar",
-      "nivel_final": "JUGAR",
-      "motivo_btts": "rescate_evitar_lambda_moderado_btts",
+      "nivel_final": "EVITAR",
+      "motivo_btts": "franja1.8-1.9_elite",
       "prob_btts": 0.5667944995314567,
       "prob_btts_calibrada": 0.5538097739088924,
       "cuota_btts": 1.81,
       "resultado_btts": null,
-      "movimiento_btts_pp": 0.0,
+      "movimiento_btts_pp": null,
       "senal_o15_tier": "VIP",
       "sug_o15": "EVITAR",
       "motivo_o15": "ninguno_evitar_o15",
