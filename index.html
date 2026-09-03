@@ -399,6 +399,7 @@ const ETIQUETAS_COMBO = {
     "combo_banda_media": "banda media (2.6-3.0, fallo≤20%)",
     "combo_banda_media_gf_max": "🎯 banda media + GF máx≥1.8",
     "combo_gf_total_max": "💎 GF total≥3.0 + GF máx≥1.8 + BTTS%≥45",
+    "combo_ppg_gf_xga": "💎 PPG máx≥2.0 + GF máx≥1.8 + xGA máx≥1.5",
     "combo_banda_alta": "banda alta (3.0-3.5, BTTS%≥55%)",
     // Descontinuadas (diseño anterior a las 3 bandas), solo por prolijidad
     "combo_original_vip": "VIP original [descontinuada]",
@@ -455,6 +456,7 @@ const ETIQUETAS_BTTS = {
     "perfil_defensa_doble_floja": "🛡️ defensa doble floja: GC≥1.8 + xGA≥1.8 + SOT≥9 + GF≥2.5",
     "perfil_gc_xga_gf": "💎 GF≥3.0 + GC≥2.5 + xGA≥1.8",
     "perfil_xga_sot_btts": "💎 xGA máx≥1.5 + SOT≥10 + BTTS%≥45",
+    "perfil_ppg_gf_xga": "💎 PPG mín≥1.2 + GF total≥3.0 + xGA máx≥1.5",
     "perfil_avg2h_o25btts": "🎯 AVG2H≥0.9 + over25&btts%≥30 + CS≤15%",
     "salvacion_cuota_corta": "🆘 cuota 1.44-1.55: fallo≥25% + BTTS≥55% + GC≥3.0 + xG≥2.2",
     "perfil_goleador": "⚽ perfil goleador (CS≤15% + FTS≤15% + BTTS≥60%)",
@@ -706,6 +708,7 @@ const MOTIVOS_VALIDADOS = new Set([
   "perfil_defensa_doble_floja",
   "perfil_gc_xga_gf",
   "perfil_xga_sot_btts",
+  "perfil_ppg_gf_xga",
   "salvacion_cuota_corta",
   "perfil_goleador",
   "camino_normal_Stake10_cuota_alta",
@@ -735,6 +738,7 @@ const MOTIVOS_VALIDADOS = new Set([
   "combo_producto_alto_sot_xg",
   "combo_banda_media_gf_max",
   "combo_gf_total_max",
+  "combo_ppg_gf_xga",
 ]);
 
 function renderMercado(picks, probKey, senalKey, tierKey, cuotaKey, resultadoDeseado, resultKey, mercadoKey, motivoKey){
