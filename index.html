@@ -415,9 +415,11 @@ const ETIQUETAS_COMBO = {
 
 const ETIQUETAS_BTTS = {
     "camino_normal_VIP+": "camino normal (VIP+)",
+    "camino_normal_VIP+_refinada": "💎 VIP+ refinada · SOT total≤14 + xGA mín≥1.2",
     "camino_normal_VIP+_prob_alta": "🎯 VIP+ · probabilidad≥55%",
     "camino_normal_Stake10": "camino normal (Stake10)",
     "camino_normal_Stake10_cuota_alta": "🎯 Stake10 · cuota≥1.40",
+    "camino_normal_Stake10_cuota_alta_fallo_alto": "💎 Stake10 refinada · cuota≥1.40 + fallo≥20%",
     "camino_normal_Stake10_cuota_alta_sot": "🎯 Stake10 · cuota≥1.40 + SOT≥9",
     "camino_normal_Stake10_cuota_alta_sot10": "🎯 Stake10 · cuota≥1.40 + SOT≥10",
     "camino_normal_Stake10_cuota_alta_gcmin": "🎯 Stake10 · cuota≥1.40 + GC mín≤1.5",
@@ -693,6 +695,8 @@ function badgesExtra(p){
 // "validada" por accidente.
 const MOTIVOS_VALIDADOS = new Set([
   "camino_normal_VIP+",
+  "camino_normal_VIP+_refinada",
+  "camino_normal_Stake10_cuota_alta_fallo_alto",
   "camino_normal_VIP+_prob_alta",
   "rescate_evitar_lambda_moderado",
   "rescate_evitar_lambda_moderado_btts",
