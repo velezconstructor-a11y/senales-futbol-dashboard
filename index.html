@@ -1071,15 +1071,14 @@ const MERCADO_ORDEN = ["BTTS", "Over 1.5", "Over 2.5", "BTTS + Over 2.5 (VIP)", 
 const CATEGORIA_ORDEN = ["Stake10","VIP+","VIP","Fuerte","ORO_FUERTE","ORO_BTTS","ÉLITE","PLATA","BRONCE","VIP ELITE"];
 
 function renderTickets(comparativo){
-  // CORREGIDO 24 ago 2026: antes usaba comparativo.historico (TODO el
-  // historico, meses de experimentacion incluidos - señales que ya
-  // desactivamos, bugs ya corregidos, etc). El usuario señalo que esto
-  // arrastraba unidades perdidas de ensayos viejos, sin reflejar el
-  // comportamiento real de las señales que estan activas HOY. Se cambia
-  // a comparativo.recientes (ventana de 7 dias, ya calculada por
-  // separado en el backend) para que este resumen sea representativo
-  // del presente, no de toda la historia del proyecto.
-  const hist = comparativo.recientes.mercados;
+  // CAMBIADO 24 ago 2026 a peticion explicita del usuario: antes leia
+  // comparativo.recientes.mercados (ventana de 7 dias) - un partido
+  // apostado bajo una señal que DESPUES se desactivo seguia sumando
+  // para siempre en esa ventana, sin reflejar que ya no esta activa.
+  // Ahora lee comparativo.mercados_activos_hoy: TODO el historico, sin
+  // limite de fecha, pero contando solo los partidos cuyo motivo esta
+  // activo en reglas_activas ahora mismo.
+  const hist = comparativo.mercados_activos_hoy || {};
   return MERCADO_ORDEN.map(nombre => {
     const s = hist[nombre];
     const cls = statusClass(s);
@@ -1313,7 +1312,7 @@ function renderPorLiga(porLiga){
 function renderEstadisticas(data){
   const comparativo = data.comparativo;
   return `
-    <section><p class="section-title">Por mercado (últimos 7 días)</p><div class="tickets">${renderTickets(comparativo)}</div></section>
+    <section><p class="section-title">Por mercado (señales activas hoy, histórico completo)</p><div class="tickets">${renderTickets(comparativo)}</div></section>
     <section><p class="section-title">Hoy · 7 días · histórico</p>${renderCmpTable(comparativo)}</section>
     ${data.serie_diaria && data.serie_diaria.length > 1 ? `
     <section><p class="section-title">Tendencia diaria — BTTS</p><div class="chart-card"><div class="chart-wrap"><canvas id="trendChart"></canvas></div></div></section>` : ""}
