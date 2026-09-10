@@ -1355,7 +1355,7 @@ function renderEstadisticas(data){
       </div>
       <div class="grid2">
         <div><p class="bar-label" style="margin-bottom:10px;">Por categoría BTTS</p>${renderBars(comparativo.historico.categorias, CATEGORIA_ORDEN)}</div>
-        <div><p class="bar-label" style="margin-bottom:10px;">Por qué se activó JUGAR (BTTS)</p>${renderBars(comparativo.historico.motivos || {}, Object.keys(comparativo.historico.motivos || {}), ETIQUETAS_BTTS)}</div>
+        <div><p class="bar-label" style="margin-bottom:10px;">Por qué se activó JUGAR (BTTS)<span style="display:block;font-weight:normal;opacity:0.6;font-size:0.85em;margin-top:3px;">Cada señal cuenta todos los partidos que le aplican, gane o no la prioridad. Las unidades no son sumables entre señales.</span></p>${renderBars(comparativo.historico.motivos || {}, Object.keys(comparativo.historico.motivos || {}), ETIQUETAS_BTTS)}</div>
         <div><p class="bar-label" style="margin-bottom:10px;">Por qué se activó JUGAR (Over 1.5)</p>${renderBars(comparativo.historico.motivos_o15 || {}, Object.keys(comparativo.historico.motivos_o15 || {}), ETIQUETAS_O15)}</div>
         <div><p class="bar-label" style="margin-bottom:10px;">Por qué se activó JUGAR (Over 2.5)</p>${renderBars(comparativo.historico.motivos_o25 || {}, Object.keys(comparativo.historico.motivos_o25 || {}), ETIQUETAS_O25)}</div>
         <div><p class="bar-label" style="margin-bottom:10px;">Por qué se activó JUGAR (1er tiempo O0.5)</p>${renderBars(comparativo.historico.motivos_ht05 || {}, Object.keys(comparativo.historico.motivos_ht05 || {}), ETIQUETAS_HT05)}</div>
