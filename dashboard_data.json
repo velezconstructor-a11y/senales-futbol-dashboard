@@ -1,5 +1,5 @@
 {
-  "actualizado": "2026-09-16T06:17:06.943462-05:00",
+  "actualizado": "2026-09-16T10:32:07.385014-05:00",
   "hoy_referencia": "2026-09-16",
   "manana_referencia": "2026-09-17",
   "pasado_manana_referencia": "2026-09-18",
@@ -27,12 +27,12 @@
           "cuota_prom": null
         },
         "Over 1.5": {
-          "bets": 0,
-          "wins": 0,
-          "acierto_pct": null,
-          "profit_u": 0.0,
-          "roi_pct": null,
-          "cuota_prom": null
+          "bets": 1,
+          "wins": 1,
+          "acierto_pct": 100.0,
+          "profit_u": 0,
+          "roi_pct": 0.0,
+          "cuota_prom": 0.0
         },
         "Over 2.5": {
           "bets": 0,
@@ -906,16 +906,61 @@
         }
       },
       "marcador_exacto": {
-        "total": 0,
+        "total": 1,
         "aciertos": 0,
-        "acierto_pct": null
+        "acierto_pct": 0.0
       },
       "calibracion": {
-        "BTTS": [],
-        "Over 1.5": [],
-        "Over 2.5": [],
-        "Over 0.5 1er tiempo": [],
-        "Over 1.5 1er tiempo (nota)": []
+        "BTTS": [
+          {
+            "rango": "60-70%",
+            "total": 1,
+            "aciertos": 0,
+            "acierto_pct": 0.0,
+            "prob_dicha_prom": 60.48653891993626,
+            "diferencia": -60.48653891993626
+          }
+        ],
+        "Over 1.5": [
+          {
+            "rango": "90-100%",
+            "total": 1,
+            "aciertos": 1,
+            "acierto_pct": 100.0,
+            "prob_dicha_prom": 96.65493371126117,
+            "diferencia": 3.3450662887388347
+          }
+        ],
+        "Over 2.5": [
+          {
+            "rango": "90-100%",
+            "total": 1,
+            "aciertos": 1,
+            "acierto_pct": 100.0,
+            "prob_dicha_prom": 90.89455131396784,
+            "diferencia": 9.105448686032162
+          }
+        ],
+        "Over 0.5 1er tiempo": [
+          {
+            "rango": "70-80%",
+            "total": 1,
+            "aciertos": 1,
+            "acierto_pct": 100.0,
+            "prob_dicha_prom": 73.17055117546012,
+            "diferencia": 26.82944882453988
+          }
+        ],
+        "Over 1.5 1er tiempo (nota)": [
+          {
+            "rango": "50-60%",
+            "total": 1,
+            "aciertos": 1,
+            "acierto_pct": 100.0,
+            "prob_dicha_prom": 58.58131370412987,
+            "diferencia": 41.41868629587013
+          }
+        ]
       },
       "por_liga": [],
       "movimiento_validacion": {
@@ -930,7 +975,7 @@
           "acierto_pct": null
         }
       },
-      "total_partidos_evaluados": 0
+      "total_partidos_evaluados": 1
     },
     "recientes": {
       "mercados": {
@@ -943,12 +988,12 @@
           "cuota_prom": 1.6064739884393062
         },
         "Over 1.5": {
-          "bets": 253,
-          "wins": 219,
-          "acierto_pct": 86.56126482213439,
+          "bets": 254,
+          "wins": 220,
+          "acierto_pct": 86.61417322834646,
           "profit_u": -3.0800000000000076,
-          "roi_pct": -1.217391304347829,
-          "cuota_prom": 1.011818181818182
+          "roi_pct": -1.2125984251968533,
+          "cuota_prom": 1.0078346456692915
         },
         "Over 2.5": {
           "bets": 109,
@@ -1965,9 +2010,9 @@
         }
       },
       "marcador_exacto": {
-        "total": 1147,
+        "total": 1148,
         "aciertos": 121,
-        "acierto_pct": 10.54925893635571
+        "acierto_pct": 10.54006968641115
       },
       "calibracion": {
         "BTTS": [
@@ -1981,11 +2026,11 @@
           },
           {
             "rango": "60-70%",
-            "total": 102,
+            "total": 103,
             "aciertos": 68,
-            "acierto_pct": 66.66666666666666,
-            "prob_dicha_prom": 62.465220586514306,
-            "diferencia": 4.201446080152351
+            "acierto_pct": 66.01941747572816,
+            "prob_dicha_prom": 62.446010084897054,
+            "diferencia": 3.5734073908311075
           },
           {
             "rango": "70-80%",
@@ -2023,11 +2068,11 @@
           },
           {
             "rango": "90-100%",
-            "total": 37,
-            "aciertos": 32,
-            "acierto_pct": 86.48648648648648,
-            "prob_dicha_prom": 94.34455070641985,
-            "diferencia": -7.858064219933368
+            "total": 38,
+            "aciertos": 33,
+            "acierto_pct": 86.8421052631579,
+            "prob_dicha_prom": 94.40535025917883,
+            "diferencia": -7.563244996020927
           }
         ],
         "Over 2.5": [
@@ -2065,11 +2110,11 @@
           },
           {
             "rango": "90-100%",
-            "total": 10,
-            "aciertos": 8,
-            "acierto_pct": 80.0,
-            "prob_dicha_prom": 91.54813967554209,
-            "diferencia": -11.548139675542089
+            "total": 11,
+            "aciertos": 9,
+            "acierto_pct": 81.81818181818183,
+            "prob_dicha_prom": 91.48872255176262,
+            "diferencia": -9.670540733580793
           }
         ],
         "Over 0.5 1er tiempo": [
@@ -2083,11 +2128,11 @@
           },
           {
             "rango": "70-80%",
-            "total": 494,
-            "aciertos": 350,
-            "acierto_pct": 70.8502024291498,
-            "prob_dicha_prom": 71.28627133748525,
-            "diferencia": -0.436068908335443
+            "total": 495,
+            "aciertos": 351,
+            "acierto_pct": 70.9090909090909,
+            "prob_dicha_prom": 71.29007796342054,
+            "diferencia": -0.380987054329637
           },
           {
             "rango": "80-90%",
@@ -2101,11 +2146,11 @@
         "Over 1.5 1er tiempo (nota)": [
           {
             "rango": "50-60%",
-            "total": 130,
-            "aciertos": 56,
-            "acierto_pct": 43.07692307692308,
-            "prob_dicha_prom": 54.15287574127725,
-            "diferencia": -11.075952664354169
+            "total": 131,
+            "aciertos": 57,
+            "acierto_pct": 43.51145038167939,
+            "prob_dicha_prom": 54.18668061122269,
+            "diferencia": -10.675230229543303
           },
           {
             "rango": "60-70%",
@@ -2687,7 +2732,7 @@
           "acierto_pct": 69.36671575846833
         }
       },
-      "total_partidos_evaluados": 1147
+      "total_partidos_evaluados": 1148
     },
     "historico": {
       "mercados": {
@@ -2700,12 +2745,12 @@
           "cuota_prom": 1.622960477255779
         },
         "Over 1.5": {
-          "bets": 1368,
-          "wins": 1103,
-          "acierto_pct": 80.62865497076024,
+          "bets": 1369,
+          "wins": 1104,
+          "acierto_pct": 80.6428049671293,
           "profit_u": -53.790000000000006,
-          "roi_pct": -3.93201754385965,
-          "cuota_prom": 1.1118786549707604
+          "roi_pct": -3.9291453615777945,
+          "cuota_prom": 1.111066471877283
         },
         "Over 2.5": {
           "bets": 709,
@@ -3750,9 +3795,9 @@
         }
       },
       "marcador_exacto": {
-        "total": 6860,
+        "total": 6861,
         "aciertos": 722,
-        "acierto_pct": 10.524781341107872
+        "acierto_pct": 10.523247340037896
       },
       "calibracion": {
         "BTTS": [
@@ -3766,11 +3811,11 @@
           },
           {
             "rango": "60-70%",
-            "total": 338,
+            "total": 339,
             "aciertos": 218,
-            "acierto_pct": 64.49704142011834,
-            "prob_dicha_prom": 62.48410718998246,
-            "diferencia": 2.012934230135876
+            "acierto_pct": 64.30678466076697,
+            "prob_dicha_prom": 62.478214658212416,
+            "diferencia": 1.8285700025545495
           },
           {
             "rango": "70-80%",
@@ -3816,11 +3861,11 @@
           },
           {
             "rango": "90-100%",
-            "total": 116,
-            "aciertos": 99,
-            "acierto_pct": 85.34482758620689,
-            "prob_dicha_prom": 94.24195692740723,
-            "diferencia": -8.89712934120034
+            "total": 117,
+            "aciertos": 100,
+            "acierto_pct": 85.47008547008546,
+            "prob_dicha_prom": 94.26258066060257,
+            "diferencia": -8.792495190517101
           }
         ],
         "Over 2.5": [
@@ -3858,11 +3903,11 @@
           },
           {
             "rango": "90-100%",
-            "total": 23,
-            "aciertos": 14,
-            "acierto_pct": 60.86956521739131,
-            "prob_dicha_prom": 92.03452874597122,
-            "diferencia": -31.164963528579904
+            "total": 24,
+            "aciertos": 15,
+            "acierto_pct": 62.5,
+            "prob_dicha_prom": 91.98702968630442,
+            "diferencia": -29.487029686304425
           }
         ],
         "Over 0.5 1er tiempo": [
@@ -3876,11 +3921,11 @@
           },
           {
             "rango": "70-80%",
-            "total": 1700,
-            "aciertos": 1252,
-            "acierto_pct": 73.6470588235294,
-            "prob_dicha_prom": 71.1800529444066,
-            "diferencia": 2.4670058791228087
+            "total": 1701,
+            "aciertos": 1253,
+            "acierto_pct": 73.66255144032921,
+            "prob_dicha_prom": 71.18122313737018,
+            "diferencia": 2.481328302959028
           },
           {
             "rango": "80-90%",
@@ -3894,11 +3939,11 @@
         "Over 1.5 1er tiempo (nota)": [
           {
             "rango": "50-60%",
-            "total": 355,
-            "aciertos": 157,
-            "acierto_pct": 44.225352112676056,
-            "prob_dicha_prom": 54.3412071310443,
-            "diferencia": -10.115855018368244
+            "total": 356,
+            "aciertos": 158,
+            "acierto_pct": 44.38202247191011,
+            "prob_dicha_prom": 54.35311754276645,
+            "diferencia": -9.971095070856336
           },
           {
             "rango": "60-70%",
@@ -5100,7 +5145,7 @@
           "acierto_pct": 67.51054852320675
         }
       },
-      "total_partidos_evaluados": 6918
+      "total_partidos_evaluados": 6919
     },
     "mercados_activos_hoy": {
       "BTTS": {
@@ -17984,7 +18029,7 @@
       "cuota_btts": 0.0,
       "cuota_btts_actual": 0.0,
       "movimiento_btts_pp": null,
-      "resultado_btts": null,
+      "resultado_btts": false,
       "senal_o15_tier": "Evitar",
       "sug_o15": "JUGAR",
       "motivo_o15": "o15_gf_o25btts",
@@ -17992,7 +18037,7 @@
       "cuota_o15": 0.0,
       "cuota_o15_actual": 0.0,
       "movimiento_o15_pp": null,
-      "resultado_o15": null,
+      "resultado_o15": true,
       "senal_o25": "Fuerte",
       "sug_o25": "EVITAR",
       "motivo_o25": "camino_normal_o25",
@@ -18000,15 +18045,15 @@
       "cuota_o25": 0.0,
       "cuota_o25_actual": 0.0,
       "movimiento_o25_pp": null,
-      "resultado_o25": null,
+      "resultado_o25": true,
       "senal_btts_o25": "—",
       "motivo_combo": "ninguno_evitar_combo",
-      "resultado_combo": null,
+      "resultado_combo": false,
       "vip_elite": null,
       "oro": null,
       "nivel_confianza": null,
       "marcador_exacto_sugerido": "1-1",
-      "marcador_exacto_real": null,
+      "marcador_exacto_real": "0-3",
       "usa_temporada_anterior": false,
       "usa_promedio_general": true,
       "es_equipo_filial": true,
@@ -18031,10 +18076,10 @@
       "mejora_o25_pct": null,
       "cuota_ht_over05": 0.0,
       "cuota_ht_over15": 0.0,
-      "resultado_over15_ht": null,
+      "resultado_over15_ht": true,
       "cuota_ht_over05_actual": 0.0,
       "movimiento_ht05_pp": null,
-      "resultado_ht05": null
+      "resultado_ht05": true
     },
     {
       "fecha": "2026-09-14",
