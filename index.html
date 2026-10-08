@@ -600,6 +600,9 @@ const ETIQUETAS_O25 = {
     "o25_xgmin_gftotal": "🎯 cuota 1.25-1.40 · xG mín≤1.31 + GF total≥3.81",
     "o25_favorito_fallo_bajo": "⚖️ cuota 1.25-1.40 · fallo máx≤17% + ratio 1X2≥4.55",
     "o25_sotmax_o25bttsmin": "🎯⚠️ cuota 1.20-1.35 · over25&btts%mín≤43% + SOT máx≤6.88 (patrón contraintuitivo)",
+    "o25_gcmin_xgamin": "🛡️ cuota 1.45-1.65 · GC mín≥1.12 + xGA mín≤0.99",
+    "o25_gctotal_bttsmax": "🎯 cuota 1.45-1.65 · GC total≤1.91 + BTTS%máx≥71%",
+    "o25_xgmin_gfmin": "🎯 cuota 1.45-1.65 · xG mín≤1.01 + GF mín≥1.25",
 };
 
 function notaRescateO25(p){
@@ -859,6 +862,9 @@ const MOTIVOS_VALIDADOS = new Set([
   "combo_foxtrot_gcmax_failedmax",
   "combo_golf_xgmin_bttsmin",
   "combo_hotel_xgmin_gftotal",
+  "o25_gcmin_xgamin",
+  "o25_gctotal_bttsmax",
+  "o25_xgmin_gfmin",
 ]);
 
 function renderMercado(picks, probKey, senalKey, tierKey, cuotaKey, resultadoDeseado, resultKey, mercadoKey, motivoKey){
