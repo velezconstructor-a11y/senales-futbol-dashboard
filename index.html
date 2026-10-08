@@ -414,6 +414,9 @@ const ETIQUETAS_COMBO = {
     // AGREGADA 24 ago 2026 - faltaba esta etiqueta desde que se creo la
     // señal (solo seguimiento, nunca genera JUGAR real - ver signals.py)
     "nueva_cuota_combo": "🔬 nueva cuota: GF≥2.5 + ratio cuotas≥0.95 (en prueba)",
+    "combo_foxtrot_gcmax_failedmax": "🦊 Foxtrot (Combinada) · cuota combo 1.3-1.6 · GC máx≤2.10 + fallo máx≤16%",
+    "combo_golf_xgmin_bttsmin": "⛳ Golf (Combinada) · cuota combo 1.5-1.8 · xG mín≤1.20 + BTTS%mín≥60%",
+    "combo_hotel_xgmin_gftotal": "🏨 Hotel (Combinada) · cuota combo 1.5-1.8 · xG mín≤1.35 + GF total≥3.79",
 };
 
 const ETIQUETAS_BTTS = {
@@ -594,6 +597,9 @@ const ETIQUETAS_O25 = {
     "o25_gf_max_btts_xg": "🎯 GF máx≥2.0 + BTTS%≥50% + xG máx≥1.6",
     "o25_gf_max_btts_xg_xgamax": "🎯 GF máx + BTTS% + xG máx + xGA máx≥1.6",
     "o25_ppg_gf_o25btts": "💎 PPG diferencia≥0.8 + GF máx≥1.8 + over25&btts%≥40",
+    "o25_xgmin_gftotal": "🎯 cuota 1.25-1.40 · xG mín≤1.31 + GF total≥3.81",
+    "o25_favorito_fallo_bajo": "⚖️ cuota 1.25-1.40 · fallo máx≤17% + ratio 1X2≥4.55",
+    "o25_sotmax_o25bttsmin": "🎯⚠️ cuota 1.20-1.35 · over25&btts%mín≤43% + SOT máx≤6.88 (patrón contraintuitivo)",
 };
 
 function notaRescateO25(p){
@@ -847,6 +853,12 @@ const MOTIVOS_VALIDADOS = new Set([
   "combo_gf_total_max",
   "combo_ppg_gf_xga",
   "combo_btts_barato_gf_xga",
+  "o25_xgmin_gftotal",
+  "o25_favorito_fallo_bajo",
+  "o25_sotmax_o25bttsmin",
+  "combo_foxtrot_gcmax_failedmax",
+  "combo_golf_xgmin_bttsmin",
+  "combo_hotel_xgmin_gftotal",
 ]);
 
 function renderMercado(picks, probKey, senalKey, tierKey, cuotaKey, resultadoDeseado, resultKey, mercadoKey, motivoKey){
