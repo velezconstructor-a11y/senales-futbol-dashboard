@@ -512,6 +512,8 @@ const ETIQUETAS_BTTS = {
     "centinela_elite": "🗿✨ Centinela Élite · igual + probabilidad calibrada≥55%",
     "atlas": "🌍 Atlas · cuota 1.45-1.65 · PPG máx≥2.00 + AVG2H mín≥1.50 (ambos anotan fuerte en la 2da mitad)",
     "coliseo": "🏟️ Coliseo · cuota 1.6-1.9 · Tiros totales≥24.2 + CS mín=0% (ningún equipo ha dejado la valla en cero)",
+    "cumbre": "⛰️ Cumbre · lo mejor del día · cuota 1.4-1.6 · VIP+ con prob≥64% + SOT total≤14 + xGA mín≥1.2",
+    "corona": "👑 Corona · lo mejor del día · cuota 1.45-1.55 · VIP+ + Diamante Élite (SOT total≥10 + GC máx≥1.8 + fallo máx≤25%)",
     "centinela_failed_bajo": "🗿⚠️ Centinela+Fallo bajo · igual que Centinela + fallo máx≤26% (EN SEGUIMIENTO, muestra real chica)",
     "apuesta_top_btts_gcmin": "🏆⚠️ Apuesta TOP BTTS+GC bajo · igual + GC mín≤1.10 (EN SEGUIMIENTO, muestra real chica)",
     "plata_cuota_1.40-1.55_sot_alto": "🥈⚠️ Plata 1.40-1.55+SOT alto · igual + SOT total≥8.5 (EN SEGUIMIENTO, muestra real chica)",
@@ -865,6 +867,8 @@ const MOTIVOS_VALIDADOS = new Set([
   "o25_gcmin_xgamin",
   "o25_gctotal_bttsmax",
   "o25_xgmin_gfmin",
+  "cumbre",
+  "corona",
 ]);
 
 function renderMercado(picks, probKey, senalKey, tierKey, cuotaKey, resultadoDeseado, resultKey, mercadoKey, motivoKey){
