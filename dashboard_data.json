@@ -1,5 +1,5 @@
 {
-  "actualizado": "2026-10-09T18:27:42.176097-05:00",
+  "actualizado": "2026-10-09T19:42:03.137218-05:00",
   "hoy_referencia": "2026-10-09",
   "manana_referencia": "2026-10-10",
   "pasado_manana_referencia": "2026-10-11",
@@ -592,15 +592,6 @@
           "activa": true,
           "penalizacion_inestabilidad": 0.0
         },
-        "salvacion_cuota_corta": {
-          "total": 1,
-          "ganados": 1,
-          "acierto_pct": 100.0,
-          "profit_u": 0.47,
-          "total_detectado": 11,
-          "activa": false,
-          "penalizacion_inestabilidad": 0.0
-        },
         "perfil_defensa_floja": {
           "total": 3,
           "ganados": 1,
@@ -718,6 +709,15 @@
           "activa": true,
           "penalizacion_inestabilidad": 0.0
         },
+        "salvacion_cuota_corta": {
+          "total": 1,
+          "ganados": 1,
+          "acierto_pct": 100.0,
+          "profit_u": 0.47,
+          "total_detectado": 10,
+          "activa": false,
+          "penalizacion_inestabilidad": 0.0
+        },
         "zafiro": {
           "total": 1,
           "ganados": 1,
@@ -785,6 +785,14 @@
           "total_detectado": 1,
           "activa": null
         },
+        "cumbre": {
+          "total": 0,
+          "ganados": 0,
+          "acierto_pct": null,
+          "profit_u": 0.0,
+          "total_detectado": 9,
+          "activa": null
+        },
         "franja1.8-1.9_bronce": {
           "total": 0,
           "ganados": 0,
@@ -815,6 +823,14 @@
           "acierto_pct": null,
           "profit_u": 0.0,
           "total_detectado": 7,
+          "activa": null
+        },
+        "corona": {
+          "total": 0,
+          "ganados": 0,
+          "acierto_pct": null,
+          "profit_u": 0.0,
+          "total_detectado": 3,
           "activa": null
         },
         "avg2h_edge": {
@@ -905,7 +921,7 @@
           "ganados": 31,
           "acierto_pct": 86.11111111111111,
           "profit_u": -1.210000000000001,
-          "total_detectado": 241,
+          "total_detectado": 240,
           "activa": true,
           "penalizacion_inestabilidad": 16.525
         },
@@ -914,7 +930,7 @@
           "ganados": 13,
           "acierto_pct": 81.25,
           "profit_u": -1.7799999999999998,
-          "total_detectado": 106,
+          "total_detectado": 105,
           "activa": true,
           "penalizacion_inestabilidad": 16.575
         }
@@ -1055,15 +1071,15 @@
           "activa": true,
           "penalizacion_inestabilidad": 0.0
         },
-        "camino_normal_o25": {
+        "o25_xgmin_gftotal": {
           "total": 0,
           "ganados": 0,
           "acierto_pct": null,
           "profit_u": 0.0,
-          "total_detectado": 10,
+          "total_detectado": 9,
           "activa": null
         },
-        "o25_xgmin_gftotal": {
+        "camino_normal_o25": {
           "total": 0,
           "ganados": 0,
           "acierto_pct": null,
@@ -1094,7 +1110,7 @@
           "ganados": 34,
           "acierto_pct": 82.92682926829268,
           "profit_u": 0.0,
-          "total_detectado": 282,
+          "total_detectado": 280,
           "activa": false,
           "penalizacion_inestabilidad": 0.0
         },
@@ -1103,7 +1119,7 @@
           "ganados": 60,
           "acierto_pct": 75.0,
           "profit_u": 0.0,
-          "total_detectado": 591,
+          "total_detectado": 587,
           "activa": false,
           "penalizacion_inestabilidad": 0.0
         }
@@ -1114,7 +1130,7 @@
           "ganados": 1,
           "acierto_pct": 16.666666666666664,
           "profit_u": 0.0,
-          "total_detectado": 33,
+          "total_detectado": 32,
           "activa": false,
           "penalizacion_inestabilidad": 0.0
         },
@@ -1123,7 +1139,7 @@
           "ganados": 15,
           "acierto_pct": 51.724137931034484,
           "profit_u": 2.2615325000000004,
-          "total_detectado": 180,
+          "total_detectado": 179,
           "activa": false,
           "penalizacion_inestabilidad": 18.830368035714287
         },
@@ -1168,7 +1184,7 @@
           "ganados": 7,
           "acierto_pct": 31.818181818181817,
           "profit_u": -1.3576000000000015,
-          "total_detectado": 102,
+          "total_detectado": 101,
           "activa": false,
           "penalizacion_inestabilidad": 24.057818181818178
         },
@@ -1342,6 +1358,8 @@
         "o25_gcmin_xgamin": true,
         "o25_gctotal_bttsmax": true,
         "o25_xgmin_gfmin": true,
+        "cumbre": true,
+        "corona": true,
         "america_pareja": true,
         "america_estricta": true,
         "america_amplia": true,
@@ -1671,7 +1689,7 @@
           "ganados": 9,
           "acierto_pct": 60.0,
           "profit_u": -0.36000000000000054,
-          "total_detectado": 42,
+          "total_detectado": 41,
           "activa": true,
           "penalizacion_inestabilidad": 19.266964285714284
         },
@@ -1725,7 +1743,7 @@
           "ganados": 34,
           "acierto_pct": 61.81818181818181,
           "profit_u": -4.469999999999999,
-          "total_detectado": 133,
+          "total_detectado": 132,
           "activa": true,
           "penalizacion_inestabilidad": 17.274603174603175
         },
@@ -2058,7 +2076,7 @@
           "ganados": 8,
           "acierto_pct": 44.44444444444444,
           "profit_u": -5.25,
-          "total_detectado": 55,
+          "total_detectado": 54,
           "activa": true,
           "penalizacion_inestabilidad": 15.950000000000001
         },
@@ -2067,7 +2085,7 @@
           "ganados": 6,
           "acierto_pct": 46.15384615384615,
           "profit_u": -3.54,
-          "total_detectado": 42,
+          "total_detectado": 41,
           "activa": true,
           "penalizacion_inestabilidad": 0.0
         },
@@ -2247,7 +2265,7 @@
           "ganados": 4,
           "acierto_pct": 66.66666666666666,
           "profit_u": -0.020000000000000018,
-          "total_detectado": 16,
+          "total_detectado": 15,
           "activa": true,
           "penalizacion_inestabilidad": 0.0
         },
@@ -2431,6 +2449,22 @@
           "activa": false,
           "penalizacion_inestabilidad": 0.0
         },
+        "cumbre": {
+          "total": 0,
+          "ganados": 0,
+          "acierto_pct": null,
+          "profit_u": 0.0,
+          "total_detectado": 9,
+          "activa": null
+        },
+        "corona": {
+          "total": 0,
+          "ganados": 0,
+          "acierto_pct": null,
+          "profit_u": 0.0,
+          "total_detectado": 3,
+          "activa": null
+        },
         "rescate_evitar_lambda_moderado": {
           "total": 0,
           "ganados": 0,
@@ -2446,7 +2480,7 @@
           "ganados": 114,
           "acierto_pct": 82.6086956521739,
           "profit_u": -10.650000000000002,
-          "total_detectado": 366,
+          "total_detectado": 365,
           "activa": true,
           "penalizacion_inestabilidad": 15.17608695652174
         },
@@ -2464,7 +2498,7 @@
           "ganados": 48,
           "acierto_pct": 77.41935483870968,
           "profit_u": -8.930000000000001,
-          "total_detectado": 158,
+          "total_detectado": 157,
           "activa": true,
           "penalizacion_inestabilidad": 15.00483870967742
         }
@@ -2475,7 +2509,7 @@
           "ganados": 56,
           "acierto_pct": 52.83018867924528,
           "profit_u": -6.16,
-          "total_detectado": 252,
+          "total_detectado": 251,
           "activa": true,
           "penalizacion_inestabilidad": 15.413207547169812
         },
@@ -2502,7 +2536,7 @@
           "ganados": 51,
           "acierto_pct": 57.95454545454546,
           "profit_u": -6.03,
-          "total_detectado": 212,
+          "total_detectado": 211,
           "activa": true,
           "penalizacion_inestabilidad": 15.7125
         },
@@ -2520,7 +2554,7 @@
           "ganados": 6,
           "acierto_pct": 85.71428571428571,
           "profit_u": 0.0,
-          "total_detectado": 19,
+          "total_detectado": 18,
           "activa": false,
           "penalizacion_inestabilidad": 0.0
         },
@@ -2646,7 +2680,7 @@
           "ganados": 179,
           "acierto_pct": 78.8546255506608,
           "profit_u": 0.0,
-          "total_detectado": 494,
+          "total_detectado": 489,
           "activa": false,
           "penalizacion_inestabilidad": 0.0
         },
@@ -2655,7 +2689,7 @@
           "ganados": 269,
           "acierto_pct": 73.29700272479565,
           "profit_u": 0.0,
-          "total_detectado": 933,
+          "total_detectado": 928,
           "activa": false,
           "penalizacion_inestabilidad": 0.0
         }
@@ -2666,7 +2700,7 @@
           "ganados": 91,
           "acierto_pct": 49.72677595628415,
           "profit_u": 4.730912500000002,
-          "total_detectado": 334,
+          "total_detectado": 333,
           "activa": false,
           "penalizacion_inestabilidad": 16.51132554198519
         },
@@ -2675,7 +2709,7 @@
           "ganados": 40,
           "acierto_pct": 49.382716049382715,
           "profit_u": 3.365332499999999,
-          "total_detectado": 161,
+          "total_detectado": 160,
           "activa": false,
           "penalizacion_inestabilidad": 1.231219207317073
         },
@@ -2684,7 +2718,7 @@
           "ganados": 11,
           "acierto_pct": 26.82926829268293,
           "profit_u": 0.0,
-          "total_detectado": 68,
+          "total_detectado": 67,
           "activa": false,
           "penalizacion_inestabilidad": 0.0
         },
@@ -2903,6 +2937,8 @@
         "o25_gcmin_xgamin": true,
         "o25_gctotal_bttsmax": true,
         "o25_xgmin_gfmin": true,
+        "cumbre": true,
+        "corona": true,
         "america_pareja": true,
         "america_estricta": true,
         "america_amplia": true,
@@ -3469,7 +3505,7 @@
           "ganados": 66,
           "acierto_pct": 55.46218487394958,
           "profit_u": -11.69,
-          "total_detectado": 166,
+          "total_detectado": 165,
           "activa": true,
           "penalizacion_inestabilidad": 15.487033898305084
         },
@@ -3478,7 +3514,7 @@
           "ganados": 61,
           "acierto_pct": 55.96330275229357,
           "profit_u": -9.930000000000001,
-          "total_detectado": 145,
+          "total_detectado": 144,
           "activa": true,
           "penalizacion_inestabilidad": 15.99611111111111
         },
@@ -3667,7 +3703,7 @@
           "ganados": 31,
           "acierto_pct": 62.0,
           "profit_u": -3.8300000000000005,
-          "total_detectado": 60,
+          "total_detectado": 59,
           "activa": true,
           "penalizacion_inestabilidad": 15.714
         },
@@ -3784,7 +3820,7 @@
           "ganados": 54,
           "acierto_pct": 58.69565217391305,
           "profit_u": -5.370000000000001,
-          "total_detectado": 128,
+          "total_detectado": 127,
           "activa": true,
           "penalizacion_inestabilidad": 16.066304347826087
         },
@@ -4036,7 +4072,7 @@
           "ganados": 84,
           "acierto_pct": 65.11627906976744,
           "profit_u": -3.2199999999999984,
-          "total_detectado": 211,
+          "total_detectado": 210,
           "activa": true,
           "penalizacion_inestabilidad": 17.264098557692307
         },
@@ -4219,6 +4255,22 @@
           "total_detectado": 10,
           "activa": false,
           "penalizacion_inestabilidad": 0.0
+        },
+        "cumbre": {
+          "total": 0,
+          "ganados": 0,
+          "acierto_pct": null,
+          "profit_u": 0.0,
+          "total_detectado": 9,
+          "activa": null
+        },
+        "corona": {
+          "total": 0,
+          "ganados": 0,
+          "acierto_pct": null,
+          "profit_u": 0.0,
+          "total_detectado": 3,
+          "activa": null
         }
       },
       "motivos_o15": {
@@ -4227,7 +4279,7 @@
           "ganados": 746,
           "acierto_pct": 85.8457997698504,
           "profit_u": -20.910000000000018,
-          "total_detectado": 1214,
+          "total_detectado": 1213,
           "activa": true,
           "penalizacion_inestabilidad": 15.727248530112824
         },
@@ -4236,7 +4288,7 @@
           "ganados": 353,
           "acierto_pct": 85.26570048309179,
           "profit_u": -20.450000000000006,
-          "total_detectado": 537,
+          "total_detectado": 536,
           "activa": true,
           "penalizacion_inestabilidad": 16.64855072463768
         },
@@ -4265,7 +4317,7 @@
           "ganados": 338,
           "acierto_pct": 62.018348623853214,
           "profit_u": -19.24,
-          "total_detectado": 678,
+          "total_detectado": 677,
           "activa": true,
           "penalizacion_inestabilidad": 15.43240344214609
         },
@@ -4274,7 +4326,7 @@
           "ganados": 365,
           "acierto_pct": 61.6554054054054,
           "profit_u": -30.64,
-          "total_detectado": 763,
+          "total_detectado": 762,
           "activa": true,
           "penalizacion_inestabilidad": 15.525
         },
@@ -4301,7 +4353,7 @@
           "ganados": 218,
           "acierto_pct": 66.87116564417178,
           "profit_u": -12.600000000000001,
-          "total_detectado": 374,
+          "total_detectado": 373,
           "activa": true,
           "penalizacion_inestabilidad": 16.15950920245399
         },
@@ -4427,7 +4479,7 @@
           "ganados": 2743,
           "acierto_pct": 74.78189749182116,
           "profit_u": -63.26000000000001,
-          "total_detectado": 4562,
+          "total_detectado": 4557,
           "activa": true,
           "penalizacion_inestabilidad": 15.517393675027263
         },
@@ -4436,7 +4488,7 @@
           "ganados": 2413,
           "acierto_pct": 70.61750073163594,
           "profit_u": 0.0,
-          "total_detectado": 4207,
+          "total_detectado": 4202,
           "activa": false,
           "penalizacion_inestabilidad": 0.0
         }
@@ -4474,7 +4526,7 @@
           "ganados": 146,
           "acierto_pct": 36.775818639798494,
           "profit_u": -6.7638774999999995,
-          "total_detectado": 424,
+          "total_detectado": 423,
           "activa": false,
           "penalizacion_inestabilidad": 16.04571179667276
         },
@@ -4483,7 +4535,7 @@
           "ganados": 247,
           "acierto_pct": 47.22753346080306,
           "profit_u": -27.0887025,
-          "total_detectado": 603,
+          "total_detectado": 602,
           "activa": false,
           "penalizacion_inestabilidad": 15.357557865008335
         },
@@ -4555,7 +4607,7 @@
           "ganados": 155,
           "acierto_pct": 50.65359477124183,
           "profit_u": -4.5651575000000015,
-          "total_detectado": 457,
+          "total_detectado": 456,
           "activa": false,
           "penalizacion_inestabilidad": 16.3751943627451
         },
@@ -4684,6 +4736,8 @@
         "o25_gcmin_xgamin": true,
         "o25_gctotal_bttsmax": true,
         "o25_xgmin_gfmin": true,
+        "cumbre": true,
+        "corona": true,
         "america_pareja": true,
         "america_estricta": true,
         "america_amplia": true,
@@ -6627,7 +6681,7 @@
   ],
   "picks_hoy": [
     {
-      "fecha": "2026-10-08",
+      "fecha": "2026-10-09",
       "fecha_partido": "2026-10-10",
       "liga": "USA MLS",
       "liga_confianza": null,
@@ -6695,7 +6749,7 @@
       "resultado_ht05": null
     },
     {
-      "fecha": "2026-10-08",
+      "fecha": "2026-10-09",
       "fecha_partido": "2026-10-10",
       "liga": "USA MLS",
       "liga_confianza": null,
@@ -6831,7 +6885,7 @@
       "resultado_ht05": null
     },
     {
-      "fecha": "2026-10-08",
+      "fecha": "2026-10-09",
       "fecha_partido": "2026-10-10",
       "liga": "USA MLS",
       "liga_confianza": null,
@@ -6899,7 +6953,7 @@
       "resultado_ht05": null
     },
     {
-      "fecha": "2026-10-08",
+      "fecha": "2026-10-09",
       "fecha_partido": "2026-10-10",
       "liga": "USA MLS",
       "liga_confianza": null,
@@ -6967,7 +7021,7 @@
       "resultado_ht05": null
     },
     {
-      "fecha": "2026-10-08",
+      "fecha": "2026-10-09",
       "fecha_partido": "2026-10-10",
       "liga": "USA MLS",
       "liga_confianza": null,
@@ -7035,7 +7089,7 @@
       "resultado_ht05": null
     },
     {
-      "fecha": "2026-10-08",
+      "fecha": "2026-10-09",
       "fecha_partido": "2026-10-10",
       "liga": "USA MLS",
       "liga_confianza": null,
@@ -7103,7 +7157,7 @@
       "resultado_ht05": null
     },
     {
-      "fecha": "2026-10-08",
+      "fecha": "2026-10-09",
       "fecha_partido": "2026-10-10",
       "liga": "USA MLS",
       "liga_confianza": null,
@@ -7171,7 +7225,7 @@
       "resultado_ht05": null
     },
     {
-      "fecha": "2026-10-08",
+      "fecha": "2026-10-09",
       "fecha_partido": "2026-10-10",
       "liga": "USA MLS",
       "liga_confianza": null,
@@ -7239,7 +7293,7 @@
       "resultado_ht05": null
     },
     {
-      "fecha": "2026-10-08",
+      "fecha": "2026-10-09",
       "fecha_partido": "2026-10-10",
       "liga": "USA MLS",
       "liga_confianza": null,
@@ -7307,7 +7361,7 @@
       "resultado_ht05": null
     },
     {
-      "fecha": "2026-10-08",
+      "fecha": "2026-10-09",
       "fecha_partido": "2026-10-10",
       "liga": "USA MLS",
       "liga_confianza": null,
@@ -7375,7 +7429,7 @@
       "resultado_ht05": null
     },
     {
-      "fecha": "2026-10-08",
+      "fecha": "2026-10-09",
       "fecha_partido": "2026-10-10",
       "liga": "USA MLS",
       "liga_confianza": null,
@@ -7443,7 +7497,7 @@
       "resultado_ht05": null
     },
     {
-      "fecha": "2026-10-08",
+      "fecha": "2026-10-09",
       "fecha_partido": "2026-10-10",
       "liga": "USA MLS",
       "liga_confianza": null,
@@ -7511,7 +7565,7 @@
       "resultado_ht05": null
     },
     {
-      "fecha": "2026-10-08",
+      "fecha": "2026-10-09",
       "fecha_partido": "2026-10-10",
       "liga": "USA MLS",
       "liga_confianza": null,
@@ -7579,7 +7633,7 @@
       "resultado_ht05": null
     },
     {
-      "fecha": "2026-10-08",
+      "fecha": "2026-10-09",
       "fecha_partido": "2026-10-10",
       "liga": "USA MLS",
       "liga_confianza": null,
@@ -8055,7 +8109,7 @@
       "resultado_ht05": true
     },
     {
-      "fecha": "2026-10-08",
+      "fecha": "2026-10-09",
       "fecha_partido": "2026-10-10",
       "liga": "USA USL Championship",
       "liga_confianza": null,
@@ -8123,7 +8177,7 @@
       "resultado_ht05": null
     },
     {
-      "fecha": "2026-10-08",
+      "fecha": "2026-10-09",
       "fecha_partido": "2026-10-10",
       "liga": "USA USL Championship",
       "liga_confianza": null,
@@ -8191,7 +8245,7 @@
       "resultado_ht05": null
     },
     {
-      "fecha": "2026-10-08",
+      "fecha": "2026-10-09",
       "fecha_partido": "2026-10-10",
       "liga": "USA USL Championship",
       "liga_confianza": null,
@@ -8259,75 +8313,7 @@
       "resultado_ht05": null
     },
     {
-      "fecha": "2026-10-08",
-      "fecha_partido": "2026-10-09",
-      "liga": "USA USL Championship",
-      "liga_confianza": null,
-      "local": "Lexington SC",
-      "visitante": "Tulsa Roughnecks FC",
-      "senal_btts_optimizada": "Evitar",
-      "nivel_final": "EVITAR",
-      "motivo_btts": "ninguno_evitar_final",
-      "prob_btts": 0.5489853148779482,
-      "prob_btts_calibrada": 0.5199023918415655,
-      "btts_min_alto": null,
-      "cuota_btts": 1.7,
-      "cuota_btts_actual": 1.7,
-      "movimiento_btts_pp": null,
-      "resultado_btts": null,
-      "senal_o15_tier": "VIP",
-      "sug_o15": "EVITAR",
-      "motivo_o15": "ninguno_evitar_o15",
-      "prob_o15": 0.805996848206062,
-      "cuota_o15": 1.27,
-      "cuota_o15_actual": 1.27,
-      "movimiento_o15_pp": null,
-      "resultado_o15": null,
-      "senal_o25": "Evitar",
-      "sug_o25": "EVITAR",
-      "motivo_o25": "ninguno_evitar_o25",
-      "prob_o25": 0.5845722541841678,
-      "cuota_o25": 1.72,
-      "cuota_o25_actual": 1.72,
-      "movimiento_o25_pp": null,
-      "resultado_o25": null,
-      "senal_btts_o25": "—",
-      "motivo_combo": "ninguno_evitar_combo",
-      "resultado_combo": null,
-      "vip_elite": null,
-      "oro": null,
-      "nivel_confianza": null,
-      "marcador_exacto_sugerido": "2-1",
-      "marcador_exacto_real": null,
-      "usa_temporada_anterior": false,
-      "usa_promedio_general": false,
-      "es_equipo_filial": false,
-      "senal_ht05_tier": "Fuerte",
-      "sug_ht05": "EVITAR",
-      "prob_over05_ht": 0.6942538205012883,
-      "prob_over15_ht": 0.3319445977953148,
-      "prob_over05_ht_v2": 0.6934884987990186,
-      "prob_over15_ht_v2": 0.3310386486288582,
-      "prob_combo_v2": null,
-      "prob_combo_calibrada": 0.4443244758615439,
-      "prob_o15_calibrada": 0.7837538803154775,
-      "prob_o25_calibrada": 0.5500587289090489,
-      "prob_over05_ht_calibrada": 0.6961582593447079,
-      "mejor_casa_btts": null,
-      "mejor_cuota_btts": null,
-      "mejora_btts_pct": null,
-      "mejor_casa_o25": null,
-      "mejor_cuota_o25": null,
-      "mejora_o25_pct": null,
-      "cuota_ht_over05": 1.35,
-      "cuota_ht_over15": 2.63,
-      "resultado_over15_ht": null,
-      "cuota_ht_over05_actual": 1.35,
-      "movimiento_ht05_pp": null,
-      "resultado_ht05": null
-    },
-    {
-      "fecha": "2026-10-08",
+      "fecha": "2026-10-09",
       "fecha_partido": "2026-10-10",
       "liga": "USA USL Championship",
       "liga_confianza": null,
@@ -8395,7 +8381,7 @@
       "resultado_ht05": null
     },
     {
-      "fecha": "2026-10-08",
+      "fecha": "2026-10-09",
       "fecha_partido": "2026-10-10",
       "liga": "USA USL Championship",
       "liga_confianza": null,
@@ -8463,7 +8449,7 @@
       "resultado_ht05": null
     },
     {
-      "fecha": "2026-10-08",
+      "fecha": "2026-10-09",
       "fecha_partido": "2026-10-10",
       "liga": "USA USL Championship",
       "liga_confianza": null,
@@ -8531,7 +8517,7 @@
       "resultado_ht05": null
     },
     {
-      "fecha": "2026-10-08",
+      "fecha": "2026-10-09",
       "fecha_partido": "2026-10-10",
       "liga": "USA USL Championship",
       "liga_confianza": null,
@@ -8599,7 +8585,7 @@
       "resultado_ht05": null
     },
     {
-      "fecha": "2026-10-08",
+      "fecha": "2026-10-09",
       "fecha_partido": "2026-10-10",
       "liga": "USA USL Championship",
       "liga_confianza": null,
@@ -8667,7 +8653,7 @@
       "resultado_ht05": null
     },
     {
-      "fecha": "2026-10-08",
+      "fecha": "2026-10-09",
       "fecha_partido": "2026-10-10",
       "liga": "USA USL Championship",
       "liga_confianza": null,
@@ -8735,7 +8721,7 @@
       "resultado_ht05": null
     },
     {
-      "fecha": "2026-10-08",
+      "fecha": "2026-10-09",
       "fecha_partido": "2026-10-10",
       "liga": "USA USL Championship",
       "liga_confianza": null,
@@ -8803,7 +8789,7 @@
       "resultado_ht05": null
     },
     {
-      "fecha": "2026-10-08",
+      "fecha": "2026-10-09",
       "fecha_partido": "2026-10-10",
       "liga": "USA USL Championship",
       "liga_confianza": null,
@@ -8871,7 +8857,7 @@
       "resultado_ht05": null
     },
     {
-      "fecha": "2026-10-08",
+      "fecha": "2026-10-09",
       "fecha_partido": "2026-10-10",
       "liga": "USA USL League One",
       "liga_confianza": null,
@@ -8939,7 +8925,7 @@
       "resultado_ht05": null
     },
     {
-      "fecha": "2026-10-08",
+      "fecha": "2026-10-09",
       "fecha_partido": "2026-10-10",
       "liga": "USA USL League One",
       "liga_confianza": null,
@@ -9075,7 +9061,7 @@
       "resultado_ht05": null
     },
     {
-      "fecha": "2026-10-08",
+      "fecha": "2026-10-09",
       "fecha_partido": "2026-10-10",
       "liga": "USA USL League One",
       "liga_confianza": null,
@@ -9143,7 +9129,7 @@
       "resultado_ht05": null
     },
     {
-      "fecha": "2026-10-08",
+      "fecha": "2026-10-09",
       "fecha_partido": "2026-10-10",
       "liga": "USA USL League One",
       "liga_confianza": null,
@@ -9211,7 +9197,7 @@
       "resultado_ht05": null
     },
     {
-      "fecha": "2026-10-08",
+      "fecha": "2026-10-09",
       "fecha_partido": "2026-10-10",
       "liga": "USA USL League One",
       "liga_confianza": null,
@@ -9279,7 +9265,7 @@
       "resultado_ht05": null
     },
     {
-      "fecha": "2026-10-08",
+      "fecha": "2026-10-09",
       "fecha_partido": "2026-10-10",
       "liga": "USA USL League One",
       "liga_confianza": null,
@@ -9347,7 +9333,7 @@
       "resultado_ht05": null
     },
     {
-      "fecha": "2026-10-08",
+      "fecha": "2026-10-09",
       "fecha_partido": "2026-10-10",
       "liga": "USA USL League One",
       "liga_confianza": null,
@@ -9415,7 +9401,7 @@
       "resultado_ht05": null
     },
     {
-      "fecha": "2026-10-08",
+      "fecha": "2026-10-09",
       "fecha_partido": "2026-10-10",
       "liga": "USA USL League One",
       "liga_confianza": null,
@@ -9823,7 +9809,7 @@
       "resultado_ht05": null
     },
     {
-      "fecha": "2026-10-08",
+      "fecha": "2026-10-09",
       "fecha_partido": "2026-10-10",
       "liga": "Brazil Serie A",
       "liga_confianza": "alta",
@@ -9851,8 +9837,8 @@
       "sug_o25": "EVITAR",
       "motivo_o25": "ninguno_evitar_o25",
       "prob_o25": 0.5750601229699301,
-      "cuota_o25": 1.92,
-      "cuota_o25_actual": 1.92,
+      "cuota_o25": 1.95,
+      "cuota_o25_actual": 1.95,
       "movimiento_o25_pp": null,
       "resultado_o25": null,
       "senal_btts_o25": "VIP",
@@ -9861,7 +9847,7 @@
       "vip_elite": null,
       "oro": null,
       "nivel_confianza": null,
-      "marcador_exacto_sugerido": "2-1",
+      "marcador_exacto_sugerido": "1-0",
       "marcador_exacto_real": null,
       "usa_temporada_anterior": false,
       "usa_promedio_general": false,
@@ -9891,7 +9877,7 @@
       "resultado_ht05": null
     },
     {
-      "fecha": "2026-10-08",
+      "fecha": "2026-10-09",
       "fecha_partido": "2026-10-10",
       "liga": "Brazil Serie A",
       "liga_confianza": "alta",
@@ -9919,8 +9905,8 @@
       "sug_o25": "EVITAR",
       "motivo_o25": "ninguno_evitar_o25",
       "prob_o25": 0.6290698282438062,
-      "cuota_o25": 1.61,
-      "cuota_o25_actual": 1.61,
+      "cuota_o25": 1.65,
+      "cuota_o25_actual": 1.65,
       "movimiento_o25_pp": null,
       "resultado_o25": null,
       "senal_btts_o25": "—",
@@ -10095,7 +10081,7 @@
       "resultado_ht05": null
     },
     {
-      "fecha": "2026-10-08",
+      "fecha": "2026-10-09",
       "fecha_partido": "2026-10-10",
       "liga": "Norway Eliteserien",
       "liga_confianza": null,
@@ -10231,7 +10217,7 @@
       "resultado_ht05": null
     },
     {
-      "fecha": "2026-10-08",
+      "fecha": "2026-10-09",
       "fecha_partido": "2026-10-10",
       "liga": "Norway Eliteserien",
       "liga_confianza": null,
@@ -10919,7 +10905,7 @@
       "visitante": "Sogndal Fotball",
       "senal_btts_optimizada": "Stake10",
       "nivel_final": "EVITAR",
-      "motivo_btts": "camino_normal_Stake10_sotmin_xga",
+      "motivo_btts": "stake11",
       "prob_btts": 0.7197135336941354,
       "prob_btts_calibrada": 0.5644185355961274,
       "btts_min_alto": null,
@@ -10986,14 +10972,14 @@
       "local": "IK Brage",
       "visitante": "Helsingborgs IF",
       "senal_btts_optimizada": "Evitar",
-      "nivel_final": "EVITAR",
-      "motivo_btts": "perfil_avg2h_o25btts",
+      "nivel_final": "JUGAR",
+      "motivo_btts": "avg2h_parejo_15",
       "prob_btts": 0.6680635055624564,
       "prob_btts_calibrada": 0.6050156860364995,
       "btts_min_alto": null,
       "cuota_btts": 1.53,
       "cuota_btts_actual": 1.53,
-      "movimiento_btts_pp": null,
+      "movimiento_btts_pp": 0.0,
       "resultado_btts": null,
       "senal_o15_tier": "VIP",
       "sug_o15": "EVITAR",
@@ -11047,7 +11033,7 @@
       "resultado_ht05": null
     },
     {
-      "fecha": "2026-10-08",
+      "fecha": "2026-10-09",
       "fecha_partido": "2026-10-10",
       "liga": "Sweden Superettan",
       "liga_confianza": null,
@@ -11115,7 +11101,7 @@
       "resultado_ht05": null
     },
     {
-      "fecha": "2026-10-08",
+      "fecha": "2026-10-09",
       "fecha_partido": "2026-10-10",
       "liga": "Sweden Superettan",
       "liga_confianza": null,
@@ -11251,7 +11237,7 @@
       "resultado_ht05": null
     },
     {
-      "fecha": "2026-10-08",
+      "fecha": "2026-10-09",
       "fecha_partido": "2026-10-10",
       "liga": "Sweden Superettan",
       "liga_confianza": null,
@@ -11387,7 +11373,7 @@
       "resultado_ht05": null
     },
     {
-      "fecha": "2026-10-08",
+      "fecha": "2026-10-09",
       "fecha_partido": "2026-10-10",
       "liga": "Sweden Superettan",
       "liga_confianza": null,
@@ -11455,7 +11441,7 @@
       "resultado_ht05": null
     },
     {
-      "fecha": "2026-10-08",
+      "fecha": "2026-10-09",
       "fecha_partido": "2026-10-10",
       "liga": "Sweden Allsvenskan",
       "liga_confianza": "baja",
@@ -11659,7 +11645,7 @@
       "resultado_ht05": true
     },
     {
-      "fecha": "2026-10-08",
+      "fecha": "2026-10-09",
       "fecha_partido": "2026-10-10",
       "liga": "Sweden Allsvenskan",
       "liga_confianza": "baja",
@@ -11727,7 +11713,7 @@
       "resultado_ht05": null
     },
     {
-      "fecha": "2026-10-08",
+      "fecha": "2026-10-09",
       "fecha_partido": "2026-10-10",
       "liga": "Sweden Allsvenskan",
       "liga_confianza": "baja",
@@ -12339,7 +12325,7 @@
       "resultado_ht05": null
     },
     {
-      "fecha": "2026-10-08",
+      "fecha": "2026-10-09",
       "fecha_partido": "2026-10-10",
       "liga": "Chile Primera División",
       "liga_confianza": null,
@@ -12475,7 +12461,7 @@
       "resultado_ht05": null
     },
     {
-      "fecha": "2026-10-08",
+      "fecha": "2026-10-09",
       "fecha_partido": "2026-10-10",
       "liga": "Chile Primera División",
       "liga_confianza": null,
@@ -12543,7 +12529,7 @@
       "resultado_ht05": null
     },
     {
-      "fecha": "2026-10-08",
+      "fecha": "2026-10-09",
       "fecha_partido": "2026-10-10",
       "liga": "Chile Primera División",
       "liga_confianza": null,
@@ -12951,7 +12937,7 @@
       "resultado_ht05": true
     },
     {
-      "fecha": "2026-10-08",
+      "fecha": "2026-10-09",
       "fecha_partido": "2026-10-10",
       "liga": "South Korea K League 1",
       "liga_confianza": null,
@@ -13019,7 +13005,7 @@
       "resultado_ht05": null
     },
     {
-      "fecha": "2026-10-08",
+      "fecha": "2026-10-09",
       "fecha_partido": "2026-10-10",
       "liga": "South Korea K League 1",
       "liga_confianza": null,
@@ -13155,7 +13141,7 @@
       "resultado_ht05": null
     },
     {
-      "fecha": "2026-10-08",
+      "fecha": "2026-10-09",
       "fecha_partido": "2026-10-10",
       "liga": "Norway 2 Division Group 1",
       "liga_confianza": null,
@@ -13359,7 +13345,7 @@
       "resultado_ht05": null
     },
     {
-      "fecha": "2026-10-08",
+      "fecha": "2026-10-09",
       "fecha_partido": "2026-10-10",
       "liga": "Norway 2 Division Group 1",
       "liga_confianza": null,
@@ -13427,7 +13413,7 @@
       "resultado_ht05": null
     },
     {
-      "fecha": "2026-10-08",
+      "fecha": "2026-10-09",
       "fecha_partido": "2026-10-10",
       "liga": "Norway 2 Division Group 1",
       "liga_confianza": null,
@@ -13563,7 +13549,7 @@
       "resultado_ht05": null
     },
     {
-      "fecha": "2026-10-08",
+      "fecha": "2026-10-09",
       "fecha_partido": "2026-10-10",
       "liga": "Faroe Islands Faroe Islands Premier League",
       "liga_confianza": null,
@@ -13971,7 +13957,7 @@
       "resultado_ht05": null
     },
     {
-      "fecha": "2026-10-08",
+      "fecha": "2026-10-09",
       "fecha_partido": "2026-10-10",
       "liga": "Norway 2 Division Group 2",
       "liga_confianza": null,
@@ -14039,7 +14025,7 @@
       "resultado_ht05": null
     },
     {
-      "fecha": "2026-10-08",
+      "fecha": "2026-10-09",
       "fecha_partido": "2026-10-10",
       "liga": "Norway 2 Division Group 2",
       "liga_confianza": null,
@@ -14379,75 +14365,7 @@
       "resultado_ht05": null
     },
     {
-      "fecha": "2026-10-08",
-      "fecha_partido": "2026-10-09",
-      "liga": "Sweden Ettan North",
-      "liga_confianza": "baja",
-      "local": "Sollentuna FK",
-      "visitante": "IFK Stocksund",
-      "senal_btts_optimizada": "Evitar",
-      "nivel_final": "EVITAR",
-      "motivo_btts": "salvacion_cuota_corta",
-      "prob_btts": 0.6597286789995722,
-      "prob_btts_calibrada": 0.5541669924577547,
-      "btts_min_alto": null,
-      "cuota_btts": 1.44,
-      "cuota_btts_actual": 1.44,
-      "movimiento_btts_pp": null,
-      "resultado_btts": null,
-      "senal_o15_tier": "VIP",
-      "sug_o15": "EVITAR",
-      "motivo_o15": "ninguno_evitar_o15",
-      "prob_o15": 0.819424970792713,
-      "cuota_o15": 1.08,
-      "cuota_o15_actual": 1.08,
-      "movimiento_o15_pp": null,
-      "resultado_o15": null,
-      "senal_o25": "Evitar",
-      "sug_o25": "EVITAR",
-      "motivo_o25": "ninguno_evitar_o25",
-      "prob_o25": 0.6052639301070485,
-      "cuota_o25": 1.44,
-      "cuota_o25_actual": 1.44,
-      "movimiento_o25_pp": null,
-      "resultado_o25": null,
-      "senal_btts_o25": "—",
-      "motivo_combo": "ninguno_evitar_combo",
-      "resultado_combo": null,
-      "vip_elite": null,
-      "oro": null,
-      "nivel_confianza": null,
-      "marcador_exacto_sugerido": "1-0",
-      "marcador_exacto_real": null,
-      "usa_temporada_anterior": false,
-      "usa_promedio_general": false,
-      "es_equipo_filial": false,
-      "senal_ht05_tier": "VIP",
-      "sug_ht05": "EVITAR",
-      "prob_over05_ht": 0.7960743882657866,
-      "prob_over15_ht": 0.4718326656083871,
-      "prob_over05_ht_v2": 0.7950522068832027,
-      "prob_over15_ht_v2": 0.4702099547930789,
-      "prob_combo_v2": null,
-      "prob_combo_calibrada": 0.4344033387162978,
-      "prob_o15_calibrada": 0.8003647677566649,
-      "prob_o25_calibrada": 0.5811289611105254,
-      "prob_over05_ht_calibrada": 0.7178921496922457,
-      "mejor_casa_btts": null,
-      "mejor_cuota_btts": null,
-      "mejora_btts_pct": null,
-      "mejor_casa_o25": null,
-      "mejor_cuota_o25": null,
-      "mejora_o25_pct": null,
-      "cuota_ht_over05": 1.19,
-      "cuota_ht_over15": 2.1,
-      "resultado_over15_ht": null,
-      "cuota_ht_over05_actual": 1.19,
-      "movimiento_ht05_pp": null,
-      "resultado_ht05": null
-    },
-    {
-      "fecha": "2026-10-08",
+      "fecha": "2026-10-09",
       "fecha_partido": "2026-10-10",
       "liga": "Sweden Ettan North",
       "liga_confianza": "baja",
@@ -14515,7 +14433,7 @@
       "resultado_ht05": null
     },
     {
-      "fecha": "2026-10-08",
+      "fecha": "2026-10-09",
       "fecha_partido": "2026-10-10",
       "liga": "Sweden Ettan North",
       "liga_confianza": "baja",
@@ -14787,7 +14705,7 @@
       "resultado_ht05": null
     },
     {
-      "fecha": "2026-10-08",
+      "fecha": "2026-10-09",
       "fecha_partido": "2026-10-10",
       "liga": "Sweden Ettan North",
       "liga_confianza": "baja",
@@ -14795,7 +14713,7 @@
       "visitante": "Vasalunds IF",
       "senal_btts_optimizada": "Fuerte",
       "nivel_final": "JUGAR",
-      "motivo_btts": "estable_btts_fallo",
+      "motivo_btts": "diamante_amplio",
       "prob_btts": 0.6577343593674416,
       "prob_btts_calibrada": 0.5416254962197297,
       "btts_min_alto": null,
@@ -14923,7 +14841,7 @@
       "resultado_ht05": null
     },
     {
-      "fecha": "2026-10-08",
+      "fecha": "2026-10-09",
       "fecha_partido": "2026-10-10",
       "liga": "Sweden Ettan South",
       "liga_confianza": "baja",
@@ -15059,7 +14977,7 @@
       "resultado_ht05": null
     },
     {
-      "fecha": "2026-10-08",
+      "fecha": "2026-10-09",
       "fecha_partido": "2026-10-10",
       "liga": "Sweden Ettan South",
       "liga_confianza": "baja",
@@ -15127,7 +15045,7 @@
       "resultado_ht05": null
     },
     {
-      "fecha": "2026-10-08",
+      "fecha": "2026-10-09",
       "fecha_partido": "2026-10-10",
       "liga": "Sweden Ettan South",
       "liga_confianza": "baja",
@@ -15195,7 +15113,7 @@
       "resultado_ht05": null
     },
     {
-      "fecha": "2026-10-08",
+      "fecha": "2026-10-09",
       "fecha_partido": "2026-10-10",
       "liga": "Sweden Ettan South",
       "liga_confianza": "baja",
@@ -15263,7 +15181,7 @@
       "resultado_ht05": null
     },
     {
-      "fecha": "2026-10-08",
+      "fecha": "2026-10-09",
       "fecha_partido": "2026-10-10",
       "liga": "Sweden Ettan South",
       "liga_confianza": "baja",
@@ -15331,7 +15249,7 @@
       "resultado_ht05": null
     },
     {
-      "fecha": "2026-10-08",
+      "fecha": "2026-10-09",
       "fecha_partido": "2026-10-10",
       "liga": "Sweden Ettan South",
       "liga_confianza": "baja",
@@ -15467,7 +15385,7 @@
       "resultado_ht05": null
     },
     {
-      "fecha": "2026-10-08",
+      "fecha": "2026-10-09",
       "fecha_partido": "2026-10-10",
       "liga": "Sweden Division 2 Norra Gotaland",
       "liga_confianza": null,
@@ -15535,7 +15453,7 @@
       "resultado_ht05": null
     },
     {
-      "fecha": "2026-10-08",
+      "fecha": "2026-10-09",
       "fecha_partido": "2026-10-10",
       "liga": "Sweden Division 2 Norra Gotaland",
       "liga_confianza": null,
@@ -15671,7 +15589,7 @@
       "resultado_ht05": null
     },
     {
-      "fecha": "2026-10-08",
+      "fecha": "2026-10-09",
       "fecha_partido": "2026-10-10",
       "liga": "Sweden Division 2 Norra Gotaland",
       "liga_confianza": null,
@@ -15679,7 +15597,7 @@
       "visitante": "Grebbestads IF",
       "senal_btts_optimizada": "Evitar",
       "nivel_final": "EVITAR",
-      "motivo_btts": "perfil_avg2h_o25btts",
+      "motivo_btts": "candado_sin_cuota",
       "prob_btts": 0.7428549815872044,
       "prob_btts_calibrada": 0.5978606963304945,
       "btts_min_alto": null,
@@ -15807,7 +15725,7 @@
       "resultado_ht05": false
     },
     {
-      "fecha": "2026-10-08",
+      "fecha": "2026-10-09",
       "fecha_partido": "2026-10-10",
       "liga": "Chile Primera B",
       "liga_confianza": "baja",
@@ -15875,7 +15793,7 @@
       "resultado_ht05": null
     },
     {
-      "fecha": "2026-10-08",
+      "fecha": "2026-10-09",
       "fecha_partido": "2026-10-10",
       "liga": "Chile Primera B",
       "liga_confianza": "baja",
@@ -15943,7 +15861,7 @@
       "resultado_ht05": null
     },
     {
-      "fecha": "2026-10-08",
+      "fecha": "2026-10-09",
       "fecha_partido": "2026-10-10",
       "liga": "Canada Canadian Premier League",
       "liga_confianza": null,
@@ -16215,7 +16133,7 @@
       "resultado_ht05": null
     },
     {
-      "fecha": "2026-10-08",
+      "fecha": "2026-10-09",
       "fecha_partido": "2026-10-10",
       "liga": "Sweden Division 2 Norra Svealand",
       "liga_confianza": null,
@@ -16291,7 +16209,7 @@
       "visitante": "Korsnäs IF FK",
       "senal_btts_optimizada": "Evitar",
       "nivel_final": "JUGAR",
-      "motivo_btts": "atlas",
+      "motivo_btts": "granate",
       "prob_btts": 0.531818522472165,
       "prob_btts_calibrada": 0.5379493148930997,
       "btts_min_alto": null,
@@ -16351,7 +16269,7 @@
       "resultado_ht05": null
     },
     {
-      "fecha": "2026-10-08",
+      "fecha": "2026-10-09",
       "fecha_partido": "2026-10-10",
       "liga": "Sweden Division 2 Norra Svealand",
       "liga_confianza": null,
@@ -16419,7 +16337,7 @@
       "resultado_ht05": null
     },
     {
-      "fecha": "2026-10-08",
+      "fecha": "2026-10-09",
       "fecha_partido": "2026-10-10",
       "liga": "Sweden Division 2 Norra Svealand",
       "liga_confianza": null,
@@ -16487,7 +16405,7 @@
       "resultado_ht05": null
     },
     {
-      "fecha": "2026-10-08",
+      "fecha": "2026-10-09",
       "fecha_partido": "2026-10-10",
       "liga": "Sweden Division 2 Norra Svealand",
       "liga_confianza": null,
@@ -16623,7 +16541,7 @@
       "resultado_ht05": null
     },
     {
-      "fecha": "2026-10-08",
+      "fecha": "2026-10-09",
       "fecha_partido": "2026-10-10",
       "liga": "Sweden Division 2 Norra Svealand",
       "liga_confianza": null,
@@ -16691,7 +16609,7 @@
       "resultado_ht05": null
     },
     {
-      "fecha": "2026-10-08",
+      "fecha": "2026-10-09",
       "fecha_partido": "2026-10-10",
       "liga": "Chile Primera B",
       "liga_confianza": "baja",
@@ -16759,7 +16677,7 @@
       "resultado_ht05": null
     },
     {
-      "fecha": "2026-10-08",
+      "fecha": "2026-10-09",
       "fecha_partido": "2026-10-10",
       "liga": "Estonia Meistriliiga",
       "liga_confianza": null,
@@ -16895,7 +16813,7 @@
       "resultado_ht05": null
     },
     {
-      "fecha": "2026-10-08",
+      "fecha": "2026-10-09",
       "fecha_partido": "2026-10-10",
       "liga": "Estonia Meistriliiga",
       "liga_confianza": null,
@@ -16903,7 +16821,7 @@
       "visitante": "FC Nõmme United",
       "senal_btts_optimizada": "Stake10",
       "nivel_final": "EVITAR",
-      "motivo_btts": "camino_normal_Stake10_sotmin_xga",
+      "motivo_btts": "stake11",
       "prob_btts": 0.6770285664985277,
       "prob_btts_calibrada": 0.528672910236605,
       "btts_min_alto": null,
@@ -17031,7 +16949,7 @@
       "resultado_ht05": null
     },
     {
-      "fecha": "2026-10-08",
+      "fecha": "2026-10-09",
       "fecha_partido": "2026-10-10",
       "liga": "Estonia Meistriliiga",
       "liga_confianza": null,
@@ -17099,7 +17017,7 @@
       "resultado_ht05": null
     },
     {
-      "fecha": "2026-10-08",
+      "fecha": "2026-10-09",
       "fecha_partido": "2026-10-10",
       "liga": "Sweden Division 2 Sodra Gotaland",
       "liga_confianza": null,
@@ -17107,7 +17025,7 @@
       "visitante": "Nosaby IF",
       "senal_btts_optimizada": "Stake10",
       "nivel_final": "EVITAR",
-      "motivo_btts": "camino_normal_Stake10_sotmin_xga",
+      "motivo_btts": "stake11",
       "prob_btts": 0.6836064282079222,
       "prob_btts_calibrada": 0.5686241630505837,
       "btts_min_alto": null,
@@ -17371,7 +17289,7 @@
       "resultado_ht05": null
     },
     {
-      "fecha": "2026-10-08",
+      "fecha": "2026-10-09",
       "fecha_partido": "2026-10-10",
       "liga": "Sweden Division 2 Sodra Gotaland",
       "liga_confianza": null,
@@ -17439,7 +17357,7 @@
       "resultado_ht05": null
     },
     {
-      "fecha": "2026-10-08",
+      "fecha": "2026-10-09",
       "fecha_partido": "2026-10-10",
       "liga": "Sweden Division 2 Sodra Gotaland",
       "liga_confianza": null,
@@ -17507,7 +17425,7 @@
       "resultado_ht05": null
     },
     {
-      "fecha": "2026-10-08",
+      "fecha": "2026-10-09",
       "fecha_partido": "2026-10-10",
       "liga": "Sweden Division 2 Sodra Svealand",
       "liga_confianza": null,
@@ -17575,7 +17493,7 @@
       "resultado_ht05": null
     },
     {
-      "fecha": "2026-10-08",
+      "fecha": "2026-10-09",
       "fecha_partido": "2026-10-10",
       "liga": "Sweden Division 2 Sodra Svealand",
       "liga_confianza": null,
@@ -17779,7 +17697,7 @@
       "resultado_ht05": null
     },
     {
-      "fecha": "2026-10-08",
+      "fecha": "2026-10-09",
       "fecha_partido": "2026-10-10",
       "liga": "Sweden Division 2 Sodra Svealand",
       "liga_confianza": null,
@@ -17915,7 +17833,7 @@
       "resultado_ht05": null
     },
     {
-      "fecha": "2026-10-08",
+      "fecha": "2026-10-09",
       "fecha_partido": "2026-10-10",
       "liga": "Sweden Division 2 Sodra Svealand",
       "liga_confianza": null,
@@ -17983,7 +17901,7 @@
       "resultado_ht05": null
     },
     {
-      "fecha": "2026-10-08",
+      "fecha": "2026-10-09",
       "fecha_partido": "2026-10-10",
       "liga": "Sweden Division 2 Vastra Gotaland",
       "liga_confianza": "baja",
@@ -18051,7 +17969,7 @@
       "resultado_ht05": null
     },
     {
-      "fecha": "2026-10-08",
+      "fecha": "2026-10-09",
       "fecha_partido": "2026-10-10",
       "liga": "Sweden Division 2 Vastra Gotaland",
       "liga_confianza": "baja",
@@ -18119,7 +18037,7 @@
       "resultado_ht05": null
     },
     {
-      "fecha": "2026-10-08",
+      "fecha": "2026-10-09",
       "fecha_partido": "2026-10-10",
       "liga": "Sweden Division 2 Vastra Gotaland",
       "liga_confianza": "baja",
@@ -18255,7 +18173,7 @@
       "resultado_ht05": null
     },
     {
-      "fecha": "2026-10-08",
+      "fecha": "2026-10-09",
       "fecha_partido": "2026-10-10",
       "liga": "Sweden Division 2 Vastra Gotaland",
       "liga_confianza": "baja",
@@ -18588,7 +18506,7 @@
       "mejor_cuota_o25": null,
       "mejora_o25_pct": null,
       "cuota_ht_over05": 1.39,
-      "cuota_ht_over15": 2.9,
+      "cuota_ht_over15": 2.79,
       "resultado_over15_ht": null,
       "cuota_ht_over05_actual": 1.39,
       "movimiento_ht05_pp": null,
@@ -18691,8 +18609,8 @@
       "sug_o25": "EVITAR",
       "motivo_o25": "ninguno_evitar_o25",
       "prob_o25": 0.5455324415800608,
-      "cuota_o25": 1.94,
-      "cuota_o25_actual": 1.94,
+      "cuota_o25": 1.96,
+      "cuota_o25_actual": 1.96,
       "movimiento_o25_pp": null,
       "resultado_o25": null,
       "senal_btts_o25": "VIP",
@@ -18792,7 +18710,7 @@
       "mejor_cuota_o25": null,
       "mejora_o25_pct": null,
       "cuota_ht_over05": 1.38,
-      "cuota_ht_over15": 2.92,
+      "cuota_ht_over15": 3.19,
       "resultado_over15_ht": null,
       "cuota_ht_over05_actual": 1.38,
       "movimiento_ht05_pp": null,
@@ -19010,14 +18928,14 @@
       "local": "Shenyang Urban FC",
       "visitante": "Wuhan Three Towns FC",
       "senal_btts_optimizada": "Evitar",
-      "nivel_final": "EVITAR",
-      "motivo_btts": "stake11",
+      "nivel_final": "JUGAR",
+      "motivo_btts": "avg2h_parejo_15",
       "prob_btts": 0.6960673722968085,
       "prob_btts_calibrada": 0.6091435226688129,
       "btts_min_alto": null,
       "cuota_btts": 1.44,
       "cuota_btts_actual": 1.44,
-      "movimiento_btts_pp": null,
+      "movimiento_btts_pp": 0.0,
       "resultado_btts": null,
       "senal_o15_tier": "VIP",
       "sug_o15": "EVITAR",
@@ -19071,7 +18989,7 @@
       "resultado_ht05": null
     },
     {
-      "fecha": "2026-10-08",
+      "fecha": "2026-10-09",
       "fecha_partido": "2026-10-10",
       "liga": "China Chinese Super League",
       "liga_confianza": null,
@@ -19207,7 +19125,7 @@
       "resultado_ht05": null
     },
     {
-      "fecha": "2026-10-08",
+      "fecha": "2026-10-09",
       "fecha_partido": "2026-10-10",
       "liga": "China Chinese Super League",
       "liga_confianza": null,
@@ -19479,7 +19397,7 @@
       "resultado_ht05": null
     },
     {
-      "fecha": "2026-10-08",
+      "fecha": "2026-10-09",
       "fecha_partido": "2026-10-10",
       "liga": "South Korea K League 2",
       "liga_confianza": null,
@@ -19547,7 +19465,7 @@
       "resultado_ht05": null
     },
     {
-      "fecha": "2026-10-08",
+      "fecha": "2026-10-09",
       "fecha_partido": "2026-10-10",
       "liga": "South Korea K League 2",
       "liga_confianza": null,
@@ -19615,7 +19533,7 @@
       "resultado_ht05": null
     },
     {
-      "fecha": "2026-10-08",
+      "fecha": "2026-10-09",
       "fecha_partido": "2026-10-10",
       "liga": "South Korea K League 2",
       "liga_confianza": null,
@@ -19683,7 +19601,7 @@
       "resultado_ht05": null
     },
     {
-      "fecha": "2026-10-08",
+      "fecha": "2026-10-09",
       "fecha_partido": "2026-10-10",
       "liga": "South Korea K League 2",
       "liga_confianza": null,
@@ -20091,7 +20009,7 @@
       "resultado_ht05": null
     },
     {
-      "fecha": "2026-10-08",
+      "fecha": "2026-10-09",
       "fecha_partido": "2026-10-10",
       "liga": "China China League One",
       "liga_confianza": null,
@@ -20227,7 +20145,7 @@
       "resultado_ht05": null
     },
     {
-      "fecha": "2026-10-08",
+      "fecha": "2026-10-09",
       "fecha_partido": "2026-10-10",
       "liga": "China China League One",
       "liga_confianza": null,
@@ -20363,7 +20281,7 @@
       "resultado_ht05": null
     },
     {
-      "fecha": "2026-10-08",
+      "fecha": "2026-10-09",
       "fecha_partido": "2026-10-10",
       "liga": "China China League One",
       "liga_confianza": null,
@@ -20567,7 +20485,7 @@
       "resultado_ht05": null
     },
     {
-      "fecha": "2026-10-08",
+      "fecha": "2026-10-09",
       "fecha_partido": "2026-10-10",
       "liga": "Colombia Categoria Primera B",
       "liga_confianza": null,
@@ -20907,7 +20825,7 @@
       "resultado_ht05": null
     },
     {
-      "fecha": "2026-10-08",
+      "fecha": "2026-10-09",
       "fecha_partido": "2026-10-09",
       "liga": "Colombia Categoria Primera A",
       "liga_confianza": "alta",
@@ -21043,7 +20961,7 @@
       "resultado_ht05": null
     },
     {
-      "fecha": "2026-10-08",
+      "fecha": "2026-10-09",
       "fecha_partido": "2026-10-10",
       "liga": "Colombia Categoria Primera A",
       "liga_confianza": "alta",
@@ -21111,75 +21029,7 @@
       "resultado_ht05": null
     },
     {
-      "fecha": "2026-10-08",
-      "fecha_partido": "2026-10-09",
-      "liga": "Colombia Categoria Primera A",
-      "liga_confianza": "alta",
-      "local": "Alianza Petrolera FC",
-      "visitante": "Rionegro Águilas SA",
-      "senal_btts_optimizada": "Evitar",
-      "nivel_final": "EVITAR",
-      "motivo_btts": "ninguno_evitar_final",
-      "prob_btts": 0.5178794598698973,
-      "prob_btts_calibrada": 0.4905917437019453,
-      "btts_min_alto": null,
-      "cuota_btts": 1.84,
-      "cuota_btts_actual": 1.84,
-      "movimiento_btts_pp": null,
-      "resultado_btts": null,
-      "senal_o15_tier": "Evitar",
-      "sug_o15": "EVITAR",
-      "motivo_o15": "ninguno_evitar_o15",
-      "prob_o15": 0.7415608703937735,
-      "cuota_o15": 1.33,
-      "cuota_o15_actual": 1.33,
-      "movimiento_o15_pp": null,
-      "resultado_o15": null,
-      "senal_o25": "Evitar",
-      "sug_o25": "EVITAR",
-      "motivo_o25": "ninguno_evitar_o25",
-      "prob_o25": 0.4933045046889266,
-      "cuota_o25": 2.2,
-      "cuota_o25_actual": 2.2,
-      "movimiento_o25_pp": null,
-      "resultado_o25": null,
-      "senal_btts_o25": "—",
-      "motivo_combo": "combo_producto_alto",
-      "resultado_combo": null,
-      "vip_elite": null,
-      "oro": null,
-      "nivel_confianza": null,
-      "marcador_exacto_sugerido": "1-1",
-      "marcador_exacto_real": null,
-      "usa_temporada_anterior": false,
-      "usa_promedio_general": false,
-      "es_equipo_filial": false,
-      "senal_ht05_tier": "Evitar",
-      "sug_ht05": "EVITAR",
-      "prob_over05_ht": 0.6620982141052869,
-      "prob_over15_ht": 0.2954747764095233,
-      "prob_over05_ht_v2": 0.6620982141052869,
-      "prob_over15_ht_v2": 0.2954747764095233,
-      "prob_combo_v2": null,
-      "prob_combo_calibrada": 0.4123891668374269,
-      "prob_o15_calibrada": 0.7358856119827225,
-      "prob_o25_calibrada": 0.5002339741829218,
-      "prob_over05_ht_calibrada": 0.6996450877461315,
-      "mejor_casa_btts": null,
-      "mejor_cuota_btts": null,
-      "mejora_btts_pct": null,
-      "mejor_casa_o25": null,
-      "mejor_cuota_o25": null,
-      "mejora_o25_pct": null,
-      "cuota_ht_over05": 1.41,
-      "cuota_ht_over15": 2.88,
-      "resultado_over15_ht": null,
-      "cuota_ht_over05_actual": 1.41,
-      "movimiento_ht05_pp": null,
-      "resultado_ht05": null
-    },
-    {
-      "fecha": "2026-10-08",
+      "fecha": "2026-10-09",
       "fecha_partido": "2026-10-10",
       "liga": "Colombia Categoria Primera A",
       "liga_confianza": "alta",
@@ -21247,7 +21097,7 @@
       "resultado_ht05": null
     },
     {
-      "fecha": "2026-10-08",
+      "fecha": "2026-10-09",
       "fecha_partido": "2026-10-10",
       "liga": "Italy Serie A",
       "liga_confianza": null,
@@ -21315,21 +21165,21 @@
       "resultado_ht05": null
     },
     {
-      "fecha": "2026-10-08",
+      "fecha": "2026-10-09",
       "fecha_partido": "2026-10-10",
       "liga": "Italy Serie A",
       "liga_confianza": null,
       "local": "Genoa CFC",
       "visitante": "ACF Fiorentina",
       "senal_btts_optimizada": "Evitar",
-      "nivel_final": "EVITAR",
-      "motivo_btts": "perfil_avg2h_o25btts",
+      "nivel_final": "JUGAR",
+      "motivo_btts": "avg2h_parejo_15",
       "prob_btts": 0.630680055843984,
       "prob_btts_calibrada": 0.5630066623496449,
       "btts_min_alto": null,
       "cuota_btts": 1.73,
       "cuota_btts_actual": 1.73,
-      "movimiento_btts_pp": null,
+      "movimiento_btts_pp": 0.0,
       "resultado_btts": null,
       "senal_o15_tier": "VIP",
       "sug_o15": "EVITAR",
@@ -21723,7 +21573,7 @@
       "resultado_ht05": null
     },
     {
-      "fecha": "2026-10-08",
+      "fecha": "2026-10-09",
       "fecha_partido": "2026-10-10",
       "liga": "Italy Serie A",
       "liga_confianza": null,
@@ -22199,7 +22049,7 @@
       "resultado_ht05": null
     },
     {
-      "fecha": "2026-10-08",
+      "fecha": "2026-10-09",
       "fecha_partido": "2026-10-10",
       "liga": "Netherlands Eredivisie",
       "liga_confianza": null,
@@ -22275,7 +22125,7 @@
       "visitante": "SC Cambuur Leeuwarden",
       "senal_btts_optimizada": "Evitar",
       "nivel_final": "EVITAR",
-      "motivo_btts": "perfil_avg2h_o25btts",
+      "motivo_btts": "plata_cuota_1.40-1.55",
       "prob_btts": 0.6951698666078799,
       "prob_btts_calibrada": 0.557366816647926,
       "btts_min_alto": null,
@@ -22403,7 +22253,7 @@
       "resultado_ht05": null
     },
     {
-      "fecha": "2026-10-08",
+      "fecha": "2026-10-09",
       "fecha_partido": "2026-10-10",
       "liga": "Netherlands Eredivisie",
       "liga_confianza": null,
@@ -22539,7 +22389,7 @@
       "resultado_ht05": true
     },
     {
-      "fecha": "2026-10-08",
+      "fecha": "2026-10-09",
       "fecha_partido": "2026-10-10",
       "liga": "Netherlands Eredivisie",
       "liga_confianza": null,
@@ -22607,7 +22457,7 @@
       "resultado_ht05": null
     },
     {
-      "fecha": "2026-10-08",
+      "fecha": "2026-10-09",
       "fecha_partido": "2026-10-10",
       "liga": "Netherlands Eredivisie",
       "liga_confianza": null,
@@ -22615,7 +22465,7 @@
       "visitante": "Nijmegen Eendracht Combinatie",
       "senal_btts_optimizada": "VIP+",
       "nivel_final": "JUGAR",
-      "motivo_btts": "VIP_reforzado",
+      "motivo_btts": "corona",
       "prob_btts": 0.663672983159985,
       "prob_btts_calibrada": 0.6160971277788275,
       "btts_min_alto": null,
@@ -22683,7 +22533,7 @@
       "visitante": "FC Groningen",
       "senal_btts_optimizada": "VIP+",
       "nivel_final": "JUGAR",
-      "motivo_btts": "VIP_reforzado",
+      "motivo_btts": "cumbre",
       "prob_btts": 0.6866972899413735,
       "prob_btts_calibrada": 0.5980903103424444,
       "btts_min_alto": null,
@@ -22811,7 +22661,7 @@
       "resultado_ht05": null
     },
     {
-      "fecha": "2026-10-08",
+      "fecha": "2026-10-09",
       "fecha_partido": "2026-10-10",
       "liga": "Mexico Liga MX",
       "liga_confianza": null,
@@ -22879,7 +22729,7 @@
       "resultado_ht05": null
     },
     {
-      "fecha": "2026-10-08",
+      "fecha": "2026-10-09",
       "fecha_partido": "2026-10-10",
       "liga": "Mexico Liga MX",
       "liga_confianza": null,
@@ -22947,7 +22797,7 @@
       "resultado_ht05": null
     },
     {
-      "fecha": "2026-10-08",
+      "fecha": "2026-10-09",
       "fecha_partido": "2026-10-10",
       "liga": "Mexico Liga MX",
       "liga_confianza": null,
@@ -23015,7 +22865,7 @@
       "resultado_ht05": null
     },
     {
-      "fecha": "2026-10-08",
+      "fecha": "2026-10-09",
       "fecha_partido": "2026-10-09",
       "liga": "Mexico Liga MX",
       "liga_confianza": null,
@@ -23083,7 +22933,7 @@
       "resultado_ht05": null
     },
     {
-      "fecha": "2026-10-08",
+      "fecha": "2026-10-09",
       "fecha_partido": "2026-10-09",
       "liga": "Mexico Liga MX",
       "liga_confianza": null,
@@ -23219,7 +23069,7 @@
       "resultado_ht05": null
     },
     {
-      "fecha": "2026-10-08",
+      "fecha": "2026-10-09",
       "fecha_partido": "2026-10-10",
       "liga": "Mexico Liga MX",
       "liga_confianza": null,
@@ -23355,7 +23205,7 @@
       "resultado_ht05": null
     },
     {
-      "fecha": "2026-10-08",
+      "fecha": "2026-10-09",
       "fecha_partido": "2026-10-10",
       "liga": "France Ligue 1",
       "liga_confianza": null,
@@ -23559,7 +23409,7 @@
       "resultado_ht05": null
     },
     {
-      "fecha": "2026-10-08",
+      "fecha": "2026-10-09",
       "fecha_partido": "2026-10-10",
       "liga": "France Ligue 1",
       "liga_confianza": null,
@@ -23627,7 +23477,7 @@
       "resultado_ht05": null
     },
     {
-      "fecha": "2026-10-08",
+      "fecha": "2026-10-09",
       "fecha_partido": "2026-10-10",
       "liga": "France Ligue 1",
       "liga_confianza": null,
@@ -23695,7 +23545,7 @@
       "resultado_ht05": null
     },
     {
-      "fecha": "2026-10-08",
+      "fecha": "2026-10-09",
       "fecha_partido": "2026-10-10",
       "liga": "France Ligue 1",
       "liga_confianza": null,
@@ -23831,7 +23681,7 @@
       "resultado_ht05": true
     },
     {
-      "fecha": "2026-10-08",
+      "fecha": "2026-10-09",
       "fecha_partido": "2026-10-10",
       "liga": "France Ligue 1",
       "liga_confianza": null,
@@ -23967,7 +23817,7 @@
       "resultado_ht05": null
     },
     {
-      "fecha": "2026-10-08",
+      "fecha": "2026-10-09",
       "fecha_partido": "2026-10-09",
       "liga": "Costa Rica Primera División FPD",
       "liga_confianza": null,
@@ -24035,7 +23885,7 @@
       "resultado_ht05": null
     },
     {
-      "fecha": "2026-10-08",
+      "fecha": "2026-10-09",
       "fecha_partido": "2026-10-10",
       "liga": "Costa Rica Primera División FPD",
       "liga_confianza": null,
@@ -24103,7 +23953,7 @@
       "resultado_ht05": null
     },
     {
-      "fecha": "2026-10-08",
+      "fecha": "2026-10-09",
       "fecha_partido": "2026-10-10",
       "liga": "Costa Rica Primera División FPD",
       "liga_confianza": null,
@@ -24171,7 +24021,7 @@
       "resultado_ht05": null
     },
     {
-      "fecha": "2026-10-08",
+      "fecha": "2026-10-09",
       "fecha_partido": "2026-10-10",
       "liga": "Costa Rica Primera División FPD",
       "liga_confianza": null,
@@ -24987,7 +24837,7 @@
       "resultado_ht05": null
     },
     {
-      "fecha": "2026-10-08",
+      "fecha": "2026-10-09",
       "fecha_partido": "2026-10-10",
       "liga": "Poland Ekstraklasa",
       "liga_confianza": null,
@@ -25123,7 +24973,7 @@
       "resultado_ht05": true
     },
     {
-      "fecha": "2026-10-08",
+      "fecha": "2026-10-09",
       "fecha_partido": "2026-10-10",
       "liga": "Poland Ekstraklasa",
       "liga_confianza": null,
@@ -25327,7 +25177,7 @@
       "resultado_ht05": true
     },
     {
-      "fecha": "2026-10-08",
+      "fecha": "2026-10-09",
       "fecha_partido": "2026-10-10",
       "liga": "Poland Ekstraklasa",
       "liga_confianza": null,
@@ -25531,21 +25381,21 @@
       "resultado_ht05": true
     },
     {
-      "fecha": "2026-10-08",
+      "fecha": "2026-10-09",
       "fecha_partido": "2026-10-10",
       "liga": "France Ligue 2",
       "liga_confianza": null,
       "local": "FC Nantes",
       "visitante": "Stade de Reims",
       "senal_btts_optimizada": "Evitar",
-      "nivel_final": "EVITAR",
-      "motivo_btts": "perfil_avg2h_o25btts",
+      "nivel_final": "JUGAR",
+      "motivo_btts": "avg2h_parejo_15",
       "prob_btts": 0.6230408201558928,
       "prob_btts_calibrada": 0.6012683729978973,
       "btts_min_alto": null,
       "cuota_btts": 1.7,
       "cuota_btts_actual": 1.7,
-      "movimiento_btts_pp": null,
+      "movimiento_btts_pp": 0.0,
       "resultado_btts": null,
       "senal_o15_tier": "VIP",
       "sug_o15": "EVITAR",
@@ -25667,7 +25517,7 @@
       "resultado_ht05": true
     },
     {
-      "fecha": "2026-10-08",
+      "fecha": "2026-10-09",
       "fecha_partido": "2026-10-10",
       "liga": "France Ligue 2",
       "liga_confianza": null,
@@ -25871,7 +25721,7 @@
       "resultado_ht05": true
     },
     {
-      "fecha": "2026-10-08",
+      "fecha": "2026-10-09",
       "fecha_partido": "2026-10-10",
       "liga": "France Ligue 2",
       "liga_confianza": null,
@@ -26075,7 +25925,7 @@
       "resultado_ht05": null
     },
     {
-      "fecha": "2026-10-08",
+      "fecha": "2026-10-09",
       "fecha_partido": "2026-10-10",
       "liga": "Serbia Prva Liga",
       "liga_confianza": "alta",
@@ -26347,7 +26197,7 @@
       "resultado_ht05": null
     },
     {
-      "fecha": "2026-10-08",
+      "fecha": "2026-10-09",
       "fecha_partido": "2026-10-10",
       "liga": "Serbia Prva Liga",
       "liga_confianza": "alta",
@@ -26551,7 +26401,7 @@
       "resultado_ht05": true
     },
     {
-      "fecha": "2026-10-08",
+      "fecha": "2026-10-09",
       "fecha_partido": "2026-10-10",
       "liga": "Japan J1 League",
       "liga_confianza": null,
@@ -26823,7 +26673,7 @@
       "resultado_ht05": null
     },
     {
-      "fecha": "2026-10-08",
+      "fecha": "2026-10-09",
       "fecha_partido": "2026-10-10",
       "liga": "Japan J1 League",
       "liga_confianza": null,
@@ -26891,7 +26741,7 @@
       "resultado_ht05": null
     },
     {
-      "fecha": "2026-10-08",
+      "fecha": "2026-10-09",
       "fecha_partido": "2026-10-10",
       "liga": "Japan J1 League",
       "liga_confianza": null,
@@ -26959,7 +26809,7 @@
       "resultado_ht05": null
     },
     {
-      "fecha": "2026-10-08",
+      "fecha": "2026-10-09",
       "fecha_partido": "2026-10-10",
       "liga": "Japan J1 League",
       "liga_confianza": null,
@@ -27034,14 +26884,14 @@
       "local": "JEF United Ichihara Chiba",
       "visitante": "V-Varen Nagasaki",
       "senal_btts_optimizada": "Evitar",
-      "nivel_final": "EVITAR",
-      "motivo_btts": "perfil_avg2h_o25btts",
+      "nivel_final": "JUGAR",
+      "motivo_btts": "avg2h_parejo_15",
       "prob_btts": 0.6245749041738322,
       "prob_btts_calibrada": 0.5503160884886286,
       "btts_min_alto": null,
       "cuota_btts": 1.67,
       "cuota_btts_actual": 1.67,
-      "movimiento_btts_pp": null,
+      "movimiento_btts_pp": 0.0,
       "resultado_btts": null,
       "senal_o15_tier": "Fuerte",
       "sug_o15": "EVITAR",
@@ -27163,7 +27013,7 @@
       "resultado_ht05": null
     },
     {
-      "fecha": "2026-10-08",
+      "fecha": "2026-10-09",
       "fecha_partido": "2026-10-10",
       "liga": "Switzerland Super League",
       "liga_confianza": "alta",
@@ -27171,7 +27021,7 @@
       "visitante": "FC Thun",
       "senal_btts_optimizada": "Stake10",
       "nivel_final": "EVITAR",
-      "motivo_btts": "camino_normal_Stake10_sotmin_xga",
+      "motivo_btts": "stake11",
       "prob_btts": 0.7583587051159191,
       "prob_btts_calibrada": 0.651704593395483,
       "btts_min_alto": null,
@@ -27231,7 +27081,7 @@
       "resultado_ht05": null
     },
     {
-      "fecha": "2026-10-08",
+      "fecha": "2026-10-09",
       "fecha_partido": "2026-10-10",
       "liga": "Switzerland Super League",
       "liga_confianza": "alta",
@@ -27367,7 +27217,7 @@
       "resultado_ht05": null
     },
     {
-      "fecha": "2026-10-08",
+      "fecha": "2026-10-09",
       "fecha_partido": "2026-10-10",
       "liga": "Switzerland Super League",
       "liga_confianza": "alta",
@@ -27911,7 +27761,7 @@
       "resultado_ht05": false
     },
     {
-      "fecha": "2026-10-08",
+      "fecha": "2026-10-09",
       "fecha_partido": "2026-10-10",
       "liga": "Slovakia Super Liga",
       "liga_confianza": null,
@@ -27987,7 +27837,7 @@
       "visitante": "MŠK Žilina",
       "senal_btts_optimizada": "VIP+",
       "nivel_final": "JUGAR",
-      "motivo_btts": "VIP_reforzado",
+      "motivo_btts": "cumbre",
       "prob_btts": 0.6887471259266149,
       "prob_btts_calibrada": 0.600463370605275,
       "btts_min_alto": null,
@@ -28047,7 +27897,7 @@
       "resultado_ht05": null
     },
     {
-      "fecha": "2026-10-08",
+      "fecha": "2026-10-09",
       "fecha_partido": "2026-10-10",
       "liga": "Slovakia Super Liga",
       "liga_confianza": null,
@@ -28115,7 +27965,7 @@
       "resultado_ht05": null
     },
     {
-      "fecha": "2026-10-08",
+      "fecha": "2026-10-09",
       "fecha_partido": "2026-10-10",
       "liga": "Slovakia Super Liga",
       "liga_confianza": null,
@@ -28183,7 +28033,7 @@
       "resultado_ht05": null
     },
     {
-      "fecha": "2026-10-08",
+      "fecha": "2026-10-09",
       "fecha_partido": "2026-10-10",
       "liga": "Slovakia Super Liga",
       "liga_confianza": null,
@@ -28259,7 +28109,7 @@
       "visitante": "FC Spartak Trnava",
       "senal_btts_optimizada": "Stake10",
       "nivel_final": "JUGAR",
-      "motivo_btts": "stake9",
+      "motivo_btts": "camino_normal_Stake10_cuota_alta_sotmin_gcmin",
       "prob_btts": 0.6709618701424795,
       "prob_btts_calibrada": 0.5723040897108113,
       "btts_min_alto": null,
@@ -28319,7 +28169,7 @@
       "resultado_ht05": null
     },
     {
-      "fecha": "2026-10-08",
+      "fecha": "2026-10-09",
       "fecha_partido": "2026-10-10",
       "liga": "Israel Israeli Premier League",
       "liga_confianza": null,
@@ -28455,7 +28305,7 @@
       "resultado_ht05": null
     },
     {
-      "fecha": "2026-10-08",
+      "fecha": "2026-10-09",
       "fecha_partido": "2026-10-10",
       "liga": "Israel Israeli Premier League",
       "liga_confianza": null,
@@ -28523,7 +28373,7 @@
       "resultado_ht05": null
     },
     {
-      "fecha": "2026-10-08",
+      "fecha": "2026-10-09",
       "fecha_partido": "2026-10-10",
       "liga": "Israel Israeli Premier League",
       "liga_confianza": null,
@@ -28591,7 +28441,7 @@
       "resultado_ht05": null
     },
     {
-      "fecha": "2026-10-08",
+      "fecha": "2026-10-09",
       "fecha_partido": "2026-10-10",
       "liga": "Israel Israeli Premier League",
       "liga_confianza": null,
@@ -28659,7 +28509,7 @@
       "resultado_ht05": null
     },
     {
-      "fecha": "2026-10-08",
+      "fecha": "2026-10-09",
       "fecha_partido": "2026-10-10",
       "liga": "Israel Israeli Premier League",
       "liga_confianza": null,
@@ -28667,7 +28517,7 @@
       "visitante": "Maccabi Petah Tikva FC",
       "senal_btts_optimizada": "VIP+",
       "nivel_final": "JUGAR",
-      "motivo_btts": "VIP_reforzado",
+      "motivo_btts": "cumbre",
       "prob_btts": 0.671360769126176,
       "prob_btts_calibrada": 0.5610767439908421,
       "btts_min_alto": null,
@@ -28727,7 +28577,7 @@
       "resultado_ht05": null
     },
     {
-      "fecha": "2026-10-08",
+      "fecha": "2026-10-09",
       "fecha_partido": "2026-10-10",
       "liga": "Scotland League Two",
       "liga_confianza": null,
@@ -28795,7 +28645,7 @@
       "resultado_ht05": null
     },
     {
-      "fecha": "2026-10-08",
+      "fecha": "2026-10-09",
       "fecha_partido": "2026-10-10",
       "liga": "Scotland League Two",
       "liga_confianza": null,
@@ -28863,7 +28713,7 @@
       "resultado_ht05": null
     },
     {
-      "fecha": "2026-10-08",
+      "fecha": "2026-10-09",
       "fecha_partido": "2026-10-10",
       "liga": "Scotland League Two",
       "liga_confianza": null,
@@ -28931,7 +28781,7 @@
       "resultado_ht05": null
     },
     {
-      "fecha": "2026-10-08",
+      "fecha": "2026-10-09",
       "fecha_partido": "2026-10-10",
       "liga": "Scotland League Two",
       "liga_confianza": null,
@@ -28999,7 +28849,7 @@
       "resultado_ht05": null
     },
     {
-      "fecha": "2026-10-08",
+      "fecha": "2026-10-09",
       "fecha_partido": "2026-10-10",
       "liga": "Scotland League Two",
       "liga_confianza": null,
@@ -29067,7 +28917,7 @@
       "resultado_ht05": null
     },
     {
-      "fecha": "2026-10-08",
+      "fecha": "2026-10-09",
       "fecha_partido": "2026-10-10",
       "liga": "Belgium First Division B",
       "liga_confianza": null,
@@ -29271,7 +29121,7 @@
       "resultado_ht05": true
     },
     {
-      "fecha": "2026-10-08",
+      "fecha": "2026-10-09",
       "fecha_partido": "2026-10-10",
       "liga": "Belgium First Division B",
       "liga_confianza": null,
@@ -29475,7 +29325,7 @@
       "resultado_ht05": null
     },
     {
-      "fecha": "2026-10-08",
+      "fecha": "2026-10-09",
       "fecha_partido": "2026-10-10",
       "liga": "Belgium First Division B",
       "liga_confianza": null,
@@ -29543,7 +29393,7 @@
       "resultado_ht05": null
     },
     {
-      "fecha": "2026-10-08",
+      "fecha": "2026-10-09",
       "fecha_partido": "2026-10-10",
       "liga": "Scotland Championship",
       "liga_confianza": null,
@@ -29611,7 +29461,7 @@
       "resultado_ht05": null
     },
     {
-      "fecha": "2026-10-08",
+      "fecha": "2026-10-09",
       "fecha_partido": "2026-10-10",
       "liga": "Scotland Championship",
       "liga_confianza": null,
@@ -29679,7 +29529,7 @@
       "resultado_ht05": null
     },
     {
-      "fecha": "2026-10-08",
+      "fecha": "2026-10-09",
       "fecha_partido": "2026-10-10",
       "liga": "Scotland Championship",
       "liga_confianza": null,
@@ -29747,7 +29597,7 @@
       "resultado_ht05": null
     },
     {
-      "fecha": "2026-10-08",
+      "fecha": "2026-10-09",
       "fecha_partido": "2026-10-10",
       "liga": "Scotland Championship",
       "liga_confianza": null,
@@ -29815,7 +29665,7 @@
       "resultado_ht05": null
     },
     {
-      "fecha": "2026-10-08",
+      "fecha": "2026-10-09",
       "fecha_partido": "2026-10-10",
       "liga": "Scotland Championship",
       "liga_confianza": null,
@@ -29883,7 +29733,7 @@
       "resultado_ht05": null
     },
     {
-      "fecha": "2026-10-08",
+      "fecha": "2026-10-09",
       "fecha_partido": "2026-10-10",
       "liga": "England Premier League",
       "liga_confianza": null,
@@ -29951,7 +29801,7 @@
       "resultado_ht05": null
     },
     {
-      "fecha": "2026-10-08",
+      "fecha": "2026-10-09",
       "fecha_partido": "2026-10-10",
       "liga": "England Premier League",
       "liga_confianza": null,
@@ -29959,7 +29809,7 @@
       "visitante": "AFC Bournemouth",
       "senal_btts_optimizada": "VIP+",
       "nivel_final": "JUGAR",
-      "motivo_btts": "VIP_reforzado",
+      "motivo_btts": "corona",
       "prob_btts": 0.7070273744690263,
       "prob_btts_calibrada": 0.6155659208060295,
       "btts_min_alto": null,
@@ -30019,21 +29869,21 @@
       "resultado_ht05": null
     },
     {
-      "fecha": "2026-10-08",
+      "fecha": "2026-10-09",
       "fecha_partido": "2026-10-10",
       "liga": "England Premier League",
       "liga_confianza": null,
       "local": "Sunderland AFC",
       "visitante": "Brighton & Hove Albion FC",
       "senal_btts_optimizada": "Evitar",
-      "nivel_final": "JUGAR",
-      "motivo_btts": "atlas",
+      "nivel_final": "EVITAR",
+      "motivo_btts": "bastion",
       "prob_btts": 0.5928518325001401,
       "prob_btts_calibrada": 0.5418889110812378,
       "btts_min_alto": null,
       "cuota_btts": 1.6,
       "cuota_btts_actual": 1.6,
-      "movimiento_btts_pp": 0.0,
+      "movimiento_btts_pp": null,
       "resultado_btts": null,
       "senal_o15_tier": "VIP",
       "sug_o15": "JUGAR",
@@ -30087,7 +29937,7 @@
       "resultado_ht05": null
     },
     {
-      "fecha": "2026-10-08",
+      "fecha": "2026-10-09",
       "fecha_partido": "2026-10-10",
       "liga": "England Premier League",
       "liga_confianza": null,
@@ -30223,7 +30073,7 @@
       "resultado_ht05": null
     },
     {
-      "fecha": "2026-10-08",
+      "fecha": "2026-10-09",
       "fecha_partido": "2026-10-10",
       "liga": "England Premier League",
       "liga_confianza": null,
@@ -30291,7 +30141,7 @@
       "resultado_ht05": null
     },
     {
-      "fecha": "2026-10-08",
+      "fecha": "2026-10-09",
       "fecha_partido": "2026-10-10",
       "liga": "England Premier League",
       "liga_confianza": null,
@@ -30495,7 +30345,7 @@
       "resultado_ht05": null
     },
     {
-      "fecha": "2026-10-08",
+      "fecha": "2026-10-09",
       "fecha_partido": "2026-10-10",
       "liga": "Scotland League One",
       "liga_confianza": null,
@@ -30563,7 +30413,7 @@
       "resultado_ht05": null
     },
     {
-      "fecha": "2026-10-08",
+      "fecha": "2026-10-09",
       "fecha_partido": "2026-10-10",
       "liga": "Scotland League One",
       "liga_confianza": null,
@@ -30631,7 +30481,7 @@
       "resultado_ht05": null
     },
     {
-      "fecha": "2026-10-08",
+      "fecha": "2026-10-09",
       "fecha_partido": "2026-10-10",
       "liga": "Scotland League One",
       "liga_confianza": null,
@@ -30699,7 +30549,7 @@
       "resultado_ht05": null
     },
     {
-      "fecha": "2026-10-08",
+      "fecha": "2026-10-09",
       "fecha_partido": "2026-10-10",
       "liga": "Scotland League One",
       "liga_confianza": null,
@@ -30767,7 +30617,7 @@
       "resultado_ht05": null
     },
     {
-      "fecha": "2026-10-08",
+      "fecha": "2026-10-09",
       "fecha_partido": "2026-10-10",
       "liga": "Scotland League One",
       "liga_confianza": null,
@@ -30835,7 +30685,7 @@
       "resultado_ht05": null
     },
     {
-      "fecha": "2026-10-08",
+      "fecha": "2026-10-09",
       "fecha_partido": "2026-10-10",
       "liga": "Scotland Premiership",
       "liga_confianza": null,
@@ -30971,7 +30821,7 @@
       "resultado_ht05": null
     },
     {
-      "fecha": "2026-10-08",
+      "fecha": "2026-10-09",
       "fecha_partido": "2026-10-10",
       "liga": "Scotland Premiership",
       "liga_confianza": null,
@@ -31107,7 +30957,7 @@
       "resultado_ht05": null
     },
     {
-      "fecha": "2026-10-08",
+      "fecha": "2026-10-09",
       "fecha_partido": "2026-10-10",
       "liga": "Scotland Premiership",
       "liga_confianza": null,
@@ -31175,7 +31025,7 @@
       "resultado_ht05": null
     },
     {
-      "fecha": "2026-10-08",
+      "fecha": "2026-10-09",
       "fecha_partido": "2026-10-10",
       "liga": "Scotland Premiership",
       "liga_confianza": null,
@@ -31379,7 +31229,7 @@
       "resultado_ht05": null
     },
     {
-      "fecha": "2026-10-08",
+      "fecha": "2026-10-09",
       "fecha_partido": "2026-10-10",
       "liga": "Slovenia PrvaLiga",
       "liga_confianza": null,
@@ -31447,7 +31297,7 @@
       "resultado_ht05": null
     },
     {
-      "fecha": "2026-10-08",
+      "fecha": "2026-10-09",
       "fecha_partido": "2026-10-10",
       "liga": "Slovenia PrvaLiga",
       "liga_confianza": null,
@@ -31515,7 +31365,7 @@
       "resultado_ht05": null
     },
     {
-      "fecha": "2026-10-08",
+      "fecha": "2026-10-09",
       "fecha_partido": "2026-10-10",
       "liga": "Slovenia PrvaLiga",
       "liga_confianza": null,
@@ -31583,7 +31433,7 @@
       "resultado_ht05": null
     },
     {
-      "fecha": "2026-10-08",
+      "fecha": "2026-10-09",
       "fecha_partido": "2026-10-10",
       "liga": "Slovenia 2. SNL",
       "liga_confianza": null,
@@ -31719,7 +31569,7 @@
       "resultado_ht05": null
     },
     {
-      "fecha": "2026-10-08",
+      "fecha": "2026-10-09",
       "fecha_partido": "2026-10-10",
       "liga": "Slovenia 2. SNL",
       "liga_confianza": null,
@@ -31923,7 +31773,7 @@
       "resultado_ht05": null
     },
     {
-      "fecha": "2026-10-08",
+      "fecha": "2026-10-09",
       "fecha_partido": "2026-10-10",
       "liga": "Slovenia 2. SNL",
       "liga_confianza": null,
@@ -32059,7 +31909,7 @@
       "resultado_ht05": true
     },
     {
-      "fecha": "2026-10-08",
+      "fecha": "2026-10-09",
       "fecha_partido": "2026-10-10",
       "liga": "Slovenia 2. SNL",
       "liga_confianza": null,
@@ -32195,7 +32045,7 @@
       "resultado_ht05": null
     },
     {
-      "fecha": "2026-10-08",
+      "fecha": "2026-10-09",
       "fecha_partido": "2026-10-10",
       "liga": "Czech Republic First League",
       "liga_confianza": null,
@@ -32263,7 +32113,7 @@
       "resultado_ht05": null
     },
     {
-      "fecha": "2026-10-08",
+      "fecha": "2026-10-09",
       "fecha_partido": "2026-10-10",
       "liga": "Czech Republic First League",
       "liga_confianza": null,
@@ -32535,7 +32385,7 @@
       "resultado_ht05": null
     },
     {
-      "fecha": "2026-10-08",
+      "fecha": "2026-10-09",
       "fecha_partido": "2026-10-10",
       "liga": "Czech Republic First League",
       "liga_confianza": null,
@@ -32603,7 +32453,7 @@
       "resultado_ht05": null
     },
     {
-      "fecha": "2026-10-08",
+      "fecha": "2026-10-09",
       "fecha_partido": "2026-10-10",
       "liga": "Slovakia 2. Liga",
       "liga_confianza": "baja",
@@ -32671,7 +32521,7 @@
       "resultado_ht05": null
     },
     {
-      "fecha": "2026-10-08",
+      "fecha": "2026-10-09",
       "fecha_partido": "2026-10-10",
       "liga": "Slovakia 2. Liga",
       "liga_confianza": "baja",
@@ -32679,7 +32529,7 @@
       "visitante": "1. FC Tatran Prešov",
       "senal_btts_optimizada": "VIP+",
       "nivel_final": "JUGAR",
-      "motivo_btts": "VIP_reforzado",
+      "motivo_btts": "cumbre",
       "prob_btts": 0.6424527281973962,
       "prob_btts_calibrada": 0.5710562690234944,
       "btts_min_alto": null,
@@ -32739,7 +32589,7 @@
       "resultado_ht05": null
     },
     {
-      "fecha": "2026-10-08",
+      "fecha": "2026-10-09",
       "fecha_partido": "2026-10-10",
       "liga": "Slovakia 2. Liga",
       "liga_confianza": "baja",
@@ -32950,14 +32800,14 @@
       "local": "FC ŠTK 1914 Šamorín",
       "visitante": "FC Petržalka akadémia",
       "senal_btts_optimizada": "Evitar",
-      "nivel_final": "JUGAR",
-      "motivo_btts": "atlas",
+      "nivel_final": "EVITAR",
+      "motivo_btts": "premium",
       "prob_btts": 0.5340173530826986,
       "prob_btts_calibrada": 0.4695317270777267,
       "btts_min_alto": null,
       "cuota_btts": 1.62,
       "cuota_btts_actual": 1.62,
-      "movimiento_btts_pp": 0.0,
+      "movimiento_btts_pp": null,
       "resultado_btts": null,
       "senal_o15_tier": "VIP",
       "sug_o15": "JUGAR",
@@ -33087,7 +32937,7 @@
       "visitante": "Újpest FC",
       "senal_btts_optimizada": "VIP+",
       "nivel_final": "JUGAR",
-      "motivo_btts": "VIP_reforzado",
+      "motivo_btts": "cumbre",
       "prob_btts": 0.7020685709065025,
       "prob_btts_calibrada": 0.60275347209108,
       "btts_min_alto": null,
@@ -33215,7 +33065,7 @@
       "resultado_ht05": null
     },
     {
-      "fecha": "2026-10-08",
+      "fecha": "2026-10-09",
       "fecha_partido": "2026-10-10",
       "liga": "Hungary NB I",
       "liga_confianza": null,
@@ -33351,7 +33201,7 @@
       "resultado_ht05": null
     },
     {
-      "fecha": "2026-10-08",
+      "fecha": "2026-10-09",
       "fecha_partido": "2026-10-10",
       "liga": "Hungary NB I",
       "liga_confianza": null,
@@ -33419,7 +33269,7 @@
       "resultado_ht05": null
     },
     {
-      "fecha": "2026-10-08",
+      "fecha": "2026-10-09",
       "fecha_partido": "2026-10-10",
       "liga": "Hungary NB I",
       "liga_confianza": null,
@@ -33623,7 +33473,7 @@
       "resultado_ht05": null
     },
     {
-      "fecha": "2026-10-08",
+      "fecha": "2026-10-09",
       "fecha_partido": "2026-10-10",
       "liga": "Belgium Pro League",
       "liga_confianza": null,
@@ -33691,7 +33541,7 @@
       "resultado_ht05": null
     },
     {
-      "fecha": "2026-10-08",
+      "fecha": "2026-10-09",
       "fecha_partido": "2026-10-10",
       "liga": "Belgium Pro League",
       "liga_confianza": null,
@@ -33827,7 +33677,7 @@
       "resultado_ht05": null
     },
     {
-      "fecha": "2026-10-08",
+      "fecha": "2026-10-09",
       "fecha_partido": "2026-10-10",
       "liga": "Belgium Pro League",
       "liga_confianza": null,
@@ -33963,7 +33813,7 @@
       "resultado_ht05": null
     },
     {
-      "fecha": "2026-10-08",
+      "fecha": "2026-10-09",
       "fecha_partido": "2026-10-10",
       "liga": "Belgium Pro League",
       "liga_confianza": null,
@@ -34099,7 +33949,7 @@
       "resultado_ht05": true
     },
     {
-      "fecha": "2026-10-08",
+      "fecha": "2026-10-09",
       "fecha_partido": "2026-10-10",
       "liga": "Northern Ireland NIFL Premiership",
       "liga_confianza": null,
@@ -34167,7 +34017,7 @@
       "resultado_ht05": null
     },
     {
-      "fecha": "2026-10-08",
+      "fecha": "2026-10-09",
       "fecha_partido": "2026-10-10",
       "liga": "Northern Ireland NIFL Premiership",
       "liga_confianza": null,
@@ -34303,7 +34153,7 @@
       "resultado_ht05": false
     },
     {
-      "fecha": "2026-10-08",
+      "fecha": "2026-10-09",
       "fecha_partido": "2026-10-10",
       "liga": "Northern Ireland NIFL Premiership",
       "liga_confianza": null,
@@ -34371,7 +34221,7 @@
       "resultado_ht05": null
     },
     {
-      "fecha": "2026-10-08",
+      "fecha": "2026-10-09",
       "fecha_partido": "2026-10-10",
       "liga": "Northern Ireland NIFL Premiership",
       "liga_confianza": null,
@@ -34439,7 +34289,7 @@
       "resultado_ht05": null
     },
     {
-      "fecha": "2026-10-08",
+      "fecha": "2026-10-09",
       "fecha_partido": "2026-10-10",
       "liga": "Northern Ireland NIFL Premiership",
       "liga_confianza": null,
@@ -34507,7 +34357,7 @@
       "resultado_ht05": null
     },
     {
-      "fecha": "2026-10-08",
+      "fecha": "2026-10-09",
       "fecha_partido": "2026-10-10",
       "liga": "England EFL League One",
       "liga_confianza": null,
@@ -34575,7 +34425,7 @@
       "resultado_ht05": null
     },
     {
-      "fecha": "2026-10-08",
+      "fecha": "2026-10-09",
       "fecha_partido": "2026-10-10",
       "liga": "England EFL League One",
       "liga_confianza": null,
@@ -34643,7 +34493,7 @@
       "resultado_ht05": null
     },
     {
-      "fecha": "2026-10-08",
+      "fecha": "2026-10-09",
       "fecha_partido": "2026-10-10",
       "liga": "England EFL League One",
       "liga_confianza": null,
@@ -34711,7 +34561,7 @@
       "resultado_ht05": null
     },
     {
-      "fecha": "2026-10-08",
+      "fecha": "2026-10-09",
       "fecha_partido": "2026-10-10",
       "liga": "England EFL League One",
       "liga_confianza": null,
@@ -34779,7 +34629,7 @@
       "resultado_ht05": null
     },
     {
-      "fecha": "2026-10-08",
+      "fecha": "2026-10-09",
       "fecha_partido": "2026-10-10",
       "liga": "England EFL League One",
       "liga_confianza": null,
@@ -34847,7 +34697,7 @@
       "resultado_ht05": null
     },
     {
-      "fecha": "2026-10-08",
+      "fecha": "2026-10-09",
       "fecha_partido": "2026-10-10",
       "liga": "England EFL League One",
       "liga_confianza": null,
@@ -34915,7 +34765,7 @@
       "resultado_ht05": null
     },
     {
-      "fecha": "2026-10-08",
+      "fecha": "2026-10-09",
       "fecha_partido": "2026-10-10",
       "liga": "England EFL League One",
       "liga_confianza": null,
@@ -34983,7 +34833,7 @@
       "resultado_ht05": null
     },
     {
-      "fecha": "2026-10-08",
+      "fecha": "2026-10-09",
       "fecha_partido": "2026-10-10",
       "liga": "England EFL League One",
       "liga_confianza": null,
@@ -35051,7 +34901,7 @@
       "resultado_ht05": null
     },
     {
-      "fecha": "2026-10-08",
+      "fecha": "2026-10-09",
       "fecha_partido": "2026-10-10",
       "liga": "England EFL League One",
       "liga_confianza": null,
@@ -35119,7 +34969,7 @@
       "resultado_ht05": null
     },
     {
-      "fecha": "2026-10-08",
+      "fecha": "2026-10-09",
       "fecha_partido": "2026-10-10",
       "liga": "England EFL League One",
       "liga_confianza": null,
@@ -35187,7 +35037,7 @@
       "resultado_ht05": null
     },
     {
-      "fecha": "2026-10-08",
+      "fecha": "2026-10-09",
       "fecha_partido": "2026-10-10",
       "liga": "England EFL League One",
       "liga_confianza": null,
@@ -35255,7 +35105,7 @@
       "resultado_ht05": null
     },
     {
-      "fecha": "2026-10-08",
+      "fecha": "2026-10-09",
       "fecha_partido": "2026-10-10",
       "liga": "England EFL League One",
       "liga_confianza": null,
@@ -35391,7 +35241,7 @@
       "resultado_ht05": null
     },
     {
-      "fecha": "2026-10-08",
+      "fecha": "2026-10-09",
       "fecha_partido": "2026-10-10",
       "liga": "Austria Bundesliga",
       "liga_confianza": null,
@@ -35459,7 +35309,7 @@
       "resultado_ht05": null
     },
     {
-      "fecha": "2026-10-08",
+      "fecha": "2026-10-09",
       "fecha_partido": "2026-10-10",
       "liga": "Austria Bundesliga",
       "liga_confianza": null,
@@ -35534,14 +35384,14 @@
       "local": "TSV Hartberg",
       "visitante": "SC Austria Lustenau",
       "senal_btts_optimizada": "Evitar",
-      "nivel_final": "EVITAR",
-      "motivo_btts": "stake11",
+      "nivel_final": "JUGAR",
+      "motivo_btts": "avg2h_parejo_15",
       "prob_btts": 0.6290075001201587,
       "prob_btts_calibrada": 0.564575184941512,
       "btts_min_alto": null,
       "cuota_btts": 1.67,
       "cuota_btts_actual": 1.67,
-      "movimiento_btts_pp": null,
+      "movimiento_btts_pp": 0.0,
       "resultado_btts": null,
       "senal_o15_tier": "Fuerte",
       "sug_o15": "EVITAR",
@@ -35663,7 +35513,7 @@
       "resultado_ht05": null
     },
     {
-      "fecha": "2026-10-08",
+      "fecha": "2026-10-09",
       "fecha_partido": "2026-10-10",
       "liga": "Austria Bundesliga",
       "liga_confianza": null,
@@ -35799,7 +35649,7 @@
       "resultado_ht05": true
     },
     {
-      "fecha": "2026-10-08",
+      "fecha": "2026-10-09",
       "fecha_partido": "2026-10-10",
       "liga": "Northern Ireland NIFL Championship",
       "liga_confianza": null,
@@ -35867,7 +35717,7 @@
       "resultado_ht05": null
     },
     {
-      "fecha": "2026-10-08",
+      "fecha": "2026-10-09",
       "fecha_partido": "2026-10-10",
       "liga": "Northern Ireland NIFL Championship",
       "liga_confianza": null,
@@ -35935,7 +35785,7 @@
       "resultado_ht05": null
     },
     {
-      "fecha": "2026-10-08",
+      "fecha": "2026-10-09",
       "fecha_partido": "2026-10-10",
       "liga": "Northern Ireland NIFL Championship",
       "liga_confianza": null,
@@ -36139,7 +35989,7 @@
       "resultado_ht05": true
     },
     {
-      "fecha": "2026-10-08",
+      "fecha": "2026-10-09",
       "fecha_partido": "2026-10-10",
       "liga": "Northern Ireland NIFL Championship",
       "liga_confianza": null,
@@ -36207,7 +36057,7 @@
       "resultado_ht05": null
     },
     {
-      "fecha": "2026-10-08",
+      "fecha": "2026-10-09",
       "fecha_partido": "2026-10-10",
       "liga": "Northern Ireland NIFL Championship",
       "liga_confianza": null,
@@ -36275,7 +36125,7 @@
       "resultado_ht05": null
     },
     {
-      "fecha": "2026-10-08",
+      "fecha": "2026-10-09",
       "fecha_partido": "2026-10-10",
       "liga": "England Championship",
       "liga_confianza": null,
@@ -36343,7 +36193,7 @@
       "resultado_ht05": null
     },
     {
-      "fecha": "2026-10-08",
+      "fecha": "2026-10-09",
       "fecha_partido": "2026-10-10",
       "liga": "England Championship",
       "liga_confianza": null,
@@ -36351,7 +36201,7 @@
       "visitante": "Wolverhampton Wanderers FC",
       "senal_btts_optimizada": "Evitar",
       "nivel_final": "JUGAR",
-      "motivo_btts": "atlas",
+      "motivo_btts": "rescate_ataque_balanceado_alta_gf_btts",
       "prob_btts": 0.6603016581542376,
       "prob_btts_calibrada": 0.5921674394403428,
       "btts_min_alto": null,
@@ -36479,7 +36329,7 @@
       "resultado_ht05": null
     },
     {
-      "fecha": "2026-10-08",
+      "fecha": "2026-10-09",
       "fecha_partido": "2026-10-10",
       "liga": "England Championship",
       "liga_confianza": null,
@@ -36547,7 +36397,7 @@
       "resultado_ht05": null
     },
     {
-      "fecha": "2026-10-08",
+      "fecha": "2026-10-09",
       "fecha_partido": "2026-10-10",
       "liga": "England Championship",
       "liga_confianza": null,
@@ -36615,7 +36465,7 @@
       "resultado_ht05": null
     },
     {
-      "fecha": "2026-10-08",
+      "fecha": "2026-10-09",
       "fecha_partido": "2026-10-10",
       "liga": "England Championship",
       "liga_confianza": null,
@@ -36683,7 +36533,7 @@
       "resultado_ht05": null
     },
     {
-      "fecha": "2026-10-08",
+      "fecha": "2026-10-09",
       "fecha_partido": "2026-10-10",
       "liga": "England Championship",
       "liga_confianza": null,
@@ -36751,7 +36601,7 @@
       "resultado_ht05": null
     },
     {
-      "fecha": "2026-10-08",
+      "fecha": "2026-10-09",
       "fecha_partido": "2026-10-10",
       "liga": "England Championship",
       "liga_confianza": null,
@@ -36819,7 +36669,7 @@
       "resultado_ht05": null
     },
     {
-      "fecha": "2026-10-08",
+      "fecha": "2026-10-09",
       "fecha_partido": "2026-10-10",
       "liga": "England Championship",
       "liga_confianza": null,
@@ -36955,21 +36805,21 @@
       "resultado_ht05": true
     },
     {
-      "fecha": "2026-10-08",
+      "fecha": "2026-10-09",
       "fecha_partido": "2026-10-10",
       "liga": "England Championship",
       "liga_confianza": null,
       "local": "Watford FC",
       "visitante": "Burnley FC",
       "senal_btts_optimizada": "Evitar",
-      "nivel_final": "EVITAR",
-      "motivo_btts": "perfil_avg2h_o25btts",
+      "nivel_final": "JUGAR",
+      "motivo_btts": "avg2h_parejo_15",
       "prob_btts": 0.6241518055367761,
       "prob_btts_calibrada": 0.5710124075382995,
       "btts_min_alto": null,
       "cuota_btts": 1.67,
       "cuota_btts_actual": 1.67,
-      "movimiento_btts_pp": null,
+      "movimiento_btts_pp": 0.0,
       "resultado_btts": null,
       "senal_o15_tier": "Fuerte",
       "sug_o15": "EVITAR",
@@ -37023,7 +36873,7 @@
       "resultado_ht05": null
     },
     {
-      "fecha": "2026-10-08",
+      "fecha": "2026-10-09",
       "fecha_partido": "2026-10-10",
       "liga": "England Championship",
       "liga_confianza": null,
@@ -37031,7 +36881,7 @@
       "visitante": "Cardiff City FC",
       "senal_btts_optimizada": "Stake10",
       "nivel_final": "JUGAR",
-      "motivo_btts": "stake9",
+      "motivo_btts": "camino_normal_Stake10_cuota_alta_sotmin_gcmin",
       "prob_btts": 0.6662563453629264,
       "prob_btts_calibrada": 0.5683897454268024,
       "btts_min_alto": null,
@@ -37091,7 +36941,7 @@
       "resultado_ht05": null
     },
     {
-      "fecha": "2026-10-08",
+      "fecha": "2026-10-09",
       "fecha_partido": "2026-10-10",
       "liga": "England EFL League Two",
       "liga_confianza": null,
@@ -37159,7 +37009,7 @@
       "resultado_ht05": null
     },
     {
-      "fecha": "2026-10-08",
+      "fecha": "2026-10-09",
       "fecha_partido": "2026-10-10",
       "liga": "England EFL League Two",
       "liga_confianza": null,
@@ -37227,7 +37077,7 @@
       "resultado_ht05": null
     },
     {
-      "fecha": "2026-10-08",
+      "fecha": "2026-10-09",
       "fecha_partido": "2026-10-10",
       "liga": "England EFL League Two",
       "liga_confianza": null,
@@ -37295,7 +37145,7 @@
       "resultado_ht05": null
     },
     {
-      "fecha": "2026-10-08",
+      "fecha": "2026-10-09",
       "fecha_partido": "2026-10-10",
       "liga": "England EFL League Two",
       "liga_confianza": null,
@@ -37363,7 +37213,7 @@
       "resultado_ht05": null
     },
     {
-      "fecha": "2026-10-08",
+      "fecha": "2026-10-09",
       "fecha_partido": "2026-10-10",
       "liga": "England EFL League Two",
       "liga_confianza": null,
@@ -37431,7 +37281,7 @@
       "resultado_ht05": null
     },
     {
-      "fecha": "2026-10-08",
+      "fecha": "2026-10-09",
       "fecha_partido": "2026-10-10",
       "liga": "England EFL League Two",
       "liga_confianza": null,
@@ -37499,7 +37349,7 @@
       "resultado_ht05": null
     },
     {
-      "fecha": "2026-10-08",
+      "fecha": "2026-10-09",
       "fecha_partido": "2026-10-10",
       "liga": "England EFL League Two",
       "liga_confianza": null,
@@ -37567,7 +37417,7 @@
       "resultado_ht05": null
     },
     {
-      "fecha": "2026-10-08",
+      "fecha": "2026-10-09",
       "fecha_partido": "2026-10-10",
       "liga": "England EFL League Two",
       "liga_confianza": null,
@@ -37635,7 +37485,7 @@
       "resultado_ht05": null
     },
     {
-      "fecha": "2026-10-08",
+      "fecha": "2026-10-09",
       "fecha_partido": "2026-10-10",
       "liga": "England EFL League Two",
       "liga_confianza": null,
@@ -37703,7 +37553,7 @@
       "resultado_ht05": null
     },
     {
-      "fecha": "2026-10-08",
+      "fecha": "2026-10-09",
       "fecha_partido": "2026-10-10",
       "liga": "England EFL League Two",
       "liga_confianza": null,
@@ -37771,7 +37621,7 @@
       "resultado_ht05": null
     },
     {
-      "fecha": "2026-10-08",
+      "fecha": "2026-10-09",
       "fecha_partido": "2026-10-10",
       "liga": "England EFL League Two",
       "liga_confianza": null,
@@ -37779,7 +37629,7 @@
       "visitante": "Barnet FC",
       "senal_btts_optimizada": "Evitar",
       "nivel_final": "JUGAR",
-      "motivo_btts": "atlas",
+      "motivo_btts": "granate",
       "prob_btts": 0.6319960028403027,
       "prob_btts_calibrada": 0.5641453911973475,
       "btts_min_alto": null,
@@ -37839,7 +37689,7 @@
       "resultado_ht05": null
     },
     {
-      "fecha": "2026-10-08",
+      "fecha": "2026-10-09",
       "fecha_partido": "2026-10-10",
       "liga": "England EFL League Two",
       "liga_confianza": null,
@@ -37975,7 +37825,7 @@
       "resultado_ht05": null
     },
     {
-      "fecha": "2026-10-08",
+      "fecha": "2026-10-09",
       "fecha_partido": "2026-10-10",
       "liga": "Italy Campionato Primavera 1",
       "liga_confianza": null,
@@ -38111,7 +37961,7 @@
       "resultado_ht05": null
     },
     {
-      "fecha": "2026-10-08",
+      "fecha": "2026-10-09",
       "fecha_partido": "2026-10-10",
       "liga": "Italy Campionato Primavera 1",
       "liga_confianza": null,
@@ -38179,7 +38029,7 @@
       "resultado_ht05": null
     },
     {
-      "fecha": "2026-10-08",
+      "fecha": "2026-10-09",
       "fecha_partido": "2026-10-10",
       "liga": "Italy Campionato Primavera 1",
       "liga_confianza": null,
@@ -38315,7 +38165,7 @@
       "resultado_ht05": null
     },
     {
-      "fecha": "2026-10-08",
+      "fecha": "2026-10-09",
       "fecha_partido": "2026-10-10",
       "liga": "Italy Campionato Primavera 1",
       "liga_confianza": null,
@@ -38383,7 +38233,7 @@
       "resultado_ht05": null
     },
     {
-      "fecha": "2026-10-08",
+      "fecha": "2026-10-09",
       "fecha_partido": "2026-10-10",
       "liga": "Italy Campionato Primavera 1",
       "liga_confianza": null,
@@ -38451,7 +38301,7 @@
       "resultado_ht05": null
     },
     {
-      "fecha": "2026-10-08",
+      "fecha": "2026-10-09",
       "fecha_partido": "2026-10-10",
       "liga": "Czech Republic FNL",
       "liga_confianza": null,
@@ -38519,7 +38369,7 @@
       "resultado_ht05": null
     },
     {
-      "fecha": "2026-10-08",
+      "fecha": "2026-10-09",
       "fecha_partido": "2026-10-10",
       "liga": "Czech Republic FNL",
       "liga_confianza": null,
@@ -38791,7 +38641,7 @@
       "resultado_ht05": false
     },
     {
-      "fecha": "2026-10-08",
+      "fecha": "2026-10-09",
       "fecha_partido": "2026-10-10",
       "liga": "Czech Republic FNL",
       "liga_confianza": null,
@@ -38995,7 +38845,7 @@
       "resultado_ht05": null
     },
     {
-      "fecha": "2026-10-08",
+      "fecha": "2026-10-09",
       "fecha_partido": "2026-10-10",
       "liga": "Spain La Liga",
       "liga_confianza": null,
@@ -39063,7 +38913,7 @@
       "resultado_ht05": null
     },
     {
-      "fecha": "2026-10-08",
+      "fecha": "2026-10-09",
       "fecha_partido": "2026-10-10",
       "liga": "Spain La Liga",
       "liga_confianza": null,
@@ -39131,7 +38981,7 @@
       "resultado_ht05": null
     },
     {
-      "fecha": "2026-10-08",
+      "fecha": "2026-10-09",
       "fecha_partido": "2026-10-10",
       "liga": "Spain La Liga",
       "liga_confianza": null,
@@ -39267,7 +39117,7 @@
       "resultado_ht05": null
     },
     {
-      "fecha": "2026-10-08",
+      "fecha": "2026-10-09",
       "fecha_partido": "2026-10-10",
       "liga": "Spain La Liga",
       "liga_confianza": null,
@@ -39275,7 +39125,7 @@
       "visitante": "Villarreal CF",
       "senal_btts_optimizada": "Stake10",
       "nivel_final": "JUGAR",
-      "motivo_btts": "stake9",
+      "motivo_btts": "camino_normal_Stake10_cuota_alta_sotmin_gcmin",
       "prob_btts": 0.7192605762501579,
       "prob_btts_calibrada": 0.6379417349052662,
       "btts_min_alto": null,
@@ -40083,21 +39933,21 @@
       "resultado_ht05": null
     },
     {
-      "fecha": "2026-10-08",
+      "fecha": "2026-10-09",
       "fecha_partido": "2026-10-10",
       "liga": "Hungary NB II",
       "liga_confianza": null,
       "local": "Mezőkövesd-Zsóry SE",
       "visitante": "Szeged 2011 FC",
       "senal_btts_optimizada": "Evitar",
-      "nivel_final": "EVITAR",
-      "motivo_btts": "perfil_avg2h_o25btts",
+      "nivel_final": "JUGAR",
+      "motivo_btts": "avg2h_parejo_15",
       "prob_btts": 0.5734463670790773,
       "prob_btts_calibrada": 0.5694592923738643,
       "btts_min_alto": null,
       "cuota_btts": 1.7,
       "cuota_btts_actual": 1.7,
-      "movimiento_btts_pp": null,
+      "movimiento_btts_pp": 0.0,
       "resultado_btts": null,
       "senal_o15_tier": "Fuerte",
       "sug_o15": "EVITAR",
@@ -40151,7 +40001,7 @@
       "resultado_ht05": null
     },
     {
-      "fecha": "2026-10-08",
+      "fecha": "2026-10-09",
       "fecha_partido": "2026-10-10",
       "liga": "Hungary NB II",
       "liga_confianza": null,
@@ -40219,7 +40069,7 @@
       "resultado_ht05": null
     },
     {
-      "fecha": "2026-10-08",
+      "fecha": "2026-10-09",
       "fecha_partido": "2026-10-10",
       "liga": "Hungary NB II",
       "liga_confianza": null,
@@ -40287,7 +40137,7 @@
       "resultado_ht05": null
     },
     {
-      "fecha": "2026-10-08",
+      "fecha": "2026-10-09",
       "fecha_partido": "2026-10-10",
       "liga": "Hungary NB II",
       "liga_confianza": null,
@@ -40355,7 +40205,7 @@
       "resultado_ht05": null
     },
     {
-      "fecha": "2026-10-08",
+      "fecha": "2026-10-09",
       "fecha_partido": "2026-10-10",
       "liga": "Hungary NB II",
       "liga_confianza": null,
@@ -40423,7 +40273,7 @@
       "resultado_ht05": null
     },
     {
-      "fecha": "2026-10-08",
+      "fecha": "2026-10-09",
       "fecha_partido": "2026-10-10",
       "liga": "Hungary NB II",
       "liga_confianza": null,
@@ -40627,7 +40477,7 @@
       "resultado_ht05": true
     },
     {
-      "fecha": "2026-10-08",
+      "fecha": "2026-10-09",
       "fecha_partido": "2026-10-10",
       "liga": "Austria 2. Liga",
       "liga_confianza": null,
@@ -40831,7 +40681,7 @@
       "resultado_ht05": null
     },
     {
-      "fecha": "2026-10-08",
+      "fecha": "2026-10-09",
       "fecha_partido": "2026-10-10",
       "liga": "Austria 2. Liga",
       "liga_confianza": null,
@@ -40899,7 +40749,7 @@
       "resultado_ht05": null
     },
     {
-      "fecha": "2026-10-08",
+      "fecha": "2026-10-09",
       "fecha_partido": "2026-10-10",
       "liga": "Austria 2. Liga",
       "liga_confianza": null,
@@ -40967,7 +40817,7 @@
       "resultado_ht05": null
     },
     {
-      "fecha": "2026-10-08",
+      "fecha": "2026-10-09",
       "fecha_partido": "2026-10-10",
       "liga": "Austria 2. Liga",
       "liga_confianza": null,
@@ -41171,7 +41021,7 @@
       "resultado_ht05": null
     },
     {
-      "fecha": "2026-10-08",
+      "fecha": "2026-10-09",
       "fecha_partido": "2026-10-10",
       "liga": "Germany Bundesliga",
       "liga_confianza": null,
@@ -41307,7 +41157,7 @@
       "resultado_ht05": false
     },
     {
-      "fecha": "2026-10-08",
+      "fecha": "2026-10-09",
       "fecha_partido": "2026-10-10",
       "liga": "Germany Bundesliga",
       "liga_confianza": null,
@@ -41375,7 +41225,7 @@
       "resultado_ht05": null
     },
     {
-      "fecha": "2026-10-08",
+      "fecha": "2026-10-09",
       "fecha_partido": "2026-10-10",
       "liga": "Germany Bundesliga",
       "liga_confianza": null,
@@ -41443,7 +41293,7 @@
       "resultado_ht05": null
     },
     {
-      "fecha": "2026-10-08",
+      "fecha": "2026-10-09",
       "fecha_partido": "2026-10-10",
       "liga": "Germany Bundesliga",
       "liga_confianza": null,
@@ -41451,7 +41301,7 @@
       "visitante": "VfB Stuttgart 1893",
       "senal_btts_optimizada": "Stake10",
       "nivel_final": "JUGAR",
-      "motivo_btts": "stake9",
+      "motivo_btts": "camino_normal_Stake10_cuota_alta_sotmin_gcmin",
       "prob_btts": 0.7022328514277251,
       "prob_btts_calibrada": 0.6146629451336334,
       "btts_min_alto": null,
@@ -41511,7 +41361,7 @@
       "resultado_ht05": null
     },
     {
-      "fecha": "2026-10-08",
+      "fecha": "2026-10-09",
       "fecha_partido": "2026-10-10",
       "liga": "Germany Bundesliga",
       "liga_confianza": null,
@@ -41519,7 +41369,7 @@
       "visitante": "Hamburger SV",
       "senal_btts_optimizada": "Evitar",
       "nivel_final": "JUGAR",
-      "motivo_btts": "stake9",
+      "motivo_btts": "perfil_defensa_doble_floja",
       "prob_btts": 0.6280876025565996,
       "prob_btts_calibrada": 0.5564619328885311,
       "btts_min_alto": null,
@@ -41647,7 +41497,7 @@
       "resultado_ht05": null
     },
     {
-      "fecha": "2026-10-08",
+      "fecha": "2026-10-09",
       "fecha_partido": "2026-10-10",
       "liga": "Germany Bundesliga",
       "liga_confianza": null,
@@ -41851,7 +41701,7 @@
       "resultado_ht05": null
     },
     {
-      "fecha": "2026-10-08",
+      "fecha": "2026-10-09",
       "fecha_partido": "2026-10-10",
       "liga": "Germany 2. Bundesliga",
       "liga_confianza": "baja",
@@ -41919,7 +41769,7 @@
       "resultado_ht05": null
     },
     {
-      "fecha": "2026-10-08",
+      "fecha": "2026-10-09",
       "fecha_partido": "2026-10-10",
       "liga": "Germany 2. Bundesliga",
       "liga_confianza": "baja",
@@ -42055,7 +41905,7 @@
       "resultado_ht05": true
     },
     {
-      "fecha": "2026-10-08",
+      "fecha": "2026-10-09",
       "fecha_partido": "2026-10-10",
       "liga": "Germany 2. Bundesliga",
       "liga_confianza": "baja",
@@ -42123,7 +41973,7 @@
       "resultado_ht05": null
     },
     {
-      "fecha": "2026-10-08",
+      "fecha": "2026-10-09",
       "fecha_partido": "2026-10-10",
       "liga": "Germany 2. Bundesliga",
       "liga_confianza": "baja",
@@ -42131,7 +41981,7 @@
       "visitante": "Hannoverscher Sportverein 1896",
       "senal_btts_optimizada": "Stake10",
       "nivel_final": "EVITAR",
-      "motivo_btts": "camino_normal_Stake10_sotmin_xga",
+      "motivo_btts": "stake11",
       "prob_btts": 0.6866539543775372,
       "prob_btts_calibrada": 0.5007457775469464,
       "btts_min_alto": null,
@@ -42199,7 +42049,7 @@
       "visitante": "SpVgg Greuther Fürth",
       "senal_btts_optimizada": "VIP+",
       "nivel_final": "JUGAR",
-      "motivo_btts": "VIP_reforzado",
+      "motivo_btts": "cumbre",
       "prob_btts": 0.7052731294547461,
       "prob_btts_calibrada": 0.6232377000159223,
       "btts_min_alto": null,
@@ -42395,7 +42245,7 @@
       "resultado_ht05": false
     },
     {
-      "fecha": "2026-10-08",
+      "fecha": "2026-10-09",
       "fecha_partido": "2026-10-10",
       "liga": "Portugal Liga NOS",
       "liga_confianza": null,
@@ -42463,7 +42313,7 @@
       "resultado_ht05": null
     },
     {
-      "fecha": "2026-10-08",
+      "fecha": "2026-10-09",
       "fecha_partido": "2026-10-10",
       "liga": "Portugal Liga NOS",
       "liga_confianza": null,
@@ -42531,7 +42381,7 @@
       "resultado_ht05": null
     },
     {
-      "fecha": "2026-10-08",
+      "fecha": "2026-10-09",
       "fecha_partido": "2026-10-10",
       "liga": "Portugal Liga NOS",
       "liga_confianza": null,
@@ -43211,7 +43061,7 @@
       "resultado_ht05": true
     },
     {
-      "fecha": "2026-10-08",
+      "fecha": "2026-10-09",
       "fecha_partido": "2026-10-10",
       "liga": "Wales Welsh Premier League",
       "liga_confianza": "baja",
@@ -43415,7 +43265,7 @@
       "resultado_ht05": true
     },
     {
-      "fecha": "2026-10-08",
+      "fecha": "2026-10-09",
       "fecha_partido": "2026-10-10",
       "liga": "Netherlands Tweede Divisie",
       "liga_confianza": null,
@@ -43483,7 +43333,7 @@
       "resultado_ht05": null
     },
     {
-      "fecha": "2026-10-08",
+      "fecha": "2026-10-09",
       "fecha_partido": "2026-10-10",
       "liga": "Netherlands Tweede Divisie",
       "liga_confianza": null,
@@ -43551,7 +43401,7 @@
       "resultado_ht05": null
     },
     {
-      "fecha": "2026-10-08",
+      "fecha": "2026-10-09",
       "fecha_partido": "2026-10-10",
       "liga": "Netherlands Tweede Divisie",
       "liga_confianza": null,
@@ -43619,7 +43469,7 @@
       "resultado_ht05": null
     },
     {
-      "fecha": "2026-10-08",
+      "fecha": "2026-10-09",
       "fecha_partido": "2026-10-10",
       "liga": "Netherlands Tweede Divisie",
       "liga_confianza": null,
@@ -43687,7 +43537,7 @@
       "resultado_ht05": null
     },
     {
-      "fecha": "2026-10-08",
+      "fecha": "2026-10-09",
       "fecha_partido": "2026-10-10",
       "liga": "Netherlands Tweede Divisie",
       "liga_confianza": null,
@@ -43695,7 +43545,7 @@
       "visitante": "Hoekse Sportvereniging Hoek",
       "senal_btts_optimizada": "Evitar",
       "nivel_final": "EVITAR",
-      "motivo_btts": "perfil_avg2h_o25btts",
+      "motivo_btts": "candado_sin_cuota",
       "prob_btts": 0.6848684487057493,
       "prob_btts_calibrada": 0.5781447812843994,
       "btts_min_alto": null,
@@ -43755,7 +43605,7 @@
       "resultado_ht05": null
     },
     {
-      "fecha": "2026-10-08",
+      "fecha": "2026-10-09",
       "fecha_partido": "2026-10-10",
       "liga": "Netherlands Tweede Divisie",
       "liga_confianza": null,
@@ -43823,7 +43673,7 @@
       "resultado_ht05": null
     },
     {
-      "fecha": "2026-10-08",
+      "fecha": "2026-10-09",
       "fecha_partido": "2026-10-10",
       "liga": "Netherlands Tweede Divisie",
       "liga_confianza": null,
@@ -43831,7 +43681,7 @@
       "visitante": "Rijnsburgse Boys",
       "senal_btts_optimizada": "Evitar",
       "nivel_final": "EVITAR",
-      "motivo_btts": "perfil_avg2h_o25btts",
+      "motivo_btts": "candado_sin_cuota",
       "prob_btts": 0.8008293699367616,
       "prob_btts_calibrada": 0.618040439839064,
       "btts_min_alto": null,
@@ -43891,7 +43741,7 @@
       "resultado_ht05": null
     },
     {
-      "fecha": "2026-10-08",
+      "fecha": "2026-10-09",
       "fecha_partido": "2026-10-10",
       "liga": "Netherlands Tweede Divisie",
       "liga_confianza": null,
@@ -43959,7 +43809,7 @@
       "resultado_ht05": null
     },
     {
-      "fecha": "2026-10-08",
+      "fecha": "2026-10-09",
       "fecha_partido": "2026-10-10",
       "liga": "Netherlands Tweede Divisie",
       "liga_confianza": null,
@@ -44027,7 +43877,7 @@
       "resultado_ht05": null
     },
     {
-      "fecha": "2026-10-08",
+      "fecha": "2026-10-09",
       "fecha_partido": "2026-10-10",
       "liga": "Czech Republic First League",
       "liga_confianza": null,
@@ -44095,7 +43945,7 @@
       "resultado_ht05": null
     },
     {
-      "fecha": "2026-10-08",
+      "fecha": "2026-10-09",
       "fecha_partido": "2026-10-10",
       "liga": "Romania Liga I",
       "liga_confianza": null,
@@ -44435,7 +44285,7 @@
       "resultado_ht05": null
     },
     {
-      "fecha": "2026-10-08",
+      "fecha": "2026-10-09",
       "fecha_partido": "2026-10-10",
       "liga": "Romania Liga I",
       "liga_confianza": null,
@@ -44503,75 +44353,7 @@
       "resultado_ht05": null
     },
     {
-      "fecha": "2026-10-08",
-      "fecha_partido": "2026-10-09",
-      "liga": "Mexico Ascenso MX",
-      "liga_confianza": null,
-      "local": "CD Tapatío",
-      "visitante": "Club Atlético La Paz",
-      "senal_btts_optimizada": "Evitar",
-      "nivel_final": "EVITAR",
-      "motivo_btts": "ninguno_evitar_final",
-      "prob_btts": 0.650933972762987,
-      "prob_btts_calibrada": 0.5592657095278474,
-      "btts_min_alto": null,
-      "cuota_btts": 1.4,
-      "cuota_btts_actual": 1.4,
-      "movimiento_btts_pp": null,
-      "resultado_btts": null,
-      "senal_o15_tier": "VIP",
-      "sug_o15": "JUGAR",
-      "motivo_o15": "o15_gf_o25btts_xgamax",
-      "prob_o15": 0.8822438968720516,
-      "cuota_o15": 1.13,
-      "cuota_o15_actual": 1.13,
-      "movimiento_o15_pp": 0.0,
-      "resultado_o15": null,
-      "senal_o25": "VIP",
-      "sug_o25": "EVITAR",
-      "motivo_o25": "camino_normal_o25",
-      "prob_o25": 0.7116957443785061,
-      "cuota_o25": 1.47,
-      "cuota_o25_actual": 1.47,
-      "movimiento_o25_pp": null,
-      "resultado_o25": null,
-      "senal_btts_o25": "VIP",
-      "motivo_combo": "combo_vip_plus",
-      "resultado_combo": null,
-      "vip_elite": null,
-      "oro": null,
-      "nivel_confianza": null,
-      "marcador_exacto_sugerido": "1-1",
-      "marcador_exacto_real": null,
-      "usa_temporada_anterior": false,
-      "usa_promedio_general": false,
-      "es_equipo_filial": false,
-      "senal_ht05_tier": "Fuerte",
-      "sug_ht05": "EVITAR",
-      "prob_over05_ht": 0.7274682069659874,
-      "prob_over15_ht": 0.3731768760217709,
-      "prob_over05_ht_v2": 0.7274682069659874,
-      "prob_over15_ht_v2": 0.3731768760217709,
-      "prob_combo_v2": null,
-      "prob_combo_calibrada": 0.4743799433286925,
-      "prob_o15_calibrada": 0.8188734166163009,
-      "prob_o25_calibrada": 0.621756861682556,
-      "prob_over05_ht_calibrada": 0.6546123033690857,
-      "mejor_casa_btts": null,
-      "mejor_cuota_btts": null,
-      "mejora_btts_pct": null,
-      "mejor_casa_o25": null,
-      "mejor_cuota_o25": null,
-      "mejora_o25_pct": null,
-      "cuota_ht_over05": 1.22,
-      "cuota_ht_over15": 2.1,
-      "resultado_over15_ht": null,
-      "cuota_ht_over05_actual": 1.22,
-      "movimiento_ht05_pp": null,
-      "resultado_ht05": null
-    },
-    {
-      "fecha": "2026-10-08",
+      "fecha": "2026-10-09",
       "fecha_partido": "2026-10-10",
       "liga": "Mexico Ascenso MX",
       "liga_confianza": null,
@@ -44639,7 +44421,7 @@
       "resultado_ht05": null
     },
     {
-      "fecha": "2026-10-08",
+      "fecha": "2026-10-09",
       "fecha_partido": "2026-10-10",
       "liga": "Mexico Ascenso MX",
       "liga_confianza": null,
@@ -44707,7 +44489,7 @@
       "resultado_ht05": null
     },
     {
-      "fecha": "2026-10-08",
+      "fecha": "2026-10-09",
       "fecha_partido": "2026-10-10",
       "liga": "Mexico Ascenso MX",
       "liga_confianza": null,
@@ -44775,7 +44557,7 @@
       "resultado_ht05": null
     },
     {
-      "fecha": "2026-10-08",
+      "fecha": "2026-10-09",
       "fecha_partido": "2026-10-09",
       "liga": "Mexico Ascenso MX",
       "liga_confianza": null,
@@ -44843,7 +44625,7 @@
       "resultado_ht05": null
     },
     {
-      "fecha": "2026-10-08",
+      "fecha": "2026-10-09",
       "fecha_partido": "2026-10-10",
       "liga": "Mexico Ascenso MX",
       "liga_confianza": null,
@@ -44911,7 +44693,7 @@
       "resultado_ht05": null
     },
     {
-      "fecha": "2026-10-08",
+      "fecha": "2026-10-09",
       "fecha_partido": "2026-10-10",
       "liga": "Mexico Ascenso MX",
       "liga_confianza": null,
@@ -45047,7 +44829,7 @@
       "resultado_ht05": null
     },
     {
-      "fecha": "2026-10-08",
+      "fecha": "2026-10-09",
       "fecha_partido": "2026-10-10",
       "liga": "Paraguay Division Profesional",
       "liga_confianza": null,
@@ -45115,7 +44897,7 @@
       "resultado_ht05": null
     },
     {
-      "fecha": "2026-10-08",
+      "fecha": "2026-10-09",
       "fecha_partido": "2026-10-10",
       "liga": "Paraguay Division Profesional",
       "liga_confianza": null,
@@ -45251,7 +45033,7 @@
       "resultado_ht05": null
     },
     {
-      "fecha": "2026-10-08",
+      "fecha": "2026-10-09",
       "fecha_partido": "2026-10-10",
       "liga": "England National League North",
       "liga_confianza": null,
@@ -45319,7 +45101,7 @@
       "resultado_ht05": null
     },
     {
-      "fecha": "2026-10-08",
+      "fecha": "2026-10-09",
       "fecha_partido": "2026-10-10",
       "liga": "England National League North",
       "liga_confianza": null,
@@ -45387,7 +45169,7 @@
       "resultado_ht05": null
     },
     {
-      "fecha": "2026-10-08",
+      "fecha": "2026-10-09",
       "fecha_partido": "2026-10-10",
       "liga": "England National League North",
       "liga_confianza": null,
@@ -45455,7 +45237,7 @@
       "resultado_ht05": null
     },
     {
-      "fecha": "2026-10-08",
+      "fecha": "2026-10-09",
       "fecha_partido": "2026-10-10",
       "liga": "England National League North",
       "liga_confianza": null,
@@ -45523,7 +45305,7 @@
       "resultado_ht05": null
     },
     {
-      "fecha": "2026-10-08",
+      "fecha": "2026-10-09",
       "fecha_partido": "2026-10-10",
       "liga": "England National League North",
       "liga_confianza": null,
@@ -45591,7 +45373,7 @@
       "resultado_ht05": null
     },
     {
-      "fecha": "2026-10-08",
+      "fecha": "2026-10-09",
       "fecha_partido": "2026-10-10",
       "liga": "England National League North",
       "liga_confianza": null,
@@ -45659,7 +45441,7 @@
       "resultado_ht05": null
     },
     {
-      "fecha": "2026-10-08",
+      "fecha": "2026-10-09",
       "fecha_partido": "2026-10-10",
       "liga": "England National League North",
       "liga_confianza": null,
@@ -45727,7 +45509,7 @@
       "resultado_ht05": null
     },
     {
-      "fecha": "2026-10-08",
+      "fecha": "2026-10-09",
       "fecha_partido": "2026-10-10",
       "liga": "England National League North",
       "liga_confianza": null,
@@ -45795,7 +45577,7 @@
       "resultado_ht05": null
     },
     {
-      "fecha": "2026-10-08",
+      "fecha": "2026-10-09",
       "fecha_partido": "2026-10-10",
       "liga": "England National League North",
       "liga_confianza": null,
@@ -45863,7 +45645,7 @@
       "resultado_ht05": null
     },
     {
-      "fecha": "2026-10-08",
+      "fecha": "2026-10-09",
       "fecha_partido": "2026-10-10",
       "liga": "England National League North",
       "liga_confianza": null,
@@ -45931,7 +45713,7 @@
       "resultado_ht05": null
     },
     {
-      "fecha": "2026-10-08",
+      "fecha": "2026-10-09",
       "fecha_partido": "2026-10-10",
       "liga": "England National League North",
       "liga_confianza": null,
@@ -45999,7 +45781,7 @@
       "resultado_ht05": null
     },
     {
-      "fecha": "2026-10-08",
+      "fecha": "2026-10-09",
       "fecha_partido": "2026-10-10",
       "liga": "England National League North",
       "liga_confianza": null,
@@ -46203,7 +45985,7 @@
       "resultado_ht05": null
     },
     {
-      "fecha": "2026-10-08",
+      "fecha": "2026-10-09",
       "fecha_partido": "2026-10-10",
       "liga": "Turkey Süper Lig",
       "liga_confianza": null,
@@ -46271,7 +46053,7 @@
       "resultado_ht05": null
     },
     {
-      "fecha": "2026-10-08",
+      "fecha": "2026-10-09",
       "fecha_partido": "2026-10-10",
       "liga": "Turkey Süper Lig",
       "liga_confianza": null,
@@ -46339,7 +46121,7 @@
       "resultado_ht05": null
     },
     {
-      "fecha": "2026-10-08",
+      "fecha": "2026-10-09",
       "fecha_partido": "2026-10-10",
       "liga": "Turkey Süper Lig",
       "liga_confianza": null,
@@ -46407,7 +46189,7 @@
       "resultado_ht05": null
     },
     {
-      "fecha": "2026-10-08",
+      "fecha": "2026-10-09",
       "fecha_partido": "2026-10-10",
       "liga": "Turkey Süper Lig",
       "liga_confianza": null,
@@ -46679,7 +46461,7 @@
       "resultado_ht05": null
     },
     {
-      "fecha": "2026-10-08",
+      "fecha": "2026-10-09",
       "fecha_partido": "2026-10-10",
       "liga": "Germany 3. Liga",
       "liga_confianza": "baja",
@@ -46747,7 +46529,7 @@
       "resultado_ht05": null
     },
     {
-      "fecha": "2026-10-08",
+      "fecha": "2026-10-09",
       "fecha_partido": "2026-10-10",
       "liga": "Germany 3. Liga",
       "liga_confianza": "baja",
@@ -47019,7 +46801,7 @@
       "resultado_ht05": null
     },
     {
-      "fecha": "2026-10-08",
+      "fecha": "2026-10-09",
       "fecha_partido": "2026-10-10",
       "liga": "Germany 3. Liga",
       "liga_confianza": "baja",
@@ -47087,21 +46869,21 @@
       "resultado_ht05": null
     },
     {
-      "fecha": "2026-10-08",
+      "fecha": "2026-10-09",
       "fecha_partido": "2026-10-10",
       "liga": "Germany 3. Liga",
       "liga_confianza": "baja",
       "local": "FC Würzburger Kickers",
       "visitante": "FC Hansa Rostock",
       "senal_btts_optimizada": "Evitar",
-      "nivel_final": "EVITAR",
-      "motivo_btts": "centinela_failed_bajo",
+      "nivel_final": "JUGAR",
+      "motivo_btts": "granate",
       "prob_btts": 0.6471997526212558,
       "prob_btts_calibrada": 0.5786724503259234,
       "btts_min_alto": null,
       "cuota_btts": 1.53,
       "cuota_btts_actual": 1.53,
-      "movimiento_btts_pp": null,
+      "movimiento_btts_pp": 0.0,
       "resultado_btts": null,
       "senal_o15_tier": "VIP",
       "sug_o15": "JUGAR",
@@ -47155,7 +46937,7 @@
       "resultado_ht05": null
     },
     {
-      "fecha": "2026-10-08",
+      "fecha": "2026-10-09",
       "fecha_partido": "2026-10-10",
       "liga": "Germany 3. Liga",
       "liga_confianza": "baja",
@@ -47223,7 +47005,7 @@
       "resultado_ht05": null
     },
     {
-      "fecha": "2026-10-08",
+      "fecha": "2026-10-09",
       "fecha_partido": "2026-10-10",
       "liga": "Germany 3. Liga",
       "liga_confianza": "baja",
@@ -47291,7 +47073,7 @@
       "resultado_ht05": null
     },
     {
-      "fecha": "2026-10-08",
+      "fecha": "2026-10-09",
       "fecha_partido": "2026-10-10",
       "liga": "Spain Segunda División",
       "liga_confianza": null,
@@ -47427,7 +47209,7 @@
       "resultado_ht05": null
     },
     {
-      "fecha": "2026-10-08",
+      "fecha": "2026-10-09",
       "fecha_partido": "2026-10-10",
       "liga": "Spain Segunda División",
       "liga_confianza": null,
@@ -47495,7 +47277,7 @@
       "resultado_ht05": null
     },
     {
-      "fecha": "2026-10-08",
+      "fecha": "2026-10-09",
       "fecha_partido": "2026-10-10",
       "liga": "Spain Segunda División",
       "liga_confianza": null,
@@ -47767,7 +47549,7 @@
       "resultado_ht05": null
     },
     {
-      "fecha": "2026-10-08",
+      "fecha": "2026-10-09",
       "fecha_partido": "2026-10-10",
       "liga": "England National League",
       "liga_confianza": null,
@@ -47835,7 +47617,7 @@
       "resultado_ht05": null
     },
     {
-      "fecha": "2026-10-08",
+      "fecha": "2026-10-09",
       "fecha_partido": "2026-10-10",
       "liga": "England National League",
       "liga_confianza": null,
@@ -47971,7 +47753,7 @@
       "resultado_ht05": false
     },
     {
-      "fecha": "2026-10-08",
+      "fecha": "2026-10-09",
       "fecha_partido": "2026-10-10",
       "liga": "England National League",
       "liga_confianza": null,
@@ -48039,7 +47821,7 @@
       "resultado_ht05": null
     },
     {
-      "fecha": "2026-10-08",
+      "fecha": "2026-10-09",
       "fecha_partido": "2026-10-10",
       "liga": "England National League",
       "liga_confianza": null,
@@ -48107,7 +47889,7 @@
       "resultado_ht05": null
     },
     {
-      "fecha": "2026-10-08",
+      "fecha": "2026-10-09",
       "fecha_partido": "2026-10-10",
       "liga": "England National League",
       "liga_confianza": null,
@@ -48175,7 +47957,7 @@
       "resultado_ht05": null
     },
     {
-      "fecha": "2026-10-08",
+      "fecha": "2026-10-09",
       "fecha_partido": "2026-10-10",
       "liga": "England National League",
       "liga_confianza": null,
@@ -48243,7 +48025,7 @@
       "resultado_ht05": null
     },
     {
-      "fecha": "2026-10-08",
+      "fecha": "2026-10-09",
       "fecha_partido": "2026-10-10",
       "liga": "England National League",
       "liga_confianza": null,
@@ -48311,7 +48093,7 @@
       "resultado_ht05": null
     },
     {
-      "fecha": "2026-10-08",
+      "fecha": "2026-10-09",
       "fecha_partido": "2026-10-10",
       "liga": "England National League",
       "liga_confianza": null,
@@ -48379,7 +48161,7 @@
       "resultado_ht05": null
     },
     {
-      "fecha": "2026-10-08",
+      "fecha": "2026-10-09",
       "fecha_partido": "2026-10-10",
       "liga": "England National League",
       "liga_confianza": null,
@@ -48447,7 +48229,7 @@
       "resultado_ht05": null
     },
     {
-      "fecha": "2026-10-08",
+      "fecha": "2026-10-09",
       "fecha_partido": "2026-10-10",
       "liga": "England National League",
       "liga_confianza": null,
@@ -48455,7 +48237,7 @@
       "visitante": "Solihull Moors FC",
       "senal_btts_optimizada": "VIP+",
       "nivel_final": "JUGAR",
-      "motivo_btts": "VIP_reforzado",
+      "motivo_btts": "cumbre",
       "prob_btts": 0.6710079822708657,
       "prob_btts_calibrada": 0.5481262984053318,
       "btts_min_alto": null,
@@ -48515,7 +48297,7 @@
       "resultado_ht05": null
     },
     {
-      "fecha": "2026-10-08",
+      "fecha": "2026-10-09",
       "fecha_partido": "2026-10-10",
       "liga": "England National League",
       "liga_confianza": null,
@@ -48583,7 +48365,7 @@
       "resultado_ht05": null
     },
     {
-      "fecha": "2026-10-08",
+      "fecha": "2026-10-09",
       "fecha_partido": "2026-10-10",
       "liga": "Germany Regionalliga Nord",
       "liga_confianza": null,
@@ -48651,7 +48433,7 @@
       "resultado_ht05": null
     },
     {
-      "fecha": "2026-10-08",
+      "fecha": "2026-10-09",
       "fecha_partido": "2026-10-10",
       "liga": "Germany Regionalliga Nord",
       "liga_confianza": null,
@@ -49195,7 +48977,7 @@
       "resultado_ht05": null
     },
     {
-      "fecha": "2026-10-08",
+      "fecha": "2026-10-09",
       "fecha_partido": "2026-10-10",
       "liga": "Germany Regionalliga West",
       "liga_confianza": null,
@@ -49263,7 +49045,7 @@
       "resultado_ht05": null
     },
     {
-      "fecha": "2026-10-08",
+      "fecha": "2026-10-09",
       "fecha_partido": "2026-10-10",
       "liga": "Germany Regionalliga West",
       "liga_confianza": null,
@@ -49331,7 +49113,7 @@
       "resultado_ht05": null
     },
     {
-      "fecha": "2026-10-08",
+      "fecha": "2026-10-09",
       "fecha_partido": "2026-10-10",
       "liga": "Germany Regionalliga West",
       "liga_confianza": null,
@@ -49467,7 +49249,7 @@
       "resultado_ht05": null
     },
     {
-      "fecha": "2026-10-08",
+      "fecha": "2026-10-09",
       "fecha_partido": "2026-10-10",
       "liga": "Germany Regionalliga West",
       "liga_confianza": null,
@@ -49543,7 +49325,7 @@
       "visitante": "SV Rödinghausen",
       "senal_btts_optimizada": "Evitar",
       "nivel_final": "EVITAR",
-      "motivo_btts": "perfil_avg2h_o25btts",
+      "motivo_btts": "candado_sin_cuota",
       "prob_btts": 0.2496607234117882,
       "prob_btts_calibrada": 0.5613584074875714,
       "btts_min_alto": null,
@@ -49603,7 +49385,7 @@
       "resultado_ht05": null
     },
     {
-      "fecha": "2026-10-08",
+      "fecha": "2026-10-09",
       "fecha_partido": "2026-10-10",
       "liga": "Germany Regionalliga West",
       "liga_confianza": null,
@@ -49671,7 +49453,7 @@
       "resultado_ht05": null
     },
     {
-      "fecha": "2026-10-08",
+      "fecha": "2026-10-09",
       "fecha_partido": "2026-10-10",
       "liga": "Germany Regionalliga West",
       "liga_confianza": null,
@@ -49807,7 +49589,7 @@
       "resultado_ht05": true
     },
     {
-      "fecha": "2026-10-08",
+      "fecha": "2026-10-09",
       "fecha_partido": "2026-10-10",
       "liga": "Denmark 1st Division",
       "liga_confianza": null,
@@ -49943,7 +49725,7 @@
       "resultado_ht05": true
     },
     {
-      "fecha": "2026-10-08",
+      "fecha": "2026-10-09",
       "fecha_partido": "2026-10-10",
       "liga": "Denmark 1st Division",
       "liga_confianza": null,
@@ -50079,7 +49861,7 @@
       "resultado_ht05": null
     },
     {
-      "fecha": "2026-10-08",
+      "fecha": "2026-10-09",
       "fecha_partido": "2026-10-10",
       "liga": "Denmark 1st Division",
       "liga_confianza": null,
@@ -50283,7 +50065,7 @@
       "resultado_ht05": true
     },
     {
-      "fecha": "2026-10-08",
+      "fecha": "2026-10-09",
       "fecha_partido": "2026-10-10",
       "liga": "Poland 1. Liga",
       "liga_confianza": "alta",
@@ -50419,7 +50201,7 @@
       "resultado_ht05": null
     },
     {
-      "fecha": "2026-10-08",
+      "fecha": "2026-10-09",
       "fecha_partido": "2026-10-10",
       "liga": "Poland 1. Liga",
       "liga_confianza": "alta",
@@ -50555,7 +50337,7 @@
       "resultado_ht05": null
     },
     {
-      "fecha": "2026-10-08",
+      "fecha": "2026-10-09",
       "fecha_partido": "2026-10-10",
       "liga": "Poland 1. Liga",
       "liga_confianza": "alta",
@@ -50827,7 +50609,7 @@
       "resultado_ht05": null
     },
     {
-      "fecha": "2026-10-08",
+      "fecha": "2026-10-09",
       "fecha_partido": "2026-10-10",
       "liga": "Poland 2. Liga",
       "liga_confianza": null,
@@ -51031,7 +50813,7 @@
       "resultado_ht05": true
     },
     {
-      "fecha": "2026-10-08",
+      "fecha": "2026-10-09",
       "fecha_partido": "2026-10-10",
       "liga": "Poland 2. Liga",
       "liga_confianza": null,
@@ -51099,7 +50881,7 @@
       "resultado_ht05": null
     },
     {
-      "fecha": "2026-10-08",
+      "fecha": "2026-10-09",
       "fecha_partido": "2026-10-10",
       "liga": "Denmark 2nd Division",
       "liga_confianza": null,
@@ -51167,7 +50949,7 @@
       "resultado_ht05": null
     },
     {
-      "fecha": "2026-10-08",
+      "fecha": "2026-10-09",
       "fecha_partido": "2026-10-10",
       "liga": "Poland 2. Liga",
       "liga_confianza": null,
@@ -51235,7 +51017,7 @@
       "resultado_ht05": null
     },
     {
-      "fecha": "2026-10-08",
+      "fecha": "2026-10-09",
       "fecha_partido": "2026-10-10",
       "liga": "Denmark 2nd Division",
       "liga_confianza": null,
@@ -51303,7 +51085,7 @@
       "resultado_ht05": null
     },
     {
-      "fecha": "2026-10-08",
+      "fecha": "2026-10-09",
       "fecha_partido": "2026-10-10",
       "liga": "Denmark 2nd Division",
       "liga_confianza": null,
@@ -51371,7 +51153,7 @@
       "resultado_ht05": null
     },
     {
-      "fecha": "2026-10-08",
+      "fecha": "2026-10-09",
       "fecha_partido": "2026-10-10",
       "liga": "Denmark 2nd Division",
       "liga_confianza": null,
@@ -51575,21 +51357,21 @@
       "resultado_ht05": null
     },
     {
-      "fecha": "2026-10-08",
+      "fecha": "2026-10-09",
       "fecha_partido": "2026-10-10",
       "liga": "Denmark 2nd Division",
       "liga_confianza": null,
       "local": "Hellerup IK",
       "visitante": "Thisted FC",
       "senal_btts_optimizada": "Evitar",
-      "nivel_final": "EVITAR",
-      "motivo_btts": "perfil_avg2h_o25btts",
+      "nivel_final": "JUGAR",
+      "motivo_btts": "avg2h_parejo_15",
       "prob_btts": 0.6243564161039667,
       "prob_btts_calibrada": 0.5732654491648538,
       "btts_min_alto": null,
       "cuota_btts": 1.65,
       "cuota_btts_actual": 1.65,
-      "movimiento_btts_pp": null,
+      "movimiento_btts_pp": 0.0,
       "resultado_btts": null,
       "senal_o15_tier": "VIP",
       "sug_o15": "EVITAR",
@@ -51643,7 +51425,7 @@
       "resultado_ht05": null
     },
     {
-      "fecha": "2026-10-08",
+      "fecha": "2026-10-09",
       "fecha_partido": "2026-10-10",
       "liga": "Denmark 3. Division",
       "liga_confianza": null,
@@ -51779,7 +51561,7 @@
       "resultado_ht05": true
     },
     {
-      "fecha": "2026-10-08",
+      "fecha": "2026-10-09",
       "fecha_partido": "2026-10-10",
       "liga": "Denmark 3. Division",
       "liga_confianza": null,
@@ -51847,7 +51629,7 @@
       "resultado_ht05": null
     },
     {
-      "fecha": "2026-10-08",
+      "fecha": "2026-10-09",
       "fecha_partido": "2026-10-10",
       "liga": "Denmark 3. Division",
       "liga_confianza": null,
@@ -51915,7 +51697,7 @@
       "resultado_ht05": null
     },
     {
-      "fecha": "2026-10-08",
+      "fecha": "2026-10-09",
       "fecha_partido": "2026-10-10",
       "liga": "Denmark 3. Division",
       "liga_confianza": null,
@@ -51923,7 +51705,7 @@
       "visitante": "Hørsholm-Usserød IK",
       "senal_btts_optimizada": "Stake10",
       "nivel_final": "EVITAR",
-      "motivo_btts": "camino_normal_Stake10_sotmin_xga",
+      "motivo_btts": "stake11",
       "prob_btts": 0.7108120412683686,
       "prob_btts_calibrada": 0.5766581722552452,
       "btts_min_alto": null,
@@ -51983,21 +51765,21 @@
       "resultado_ht05": null
     },
     {
-      "fecha": "2026-10-08",
+      "fecha": "2026-10-09",
       "fecha_partido": "2026-10-10",
       "liga": "Denmark 3. Division",
       "liga_confianza": null,
       "local": "Vanløse IF",
       "visitante": "Holbaek Bold Idraetsforening",
       "senal_btts_optimizada": "Fuerte",
-      "nivel_final": "EVITAR",
-      "motivo_btts": "centinela_failed_bajo",
+      "nivel_final": "JUGAR",
+      "motivo_btts": "diamante_elite",
       "prob_btts": 0.5847626359176776,
       "prob_btts_calibrada": 0.5331594355456725,
       "btts_min_alto": null,
       "cuota_btts": 1.5,
       "cuota_btts_actual": 1.5,
-      "movimiento_btts_pp": null,
+      "movimiento_btts_pp": 0.0,
       "resultado_btts": null,
       "senal_o15_tier": "VIP",
       "sug_o15": "JUGAR",
@@ -52187,7 +51969,7 @@
       "resultado_ht05": null
     },
     {
-      "fecha": "2026-10-08",
+      "fecha": "2026-10-09",
       "fecha_partido": "2026-10-10",
       "liga": "Greece Super League",
       "liga_confianza": null,
@@ -52323,7 +52105,7 @@
       "resultado_ht05": null
     },
     {
-      "fecha": "2026-10-08",
+      "fecha": "2026-10-09",
       "fecha_partido": "2026-10-10",
       "liga": "Greece Super League",
       "liga_confianza": null,
@@ -52527,7 +52309,7 @@
       "resultado_ht05": null
     },
     {
-      "fecha": "2026-10-08",
+      "fecha": "2026-10-09",
       "fecha_partido": "2026-10-10",
       "liga": "Qatar Stars League",
       "liga_confianza": null,
@@ -52595,7 +52377,7 @@
       "resultado_ht05": null
     },
     {
-      "fecha": "2026-10-08",
+      "fecha": "2026-10-09",
       "fecha_partido": "2026-10-10",
       "liga": "Qatar Stars League",
       "liga_confianza": null,
@@ -52935,75 +52717,7 @@
       "resultado_ht05": null
     },
     {
-      "fecha": "2026-10-08",
-      "fecha_partido": "2026-10-09",
-      "liga": "El Salvador Salvadoran Primera División",
-      "liga_confianza": null,
-      "local": "INCA-Aruba",
-      "visitante": "CD Platense Municipal Zacatecoluca",
-      "senal_btts_optimizada": "Evitar",
-      "nivel_final": "EVITAR",
-      "motivo_btts": "ninguno_evitar_final",
-      "prob_btts": 0.6316561322595898,
-      "prob_btts_calibrada": 0.5042696743132328,
-      "btts_min_alto": null,
-      "cuota_btts": 0.0,
-      "cuota_btts_actual": 0.0,
-      "movimiento_btts_pp": null,
-      "resultado_btts": null,
-      "senal_o15_tier": "VIP",
-      "sug_o15": "EVITAR",
-      "motivo_o15": "ninguno_evitar_o15",
-      "prob_o15": 0.7999612630235946,
-      "cuota_o15": 0.0,
-      "cuota_o15_actual": 0.0,
-      "movimiento_o15_pp": null,
-      "resultado_o15": null,
-      "senal_o25": "Evitar",
-      "sug_o25": "EVITAR",
-      "motivo_o25": "ninguno_evitar_o25",
-      "prob_o25": 0.5754755490554448,
-      "cuota_o25": 2.25,
-      "cuota_o25_actual": 2.25,
-      "movimiento_o25_pp": null,
-      "resultado_o25": null,
-      "senal_btts_o25": "—",
-      "motivo_combo": "ninguno_evitar_combo",
-      "resultado_combo": null,
-      "vip_elite": null,
-      "oro": null,
-      "nivel_confianza": null,
-      "marcador_exacto_sugerido": "1-1",
-      "marcador_exacto_real": null,
-      "usa_temporada_anterior": false,
-      "usa_promedio_general": false,
-      "es_equipo_filial": false,
-      "senal_ht05_tier": "Fuerte",
-      "sug_ht05": "EVITAR",
-      "prob_over05_ht": 0.7134952031398099,
-      "prob_over15_ht": 0.3553642070645723,
-      "prob_over05_ht_v2": 0.7134952031398099,
-      "prob_over15_ht_v2": 0.3553642070645723,
-      "prob_combo_v2": null,
-      "prob_combo_calibrada": 0.4226336504160047,
-      "prob_o15_calibrada": 0.7071191295440233,
-      "prob_o25_calibrada": 0.4665222764308669,
-      "prob_over05_ht_calibrada": 0.6960369780669308,
-      "mejor_casa_btts": null,
-      "mejor_cuota_btts": null,
-      "mejora_btts_pct": null,
-      "mejor_casa_o25": null,
-      "mejor_cuota_o25": null,
-      "mejora_o25_pct": null,
-      "cuota_ht_over05": 0.0,
-      "cuota_ht_over15": 0.0,
-      "resultado_over15_ht": null,
-      "cuota_ht_over05_actual": 0.0,
-      "movimiento_ht05_pp": null,
-      "resultado_ht05": null
-    },
-    {
-      "fecha": "2026-10-08",
+      "fecha": "2026-10-09",
       "fecha_partido": "2026-10-10",
       "liga": "El Salvador Salvadoran Primera División",
       "liga_confianza": null,
@@ -53139,7 +52853,7 @@
       "resultado_ht05": null
     },
     {
-      "fecha": "2026-10-08",
+      "fecha": "2026-10-09",
       "fecha_partido": "2026-10-10",
       "liga": "El Salvador Salvadoran Primera División",
       "liga_confianza": null,
@@ -53615,7 +53329,7 @@
       "resultado_ht05": true
     },
     {
-      "fecha": "2026-10-08",
+      "fecha": "2026-10-09",
       "fecha_partido": "2026-10-10",
       "liga": "England Northern Premier League",
       "liga_confianza": null,
@@ -53683,7 +53397,7 @@
       "resultado_ht05": null
     },
     {
-      "fecha": "2026-10-08",
+      "fecha": "2026-10-09",
       "fecha_partido": "2026-10-10",
       "liga": "England Northern Premier League",
       "liga_confianza": null,
@@ -53751,7 +53465,7 @@
       "resultado_ht05": null
     },
     {
-      "fecha": "2026-10-08",
+      "fecha": "2026-10-09",
       "fecha_partido": "2026-10-10",
       "liga": "England Northern Premier League",
       "liga_confianza": null,
@@ -53819,21 +53533,21 @@
       "resultado_ht05": null
     },
     {
-      "fecha": "2026-10-08",
+      "fecha": "2026-10-09",
       "fecha_partido": "2026-10-10",
       "liga": "England Northern Premier League",
       "liga_confianza": null,
       "local": "Avro FC",
       "visitante": "Guiseley AFC",
       "senal_btts_optimizada": "Evitar",
-      "nivel_final": "EVITAR",
-      "motivo_btts": "centinela_failed_bajo",
+      "nivel_final": "JUGAR",
+      "motivo_btts": "rescate_ataque_balanceado_alta_failed_bajo",
       "prob_btts": 0.657199673711371,
       "prob_btts_calibrada": 0.6350374232189036,
       "btts_min_alto": null,
       "cuota_btts": 1.56,
       "cuota_btts_actual": 1.56,
-      "movimiento_btts_pp": null,
+      "movimiento_btts_pp": 0.0,
       "resultado_btts": null,
       "senal_o15_tier": "VIP",
       "sug_o15": "JUGAR",
@@ -53887,7 +53601,7 @@
       "resultado_ht05": null
     },
     {
-      "fecha": "2026-10-08",
+      "fecha": "2026-10-09",
       "fecha_partido": "2026-10-10",
       "liga": "England Northern Premier League",
       "liga_confianza": null,
@@ -53895,7 +53609,7 @@
       "visitante": "Workington AFC",
       "senal_btts_optimizada": "Stake10",
       "nivel_final": "EVITAR",
-      "motivo_btts": "camino_normal_Stake10_sotmin_xga",
+      "motivo_btts": "stake11",
       "prob_btts": 0.735114199168534,
       "prob_btts_calibrada": 0.5909816149762104,
       "btts_min_alto": null,
@@ -53955,7 +53669,7 @@
       "resultado_ht05": null
     },
     {
-      "fecha": "2026-10-08",
+      "fecha": "2026-10-09",
       "fecha_partido": "2026-10-10",
       "liga": "England Northern Premier League",
       "liga_confianza": null,
@@ -54023,7 +53737,7 @@
       "resultado_ht05": null
     },
     {
-      "fecha": "2026-10-08",
+      "fecha": "2026-10-09",
       "fecha_partido": "2026-10-10",
       "liga": "England Northern Premier League",
       "liga_confianza": null,
@@ -54091,7 +53805,7 @@
       "resultado_ht05": null
     },
     {
-      "fecha": "2026-10-08",
+      "fecha": "2026-10-09",
       "fecha_partido": "2026-10-10",
       "liga": "England Northern Premier League",
       "liga_confianza": null,
@@ -54159,7 +53873,7 @@
       "resultado_ht05": null
     },
     {
-      "fecha": "2026-10-08",
+      "fecha": "2026-10-09",
       "fecha_partido": "2026-10-10",
       "liga": "England Northern Premier League",
       "liga_confianza": null,
@@ -54227,7 +53941,7 @@
       "resultado_ht05": null
     },
     {
-      "fecha": "2026-10-08",
+      "fecha": "2026-10-09",
       "fecha_partido": "2026-10-10",
       "liga": "England Northern Premier League",
       "liga_confianza": null,
@@ -54295,7 +54009,7 @@
       "resultado_ht05": null
     },
     {
-      "fecha": "2026-10-08",
+      "fecha": "2026-10-09",
       "fecha_partido": "2026-10-10",
       "liga": "England Northern Premier League",
       "liga_confianza": null,
@@ -54363,7 +54077,7 @@
       "resultado_ht05": null
     },
     {
-      "fecha": "2026-10-08",
+      "fecha": "2026-10-09",
       "fecha_partido": "2026-10-10",
       "liga": "England Isthmian Premier Division",
       "liga_confianza": null,
@@ -54431,7 +54145,7 @@
       "resultado_ht05": null
     },
     {
-      "fecha": "2026-10-08",
+      "fecha": "2026-10-09",
       "fecha_partido": "2026-10-10",
       "liga": "England Isthmian Premier Division",
       "liga_confianza": null,
@@ -54499,7 +54213,7 @@
       "resultado_ht05": null
     },
     {
-      "fecha": "2026-10-08",
+      "fecha": "2026-10-09",
       "fecha_partido": "2026-10-10",
       "liga": "England Isthmian Premier Division",
       "liga_confianza": null,
@@ -54567,7 +54281,7 @@
       "resultado_ht05": null
     },
     {
-      "fecha": "2026-10-08",
+      "fecha": "2026-10-09",
       "fecha_partido": "2026-10-10",
       "liga": "England Isthmian Premier Division",
       "liga_confianza": null,
@@ -54635,7 +54349,7 @@
       "resultado_ht05": null
     },
     {
-      "fecha": "2026-10-08",
+      "fecha": "2026-10-09",
       "fecha_partido": "2026-10-10",
       "liga": "England Isthmian Premier Division",
       "liga_confianza": null,
@@ -54643,7 +54357,7 @@
       "visitante": "Brentwood Town FC",
       "senal_btts_optimizada": "Evitar",
       "nivel_final": "EVITAR",
-      "motivo_btts": "rescate_xg_alto_btts_historico_alto",
+      "motivo_btts": "salvacion_cuota_corta",
       "prob_btts": 0.6578080572058206,
       "prob_btts_calibrada": 0.6021471200653636,
       "btts_min_alto": null,
@@ -54703,7 +54417,7 @@
       "resultado_ht05": null
     },
     {
-      "fecha": "2026-10-08",
+      "fecha": "2026-10-09",
       "fecha_partido": "2026-10-10",
       "liga": "England Isthmian Premier Division",
       "liga_confianza": null,
@@ -54771,7 +54485,7 @@
       "resultado_ht05": null
     },
     {
-      "fecha": "2026-10-08",
+      "fecha": "2026-10-09",
       "fecha_partido": "2026-10-10",
       "liga": "England Isthmian Premier Division",
       "liga_confianza": null,
@@ -54839,7 +54553,7 @@
       "resultado_ht05": null
     },
     {
-      "fecha": "2026-10-08",
+      "fecha": "2026-10-09",
       "fecha_partido": "2026-10-10",
       "liga": "England Isthmian Premier Division",
       "liga_confianza": null,
@@ -54907,7 +54621,7 @@
       "resultado_ht05": null
     },
     {
-      "fecha": "2026-10-08",
+      "fecha": "2026-10-09",
       "fecha_partido": "2026-10-10",
       "liga": "England Isthmian Premier Division",
       "liga_confianza": null,
@@ -54975,7 +54689,7 @@
       "resultado_ht05": null
     },
     {
-      "fecha": "2026-10-08",
+      "fecha": "2026-10-09",
       "fecha_partido": "2026-10-10",
       "liga": "England Isthmian Premier Division",
       "liga_confianza": null,
@@ -55043,7 +54757,7 @@
       "resultado_ht05": null
     },
     {
-      "fecha": "2026-10-08",
+      "fecha": "2026-10-09",
       "fecha_partido": "2026-10-10",
       "liga": "England Isthmian Premier Division",
       "liga_confianza": null,
@@ -55111,7 +54825,7 @@
       "resultado_ht05": null
     },
     {
-      "fecha": "2026-10-08",
+      "fecha": "2026-10-09",
       "fecha_partido": "2026-10-10",
       "liga": "Romania Liga II",
       "liga_confianza": null,
@@ -55179,7 +54893,7 @@
       "resultado_ht05": null
     },
     {
-      "fecha": "2026-10-08",
+      "fecha": "2026-10-09",
       "fecha_partido": "2026-10-10",
       "liga": "Romania Liga II",
       "liga_confianza": null,
@@ -55247,7 +54961,7 @@
       "resultado_ht05": null
     },
     {
-      "fecha": "2026-10-08",
+      "fecha": "2026-10-09",
       "fecha_partido": "2026-10-10",
       "liga": "Romania Liga II",
       "liga_confianza": null,
@@ -55315,21 +55029,21 @@
       "resultado_ht05": null
     },
     {
-      "fecha": "2026-10-08",
+      "fecha": "2026-10-09",
       "fecha_partido": "2026-10-10",
       "liga": "Romania Liga II",
       "liga_confianza": null,
       "local": "ACS Viitorul Şelimbăr",
       "visitante": "FC Unirea 2004 Slobozia",
       "senal_btts_optimizada": "Evitar",
-      "nivel_final": "EVITAR",
-      "motivo_btts": "perfil_avg2h_o25btts",
+      "nivel_final": "JUGAR",
+      "motivo_btts": "avg2h_parejo_15",
       "prob_btts": 0.5994358498086971,
       "prob_btts_calibrada": 0.5601635132908834,
       "btts_min_alto": null,
       "cuota_btts": 1.71,
       "cuota_btts_actual": 1.71,
-      "movimiento_btts_pp": null,
+      "movimiento_btts_pp": 0.0,
       "resultado_btts": null,
       "senal_o15_tier": "Fuerte",
       "sug_o15": "EVITAR",
@@ -55383,7 +55097,7 @@
       "resultado_ht05": null
     },
     {
-      "fecha": "2026-10-08",
+      "fecha": "2026-10-09",
       "fecha_partido": "2026-10-10",
       "liga": "Romania Liga II",
       "liga_confianza": null,
@@ -55451,7 +55165,7 @@
       "resultado_ht05": null
     },
     {
-      "fecha": "2026-10-08",
+      "fecha": "2026-10-09",
       "fecha_partido": "2026-10-10",
       "liga": "Romania Liga II",
       "liga_confianza": null,
@@ -55655,7 +55369,7 @@
       "resultado_ht05": null
     },
     {
-      "fecha": "2026-10-08",
+      "fecha": "2026-10-09",
       "fecha_partido": "2026-10-10",
       "liga": "Romania Liga II",
       "liga_confianza": null,
@@ -55723,7 +55437,7 @@
       "resultado_ht05": null
     },
     {
-      "fecha": "2026-10-08",
+      "fecha": "2026-10-09",
       "fecha_partido": "2026-10-10",
       "liga": "Romania Liga II",
       "liga_confianza": null,
@@ -55791,7 +55505,7 @@
       "resultado_ht05": null
     },
     {
-      "fecha": "2026-10-08",
+      "fecha": "2026-10-09",
       "fecha_partido": "2026-10-10",
       "liga": "England National League South",
       "liga_confianza": null,
@@ -55799,7 +55513,7 @@
       "visitante": "Walton & Hersham FC",
       "senal_btts_optimizada": "Stake10",
       "nivel_final": "JUGAR",
-      "motivo_btts": "stake9",
+      "motivo_btts": "camino_normal_Stake10_cuota_alta_sotmin_gcmin",
       "prob_btts": 0.694272530282805,
       "prob_btts_calibrada": 0.5474385622577024,
       "btts_min_alto": null,
@@ -55859,7 +55573,7 @@
       "resultado_ht05": null
     },
     {
-      "fecha": "2026-10-08",
+      "fecha": "2026-10-09",
       "fecha_partido": "2026-10-10",
       "liga": "England National League South",
       "liga_confianza": null,
@@ -55927,7 +55641,7 @@
       "resultado_ht05": null
     },
     {
-      "fecha": "2026-10-08",
+      "fecha": "2026-10-09",
       "fecha_partido": "2026-10-10",
       "liga": "England National League South",
       "liga_confianza": null,
@@ -55995,7 +55709,7 @@
       "resultado_ht05": null
     },
     {
-      "fecha": "2026-10-08",
+      "fecha": "2026-10-09",
       "fecha_partido": "2026-10-10",
       "liga": "England National League South",
       "liga_confianza": null,
@@ -56063,7 +55777,7 @@
       "resultado_ht05": null
     },
     {
-      "fecha": "2026-10-08",
+      "fecha": "2026-10-09",
       "fecha_partido": "2026-10-10",
       "liga": "England National League South",
       "liga_confianza": null,
@@ -56131,7 +55845,7 @@
       "resultado_ht05": null
     },
     {
-      "fecha": "2026-10-08",
+      "fecha": "2026-10-09",
       "fecha_partido": "2026-10-10",
       "liga": "England National League South",
       "liga_confianza": null,
@@ -56199,7 +55913,7 @@
       "resultado_ht05": null
     },
     {
-      "fecha": "2026-10-08",
+      "fecha": "2026-10-09",
       "fecha_partido": "2026-10-10",
       "liga": "England National League South",
       "liga_confianza": null,
@@ -56267,7 +55981,7 @@
       "resultado_ht05": null
     },
     {
-      "fecha": "2026-10-08",
+      "fecha": "2026-10-09",
       "fecha_partido": "2026-10-10",
       "liga": "England National League South",
       "liga_confianza": null,
@@ -56335,7 +56049,7 @@
       "resultado_ht05": null
     },
     {
-      "fecha": "2026-10-08",
+      "fecha": "2026-10-09",
       "fecha_partido": "2026-10-10",
       "liga": "England National League South",
       "liga_confianza": null,
@@ -56403,7 +56117,7 @@
       "resultado_ht05": null
     },
     {
-      "fecha": "2026-10-08",
+      "fecha": "2026-10-09",
       "fecha_partido": "2026-10-10",
       "liga": "England National League South",
       "liga_confianza": null,
@@ -56471,7 +56185,7 @@
       "resultado_ht05": null
     },
     {
-      "fecha": "2026-10-08",
+      "fecha": "2026-10-09",
       "fecha_partido": "2026-10-10",
       "liga": "England National League South",
       "liga_confianza": null,
@@ -56539,7 +56253,7 @@
       "resultado_ht05": null
     },
     {
-      "fecha": "2026-10-08",
+      "fecha": "2026-10-09",
       "fecha_partido": "2026-10-10",
       "liga": "England National League South",
       "liga_confianza": null,
@@ -56675,7 +56389,7 @@
       "resultado_ht05": true
     },
     {
-      "fecha": "2026-10-08",
+      "fecha": "2026-10-09",
       "fecha_partido": "2026-10-10",
       "liga": "Italy Serie B",
       "liga_confianza": null,
@@ -56811,7 +56525,7 @@
       "resultado_ht05": null
     },
     {
-      "fecha": "2026-10-08",
+      "fecha": "2026-10-09",
       "fecha_partido": "2026-10-10",
       "liga": "Italy Serie B",
       "liga_confianza": null,
@@ -56879,7 +56593,7 @@
       "resultado_ht05": null
     },
     {
-      "fecha": "2026-10-08",
+      "fecha": "2026-10-09",
       "fecha_partido": "2026-10-10",
       "liga": "Italy Serie B",
       "liga_confianza": null,
@@ -56947,7 +56661,7 @@
       "resultado_ht05": null
     },
     {
-      "fecha": "2026-10-08",
+      "fecha": "2026-10-09",
       "fecha_partido": "2026-10-10",
       "liga": "Italy Serie B",
       "liga_confianza": null,
@@ -57015,7 +56729,7 @@
       "resultado_ht05": null
     },
     {
-      "fecha": "2026-10-08",
+      "fecha": "2026-10-09",
       "fecha_partido": "2026-10-10",
       "liga": "Italy Serie B",
       "liga_confianza": null,
@@ -57219,7 +56933,7 @@
       "resultado_ht05": null
     },
     {
-      "fecha": "2026-10-08",
+      "fecha": "2026-10-09",
       "fecha_partido": "2026-10-10",
       "liga": "Italy Serie B",
       "liga_confianza": null,
@@ -57287,7 +57001,7 @@
       "resultado_ht05": null
     },
     {
-      "fecha": "2026-10-08",
+      "fecha": "2026-10-09",
       "fecha_partido": "2026-10-10",
       "liga": "Chile Segunda División",
       "liga_confianza": null,
@@ -57355,7 +57069,7 @@
       "resultado_ht05": null
     },
     {
-      "fecha": "2026-10-08",
+      "fecha": "2026-10-09",
       "fecha_partido": "2026-10-10",
       "liga": "Chile Segunda División",
       "liga_confianza": null,
@@ -57559,7 +57273,7 @@
       "resultado_ht05": null
     },
     {
-      "fecha": "2026-10-08",
+      "fecha": "2026-10-09",
       "fecha_partido": "2026-10-10",
       "liga": "Poland 3 Liga Group 2",
       "liga_confianza": null,
@@ -57627,7 +57341,7 @@
       "resultado_ht05": null
     },
     {
-      "fecha": "2026-10-08",
+      "fecha": "2026-10-09",
       "fecha_partido": "2026-10-10",
       "liga": "Poland 3 Liga Group 2",
       "liga_confianza": null,
@@ -57695,7 +57409,7 @@
       "resultado_ht05": null
     },
     {
-      "fecha": "2026-10-08",
+      "fecha": "2026-10-09",
       "fecha_partido": "2026-10-10",
       "liga": "Poland 3 Liga Group 2",
       "liga_confianza": null,
@@ -57763,7 +57477,7 @@
       "resultado_ht05": null
     },
     {
-      "fecha": "2026-10-08",
+      "fecha": "2026-10-09",
       "fecha_partido": "2026-10-10",
       "liga": "Poland 3 Liga Group 2",
       "liga_confianza": null,
@@ -57899,7 +57613,7 @@
       "resultado_ht05": false
     },
     {
-      "fecha": "2026-10-08",
+      "fecha": "2026-10-09",
       "fecha_partido": "2026-10-10",
       "liga": "Poland 3 Liga Group 2",
       "liga_confianza": null,
@@ -57967,7 +57681,7 @@
       "resultado_ht05": null
     },
     {
-      "fecha": "2026-10-08",
+      "fecha": "2026-10-09",
       "fecha_partido": "2026-10-10",
       "liga": "Poland 3 Liga Group 2",
       "liga_confianza": null,
@@ -58103,7 +57817,7 @@
       "resultado_ht05": true
     },
     {
-      "fecha": "2026-10-08",
+      "fecha": "2026-10-09",
       "fecha_partido": "2026-10-10",
       "liga": "Poland 3 Liga Group 2",
       "liga_confianza": null,
@@ -58171,7 +57885,7 @@
       "resultado_ht05": null
     },
     {
-      "fecha": "2026-10-08",
+      "fecha": "2026-10-09",
       "fecha_partido": "2026-10-10",
       "liga": "Poland 3 Liga Group 3",
       "liga_confianza": "baja",
@@ -58239,7 +57953,7 @@
       "resultado_ht05": null
     },
     {
-      "fecha": "2026-10-08",
+      "fecha": "2026-10-09",
       "fecha_partido": "2026-10-10",
       "liga": "Poland 3 Liga Group 3",
       "liga_confianza": "baja",
@@ -58307,7 +58021,7 @@
       "resultado_ht05": null
     },
     {
-      "fecha": "2026-10-08",
+      "fecha": "2026-10-09",
       "fecha_partido": "2026-10-10",
       "liga": "Poland 3 Liga Group 3",
       "liga_confianza": "baja",
@@ -58375,7 +58089,7 @@
       "resultado_ht05": null
     },
     {
-      "fecha": "2026-10-08",
+      "fecha": "2026-10-09",
       "fecha_partido": "2026-10-10",
       "liga": "Poland 3 Liga Group 3",
       "liga_confianza": "baja",
@@ -58443,7 +58157,7 @@
       "resultado_ht05": null
     },
     {
-      "fecha": "2026-10-08",
+      "fecha": "2026-10-09",
       "fecha_partido": "2026-10-10",
       "liga": "Poland 3 Liga Group 3",
       "liga_confianza": "baja",
@@ -58579,7 +58293,7 @@
       "resultado_ht05": true
     },
     {
-      "fecha": "2026-10-08",
+      "fecha": "2026-10-09",
       "fecha_partido": "2026-10-10",
       "liga": "Poland 3 Liga Group 3",
       "liga_confianza": "baja",
@@ -58647,7 +58361,7 @@
       "resultado_ht05": null
     },
     {
-      "fecha": "2026-10-08",
+      "fecha": "2026-10-09",
       "fecha_partido": "2026-10-10",
       "liga": "Poland 3 Liga Group 3",
       "liga_confianza": "baja",
@@ -58715,7 +58429,7 @@
       "resultado_ht05": null
     },
     {
-      "fecha": "2026-10-08",
+      "fecha": "2026-10-09",
       "fecha_partido": "2026-10-10",
       "liga": "Poland 3 Liga Group 1",
       "liga_confianza": null,
@@ -58783,7 +58497,7 @@
       "resultado_ht05": null
     },
     {
-      "fecha": "2026-10-08",
+      "fecha": "2026-10-09",
       "fecha_partido": "2026-10-10",
       "liga": "Poland 3 Liga Group 1",
       "liga_confianza": null,
@@ -58919,7 +58633,7 @@
       "resultado_ht05": true
     },
     {
-      "fecha": "2026-10-08",
+      "fecha": "2026-10-09",
       "fecha_partido": "2026-10-10",
       "liga": "Poland 3 Liga Group 1",
       "liga_confianza": null,
@@ -58987,7 +58701,7 @@
       "resultado_ht05": null
     },
     {
-      "fecha": "2026-10-08",
+      "fecha": "2026-10-09",
       "fecha_partido": "2026-10-10",
       "liga": "Poland 3 Liga Group 1",
       "liga_confianza": null,
@@ -59055,7 +58769,7 @@
       "resultado_ht05": null
     },
     {
-      "fecha": "2026-10-08",
+      "fecha": "2026-10-09",
       "fecha_partido": "2026-10-10",
       "liga": "Poland 3 Liga Group 1",
       "liga_confianza": null,
@@ -59123,7 +58837,7 @@
       "resultado_ht05": null
     },
     {
-      "fecha": "2026-10-08",
+      "fecha": "2026-10-09",
       "fecha_partido": "2026-10-10",
       "liga": "Poland 3 Liga Group 1",
       "liga_confianza": null,
@@ -59327,7 +59041,7 @@
       "resultado_ht05": null
     },
     {
-      "fecha": "2026-10-08",
+      "fecha": "2026-10-09",
       "fecha_partido": "2026-10-10",
       "liga": "Poland 3 Liga Group 4",
       "liga_confianza": null,
@@ -59395,7 +59109,7 @@
       "resultado_ht05": null
     },
     {
-      "fecha": "2026-10-08",
+      "fecha": "2026-10-09",
       "fecha_partido": "2026-10-10",
       "liga": "Poland 3 Liga Group 4",
       "liga_confianza": null,
@@ -59463,7 +59177,7 @@
       "resultado_ht05": null
     },
     {
-      "fecha": "2026-10-08",
+      "fecha": "2026-10-09",
       "fecha_partido": "2026-10-10",
       "liga": "Poland 3 Liga Group 4",
       "liga_confianza": null,
@@ -59531,7 +59245,7 @@
       "resultado_ht05": null
     },
     {
-      "fecha": "2026-10-08",
+      "fecha": "2026-10-09",
       "fecha_partido": "2026-10-10",
       "liga": "Poland 3 Liga Group 4",
       "liga_confianza": null,
@@ -59599,7 +59313,7 @@
       "resultado_ht05": null
     },
     {
-      "fecha": "2026-10-08",
+      "fecha": "2026-10-09",
       "fecha_partido": "2026-10-10",
       "liga": "Poland 3 Liga Group 4",
       "liga_confianza": null,
@@ -59803,7 +59517,7 @@
       "resultado_ht05": true
     },
     {
-      "fecha": "2026-10-08",
+      "fecha": "2026-10-09",
       "fecha_partido": "2026-10-10",
       "liga": "Poland 3 Liga Group 4",
       "liga_confianza": null,
@@ -60143,7 +59857,7 @@
       "resultado_ht05": null
     },
     {
-      "fecha": "2026-10-08",
+      "fecha": "2026-10-09",
       "fecha_partido": "2026-10-10",
       "liga": "Saudi Arabia Professional League",
       "liga_confianza": null,
@@ -60347,7 +60061,7 @@
       "resultado_ht05": true
     },
     {
-      "fecha": "2026-10-08",
+      "fecha": "2026-10-09",
       "fecha_partido": "2026-10-10",
       "liga": "Saudi Arabia Professional League",
       "liga_confianza": null,
@@ -60483,7 +60197,7 @@
       "resultado_ht05": null
     },
     {
-      "fecha": "2026-10-08",
+      "fecha": "2026-10-09",
       "fecha_partido": "2026-10-10",
       "liga": "Saudi Arabia Professional League",
       "liga_confianza": null,
@@ -60551,7 +60265,7 @@
       "resultado_ht05": null
     },
     {
-      "fecha": "2026-10-08",
+      "fecha": "2026-10-09",
       "fecha_partido": "2026-10-10",
       "liga": "Poland 3 Liga Group 3",
       "liga_confianza": "baja",
@@ -60619,7 +60333,7 @@
       "resultado_ht05": null
     },
     {
-      "fecha": "2026-10-08",
+      "fecha": "2026-10-09",
       "fecha_partido": "2026-10-09",
       "liga": "Costa Rica Liga de Ascenso",
       "liga_confianza": null,
@@ -60687,7 +60401,7 @@
       "resultado_ht05": null
     },
     {
-      "fecha": "2026-10-08",
+      "fecha": "2026-10-09",
       "fecha_partido": "2026-10-10",
       "liga": "Costa Rica Liga de Ascenso",
       "liga_confianza": null,
@@ -60891,7 +60605,7 @@
       "resultado_ht05": null
     },
     {
-      "fecha": "2026-10-08",
+      "fecha": "2026-10-09",
       "fecha_partido": "2026-10-10",
       "liga": "Costa Rica Liga de Ascenso",
       "liga_confianza": null,
@@ -61027,7 +60741,7 @@
       "resultado_ht05": null
     },
     {
-      "fecha": "2026-10-08",
+      "fecha": "2026-10-09",
       "fecha_partido": "2026-10-10",
       "liga": "Chile Segunda División",
       "liga_confianza": null,
@@ -61163,7 +60877,7 @@
       "resultado_ht05": null
     },
     {
-      "fecha": "2026-10-08",
+      "fecha": "2026-10-09",
       "fecha_partido": "2026-10-10",
       "liga": "England Southern League Premier South",
       "liga_confianza": null,
@@ -61171,7 +60885,7 @@
       "visitante": "Gloucester City AFC",
       "senal_btts_optimizada": "VIP+",
       "nivel_final": "JUGAR",
-      "motivo_btts": "VIP_reforzado",
+      "motivo_btts": "corona",
       "prob_btts": 0.6479758675841341,
       "prob_btts_calibrada": 0.6098743064066476,
       "btts_min_alto": null,
@@ -61231,7 +60945,7 @@
       "resultado_ht05": null
     },
     {
-      "fecha": "2026-10-08",
+      "fecha": "2026-10-09",
       "fecha_partido": "2026-10-10",
       "liga": "England Southern League Premier South",
       "liga_confianza": null,
@@ -61299,7 +61013,7 @@
       "resultado_ht05": null
     },
     {
-      "fecha": "2026-10-08",
+      "fecha": "2026-10-09",
       "fecha_partido": "2026-10-10",
       "liga": "England Southern League Premier South",
       "liga_confianza": null,
@@ -61307,7 +61021,7 @@
       "visitante": "Bracknell Town FC",
       "senal_btts_optimizada": "Evitar",
       "nivel_final": "JUGAR",
-      "motivo_btts": "atlas",
+      "motivo_btts": "stake9",
       "prob_btts": 0.6344195047913157,
       "prob_btts_calibrada": 0.5612175806697732,
       "btts_min_alto": null,
@@ -61367,7 +61081,7 @@
       "resultado_ht05": null
     },
     {
-      "fecha": "2026-10-08",
+      "fecha": "2026-10-09",
       "fecha_partido": "2026-10-10",
       "liga": "England Southern League Premier South",
       "liga_confianza": null,
@@ -61435,7 +61149,7 @@
       "resultado_ht05": null
     },
     {
-      "fecha": "2026-10-08",
+      "fecha": "2026-10-09",
       "fecha_partido": "2026-10-10",
       "liga": "England Southern League Premier South",
       "liga_confianza": null,
@@ -61503,7 +61217,7 @@
       "resultado_ht05": null
     },
     {
-      "fecha": "2026-10-08",
+      "fecha": "2026-10-09",
       "fecha_partido": "2026-10-10",
       "liga": "England Southern League Premier South",
       "liga_confianza": null,
@@ -61571,7 +61285,7 @@
       "resultado_ht05": null
     },
     {
-      "fecha": "2026-10-08",
+      "fecha": "2026-10-09",
       "fecha_partido": "2026-10-10",
       "liga": "England Southern League Premier South",
       "liga_confianza": null,
@@ -61639,7 +61353,7 @@
       "resultado_ht05": null
     },
     {
-      "fecha": "2026-10-08",
+      "fecha": "2026-10-09",
       "fecha_partido": "2026-10-10",
       "liga": "England Southern League Premier South",
       "liga_confianza": null,
@@ -61707,7 +61421,7 @@
       "resultado_ht05": null
     },
     {
-      "fecha": "2026-10-08",
+      "fecha": "2026-10-09",
       "fecha_partido": "2026-10-10",
       "liga": "England Southern League Premier South",
       "liga_confianza": null,
@@ -61775,7 +61489,7 @@
       "resultado_ht05": null
     },
     {
-      "fecha": "2026-10-08",
+      "fecha": "2026-10-09",
       "fecha_partido": "2026-10-10",
       "liga": "England Southern League Premier South",
       "liga_confianza": null,
@@ -61843,7 +61557,7 @@
       "resultado_ht05": null
     },
     {
-      "fecha": "2026-10-08",
+      "fecha": "2026-10-09",
       "fecha_partido": "2026-10-10",
       "liga": "England Southern League Premier South",
       "liga_confianza": null,
@@ -61979,7 +61693,7 @@
       "resultado_ht05": null
     },
     {
-      "fecha": "2026-10-08",
+      "fecha": "2026-10-09",
       "fecha_partido": "2026-10-10",
       "liga": "Bolivia LFPB",
       "liga_confianza": null,
@@ -62251,7 +61965,7 @@
       "resultado_ht05": false
     },
     {
-      "fecha": "2026-10-08",
+      "fecha": "2026-10-09",
       "fecha_partido": "2026-10-10",
       "liga": "Bolivia LFPB",
       "liga_confianza": null,
@@ -62259,7 +61973,7 @@
       "visitante": "CDT Real Oruro",
       "senal_btts_optimizada": "VIP+",
       "nivel_final": "JUGAR",
-      "motivo_btts": "VIP_reforzado",
+      "motivo_btts": "cumbre",
       "prob_btts": 0.7045479284035201,
       "prob_btts_calibrada": 0.5962633715421984,
       "btts_min_alto": null,
@@ -62931,7 +62645,7 @@
       "resultado_ht05": true
     },
     {
-      "fecha": "2026-10-08",
+      "fecha": "2026-10-09",
       "fecha_partido": "2026-10-10",
       "liga": "Mexico Liga Premier Serie A",
       "liga_confianza": null,
@@ -62999,7 +62713,7 @@
       "resultado_ht05": null
     },
     {
-      "fecha": "2026-10-08",
+      "fecha": "2026-10-09",
       "fecha_partido": "2026-10-10",
       "liga": "Mexico Liga Premier Serie A",
       "liga_confianza": null,
@@ -63067,7 +62781,7 @@
       "resultado_ht05": null
     },
     {
-      "fecha": "2026-10-08",
+      "fecha": "2026-10-09",
       "fecha_partido": "2026-10-10",
       "liga": "Mexico Liga Premier Serie A",
       "liga_confianza": null,
@@ -63203,7 +62917,7 @@
       "resultado_ht05": null
     },
     {
-      "fecha": "2026-10-08",
+      "fecha": "2026-10-09",
       "fecha_partido": "2026-10-10",
       "liga": "Mexico Liga Premier Serie A",
       "liga_confianza": null,
@@ -63407,7 +63121,7 @@
       "resultado_ht05": null
     },
     {
-      "fecha": "2026-10-08",
+      "fecha": "2026-10-09",
       "fecha_partido": "2026-10-10",
       "liga": "Mexico Liga Premier Serie A",
       "liga_confianza": null,
@@ -63475,7 +63189,7 @@
       "resultado_ht05": null
     },
     {
-      "fecha": "2026-10-08",
+      "fecha": "2026-10-09",
       "fecha_partido": "2026-10-10",
       "liga": "Mexico Liga Premier Serie A",
       "liga_confianza": null,
@@ -63543,7 +63257,7 @@
       "resultado_ht05": null
     },
     {
-      "fecha": "2026-10-08",
+      "fecha": "2026-10-09",
       "fecha_partido": "2026-10-10",
       "liga": "Vietnam V.League 1",
       "liga_confianza": null,
@@ -63611,7 +63325,7 @@
       "resultado_ht05": null
     },
     {
-      "fecha": "2026-10-08",
+      "fecha": "2026-10-09",
       "fecha_partido": "2026-10-10",
       "liga": "Vietnam V.League 1",
       "liga_confianza": null,
@@ -63679,7 +63393,7 @@
       "resultado_ht05": null
     },
     {
-      "fecha": "2026-10-08",
+      "fecha": "2026-10-09",
       "fecha_partido": "2026-10-10",
       "liga": "Vietnam V.League 1",
       "liga_confianza": null,
@@ -63883,7 +63597,7 @@
       "resultado_ht05": null
     },
     {
-      "fecha": "2026-10-08",
+      "fecha": "2026-10-09",
       "fecha_partido": "2026-10-10",
       "liga": "Honduras Liga Nacional de Fútbol Profesional de Honduras",
       "liga_confianza": null,
@@ -64019,7 +63733,7 @@
       "resultado_ht05": null
     },
     {
-      "fecha": "2026-10-08",
+      "fecha": "2026-10-09",
       "fecha_partido": "2026-10-10",
       "liga": "Honduras Liga Nacional de Fútbol Profesional de Honduras",
       "liga_confianza": null,
@@ -64155,7 +63869,7 @@
       "resultado_ht05": null
     },
     {
-      "fecha": "2026-10-08",
+      "fecha": "2026-10-09",
       "fecha_partido": "2026-10-10",
       "liga": "Honduras Liga Nacional de Fútbol Profesional de Honduras",
       "liga_confianza": null,
@@ -64427,7 +64141,7 @@
       "resultado_ht05": true
     },
     {
-      "fecha": "2026-10-08",
+      "fecha": "2026-10-09",
       "fecha_partido": "2026-10-10",
       "liga": "Finland Veikkausliiga",
       "liga_confianza": null,
@@ -64495,7 +64209,7 @@
       "resultado_ht05": null
     },
     {
-      "fecha": "2026-10-08",
+      "fecha": "2026-10-09",
       "fecha_partido": "2026-10-10",
       "liga": "Finland Veikkausliiga",
       "liga_confianza": null,
@@ -64563,7 +64277,7 @@
       "resultado_ht05": null
     },
     {
-      "fecha": "2026-10-08",
+      "fecha": "2026-10-09",
       "fecha_partido": "2026-10-10",
       "liga": "Iceland Úrvalsdeild",
       "liga_confianza": null,
@@ -64631,7 +64345,7 @@
       "resultado_ht05": null
     },
     {
-      "fecha": "2026-10-08",
+      "fecha": "2026-10-09",
       "fecha_partido": "2026-10-10",
       "liga": "Iceland Úrvalsdeild",
       "liga_confianza": null,
@@ -64699,7 +64413,7 @@
       "resultado_ht05": null
     },
     {
-      "fecha": "2026-10-08",
+      "fecha": "2026-10-09",
       "fecha_partido": "2026-10-10",
       "liga": "Iceland Úrvalsdeild",
       "liga_confianza": null,
@@ -64843,7 +64557,7 @@
       "visitante": "Keflavík ÍF",
       "senal_btts_optimizada": "Stake10",
       "nivel_final": "EVITAR",
-      "motivo_btts": "camino_normal_Stake10_sotmin_xga",
+      "motivo_btts": "stake11",
       "prob_btts": 0.7205632870803098,
       "prob_btts_calibrada": 0.5761716087268034,
       "btts_min_alto": null,
@@ -64903,7 +64617,7 @@
       "resultado_ht05": null
     },
     {
-      "fecha": "2026-10-08",
+      "fecha": "2026-10-09",
       "fecha_partido": "2026-10-10",
       "liga": "Iceland Úrvalsdeild",
       "liga_confianza": null,
@@ -65039,7 +64753,7 @@
       "resultado_ht05": null
     },
     {
-      "fecha": "2026-10-08",
+      "fecha": "2026-10-09",
       "fecha_partido": "2026-10-10",
       "liga": "Ecuador Primera Categoría Serie A",
       "liga_confianza": null,
@@ -65311,7 +65025,7 @@
       "resultado_ht05": null
     },
     {
-      "fecha": "2026-10-08",
+      "fecha": "2026-10-09",
       "fecha_partido": "2026-10-10",
       "liga": "Ecuador Primera Categoría Serie A",
       "liga_confianza": null,
@@ -65379,7 +65093,7 @@
       "resultado_ht05": null
     },
     {
-      "fecha": "2026-10-08",
+      "fecha": "2026-10-09",
       "fecha_partido": "2026-10-10",
       "liga": "Ecuador Primera Categoría Serie A",
       "liga_confianza": null,
@@ -65515,75 +65229,7 @@
       "resultado_ht05": true
     },
     {
-      "fecha": "2026-10-08",
-      "fecha_partido": "2026-10-09",
-      "liga": "Paraguay Division Intermedia",
-      "liga_confianza": "alta",
-      "local": "Club Sol de América",
-      "visitante": "Club Sportivo Carapeguá",
-      "senal_btts_optimizada": "Evitar",
-      "nivel_final": "EVITAR",
-      "motivo_btts": "ninguno_evitar_final",
-      "prob_btts": 0.542512544521435,
-      "prob_btts_calibrada": 0.4778874838219739,
-      "btts_min_alto": null,
-      "cuota_btts": 1.57,
-      "cuota_btts_actual": 1.57,
-      "movimiento_btts_pp": null,
-      "resultado_btts": null,
-      "senal_o15_tier": "VIP",
-      "sug_o15": "EVITAR",
-      "motivo_o15": "ninguno_evitar_o15",
-      "prob_o15": 0.7844341341008343,
-      "cuota_o15": 1.25,
-      "cuota_o15_actual": 1.25,
-      "movimiento_o15_pp": null,
-      "resultado_o15": null,
-      "senal_o25": "Evitar",
-      "sug_o25": "EVITAR",
-      "motivo_o25": "ninguno_evitar_o25",
-      "prob_o25": 0.5526240936423814,
-      "cuota_o25": 1.91,
-      "cuota_o25_actual": 1.91,
-      "movimiento_o25_pp": null,
-      "resultado_o25": null,
-      "senal_btts_o25": "—",
-      "motivo_combo": "ninguno_evitar_combo",
-      "resultado_combo": null,
-      "vip_elite": null,
-      "oro": null,
-      "nivel_confianza": null,
-      "marcador_exacto_sugerido": "1-1",
-      "marcador_exacto_real": null,
-      "usa_temporada_anterior": false,
-      "usa_promedio_general": false,
-      "es_equipo_filial": false,
-      "senal_ht05_tier": "Evitar",
-      "sug_ht05": "EVITAR",
-      "prob_over05_ht": 0.6321205588285577,
-      "prob_over15_ht": 0.2642411176571153,
-      "prob_over05_ht_v2": 0.6321205588285577,
-      "prob_over15_ht_v2": 0.2642411176571153,
-      "prob_combo_v2": null,
-      "prob_combo_calibrada": 0.4206361977262281,
-      "prob_o15_calibrada": 0.6979791024363989,
-      "prob_o25_calibrada": 0.4433849031955683,
-      "prob_over05_ht_calibrada": 0.7093459505661796,
-      "mejor_casa_btts": null,
-      "mejor_cuota_btts": null,
-      "mejora_btts_pct": null,
-      "mejor_casa_o25": null,
-      "mejor_cuota_o25": null,
-      "mejora_o25_pct": null,
-      "cuota_ht_over05": 1.33,
-      "cuota_ht_over15": 2.73,
-      "resultado_over15_ht": null,
-      "cuota_ht_over05_actual": 1.33,
-      "movimiento_ht05_pp": null,
-      "resultado_ht05": null
-    },
-    {
-      "fecha": "2026-10-08",
+      "fecha": "2026-10-09",
       "fecha_partido": "2026-10-10",
       "liga": "Paraguay Division Intermedia",
       "liga_confianza": "alta",
@@ -65719,7 +65365,7 @@
       "resultado_ht05": null
     },
     {
-      "fecha": "2026-10-08",
+      "fecha": "2026-10-09",
       "fecha_partido": "2026-10-10",
       "liga": "Paraguay Division Intermedia",
       "liga_confianza": "alta",
@@ -65747,8 +65393,8 @@
       "sug_o25": "EVITAR",
       "motivo_o25": "ninguno_evitar_o25",
       "prob_o25": 0.5604066932120364,
-      "cuota_o25": 1.88,
-      "cuota_o25_actual": 1.88,
+      "cuota_o25": 1.95,
+      "cuota_o25_actual": 1.95,
       "movimiento_o25_pp": null,
       "resultado_o25": null,
       "senal_btts_o25": "—",
@@ -65923,7 +65569,7 @@
       "resultado_ht05": null
     },
     {
-      "fecha": "2026-10-08",
+      "fecha": "2026-10-09",
       "fecha_partido": "2026-10-10",
       "liga": "Paraguay Division Intermedia",
       "liga_confianza": "alta",
@@ -65951,8 +65597,8 @@
       "sug_o25": "EVITAR",
       "motivo_o25": "ninguno_evitar_o25",
       "prob_o25": 0.5731481346520355,
-      "cuota_o25": 1.83,
-      "cuota_o25_actual": 1.83,
+      "cuota_o25": 1.9,
+      "cuota_o25_actual": 1.9,
       "movimiento_o25_pp": null,
       "resultado_o25": null,
       "senal_btts_o25": "—",
@@ -66918,13 +66564,13 @@
       "local": "TSV Hartberg",
       "visitante": "SC Austria Lustenau",
       "senal_btts_optimizada": "Evitar",
-      "nivel_final": "EVITAR",
-      "motivo_btts": "stake11",
+      "nivel_final": "JUGAR",
+      "motivo_btts": "avg2h_parejo_15",
       "prob_btts": 0.6290075001201587,
       "prob_btts_calibrada": 0.564575184941512,
       "cuota_btts": 1.67,
       "resultado_btts": null,
-      "movimiento_btts_pp": null,
+      "movimiento_btts_pp": 0.0,
       "senal_o15_tier": "Fuerte",
       "sug_o15": "EVITAR",
       "motivo_o15": "ninguno_evitar_o15",
@@ -67021,7 +66667,7 @@
       "visitante": "SC Cambuur Leeuwarden",
       "senal_btts_optimizada": "Evitar",
       "nivel_final": "EVITAR",
-      "motivo_btts": "perfil_avg2h_o25btts",
+      "motivo_btts": "plata_cuota_1.40-1.55",
       "prob_btts": 0.6951698666078799,
       "prob_btts_calibrada": 0.557366816647926,
       "cuota_btts": 1.44,
@@ -67429,7 +67075,7 @@
       "visitante": "SV Rödinghausen",
       "senal_btts_optimizada": "Evitar",
       "nivel_final": "EVITAR",
-      "motivo_btts": "perfil_avg2h_o25btts",
+      "motivo_btts": "candado_sin_cuota",
       "prob_btts": 0.2496607234117882,
       "prob_btts_calibrada": 0.5613584074875714,
       "cuota_btts": 0.0,
@@ -67990,7 +67636,7 @@
       "visitante": "Korsnäs IF FK",
       "senal_btts_optimizada": "Evitar",
       "nivel_final": "JUGAR",
-      "motivo_btts": "atlas",
+      "motivo_btts": "granate",
       "prob_btts": 0.531818522472165,
       "prob_btts_calibrada": 0.5379493148930997,
       "cuota_btts": 1.6,
@@ -68398,7 +68044,7 @@
       "visitante": "MŠK Žilina",
       "senal_btts_optimizada": "VIP+",
       "nivel_final": "JUGAR",
-      "motivo_btts": "VIP_reforzado",
+      "motivo_btts": "cumbre",
       "prob_btts": 0.6887471259266149,
       "prob_btts_calibrada": 0.600463370605275,
       "cuota_btts": 1.4,
@@ -68448,13 +68094,13 @@
       "local": "FC ŠTK 1914 Šamorín",
       "visitante": "FC Petržalka akadémia",
       "senal_btts_optimizada": "Evitar",
-      "nivel_final": "JUGAR",
-      "motivo_btts": "atlas",
+      "nivel_final": "EVITAR",
+      "motivo_btts": "premium",
       "prob_btts": 0.5340173530826986,
       "prob_btts_calibrada": 0.4695317270777267,
       "cuota_btts": 1.62,
       "resultado_btts": null,
-      "movimiento_btts_pp": 0.0,
+      "movimiento_btts_pp": null,
       "senal_o15_tier": "VIP",
       "sug_o15": "JUGAR",
       "motivo_o15": "o15_gf_o25btts",
@@ -70641,13 +70287,13 @@
       "local": "JEF United Ichihara Chiba",
       "visitante": "V-Varen Nagasaki",
       "senal_btts_optimizada": "Evitar",
-      "nivel_final": "EVITAR",
-      "motivo_btts": "perfil_avg2h_o25btts",
+      "nivel_final": "JUGAR",
+      "motivo_btts": "avg2h_parejo_15",
       "prob_btts": 0.6245749041738322,
       "prob_btts_calibrada": 0.5503160884886286,
       "cuota_btts": 1.67,
       "resultado_btts": null,
-      "movimiento_btts_pp": null,
+      "movimiento_btts_pp": 0.0,
       "senal_o15_tier": "Fuerte",
       "sug_o15": "EVITAR",
       "motivo_o15": "ninguno_evitar_o15",
@@ -71508,13 +71154,13 @@
       "local": "Shenyang Urban FC",
       "visitante": "Wuhan Three Towns FC",
       "senal_btts_optimizada": "Evitar",
-      "nivel_final": "EVITAR",
-      "motivo_btts": "stake11",
+      "nivel_final": "JUGAR",
+      "motivo_btts": "avg2h_parejo_15",
       "prob_btts": 0.6960673722968085,
       "prob_btts_calibrada": 0.6091435226688129,
       "cuota_btts": 1.44,
       "resultado_btts": null,
-      "movimiento_btts_pp": null,
+      "movimiento_btts_pp": 0.0,
       "senal_o15_tier": "VIP",
       "sug_o15": "EVITAR",
       "motivo_o15": "ninguno_evitar_o15",
@@ -71713,7 +71359,7 @@
       "visitante": "SpVgg Greuther Fürth",
       "senal_btts_optimizada": "VIP+",
       "nivel_final": "JUGAR",
-      "motivo_btts": "VIP_reforzado",
+      "motivo_btts": "cumbre",
       "prob_btts": 0.7052731294547461,
       "prob_btts_calibrada": 0.6232377000159223,
       "cuota_btts": 1.44,
@@ -72784,7 +72430,7 @@
       "visitante": "Keflavík ÍF",
       "senal_btts_optimizada": "Stake10",
       "nivel_final": "EVITAR",
-      "motivo_btts": "camino_normal_Stake10_sotmin_xga",
+      "motivo_btts": "stake11",
       "prob_btts": 0.7205632870803098,
       "prob_btts_calibrada": 0.5761716087268034,
       "cuota_btts": 1.32,
@@ -72901,13 +72547,13 @@
       "senal_o25": "Evitar",
       "sug_o25": "EVITAR",
       "motivo_o25": "ninguno_evitar_o25",
-      "cuota_o25": 1.94,
+      "cuota_o25": 1.96,
       "resultado_o25": null,
       "movimiento_o25_pp": null,
       "senal_btts_o25": "VIP",
       "motivo_combo": "combo_producto_alto_sot_xg",
       "btts_min_alto": null,
-      "cuota_combo": 2.848895,
+      "cuota_combo": 2.87543,
       "resultado_combo": null,
       "senal_ht05_tier": "Evitar",
       "sug_ht05": "EVITAR",
@@ -73270,7 +72916,7 @@
       "sug_ht05": "EVITAR",
       "cuota_ht_over05": 1.38,
       "resultado_ht05": null,
-      "cuota_ht_over15": 2.92,
+      "cuota_ht_over15": 3.19,
       "prob_over15_ht_v2": 0.2532064149363043,
       "resultado_over15_ht": null,
       "prob_combo_v2": null,
@@ -75616,7 +75262,7 @@
       "sug_ht05": "EVITAR",
       "cuota_ht_over05": 1.39,
       "resultado_ht05": null,
-      "cuota_ht_over15": 2.9,
+      "cuota_ht_over15": 2.79,
       "prob_over15_ht_v2": 0.2771143148177237,
       "resultado_over15_ht": null,
       "prob_combo_v2": null,
@@ -75843,13 +75489,13 @@
       "local": "IK Brage",
       "visitante": "Helsingborgs IF",
       "senal_btts_optimizada": "Evitar",
-      "nivel_final": "EVITAR",
-      "motivo_btts": "perfil_avg2h_o25btts",
+      "nivel_final": "JUGAR",
+      "motivo_btts": "avg2h_parejo_15",
       "prob_btts": 0.6680635055624564,
       "prob_btts_calibrada": 0.6050156860364995,
       "cuota_btts": 1.53,
       "resultado_btts": null,
-      "movimiento_btts_pp": null,
+      "movimiento_btts_pp": 0.0,
       "senal_o15_tier": "VIP",
       "sug_o15": "EVITAR",
       "motivo_o15": "ninguno_evitar_o15",
@@ -75895,7 +75541,7 @@
       "visitante": "Sogndal Fotball",
       "senal_btts_optimizada": "Stake10",
       "nivel_final": "EVITAR",
-      "motivo_btts": "camino_normal_Stake10_sotmin_xga",
+      "motivo_btts": "stake11",
       "prob_btts": 0.7197135336941354,
       "prob_btts_calibrada": 0.5644185355961274,
       "cuota_btts": 1.3,
