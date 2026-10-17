@@ -515,6 +515,7 @@ const ETIQUETAS_BTTS = {
     "coliseo": "🏟️ Coliseo · cuota 1.6-1.9 · Tiros totales≥24.2 + CS mín=0% (ningún equipo ha dejado la valla en cero)",
     "cumbre": "⛰️ Cumbre · lo mejor del día · cuota 1.4-1.6 · VIP+ con prob≥64% + SOT total≤14 + xGA mín≥1.2",
     "corona": "👑 Corona · lo mejor del día · cuota 1.45-1.55 · VIP+ + Diamante Élite (SOT total≥10 + GC máx≥1.8 + fallo máx≤25%)",
+    "pilares_cuota_1.40-1.55": "🧱 Pilares · cuota 1.40-1.55 · SOT total≥10 + visitante recibe≥1.6 goles + fallo≤20-25% + arco en cero≤40% en ambos (sin modelo, sin Stake10)",
     "centinela_failed_bajo": "🗿⚠️ Centinela+Fallo bajo · igual que Centinela + fallo máx≤26% (EN SEGUIMIENTO, muestra real chica)",
     "apuesta_top_btts_gcmin": "🏆⚠️ Apuesta TOP BTTS+GC bajo · igual + GC mín≤1.10 (EN SEGUIMIENTO, muestra real chica)",
     "plata_cuota_1.40-1.55_sot_alto": "🥈⚠️ Plata 1.40-1.55+SOT alto · igual + SOT total≥8.5 (EN SEGUIMIENTO, muestra real chica)",
@@ -870,6 +871,7 @@ const MOTIVOS_VALIDADOS = new Set([
   "o25_xgmin_gfmin",
   "cumbre",
   "corona",
+  "pilares_cuota_1.40-1.55",
 ]);
 
 function renderMercado(picks, probKey, senalKey, tierKey, cuotaKey, resultadoDeseado, resultKey, mercadoKey, motivoKey){
