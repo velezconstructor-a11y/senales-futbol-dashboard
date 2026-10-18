@@ -443,6 +443,7 @@ const ETIQUETAS_COMBO = {
     "combo_hotel_xgmin_gftotal": "🏨 Hotel (Combinada) · cuota combo 1.5-1.8 · xG mín≤1.35 + GF total≥3.79",
 };
 
+const SENALES_EN_PRUEBA = new Set(["estable_gc_fallo_plus","estable_btts_fallo_plus","atlas_plus","centinela_plus","centinela_elite_plus","bastion_plus","bastion_elite_plus","esmeralda_cuota_1.45-1.55_plus","cumbre_xga137","cumbre_xga137_fallo20","stake9_fallo_gc"]);
 const ETIQUETAS_BTTS = {
     "camino_normal_VIP+": "camino normal (VIP+)",
     "camino_normal_VIP+_refinada": "💎 VIP+ refinada · SOT total≤14 + xGA mín≥1.2",
@@ -548,6 +549,9 @@ const ETIQUETAS_BTTS = {
     "bastion_plus": "🔬 Bastión ＋ · EN PRUEBA (apagada) · igual que Bastión + ataque del más flojo ≥1.25 gol/partido + λ del más flojo ≥1.41",
     "bastion_elite_plus": "🔬 Bastión Élite ＋ · EN PRUEBA (apagada) · igual que Bastión Élite + ataque del más flojo ≥1.25 gol/partido + λ del más flojo ≥1.41",
     "esmeralda_cuota_1.45-1.55_plus": "🔬 Esmeralda 1.45-1.55 ＋ · EN PRUEBA (apagada) · igual que Esmeralda + ataque del más flojo ≥1.25 gol/partido + λ del más flojo ≥1.41",
+    "cumbre_xga137": "🔬 Cumbre xGA≥1.37 · EN PRUEBA (apagada) · Cumbre con xGA mín≥1.37 (la original pide ≥1.2)",
+    "cumbre_xga137_fallo20": "🔬 Cumbre xGA≥1.37 + Fallo≤20% · EN PRUEBA (apagada) · lo anterior + fallo máx≤20%",
+    "stake9_fallo_gc": "🔬 Stake 9 + Fallo≤20% + GC≥3.15 · EN PRUEBA (apagada) · Stake 9 en cuota 1.40-1.65 + fallo máx≤20% + goles concedidos totales≥3.15",
     "centinela_failed_bajo": "🗿⚠️ Centinela+Fallo bajo · igual que Centinela + fallo máx≤26% (EN SEGUIMIENTO, muestra real chica)",
     "apuesta_top_btts_gcmin": "🏆⚠️ Apuesta TOP BTTS+GC bajo · igual + GC mín≤1.10 (EN SEGUIMIENTO, muestra real chica)",
     "plata_cuota_1.40-1.55_sot_alto": "🥈⚠️ Plata 1.40-1.55+SOT alto · igual + SOT total≥8.5 (EN SEGUIMIENTO, muestra real chica)",
@@ -573,7 +577,14 @@ function notaRescateBtts(p){
   const texto = ETIQUETAS_BTTS[motivo] || motivo;
   const color = esRescate ? "var(--amber)" : "var(--chalk-dim)";
   const opacidad = p.nivel_final === "JUGAR" ? "1" : "0.6";
-  return ` · <span title="Por que se activo esta señal de BTTS" style="color:${color};opacity:${opacidad};">${texto}</span>`;
+  // AGREGADO 18 oct 2026: señales APAGADAS en prueba (versiones "+", Cumbre y
+  // Stake 9 mejoradas) que tambien aplican a este partido: se muestran como
+  // etiqueta extra para poder ver como les va, aunque no decidan el JUGAR.
+  const enPrueba = String(p.motivos_btts_todos || "").split("|")
+    .filter(t => SENALES_EN_PRUEBA.has(t) && t !== motivo)
+    .map(t => `<span title="Señal apagada en prueba: aplica a este partido pero no decide el JUGAR" style="color:var(--amber);opacity:0.9;">${(ETIQUETAS_BTTS[t] || t).split(" · ")[0]}</span>`);
+  const extra = enPrueba.length ? " · " + enPrueba.join(" · ") : "";
+  return ` · <span title="Por que se activo esta señal de BTTS" style="color:${color};opacity:${opacidad};">${texto}</span>${extra}`;
 }
 
 // AGREGADO 24 ago 2026: equivalente de notaRescateBtts, pero para Over
