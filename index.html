@@ -343,7 +343,16 @@ let DIA_SELECCIONADO = "hoy";
 // el usuario pidio poder ver las señales ordenadas de mayor a menor
 // ROI%, o de mas a menos unidades ganadas, en vez del orden fijo
 // (insercion en el JSON) que tenian antes.
-let ORDEN_DETALLE = "roi";
+// CAMBIADO 18 oct 2026: por defecto "estable" = de mayor ROI Y estabilidad a
+// menor. Puntaje = ROI% - 1 error estandar (74/raiz(n)): sube con el ROI y
+// baja si la muestra es chica, asi una señal con +40% en 3 casos no pasa
+// delante de una con +10% en 80.
+let ORDEN_DETALLE = "estable";
+function puntajeEstable(s){
+  const n = nOf(s);
+  if(n === 0) return -Infinity;
+  return (s.profit_u ?? 0) / n * 100 - 74 / Math.sqrt(n);
+}
 
 // AGREGADO 23 ago 2026: una señal se muestra como "Validada" solo si
 // cumple LAS DOS cosas a la vez - son conceptos distintos:
@@ -358,8 +367,22 @@ let ORDEN_DETALLE = "roi";
 // lista fija). Y al reves: ELITE/ORO_FUERTE estan "activas" (el
 // usuario las prendio a mano pese a evidencia insuficiente) pero
 // nunca deben mostrarse como "Validadas" - por eso se exigen las dos.
+// AGREGADO 18 oct 2026: ademas de validada y activa, la señal debe ser
+// ESTABLE: con 25+ casos reales su ROI tiene que ser >= 0%. Con menos casos
+// se confia en la evidencia retrospectiva. Misma regla que
+// reglas_activas.es_estable() (la usa el bot de Telegram).
+let ESTADISTICAS_MOTIVOS = {};
+const MIN_CASOS_ESTABLE = 25;
+function esEstable(motivo){
+  const s = ESTADISTICAS_MOTIVOS[motivo];
+  if(!s) return true;
+  const n = nOf(s);
+  if(n < MIN_CASOS_ESTABLE) return true;
+  return (s.profit_u ?? 0) / n >= 0;
+}
 function esValidadaReal(motivo){
   if(!MOTIVOS_VALIDADOS.has(motivo)) return false;
+  if(!esEstable(motivo)) return false;
   // Si el motivo aun no aparece en el estado dinamico (recien creado,
   // sin suficiente muestra para que main.py lo evalue todavia), se
   // confia en el juicio de evidencia original - no hay nada mas fresco
@@ -1025,10 +1048,8 @@ function renderMercado(picks, probKey, senalKey, tierKey, cuotaKey, resultadoDes
       <p class="section-title">✅ Picks del Día</p>
       ${validadasHtml}
     </section>
-    <section>
-      <p class="section-title">🔍 En seguimiento</p>
-      ${enSeguimientoHtml}
-    </section>
+    <!-- 18 oct 2026: la seccion "En seguimiento" se quito de la vista: solo se
+         muestra como JUGAR lo que esta activo y estable (ver esValidadaReal). -->
     <section>
       <p class="section-title">🔝 Mayor probabilidad</p>
       ${topProbHtml}
@@ -1231,6 +1252,9 @@ function renderBars(dictHist, orden, etiquetas){
     if(naA && naB) return 0;
     if(naA) return 1;
     if(naB) return -1;
+    if(ORDEN_DETALLE === "estable"){
+      return puntajeEstable(sb) - puntajeEstable(sa);
+    }
     if(ORDEN_DETALLE === "unidades"){
       return (sb.profit_u ?? 0) - (sa.profit_u ?? 0);
     }
@@ -1240,7 +1264,8 @@ function renderBars(dictHist, orden, etiquetas){
   });
   return '<div class="bars">' + nombres.map(nombre => {
     const st = dictHist[nombre];
-    const textoLabel = etiquetas[nombre] || nombre;
+    const apagada = (nombre in REGLAS_ACTIVAS_REAL) && REGLAS_ACTIVAS_REAL[nombre] === false;
+    const textoLabel = (etiquetas[nombre] || nombre) + (apagada ? ' <span style="color:var(--loss);font-size:0.85em;">· apagada</span>' : '');
     const totalDetectado = st.total_detectado ?? nOf(st);
     const pendientes = totalDetectado - nOf(st);
     const notaPend = pendientes > 0 ? ` <span style="color:var(--chalk-dim);">(+${pendientes} pend.)</span>` : "";
@@ -1429,6 +1454,7 @@ function renderEstadisticas(data){
       <p class="section-title">Detalle</p>
       <div style="display:flex;gap:8px;margin-bottom:14px;align-items:center;">
         <span class="bar-label" style="margin:0;">Ordenar por:</span>
+        <button onclick="cambiarOrdenDetalle('estable')" class="tab-btn ${ORDEN_DETALLE==='estable'?'active':''}" style="padding:4px 12px;font-size:12px;">ROI + estabilidad</button>
         <button onclick="cambiarOrdenDetalle('roi')" class="tab-btn ${ORDEN_DETALLE==='roi'?'active':''}" style="padding:4px 12px;font-size:12px;">ROI%</button>
         <button onclick="cambiarOrdenDetalle('unidades')" class="tab-btn ${ORDEN_DETALLE==='unidades'?'active':''}" style="padding:4px 12px;font-size:12px;">Unidades</button>
       </div>
@@ -1494,16 +1520,20 @@ function elegirMejoresPorMercado(picks){
   };
   picks.forEach(p => {
     // Ambos Marcan (BTTS)
-    if(p.vip_elite) actualizar("Ambos Marcan", 1000 + (probBtts(p)||0), p, p.vip_elite);
-    else if(p.senal_btts_optimizada === "VIP+" && p.nivel_final === "JUGAR") actualizar("Ambos Marcan", 900 + (probBtts(p)||0), p, "VIP+");
-    else if(p.senal_btts_optimizada === "VIP" && p.nivel_final === "JUGAR") actualizar("Ambos Marcan", 700 + (probBtts(p)||0), p, "VIP");
-    else if(p.nivel_final === "JUGAR" && esValidadaReal(p.motivo_btts)) actualizar("Ambos Marcan", 500 + (probBtts(p)||0), p, "Validada");
+    // 18 oct 2026: TODO requiere JUGAR + señal validada, activa y estable.
+    const bttsOk = p.nivel_final === "JUGAR" && esValidadaReal(p.motivo_btts);
+    if(bttsOk && p.vip_elite) actualizar("Ambos Marcan", 1000 + (probBtts(p)||0), p, p.vip_elite);
+    else if(bttsOk && p.senal_btts_optimizada === "VIP+") actualizar("Ambos Marcan", 900 + (probBtts(p)||0), p, "VIP+");
+    else if(bttsOk && p.senal_btts_optimizada === "VIP") actualizar("Ambos Marcan", 700 + (probBtts(p)||0), p, "VIP");
+    else if(bttsOk) actualizar("Ambos Marcan", 500 + (probBtts(p)||0), p, "Validada");
     // Over 1.5
-    if(p.senal_o15_tier === "VIP" && p.sug_o15 === "JUGAR") actualizar("Over 1.5", 800 + (p.prob_o15||0), p, "VIP");
-    else if(p.sug_o15 === "JUGAR" && esValidadaReal(p.motivo_o15)) actualizar("Over 1.5", 500 + (p.prob_o15||0), p, "Validada");
+    const o15Ok = p.sug_o15 === "JUGAR" && esValidadaReal(p.motivo_o15);
+    if(o15Ok && p.senal_o15_tier === "VIP") actualizar("Over 1.5", 800 + (p.prob_o15||0), p, "VIP");
+    else if(o15Ok) actualizar("Over 1.5", 500 + (p.prob_o15||0), p, "Validada");
     // Over 2.5
-    if(p.senal_o25 === "VIP" && p.sug_o25 === "JUGAR") actualizar("Over 2.5", 800 + (p.prob_o25||0), p, "VIP");
-    else if(p.sug_o25 === "JUGAR" && esValidadaReal(p.motivo_o25)) actualizar("Over 2.5", 500 + (p.prob_o25||0), p, "Validada");
+    const o25Ok = p.sug_o25 === "JUGAR" && esValidadaReal(p.motivo_o25);
+    if(o25Ok && p.senal_o25 === "VIP") actualizar("Over 2.5", 800 + (p.prob_o25||0), p, "VIP");
+    else if(o25Ok) actualizar("Over 2.5", 500 + (p.prob_o25||0), p, "Validada");
     // Combinada BTTS+O2.5
     const probCombo = p.prob_combo_calibrada != null ? p.prob_combo_calibrada : p.prob_combo_v2;
     if(p.senal_btts_o25 === "VIP" && esValidadaReal(p.motivo_combo)) actualizar("BTTS + Over 2.5", 600 + (probCombo||0), p, "VIP");
@@ -1570,6 +1600,8 @@ function render(data){
   // caso real: combo_banda_baja se veia "Validada" en la pagina mucho
   // despues de que su ROI real cayera a -25.7%, ya apagada de verdad).
   REGLAS_ACTIVAS_REAL = data.comparativo?.historico?.reglas_activas_actuales || {};
+  const _h = data.comparativo?.historico || {};
+  ESTADISTICAS_MOTIVOS = {...(_h.motivos || {}), ...(_h.motivos_o15 || {}), ...(_h.motivos_o25 || {}), ...(_h.motivos_combo || {}), ...(_h.motivos_ht05 || {})};
   const totalHist = data.comparativo.historico.total_partidos_evaluados;
   const picksTodas = data.picks_hoy || [];
 
