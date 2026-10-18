@@ -415,6 +415,7 @@ function notaLigaConfianza(p){
 // Igual que ETIQUETAS_BTTS - sacado a global para que Estadisticas y la
 // nota de cada partido de la combinada usen el mismo texto siempre.
 const ETIQUETAS_COMBO = {
+    "combo_pilares": "🧱 Pilares (Combinada) · BTTS cuota 1.40-1.55 · SOT total≥10 + visitante recibe≥1.6 goles + fallo≤20-25% + arco en cero≤40% en ambos (sin modelo, sin Stake10)",
     "combo_vip_plus": "👑 VIP+ (Combinada) · cuota 1.45-1.60 · fallo máx≤20%",
     "combo_diamante_elite": "💎 Diamante Élite (Combinada) · misma fórmula BTTS · cuota BTTS 1.45-1.55 + SOT total≥10 + GC máx≥1.8 + fallo≤25%",
     // "combo_btts_vipmas", "combo_original_revisar", "combo_original_vip"
@@ -895,6 +896,7 @@ const MOTIVOS_VALIDADOS = new Set([
   "cumbre",
   "corona",
   "pilares_cuota_1.40-1.55",
+  "combo_pilares",
 ]);
 
 function renderMercado(picks, probKey, senalKey, tierKey, cuotaKey, resultadoDeseado, resultKey, mercadoKey, motivoKey){
