@@ -1626,6 +1626,22 @@ function render(data){
   const totalHist = data.comparativo.historico.total_partidos_evaluados;
   const picksTodas = data.picks_hoy || [];
 
+  // AGREGADO 19 oct 2026: autodiagnostico. Si los partidos llegan SIN el campo
+  // motivos_btts_todos, el backtest.py de la carpeta es una version vieja y
+  // las etiquetas "🔬 en prueba" no pueden aparecer en los partidos (las
+  // Estadisticas si funcionan, porque se calculan por otro camino).
+  try {
+    let aviso = document.getElementById("aviso-etiquetas");
+    const falta = picksTodas.length > 0 && !picksTodas.some(p => Object.prototype.hasOwnProperty.call(p, "motivos_btts_todos"));
+    if (falta && !aviso) {
+      aviso = document.createElement("div");
+      aviso.id = "aviso-etiquetas";
+      aviso.style.cssText = "position:fixed;bottom:8px;left:8px;right:8px;z-index:9999;background:#7a4b00;color:#fff;padding:8px 12px;border-radius:8px;font-size:13px;";
+      aviso.textContent = "⚠️ Falta actualizar backtest.py: el dashboard no recibe las etiquetas en prueba de cada partido (campo motivos_btts_todos).";
+      document.body.appendChild(aviso);
+    } else if (!falta && aviso) { aviso.remove(); }
+  } catch (e) {}
+
   // AGREGADO 23 ago 2026: barra Hoy/Mañana/Pasado mañana. "picks_hoy"
   // (pese al nombre historico) ya trae los 3 dias mezclados desde que
   // se amplio la ventana en backtest.py - aqui se separan por fecha y
