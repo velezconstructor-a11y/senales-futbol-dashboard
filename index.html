@@ -1342,7 +1342,8 @@ function renderHistorialMercado(picksRecientes, señalKey, tierKey, resultadoKey
     const cuotaTxt = esCombo
       ? (p.cuota_combo != null ? p.cuota_combo.toFixed(2) : "—")
       : (p[cuotaKey] != null ? p[cuotaKey].toFixed(2) : "—");
-    return `<div class="pick"><span class="pick-date">${fecha}</span><span class="pick-teams">${p.local} vs ${p.visitante}</span><span class="pick-tier" title="cuota ${cuotaTxt}">${etiqueta}</span><span class="pick-result ${resClass}">${resTxt}</span></div>`;
+    const extraPrueba = (!esCombo && señalKey === "nivel_final") ? tagsEnPrueba(p).map(t => ` <span style="color:var(--amber);" title="Señal apagada en prueba">${nombreCortoPrueba(t)}</span>`).join("") : "";
+    return `<div class="pick"><span class="pick-date">${fecha}</span><span class="pick-teams">${p.local} vs ${p.visitante}</span><span class="pick-tier" title="cuota ${cuotaTxt}">${etiqueta}${extraPrueba}</span><span class="pick-result ${resClass}">${resTxt}</span></div>`;
   }).join("") + '</div>';
 }
 
@@ -1464,6 +1465,51 @@ function renderPorLiga(porLiga){
   return `<table class="cmp-table"><thead><tr><th>Liga</th><th class="num">n</th><th class="num">Acierto BTTS</th><th class="num">Unidades</th></tr></thead><tbody>${filas}</tbody></table>`;
 }
 
+// AGREGADO 19 oct 2026: partidos de las señales APAGADAS en prueba. Las
+// Estadisticas cuentan a cada señal en prueba, pero esos partidos no siempre
+// estan en las listas normales (que solo muestran JUGAR activos y estables),
+// asi que aqui se listan TODOS los que le aplican, pendientes primero.
+function tagsEnPrueba(p){
+  return String(p.motivos_btts_todos || "").split("|").filter(t => SENALES_EN_PRUEBA.has(t));
+}
+function nombreCortoPrueba(t){ return (ETIQUETAS_BTTS[t] || t).split(" · ")[0]; }
+function renderPartidosEnPrueba(data){
+  const vistos = new Set(), todos = [];
+  for(const p of [...(data.picks_hoy || []), ...(data.picks_recientes || [])]){
+    const k = [p.fecha_partido || p.fecha, p.local, p.visitante].join("|");
+    if(vistos.has(k)) continue; vistos.add(k); todos.push(p);
+  }
+  const porSenal = {};
+  for(const p of todos) for(const t of tagsEnPrueba(p)) (porSenal[t] = porSenal[t] || []).push(p);
+  const claves = Object.keys(porSenal);
+  if(claves.length === 0){
+    return `<section><p class="section-title">🔬 Partidos de las señales en prueba</p><div class="empty">Ningún partido reciente cumple todavía una señal en prueba. Si las Estadísticas muestran casos, falta actualizar backtest.py (campo motivos_btts_todos).</div></section>`;
+  }
+  claves.sort((a, b) => porSenal[b].length - porSenal[a].length);
+  const fechaDe = p => String(p.fecha_partido || p.fecha || "").split(" ")[0];
+  const bloques = claves.map(t => {
+    const lista = porSenal[t].slice().sort((a, b) => {
+      const pa = a.resultado_btts === true || a.resultado_btts === false ? 1 : 0;
+      const pb = b.resultado_btts === true || b.resultado_btts === false ? 1 : 0;
+      if(pa !== pb) return pa - pb;                       // pendientes primero
+      return fechaDe(b).localeCompare(fechaDe(a));         // luego los mas recientes
+    }).slice(0, 12);
+    const res = porSenal[t].filter(p => p.resultado_btts === true || p.resultado_btts === false);
+    const gan = res.filter(p => p.resultado_btts === true).length;
+    const pend = porSenal[t].length - res.length;
+    const filas = lista.map(p => {
+      let cls = "pending", txt = "?";
+      if(p.resultado_btts === true){ cls = "win"; txt = "✓"; } else if(p.resultado_btts === false){ cls = "loss"; txt = "✕"; }
+      const cuota = p.cuota_btts != null ? Number(p.cuota_btts).toFixed(2) : "—";
+      const decision = p.nivel_final === "JUGAR" ? "JUGAR" : "no se juega";
+      const real = p.motivo_btts && p.motivo_btts !== "ninguno_evitar_final" ? ` · ${nombreCortoPrueba(p.motivo_btts)}` : "";
+      return `<div class="pick"><span class="pick-date">${fechaDe(p).slice(5)}</span><span class="pick-teams">${p.local} vs ${p.visitante}</span><span class="pick-tier" title="cuota ${cuota}">${cuota} · ${decision}${real}</span><span class="pick-result ${cls}">${txt}</span></div>`;
+    }).join("");
+    return `<div style="margin-bottom:18px;"><p class="bar-label" style="margin-bottom:8px;">${ETIQUETAS_BTTS[t] ? nombreCortoPrueba(t) : t} <span style="opacity:0.7;font-weight:normal;">— ${gan}/${res.length} aciertos · ${pend} pendientes</span></p><div class="picks">${filas}</div></div>`;
+  }).join("");
+  return `<section><p class="section-title">🔬 Partidos de las señales en prueba (apagadas)</p><p class="bar-label" style="opacity:0.7;font-weight:normal;margin-bottom:12px;">Todos los partidos recientes que cumplen cada señal, se jueguen o no. "no se juega" = la decisión real del sistema fue otra y este partido no recibe alerta.</p>${bloques}</section>`;
+}
+
 function renderEstadisticas(data){
   const comparativo = data.comparativo;
   return `
@@ -1489,6 +1535,7 @@ function renderEstadisticas(data){
         <div><p class="bar-label" style="margin-bottom:10px;">Nota: BTTS% ambos altos (⭐, todavía no filtra) — dentro de partidos JUGAR de BTTS</p>${renderBars(comparativo.historico.nota_btts_min_alto || {}, ["cumple_nota","no_cumple_nota"])}</div>
       </div>
     </section>
+    ${renderPartidosEnPrueba(data)}
     <section>
       <p class="section-title">🌍 Acierto por liga (BTTS)</p>
       ${renderPorLiga(comparativo.historico.por_liga)}
