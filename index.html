@@ -443,7 +443,7 @@ const ETIQUETAS_COMBO = {
     "combo_hotel_xgmin_gftotal": "🏨 Hotel (Combinada) · cuota combo 1.5-1.8 · xG mín≤1.35 + GF total≥3.79",
 };
 
-const SENALES_EN_PRUEBA = new Set(["estable_gc_fallo_plus","estable_btts_fallo_plus","atlas_plus","centinela_plus","centinela_elite_plus","bastion_plus","bastion_elite_plus","esmeralda_cuota_1.45-1.55_plus","cumbre_xga137","cumbre_xga137_fallo20","stake9_fallo_gc"]);
+const SENALES_EN_PRUEBA = new Set(["estable_gc_fallo_plus","estable_btts_fallo_plus","atlas_plus","centinela_plus","centinela_elite_plus","bastion_plus","bastion_elite_plus","esmeralda_cuota_1.45-1.55_plus","cumbre_xga137","cumbre_xga137_fallo20","stake9_fallo_gc","s1_vip_valor","s2_rescate_valor","s3_ambar_granate_valor"]);
 const ETIQUETAS_BTTS = {
     "camino_normal_VIP+": "camino normal (VIP+)",
     "camino_normal_VIP+_refinada": "💎 VIP+ refinada · SOT total≤14 + xGA mín≥1.2",
@@ -552,6 +552,9 @@ const ETIQUETAS_BTTS = {
     "cumbre_xga137": "🔬 Cumbre xGA≥1.37 · EN PRUEBA (apagada) · Cumbre con xGA mín≥1.37 (la original pide ≥1.2)",
     "cumbre_xga137_fallo20": "🔬 Cumbre xGA≥1.37 + Fallo≤20% · EN PRUEBA (apagada) · lo anterior + fallo máx≤20%",
     "stake9_fallo_gc": "🔬 Stake 9 + Fallo≤20% + GC≥3.15 · EN PRUEBA (apagada) · Stake 9 en cuota 1.40-1.65 + fallo máx≤20% + goles concedidos totales≥3.15",
+    "s1_vip_valor": "🔬 S1 VIP Valor · EN PRUEBA (apagada) · VIP+ / VIP+ refinada / VIP Reforzado con cuota BTTS 1.45-1.74",
+    "s2_rescate_valor": "🔬 S2 Rescate Valor · EN PRUEBA (apagada) · rescate ataque balanceado (GF≥3.0 o fallo≤18%) con cuota≥1.45 y probabilidad del modelo<65%",
+    "s3_ambar_granate_valor": "🔬 S3 Ámbar-Granate Valor · EN PRUEBA (apagada) · Ámbar o Granate con cuota≥1.45 y probabilidad del modelo<65%",
     "centinela_failed_bajo": "🗿⚠️ Centinela+Fallo bajo · igual que Centinela + fallo máx≤26% (EN SEGUIMIENTO, muestra real chica)",
     "apuesta_top_btts_gcmin": "🏆⚠️ Apuesta TOP BTTS+GC bajo · igual + GC mín≤1.10 (EN SEGUIMIENTO, muestra real chica)",
     "plata_cuota_1.40-1.55_sot_alto": "🥈⚠️ Plata 1.40-1.55+SOT alto · igual + SOT total≥8.5 (EN SEGUIMIENTO, muestra real chica)",
@@ -582,8 +585,8 @@ function notaRescateBtts(p){
   // etiqueta extra para poder ver como les va, aunque no decidan el JUGAR.
   const enPrueba = String(p.motivos_btts_todos || "").split("|")
     .filter(t => SENALES_EN_PRUEBA.has(t) && t !== motivo)
-    .map(t => `<span title="Señal apagada en prueba: aplica a este partido pero no decide el JUGAR" style="color:var(--amber);opacity:0.9;">${(ETIQUETAS_BTTS[t] || t).split(" · ")[0]}</span>`);
-  const extra = enPrueba.length ? " · " + enPrueba.join(" · ") : "";
+    .map(t => `<span title="Señal apagada en prueba: aplica a este partido pero no decide el JUGAR" style="color:var(--amber);opacity:0.9;">${ETIQUETAS_BTTS[t] || t}</span>`);
+  const extra = enPrueba.length ? "<br>" + enPrueba.join("<br>") : "";
   return ` · <span title="Por que se activo esta señal de BTTS" style="color:${color};opacity:${opacidad};">${texto}</span>${extra}`;
 }
 
@@ -1342,7 +1345,7 @@ function renderHistorialMercado(picksRecientes, señalKey, tierKey, resultadoKey
     const cuotaTxt = esCombo
       ? (p.cuota_combo != null ? p.cuota_combo.toFixed(2) : "—")
       : (p[cuotaKey] != null ? p[cuotaKey].toFixed(2) : "—");
-    const extraPrueba = (!esCombo && señalKey === "nivel_final") ? tagsEnPrueba(p).map(t => ` <span style="color:var(--amber);" title="Señal apagada en prueba">${nombreCortoPrueba(t)}</span>`).join("") : "";
+    const extraPrueba = (!esCombo && señalKey === "nivel_final") ? tagsEnPrueba(p).map(t => ` <span style="color:var(--amber);" title="Señal apagada en prueba">${nombreCompletoPrueba(t)}</span>`).join("") : "";
     return `<div class="pick"><span class="pick-date">${fecha}</span><span class="pick-teams">${p.local} vs ${p.visitante}</span><span class="pick-tier" title="cuota ${cuotaTxt}">${etiqueta}${extraPrueba}</span><span class="pick-result ${resClass}">${resTxt}</span></div>`;
   }).join("") + '</div>';
 }
@@ -1473,6 +1476,7 @@ function tagsEnPrueba(p){
   return String(p.motivos_btts_todos || "").split("|").filter(t => SENALES_EN_PRUEBA.has(t));
 }
 function nombreCortoPrueba(t){ return (ETIQUETAS_BTTS[t] || t).split(" · ")[0]; }
+function nombreCompletoPrueba(t){ return ETIQUETAS_BTTS[t] || t; }
 function renderPartidosEnPrueba(data){
   const vistos = new Set(), todos = [];
   for(const p of [...(data.picks_hoy || []), ...(data.picks_recientes || [])]){
@@ -1505,7 +1509,7 @@ function renderPartidosEnPrueba(data){
       const real = p.motivo_btts && p.motivo_btts !== "ninguno_evitar_final" ? ` · ${nombreCortoPrueba(p.motivo_btts)}` : "";
       return `<div class="pick"><span class="pick-date">${fechaDe(p).slice(5)}</span><span class="pick-teams">${p.local} vs ${p.visitante}</span><span class="pick-tier" title="cuota ${cuota}">${cuota} · ${decision}${real}</span><span class="pick-result ${cls}">${txt}</span></div>`;
     }).join("");
-    return `<div style="margin-bottom:18px;"><p class="bar-label" style="margin-bottom:8px;">${ETIQUETAS_BTTS[t] ? nombreCortoPrueba(t) : t} <span style="opacity:0.7;font-weight:normal;">— ${gan}/${res.length} aciertos · ${pend} pendientes</span></p><div class="picks">${filas}</div></div>`;
+    return `<div style="margin-bottom:18px;"><p class="bar-label" style="margin-bottom:8px;">${nombreCompletoPrueba(t)} <span style="opacity:0.7;font-weight:normal;">— ${gan}/${res.length} aciertos · ${pend} pendientes</span></p><div class="picks">${filas}</div></div>`;
   }).join("");
   return `<section><p class="section-title">🔬 Partidos de las señales en prueba (apagadas)</p><p class="bar-label" style="opacity:0.7;font-weight:normal;margin-bottom:12px;">Todos los partidos recientes que cumplen cada señal, se jueguen o no. "no se juega" = la decisión real del sistema fue otra y este partido no recibe alerta.</p>${bloques}</section>`;
 }
