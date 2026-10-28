@@ -443,7 +443,7 @@ const ETIQUETAS_COMBO = {
     "combo_hotel_xgmin_gftotal": "🏨 Hotel (Combinada) · cuota combo 1.5-1.8 · xG mín≤1.35 + GF total≥3.79",
 };
 
-const SENALES_EN_PRUEBA = new Set(["estable_gc_fallo_plus","estable_btts_fallo_plus","atlas_plus","centinela_plus","centinela_elite_plus","bastion_plus","bastion_elite_plus","esmeralda_cuota_1.45-1.55_plus","cumbre_xga137","cumbre_xga137_fallo20","stake9_fallo_gc","s1_vip_valor","s2_rescate_valor","s3_ambar_granate_valor"]);
+const SENALES_EN_PRUEBA = new Set(["estable_gc_fallo_plus","estable_btts_fallo_plus","atlas_plus","centinela_plus","centinela_elite_plus","bastion_plus","bastion_elite_plus","esmeralda_cuota_1.45-1.55_plus","cumbre_xga137","cumbre_xga137_fallo20","stake9_fallo_gc","s1_vip_valor","s2_rescate_valor","s3_ambar_granate_valor","mezcla_01","mezcla_02","mezcla_03","mezcla_04","mezcla_05","mezcla_06","mezcla_07","mezcla_08","mezcla_09","mezcla_10","mezcla_11","mezcla_12","mezcla_13","mezcla_14","stake9_mezcla","camino_normal_VIP_Fuerte_edge_ok_mezcla","perfil_xga_sot_btts_mezcla","vanguard_mezcla","perfil_calibrado_xga_fallo_mezcla","camino_normal_Stake10_cuota_alta_gcmin_mezcla"]);
 const ETIQUETAS_BTTS = {
     "camino_normal_VIP+": "camino normal (VIP+)",
     "camino_normal_VIP+_refinada": "💎 VIP+ refinada · SOT total≤14 + xGA mín≥1.2",
@@ -555,6 +555,26 @@ const ETIQUETAS_BTTS = {
     "s1_vip_valor": "🔬 S1 VIP Valor · EN PRUEBA (apagada) · VIP+ / VIP+ refinada / VIP Reforzado con cuota BTTS 1.45-1.74",
     "s2_rescate_valor": "🔬 S2 Rescate Valor · EN PRUEBA (apagada) · rescate ataque balanceado (GF≥3.0 o fallo≤18%) con cuota≥1.45 y probabilidad del modelo<65%",
     "s3_ambar_granate_valor": "🔬 S3 Ámbar-Granate Valor · EN PRUEBA (apagada) · Ámbar o Granate con cuota≥1.45 y probabilidad del modelo<65%",
+    "mezcla_01": "🧪 Mezcla 01 · EN PRUEBA (apagada) · GF total≥3.65 + GC mín≥1.25 + xG mín≥1.49",
+    "mezcla_02": "🧪 Mezcla 02 · EN PRUEBA (apagada) · SOT máx≥5.00 + GF mín≥1.50 + GC mín≥1.44",
+    "mezcla_03": "🧪 Mezcla 03 · EN PRUEBA (apagada) · GF mín≥1.50 + GC mín≥1.25 + xG mín≥1.49",
+    "mezcla_04": "🧪 Mezcla 04 · EN PRUEBA (apagada) · GF total≥3.65 + GC mín≥1.09 + xG mín≥1.49",
+    "mezcla_05": "🧪 Mezcla 05 · EN PRUEBA (apagada) · BTTS% prom≥56.50 + GF total≥3.65 + GC mín≥1.25 + xG mín≥1.49",
+    "mezcla_06": "🧪 Mezcla 06 · EN PRUEBA (apagada) · GF total≥3.65 + xG×SOT≥34.07 + GC mín≥1.25 + xG mín≥1.49",
+    "mezcla_07": "🧪 Mezcla 07 · EN PRUEBA (apagada) · GF total≥3.65 + GC mín≥1.25 + xG mín≥1.49 + fallo máx %≤24.00",
+    "mezcla_08": "🧪 Mezcla 08 · EN PRUEBA (apagada) · SOT total≥10.50 + GF mín≥1.50 + GC mín≥1.25 + xG mín≥1.49",
+    "mezcla_09": "🧪 Mezcla 09 · EN PRUEBA (apagada) · GF total≥3.65 + SOT máx≥5.00 + GC mín≥1.25 + xG mín≥1.49",
+    "mezcla_10": "🧪 Mezcla 10 · EN PRUEBA (apagada) · GF total≥3.65 + BTTS% mín≥47.00 + GC mín≥1.25 + xG mín≥1.49",
+    "mezcla_11": "🧪 Mezcla 11 · EN PRUEBA (apagada) · BTTS% prom≥62.50 + SOT total≥10.50 + GF mín≥1.50 + GC mín≥1.44",
+    "mezcla_12": "🧪 Mezcla 12 · EN PRUEBA (apagada) · GF total≥3.65 + GF mín≥1.12 + GC mín≥1.25 + xG mín≥1.49",
+    "mezcla_13": "🧪 Mezcla 13 · EN PRUEBA (apagada) · GF total≥3.65 + SOT máx≥5.50 + GC mín≥1.25 + xG mín≥1.49",
+    "mezcla_14": "🧪 Mezcla 14 · EN PRUEBA (apagada) · BTTS% prom≥62.50 + GF total≥3.65 + GC mín≥1.25 + xG mín≥1.49",
+    "stake9_mezcla": "🧪 🎲 Stake 9 · SOT total≥10 + CS máx≤35% + goles concedidos 1erT≥1.3 + alguna de las 14 mezclas (01-14) · EN PRUEBA (apagada)",
+    "camino_normal_VIP_Fuerte_edge_ok_mezcla": "🧪 camino normal (VIP/Fuerte) + alguna de las 14 mezclas (01-14) · EN PRUEBA (apagada)",
+    "perfil_xga_sot_btts_mezcla": "🧪 💎 xGA máx≥1.5 + SOT≥10 + BTTS%≥45 + alguna de las 14 mezclas (01-14) · EN PRUEBA (apagada)",
+    "vanguard_mezcla": "🧪 🏳️ Vanguard · cuota 1.5-1.65 · SOT total≥10 + CS máx≤35% + alguna de las 14 mezclas (01-14) · EN PRUEBA (apagada)",
+    "perfil_calibrado_xga_fallo_mezcla": "🧪 🎲 prob. calibrada 60-70% + xGA máx≥1.8 + fallo≥25% + alguna de las 14 mezclas (01-14) · EN PRUEBA (apagada)",
+    "camino_normal_Stake10_cuota_alta_gcmin_mezcla": "🧪 🎯 Stake10 · cuota≥1.40 + GC mín≤1.5 + alguna de las 14 mezclas (01-14) · EN PRUEBA (apagada)",
     "centinela_failed_bajo": "🗿⚠️ Centinela+Fallo bajo · igual que Centinela + fallo máx≤26% (EN SEGUIMIENTO, muestra real chica)",
     "apuesta_top_btts_gcmin": "🏆⚠️ Apuesta TOP BTTS+GC bajo · igual + GC mín≤1.10 (EN SEGUIMIENTO, muestra real chica)",
     "plata_cuota_1.40-1.55_sot_alto": "🥈⚠️ Plata 1.40-1.55+SOT alto · igual + SOT total≥8.5 (EN SEGUIMIENTO, muestra real chica)",
