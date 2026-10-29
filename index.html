@@ -775,12 +775,25 @@ function confirmacionCuotaBadge(p, mercado){
   // especifica es JUGAR - si es null, no aplica (no es JUGAR, o falta dato).
   const mov = p["movimiento_" + mercado + "_pp"];
   const umbral = (DATA && DATA.umbral_movimiento_pp) || 4;
+  // 29 oct 2026: ALZA de cuota. Si la cuota SUBIO >=2% desde que se detecto
+  // el pick, el mercado se esta alejando de el. Medido en el historico (4
+  // mercados, ~2.300 apuestas, en las dos mitades del periodo): ROI -13% con
+  // alza >=2% contra -7% sin movimiento (en las señales JUGAR la diferencia
+  // fue menor: -8% contra -6%, pocos casos). Es informativo, no cambia la señal.
+  const alza = p["alza_" + mercado + "_pct"];
+  const umbralAlza = (DATA && DATA.umbral_alza_cuota_pct) || 2;
+  if(alza != null && alza >= umbralAlza){
+    const co = p["cuota_" + mercado + "_inicial"] ?? p["cuota_" + mercado];
+    const ca = p["cuota_" + mercado + "_actual"];
+    const txt = (co != null && ca != null) ? ` (${co.toFixed(2)} → ${ca.toFixed(2)})` : "";
+    return ` · <span title="La cuota SUBIÓ ${alza.toFixed(1)}% desde que se detectó la señal: el mercado se está alejando de este pick. En el histórico (todos los partidos de BTTS, O1.5, O2.5 y 1er tiempo O0.5, 27 jul-6 sep) las apuestas con alza de 2% o más rindieron ROI -13% contra -7% las que no se movieron; entre las señales JUGAR la diferencia fue menor (-8% contra -6%, pocos casos). Dato informativo, no cambia la señal." style="color:var(--loss);">⚠️ cuota subiendo (+${alza.toFixed(1)}%)${txt}</span>`;
+  }
   if(mov == null || mov < umbral) return "";
   // Se muestran las dos cuotas (original -> actual) ademas del porcentaje,
   // para que se pueda verificar a simple vista que cuota mas baja =
   // porcentaje positivo (antes solo se veia el %, y sin la cuota original
   // visible en ningun lado era facil confundirse sobre que subio o bajo).
-  const cuotaOrig = p["cuota_" + mercado];
+  const cuotaOrig = p["cuota_" + mercado + "_inicial"] ?? p["cuota_" + mercado];
   const cuotaAct = p["cuota_" + mercado + "_actual"];
   const cuotasTxt = (cuotaOrig != null && cuotaAct != null)
     ? ` (${cuotaOrig.toFixed(2)} → ${cuotaAct.toFixed(2)})`
@@ -1120,6 +1133,13 @@ function renderCombo(picks){
   const fila = (p) => {
     const cuotaProducto = (p.cuota_btts && p.cuota_o25) ? (p.cuota_btts * p.cuota_o25) : null;
     const cuotaCombo = cuotaProducto ? (1 + (cuotaProducto - 1) * (1 - DESCUENTO_CORRELACION)).toFixed(2) : "—";
+    // 29 oct 2026: cuota MINIMA de la combinada. La cuota de arriba es una
+    // ESTIMACION (la casa no la publica en FootyStats). Con el historial de esta
+    // señal se calcula cuanto tendria que pagar la casa para que su ROI sea 0:
+    // si tu casa paga menos que esto, esta señal pierde dinero.
+    const fBE = (DATA && DATA.combo_factor_equilibrio) ? DATA.combo_factor_equilibrio[p.motivo_combo] : null;
+    const cuotaMin = (cuotaProducto && fBE != null) ? (1 + (cuotaProducto - 1) * fBE) : null;
+    const minTxt = cuotaMin ? ` <span title="Cuota mínima de la combinada para que esta señal no pierda dinero según su propio historial. La cuota ${cuotaCombo} es una ESTIMACIÓN (producto de las dos cuotas con descuento de ${(DESCUENTO_CORRELACION*100).toFixed(1)}%), no la de tu casa: si tu casa paga menos que ${cuotaMin.toFixed(2)}, no la juegues." style="color:var(--amber);">(mín. ${cuotaMin.toFixed(2)})</span>` : "";
     const resultado = p.resultado_combo;
     let badgeClass, badgeTxt;
     if(resultado === true){ badgeClass = "ganada"; badgeTxt = "✓ Ganada"; }
@@ -1134,7 +1154,7 @@ function renderCombo(picks){
           <div class="match-teams">${p.local} vs ${p.visitante}</div>
           <div class="match-liga">${p.liga || ""} · ${diaBadge(p)}${respaldoBadge(p)}${notaLigaConfianza(p)}${motivo}</div>
         </div>
-        <span class="match-pct">cuota ${cuotaCombo} · ${badgeTxt}${probTxt}</span>
+        <span class="match-pct">cuota ${cuotaCombo}${minTxt} · ${badgeTxt}${probTxt}</span>
         <span class="match-badge ${badgeClass}">${badgeTxt}</span>
       </div>`;
   };
@@ -1422,7 +1442,7 @@ function renderCalibracion(calibracion){
 }
 
 function renderMovimientoValidacion(mv){
-  const con = mv?.con_movimiento, sin = mv?.sin_movimiento;
+  const con = mv?.con_movimiento, sin = mv?.sin_movimiento, alza = mv?.con_alza;
   if((!con || con.total === 0) && (!sin || sin.total === 0)){
     return '<div class="empty">Todavía no hay partidos jugados con suficiente historial de movimiento de cuota.</div>';
   }
@@ -1431,8 +1451,9 @@ function renderMovimientoValidacion(mv){
     return `<tr><td class="name">${etiqueta}</td><td class="num">${s.total}</td><td class="num">${s.acierto_pct.toFixed(0)}% (${s.aciertos}/${s.total})</td></tr>`;
   };
   return `<table class="cmp-table"><thead><tr><th>Grupo</th><th class="num">n</th><th class="num">Acierto</th></tr></thead><tbody>
-    ${fila("Con +4pp de movimiento", con)}
+    ${fila("Con +4pp de movimiento (cuota bajando)", con)}
     ${fila("Sin ese movimiento", sin)}
+    ${fila("⚠️ Con alza de cuota ≥2% (cuota subiendo)", alza)}
   </tbody></table>`;
 }
 
