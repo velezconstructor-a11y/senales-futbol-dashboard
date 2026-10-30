@@ -297,6 +297,57 @@
   ::selection{background:var(--amber);color:var(--pitch-950);}
   :focus-visible{outline:2px solid var(--amber);outline-offset:2px;}
   @media (prefers-reduced-motion: reduce){*{animation:none !important;transition:none !important;}}
+
+  /* ===== SELECCION VIP (30 oct 2026) ===== */
+  .vip-tiles{display:grid;grid-template-columns:repeat(auto-fit, minmax(150px, 1fr));gap:10px;margin:0 0 18px;}
+  .vip-tile{background:var(--pitch-800);border:1px solid var(--line);border-radius:10px;padding:14px 16px;}
+  .vip-tile .lbl{font-family:var(--mono);font-size:11px;text-transform:uppercase;letter-spacing:.06em;color:var(--chalk-dim);}
+  .vip-tile .val{font-size:28px;font-weight:700;line-height:1.1;margin-top:8px;font-family:var(--sans);}
+  .vip-tile .sub{font-family:var(--mono);font-size:11px;color:var(--chalk-dim);margin-top:8px;line-height:1.5;}
+  .vip-verdict{background:var(--pitch-800);border:1px solid var(--line);border-left:3px solid var(--amber);border-radius:10px;padding:16px 18px;font-size:14px;line-height:1.6;}
+  .vip-verdict p{margin:0 0 10px;}
+  .vip-verdict p:last-child{margin-bottom:0;}
+  .vip-aviso{background:rgba(209,154,61,0.08);border:1px solid var(--amber-dim);border-radius:10px;padding:12px 16px;font-size:13px;line-height:1.55;color:var(--chalk);margin:0 0 14px;}
+  .vip-dim{color:var(--chalk-dim);}
+  .vip-nota{font-family:var(--mono);font-size:10.5px;color:var(--chalk-dim);margin-top:2px;line-height:1.4;font-weight:400;}
+  .vip-scroll{overflow-x:auto;-webkit-overflow-scrolling:touch;}
+  .vip-scroll .cmp-table{min-width:640px;}
+  .vip-chip{display:inline-block;font-family:var(--mono);font-size:10.5px;font-weight:700;letter-spacing:.04em;padding:2px 9px;border-radius:20px;border:1px solid var(--amber-dim);color:var(--amber);white-space:nowrap;}
+  .vip-chip.fuerte{background:var(--amber);color:var(--pitch-950);border-color:var(--amber);}
+  .vip-chip.gris{border-color:var(--line);color:var(--chalk-dim);}
+  .vip-semaforo{display:inline-flex;align-items:center;gap:8px;font-family:var(--mono);font-size:12px;padding:5px 12px;border-radius:20px;border:1px solid var(--line);color:var(--chalk);}
+  .vip-semaforo .pt{width:9px;height:9px;border-radius:50%;background:#445c4e;flex-shrink:0;}
+  .vip-semaforo.ok .pt{background:var(--win);box-shadow:0 0 6px var(--win);}
+  .vip-semaforo.mal .pt{background:var(--loss);box-shadow:0 0 6px var(--loss);}
+  .vip-semaforo.medio .pt{background:var(--amber);box-shadow:0 0 6px var(--amber);}
+  .vip-prog{margin-top:10px;}
+  .vip-prog .bar-track{margin-top:0;height:8px;}
+  .vip-prog .bar-fill{background:var(--amber);}
+  .vip-prog-txt{display:flex;justify-content:space-between;gap:10px;font-family:var(--mono);font-size:11px;color:var(--chalk-dim);margin-top:6px;flex-wrap:wrap;}
+  .vip-det{margin-top:12px;font-size:12px;color:var(--chalk-dim);font-family:var(--mono);}
+  .vip-det summary{cursor:pointer;padding:4px 0;}
+  .vip-det summary:hover{color:var(--chalk);}
+  .vip-chart{position:relative;}
+  .vip-chart svg{display:block;width:100%;height:auto;touch-action:pan-y;}
+  .vip-chart svg:focus-visible{outline:2px solid var(--amber);outline-offset:2px;border-radius:6px;}
+  .vip-leyenda{display:flex;gap:18px;flex-wrap:wrap;margin:0 0 10px;font-size:12px;color:var(--chalk-dim);font-family:var(--mono);}
+  .vip-leyenda .k{display:inline-block;width:18px;height:0;border-top:2px solid;vertical-align:middle;margin-right:6px;border-radius:2px;}
+  .vip-tip{position:absolute;pointer-events:none;z-index:5;background:var(--pitch-950);border:1px solid var(--line);border-radius:8px;padding:8px 10px;font-family:var(--mono);font-size:11.5px;line-height:1.55;min-width:150px;display:none;box-shadow:0 4px 16px rgba(0,0,0,.4);}
+  .vip-tip .f{color:var(--chalk-dim);margin-bottom:4px;}
+  .vip-tip .r{display:flex;align-items:center;gap:8px;}
+  .vip-tip .r .k{display:inline-block;width:12px;height:0;border-top:2px solid;border-radius:2px;flex-shrink:0;}
+  .vip-tip .r b{font-size:13px;margin-left:auto;padding-left:12px;}
+  .vip-pick-vacio{border:1px dashed var(--line);border-radius:10px;padding:22px 18px;text-align:center;color:var(--chalk-dim);font-size:13px;line-height:1.6;}
+
+  .vip-scroll .cmp-table td.num, .vip-scroll .cmp-table th.num{white-space:nowrap;}
+  .vip-scroll .cmp-table td.vip-nom{min-width:150px;}
+  .vip-scroll .cmp-table td:first-child, .vip-scroll .cmp-table th:first-child{position:sticky;left:0;z-index:1;background:var(--pitch-950);}
+  @media (max-width:620px){
+    .vip-scroll .cmp-table{min-width:760px;}
+    .vip-tile .val{font-size:24px;}
+  }
+  .vip-scroll .cmp-table tr.vip-dest td{background:rgba(209,154,61,0.07);}
+  .vip-scroll .cmp-table tr.vip-dest td:first-child{background:linear-gradient(rgba(209,154,61,0.07), rgba(209,154,61,0.07)), var(--pitch-950);}
 </style>
 </head>
 <body>
@@ -322,6 +373,7 @@
 
 const TABS = [
   {id:"btts",  label:"Ambos Marcan"},
+  {id:"vip",   label:"💎 Selección VIP"},
   {id:"o15",   label:"Over 1.5"},
   {id:"o25",   label:"Over 2.5"},
   {id:"combo", label:"BTTS+O2.5"},
@@ -1023,7 +1075,7 @@ function renderMercado(picks, probKey, senalKey, tierKey, cuotaKey, resultadoDes
         <div class="conf-card">
           <div>
             <div class="conf-teams">${p.local} vs ${p.visitante}</div>
-            <div class="conf-liga">${p.liga || ""} · ${diaBadge(p)}${respaldoBadge(p)}${confirmacionCuotaBadge(p, mercadoKey)}${notaLigaConfianza(p)}${mercadoKey === 'ht05' ? notaOver15Ht(p) : ''}${mercadoKey === 'btts' ? notaRescateBtts(p) : ''}${mercadoKey === 'o25' ? notaRescateO25(p) : ''}${mercadoKey === 'o15' ? notaRescateO15(p) : ''}${mercadoKey === 'ht05' ? notaRescateHt05(p) : ''}${mercadoKey === 'btts' ? notaBttsMinAlto(p) : ''}</div>
+            <div class="conf-liga">${p.liga || ""} · ${diaBadge(p)}${mercadoKey === 'btts' ? vipNotaBtts(p) : ''}${respaldoBadge(p)}${confirmacionCuotaBadge(p, mercadoKey)}${notaLigaConfianza(p)}${mercadoKey === 'ht05' ? notaOver15Ht(p) : ''}${mercadoKey === 'btts' ? notaRescateBtts(p) : ''}${mercadoKey === 'o25' ? notaRescateO25(p) : ''}${mercadoKey === 'o15' ? notaRescateO15(p) : ''}${mercadoKey === 'ht05' ? notaRescateHt05(p) : ''}${mercadoKey === 'btts' ? notaBttsMinAlto(p) : ''}</div>
             ${badgesExtra(p)}
           </div>
           <div class="conf-tier">
@@ -1034,7 +1086,18 @@ function renderMercado(picks, probKey, senalKey, tierKey, cuotaKey, resultadoDes
         </div>`;
       }).join("");
 
-  const validadasHtml = renderCardsConfianza(validadas, "Sin señales validadas hoy todavía.");
+  // 30 oct 2026: en Ambos Marcan, con la Seleccion VIP activa, "Picks del Dia" muestra
+  // la seleccion (Respaldada primero) y deja los demas JUGAR plegados aparte.
+  const separaVip = mercadoKey === "btts" && vipActiva() && vipPol().solo_vip_en_telegram === true && picks.some(p => "vip_btts" in p);
+  let validadasHtml;
+  if(separaVip){
+    const enSel = validadas.filter(p => vipClase(p)).sort(vipOrden);
+    const fuera = validadas.filter(p => !vipClase(p));
+    validadasHtml = renderCardsConfianza(enSel, "Hoy no hay picks de BTTS en la Selección VIP. No enviar nada es una decisión válida.")
+      + (fuera.length ? `<details class="vip-det"><summary>Otros ${fuera.length} JUGAR de BTTS sin ventaja de precio (no se envían al Telegram)</summary><div style="margin-top:8px;">${renderCardsConfianza(fuera, "")}</div></details>` : "");
+  } else {
+    validadasHtml = renderCardsConfianza(validadas, "Sin señales validadas hoy todavía.");
+  }
   const enSeguimientoHtml = renderCardsConfianza(enSeguimiento, "Nada en seguimiento hoy.");
 
   // Top probabilidad: independiente de si el modelo disparo formalmente "JUGAR"
@@ -1059,7 +1122,7 @@ function renderMercado(picks, probKey, senalKey, tierKey, cuotaKey, resultadoDes
         <div class="conf-card">
           <div>
             <div class="conf-teams">${p.local} vs ${p.visitante}</div>
-            <div class="conf-liga">${p.liga || ""} · ${diaBadge(p)}${respaldoBadge(p)}${confirmacionCuotaBadge(p, mercadoKey)}${notaLigaConfianza(p)}${mercadoKey === 'ht05' ? notaOver15Ht(p) : ''}${mercadoKey === 'btts' ? notaRescateBtts(p) : ''}${mercadoKey === 'o25' ? notaRescateO25(p) : ''}${mercadoKey === 'o15' ? notaRescateO15(p) : ''}${mercadoKey === 'ht05' ? notaRescateHt05(p) : ''}${mercadoKey === 'btts' ? notaBttsMinAlto(p) : ''}</div>
+            <div class="conf-liga">${p.liga || ""} · ${diaBadge(p)}${mercadoKey === 'btts' ? vipNotaBtts(p) : ''}${respaldoBadge(p)}${confirmacionCuotaBadge(p, mercadoKey)}${notaLigaConfianza(p)}${mercadoKey === 'ht05' ? notaOver15Ht(p) : ''}${mercadoKey === 'btts' ? notaRescateBtts(p) : ''}${mercadoKey === 'o25' ? notaRescateO25(p) : ''}${mercadoKey === 'o15' ? notaRescateO15(p) : ''}${mercadoKey === 'ht05' ? notaRescateHt05(p) : ''}${mercadoKey === 'btts' ? notaBttsMinAlto(p) : ''}</div>
             ${badgesExtra(p)}
           </div>
           <div class="conf-tier">
@@ -1108,7 +1171,7 @@ function renderMercado(picks, probKey, senalKey, tierKey, cuotaKey, resultadoDes
           <div class="match-row">
             <div>
               <div class="match-teams">${p.local} vs ${p.visitante}</div>
-              <div class="match-liga">${tierTxt}${p.liga || ""} · ${diaBadge(p)}${respaldoBadge(p)}${confirmacionCuotaBadge(p, mercadoKey)}${notaLigaConfianza(p)}${mercadoKey === 'ht05' ? notaOver15Ht(p) : ''}${mercadoKey === 'btts' ? notaRescateBtts(p) : ''}${mercadoKey === 'o25' ? notaRescateO25(p) : ''}${mercadoKey === 'o15' ? notaRescateO15(p) : ''}${mercadoKey === 'ht05' ? notaRescateHt05(p) : ''}${mercadoKey === 'btts' ? notaBttsMinAlto(p) : ''}</div>
+              <div class="match-liga">${tierTxt}${p.liga || ""} · ${diaBadge(p)}${mercadoKey === 'btts' ? vipNotaBtts(p) : ''}${respaldoBadge(p)}${confirmacionCuotaBadge(p, mercadoKey)}${notaLigaConfianza(p)}${mercadoKey === 'ht05' ? notaOver15Ht(p) : ''}${mercadoKey === 'btts' ? notaRescateBtts(p) : ''}${mercadoKey === 'o25' ? notaRescateO25(p) : ''}${mercadoKey === 'o15' ? notaRescateO15(p) : ''}${mercadoKey === 'ht05' ? notaRescateHt05(p) : ''}${mercadoKey === 'btts' ? notaBttsMinAlto(p) : ''}</div>
               ${badgesExtra(p)}
             </div>
             <span class="match-pct">cuota ${cuotaTxt} · ${pctT}${edgeTxt(prob, p[cuotaKey])}</span>
@@ -1118,7 +1181,7 @@ function renderMercado(picks, probKey, senalKey, tierKey, cuotaKey, resultadoDes
 
   return `
     <section>
-      <p class="section-title">✅ Picks del Día</p>
+      <p class="section-title">${separaVip ? "💎 Picks del Día — Selección VIP" : "✅ Picks del Día"}</p>
       ${validadasHtml}
     </section>
     <!-- 18 oct 2026: la seccion "En seguimiento" se quito de la vista: solo se
@@ -1402,7 +1465,7 @@ function renderHistorialMercado(picksRecientes, señalKey, tierKey, resultadoKey
     if(resultado === true){ resClass = "win"; resTxt = "✓"; }
     else if(resultado === false){ resClass = "loss"; resTxt = "✕"; }
     const fecha = (p.fecha_partido || p.fecha || "").split(" ")[0].slice(5);
-    const etiqueta = esCombo ? p.senal_btts_o25 : (p[tierKey] || "—");
+    const etiqueta = esCombo ? p.senal_btts_o25 : (((señalKey === "nivel_final" && vipClase(p)) ? "💎 " : "") + (p[tierKey] || "—"));
     const cuotaTxt = esCombo
       ? (p.cuota_combo != null ? p.cuota_combo.toFixed(2) : "—")
       : (p[cuotaKey] != null ? p[cuotaKey].toFixed(2) : "—");
@@ -1637,6 +1700,479 @@ function cambiarOrdenDetalle(modo){
   if(DATA) render(DATA);
 }
 
+// ============================================================================
+// SELECCION VIP DE BTTS (30 oct 2026)
+// ============================================================================
+// Toda la medicion llega calculada en dashboard_data.json -> "vip_btts"
+// (backtest._vip_btts_datos); aqui solo se muestra. La regla que decide quien
+// entra a la seleccion vive en reglas_activas.clasificar_vip_btts (Python) y
+// cada pick ya trae su clase en p.vip_btts ("RESPALDADA", "ZONA_VALOR" o null).
+const MESES_ES = ["ene","feb","mar","abr","may","jun","jul","ago","sep","oct","nov","dic"];
+const MESES_ES_LARGO = ["enero","febrero","marzo","abril","mayo","junio","julio","agosto","septiembre","octubre","noviembre","diciembre"];
+const VIP_CLASES = {
+  RESPALDADA: {nombre: "Respaldada", chip: "💎 VIP · RESPALDADA", fuerte: true},
+  ZONA_VALOR: {nombre: "Zona de valor", chip: "💎 VIP · ZONA DE VALOR", fuerte: false},
+};
+// Colores de las 2 lineas de la curva: casillas 1 y 2 de la paleta categorica
+// validada para fondo oscuro (separacion para daltonismo y contraste >=3:1
+// contra el fondo de la tarjeta, verificado con validate_palette.js).
+const VIP_COLOR_VIP = "#3987e5";
+const VIP_COLOR_TODAS = "#d95926";
+let VIP_CURVA = null;
+
+function vipEsc(s){
+  return String(s == null ? "" : s).replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+}
+function vipPol(){ return (DATA && DATA.vip_btts && DATA.vip_btts.politica) || {}; }
+function vipActiva(){ return !!(DATA && DATA.vip_btts && DATA.vip_btts.politica && !DATA.vip_btts.error && !DATA.vip_btts.vacio); }
+function vipClase(p){ return (p && VIP_CLASES[p.vip_btts]) ? p.vip_btts : null; }
+function vipFmt(x, nd, signo){
+  if(x == null || isNaN(x)) return "—";
+  nd = (nd == null) ? 1 : nd;
+  const s = Math.abs(x).toFixed(nd);
+  const esCero = Number(s) === 0;
+  if(x < 0 && !esCero) return "-" + s;
+  return (signo !== false && x > 0 && !esCero ? "+" : "") + s;
+}
+function vipPct(x){ return x == null ? "—" : vipFmt(x, 1) + "%"; }
+function vipCol(x){ return (x == null || x === 0) ? "var(--chalk)" : (x > 0 ? "var(--win)" : "var(--loss)"); }
+function vipN(x){
+  if(x == null || isNaN(x)) return "—";
+  const s = String(Math.round(Number(x)));
+  return s.replace(/\B(?=(\d{3})+(?!\d))/g, "\u202f");
+}
+function vipFechaCorta(f){
+  if(!f) return "—";
+  const p = String(f).split("-");
+  return p.length === 3 ? (parseInt(p[2], 10) + " " + MESES_ES[parseInt(p[1], 10) - 1]) : f;
+}
+function vipMesNombre(ym){
+  const p = String(ym || "").split("-");
+  return p.length === 2 ? MESES_ES_LARGO[parseInt(p[1], 10) - 1] : (ym || "");
+}
+function vipOrden(a, b){
+  const pr = (p) => p.vip_btts === "RESPALDADA" ? 0 : (p.vip_btts === "ZONA_VALOR" ? 1 : 2);
+  if(pr(a) !== pr(b)) return pr(a) - pr(b);
+  const pa = a.prob_btts_calibrada != null ? a.prob_btts_calibrada : (a.prob_btts || 0);
+  const pb = b.prob_btts_calibrada != null ? b.prob_btts_calibrada : (b.prob_btts || 0);
+  return pb - pa;
+}
+
+// Etiqueta corta para las tarjetas del mercado Ambos Marcan.
+function vipNotaBtts(p){
+  if(!vipActiva() || p.nivel_final !== "JUGAR") return "";
+  const V = DATA.vip_btts, pol = vipPol();
+  const c = vipClase(p);
+  if(c){
+    const info = VIP_CLASES[c];
+    const titulo = c === "RESPALDADA"
+      ? "Respaldada: VIP+ con cuota 1.40–1.60, o Pilares. Es el grupo con mejor respaldo en los datos (ver pestaña Selección VIP)."
+      : `Zona de valor: cuota entre ${Number(pol.cuota_min).toFixed(2)} y ${Number(pol.cuota_max).toFixed(2)}, donde la casa se queda menos. Ver pestaña Selección VIP.`;
+    const enviado = p.alerta_btts ? ' · <span title="Esta alerta ya salió al Telegram" style="color:var(--chalk-dim);">📨 enviado</span>' : "";
+    return ` · <span class="vip-chip ${info.fuerte ? "fuerte" : ""}" title="${vipEsc(titulo)}">${info.chip}</span>${enviado}`;
+  }
+  const r = V.resto_jugar || {};
+  const t = `El sistema dice JUGAR, pero la cuota está fuera de las zonas donde se midió ventaja. En el histórico este grupo rinde ${vipPct(r.roi)} (${vipN(r.n)} apuestas) y no se envía al Telegram.`;
+  return ` · <span class="vip-chip gris" title="${vipEsc(t)}">sin ventaja de precio</span>`;
+}
+
+function vipTile(lbl, val, sub, color){
+  return `<div class="vip-tile"><div class="lbl">${lbl}</div><div class="val" style="${color ? "color:" + color + ";" : ""}">${val}</div><div class="sub">${sub || ""}</div></div>`;
+}
+
+function vipFilaGrupo(nombre, s, nota, destacada, esReferencia){
+  const sty = destacada ? ' class="vip-dest"' : "";
+  const celdaNombre = `<td class="vip-nom">${nombre}${nota ? `<div class="vip-nota">${nota}</div>` : ""}</td>`;
+  if(!s || !s.n){
+    return `<tr${sty}>${celdaNombre}<td class="num vip-dim" colspan="8">sin apuestas</td></tr>`;
+  }
+  const ic = s.ic95 ? `${vipFmt(s.ic95[0])} a ${vipFmt(s.ic95[1])}` : "—";
+  return `<tr${sty}>
+    ${celdaNombre}
+    <td class="num">${vipN(s.n)}</td>
+    <td class="num" style="color:${vipCol(s.roi)};font-weight:700;">${vipPct(s.roi)}</td>
+    <td class="num" style="color:${vipCol(s.alfa)};">${esReferencia ? "—" : vipFmt(s.alfa)}</td>
+    <td class="num">${vipFmt(s.acierto, 1, false)}% <span class="vip-dim">/ ${vipFmt(s.acierto_necesario, 1, false)}%</span></td>
+    <td class="num vip-dim">${ic}</td>
+    <td class="num">${vipFmt(s.cuota_media, 2, false)}</td>
+    <td class="num" style="color:${vipCol(s.uds)};">${vipFmt(s.uds)}u</td>
+    <td class="num">${s.max_caida_u != null ? "-" + vipFmt(s.max_caida_u, 1, false) + "u" : "—"}</td>
+  </tr>`;
+}
+
+function vipSemaforo(L, mercadoRoi){
+  const n = (L && L.n) || 0;
+  if(n === 0) return {cls: "", txt: "Sin apuestas resueltas todavía"};
+  if(n < 30) return {cls: "", txt: `Muy pronto para opinar (${n} apuestas)`};
+  if(n < 100) return {cls: (L.roi != null && L.roi < -15) ? "medio" : "", txt: (L.roi != null && L.roi < -15) ? `Va por debajo de lo esperado, pero con ${n} apuestas todavía puede ser ruido` : `En observación (${n} apuestas; con 100 empieza a pesar)`};
+  if(L.roi != null && L.roi >= 0) return {cls: "ok", txt: `Va en positivo con ${n} apuestas`};
+  if(L.roi != null && mercadoRoi != null && L.roi >= mercadoRoi) return {cls: "medio", txt: `Pierde menos que un partido cualquiera, pero sigue en negativo (${n} apuestas)`};
+  return {cls: "mal", txt: `Va peor que un partido cualquiera con ${n} apuestas: revisar la regla`};
+}
+
+// Ticks "redondos" (1, 2, 5, 10 x potencia de 10) para el eje de unidades.
+function vipTicks(lo, hi){
+  const span = Math.max(hi - lo, 1e-9);
+  const raw = span / 5;
+  const pow = Math.pow(10, Math.floor(Math.log10(raw)));
+  const f = raw / pow;
+  const step = (f <= 1 ? 1 : f <= 2 ? 2 : f <= 5 ? 5 : 10) * pow;
+  const t0 = Math.floor(lo / step + 1e-9) * step, t1 = Math.ceil(hi / step - 1e-9) * step;
+  const ticks = [];
+  for(let v = t0; v <= t1 + step * 1e-6; v += step) ticks.push(Math.round(v * 1000) / 1000);
+  return {ticks, lo: ticks[0], hi: ticks[ticks.length - 1]};
+}
+
+// Curva de ganancia acumulada (unidades): Seleccion VIP contra todas las JUGAR.
+// En pantallas angostas se usa un lienzo mas chico (textos mas grandes al escalar) y
+// solo el valor al final de cada linea; el nombre va en la leyenda de arriba.
+function vipEsMovil(){ return window.innerWidth < 620; }
+function vipCurvaSvg(curva){
+  VIP_CURVA = null;
+  if(!curva || curva.length < 2) return '<div class="empty">Todavía no hay suficientes días para dibujar la curva.</div>';
+  const movil = vipEsMovil();
+  const W = movil ? 380 : 760, H = movil ? 290 : 300;
+  const ml = movil ? 38 : 46, mr = movil ? 60 : 132, mt = 14, mb = 30;
+  const fs = movil ? 12 : 11;
+  const iw = W - ml - mr, ih = H - mt - mb;
+  const t = curva.map(c => Date.parse(c.fecha + "T00:00:00Z"));
+  const t0 = t[0], t1 = t[t.length - 1];
+  const xs = t.map(v => ml + (t1 === t0 ? 0 : iw * (v - t0) / (t1 - t0)));
+  const SER = [
+    {k: "vip", nombre: "Selección VIP", color: VIP_COLOR_VIP},
+    {k: "todas", nombre: "Todas las JUGAR", color: VIP_COLOR_TODAS},
+  ];
+  const vals = [];
+  curva.forEach(c => { SER.forEach(s => vals.push(c[s.k])); });
+  const tk = vipTicks(Math.min(0, ...vals), Math.max(0, ...vals));
+  const yv = (v) => mt + ih * (1 - (v - tk.lo) / (tk.hi - tk.lo));
+  const ys = SER.map(s => curva.map(c => yv(c[s.k])));
+
+  let g = "";
+  tk.ticks.forEach(v => {
+    const y = yv(v);
+    g += `<line x1="${ml}" x2="${W - mr}" y1="${y.toFixed(1)}" y2="${y.toFixed(1)}" stroke="${v === 0 ? "var(--chalk-dim)" : "var(--line)"}" stroke-width="1" ${v === 0 ? 'stroke-opacity="0.55"' : ""}/>`;
+    g += `<text x="${ml - 6}" y="${(y + 4).toFixed(1)}" text-anchor="end" fill="var(--chalk-dim)" font-size="${fs}" font-family="var(--mono)">${vipFmt(v, 0)}</text>`;
+  });
+  // meses en el eje X (primer dato de cada mes); si dos quedan muy pegados se omite la primera
+  const mesesX = [];
+  let mesPrev = "";
+  curva.forEach((c, i) => {
+    const ym = c.fecha.slice(0, 7);
+    if(ym !== mesPrev){ mesPrev = ym; mesesX.push({x: xs[i], txt: MESES_ES[parseInt(ym.slice(5, 7), 10) - 1], ini: i === 0}); }
+  });
+  const minGap = movil ? 46 : 40;
+  mesesX.forEach((m, k) => {
+    const sig = mesesX[k + 1];
+    if(sig && sig.x - m.x < minGap) return;
+    g += `<text x="${m.x.toFixed(1)}" y="${H - 8}" text-anchor="${m.ini ? "start" : "middle"}" fill="var(--chalk-dim)" font-size="${fs}" font-family="var(--mono)">${m.txt}</text>`;
+  });
+  // lineas (2px, extremos redondeados)
+  SER.forEach((s, j) => {
+    const d = curva.map((c, i) => (i ? "L" : "M") + xs[i].toFixed(1) + " " + ys[j][i].toFixed(1)).join(" ");
+    g += `<path d="${d}" fill="none" stroke="${s.color}" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/>`;
+  });
+  // puntos finales con anillo del color de la superficie + etiquetas directas
+  const last = curva.length - 1;
+  const lx = xs[last] + 12;
+  let ly = SER.map((s, j) => ys[j][last]);
+  const sep = movil ? 18 : 34;
+  const hayChoque = Math.abs(ly[0] - ly[1]) < sep;
+  if(hayChoque){
+    const mid = (ly[0] + ly[1]) / 2;
+    const arriba = ly[0] <= ly[1] ? 0 : 1;
+    ly = ly.slice();
+    ly[arriba] = mid - sep / 2;
+    ly[1 - arriba] = mid + sep / 2;
+  }
+  SER.forEach((s, j) => {
+    const cy = ys[j][last];
+    if(hayChoque) g += `<line x1="${xs[last].toFixed(1)}" y1="${cy.toFixed(1)}" x2="${(lx - 3).toFixed(1)}" y2="${ly[j].toFixed(1)}" stroke="${s.color}" stroke-width="1"/>`;
+    g += `<circle cx="${xs[last].toFixed(1)}" cy="${cy.toFixed(1)}" r="4.5" fill="${s.color}" stroke="var(--pitch-800)" stroke-width="2"/>`;
+    if(movil){
+      g += `<text x="${lx.toFixed(1)}" y="${(ly[j] + 4).toFixed(1)}" fill="var(--chalk)" font-size="13" font-weight="700" font-family="var(--sans)">${vipFmt(curva[last][s.k], 1)}u</text>`;
+    } else {
+      g += `<text x="${lx.toFixed(1)}" y="${(ly[j] - 2).toFixed(1)}" fill="var(--chalk-dim)" font-size="11" font-family="var(--mono)">${s.nombre}</text>`;
+      g += `<text x="${lx.toFixed(1)}" y="${(ly[j] + 14).toFixed(1)}" fill="var(--chalk)" font-size="14" font-weight="700" font-family="var(--sans)">${vipFmt(curva[last][s.k], 1)}u</text>`;
+    }
+  });
+  // capa de hover: linea vertical + puntos que siguen al puntero
+  g += `<line id="vipCross" x1="0" x2="0" y1="${mt}" y2="${H - mb}" stroke="var(--chalk-dim)" stroke-width="1" style="display:none;"/>`;
+  SER.forEach((s, j) => { g += `<circle id="vipDot${j}" r="4.5" fill="${s.color}" stroke="var(--pitch-800)" stroke-width="2" style="display:none;"/>`; });
+  g += `<rect x="${ml}" y="0" width="${iw + 12}" height="${H}" fill="transparent" style="cursor:crosshair;"/>`;
+
+  VIP_CURVA = {W, H, xs, ys, curva, series: SER, movil};
+  const resumenAria = `Ganancia acumulada en unidades desde ${curva[0].fecha} hasta ${curva[last].fecha}. Selección VIP: ${vipFmt(curva[last].vip, 1)} unidades. Todas las JUGAR: ${vipFmt(curva[last].todas, 1)} unidades.`;
+  return `<div class="vip-chart">
+    <svg id="vipCurva" viewBox="0 0 ${W} ${H}" role="img" tabindex="0" aria-label="${vipEsc(resumenAria)}">${g}</svg>
+    <div class="vip-tip" id="vipTip"></div>
+  </div>`;
+}
+
+// Conecta el crosshair + tooltip (se llama despues de pintar la pagina).
+function vipInitCurva(){
+  const svg = document.getElementById("vipCurva");
+  const tip = document.getElementById("vipTip");
+  const G = VIP_CURVA;
+  if(!svg || !tip || !G) return;
+  const cross = svg.querySelector("#vipCross");
+  const dots = G.series.map((_, j) => svg.querySelector("#vipDot" + j));
+  let idx = G.curva.length - 1;
+  const ocultar = () => { tip.style.display = "none"; cross.style.display = "none"; dots.forEach(d => { d.style.display = "none"; }); };
+  const mostrar = (i) => {
+    idx = Math.max(0, Math.min(G.curva.length - 1, i));
+    const c = G.curva[idx];
+    cross.setAttribute("x1", G.xs[idx]); cross.setAttribute("x2", G.xs[idx]); cross.style.display = "";
+    G.series.forEach((s, j) => { dots[j].setAttribute("cx", G.xs[idx]); dots[j].setAttribute("cy", G.ys[j][idx]); dots[j].style.display = ""; });
+    tip.textContent = "";
+    const f = document.createElement("div"); f.className = "f";
+    f.textContent = vipFechaCorta(c.fecha) + " " + c.fecha.slice(0, 4);
+    tip.appendChild(f);
+    G.series.forEach(s => {
+      const r = document.createElement("div"); r.className = "r";
+      const k = document.createElement("span"); k.className = "k"; k.style.borderTopColor = s.color; r.appendChild(k);
+      const n = document.createElement("span"); n.textContent = s.nombre; r.appendChild(n);
+      const b = document.createElement("b"); b.textContent = vipFmt(c[s.k], 1) + "u"; r.appendChild(b);
+      tip.appendChild(r);
+    });
+    tip.style.display = "block";
+    const rect = svg.getBoundingClientRect();
+    const escX = rect.width / G.W, escY = rect.height / G.H;
+    const px = G.xs[idx] * escX;
+    const wT = tip.offsetWidth, hT = tip.offsetHeight;
+    // 4 esquinas posibles (derecha/izquierda del cursor, arriba/abajo): gana la que menos lineas tapa
+    const cands = [];
+    [px + 14, px - wT - 14].forEach(l => {
+      if(l < 0 || l + wT > rect.width) return;
+      [6, rect.height - hT - 34 * escY].forEach(t => cands.push({l, t: Math.max(6, t)}));
+    });
+    if(!cands.length) cands.push({l: Math.max(0, Math.min(px + 14, rect.width - wT)), t: 6});
+    const cruces = (c) => { let n = 0; G.ys.forEach((col, j) => col.forEach((yy, i) => {
+      const x = G.xs[i] * escX, y = yy * escY;
+      if(x > c.l - 6 && x < c.l + wT + 6 && y > c.t - 8 && y < c.t + hT + 8) n++;
+    })); return n; };
+    let mejor = cands[0], mejorN = Infinity;
+    cands.forEach(c => { const n = cruces(c); if(n < mejorN){ mejor = c; mejorN = n; } });
+    tip.style.left = mejor.l + "px";
+    tip.style.top = mejor.t + "px";
+  };
+  const masCercano = (x) => {
+    let lo = 0, hi = G.xs.length - 1;
+    while(hi - lo > 1){ const m = (lo + hi) >> 1; if(G.xs[m] < x) lo = m; else hi = m; }
+    return (Math.abs(G.xs[lo] - x) <= Math.abs(G.xs[hi] - x)) ? lo : hi;
+  };
+  const desdeEvento = (ev) => {
+    const rect = svg.getBoundingClientRect();
+    return masCercano((ev.clientX - rect.left) * G.W / rect.width);
+  };
+  svg.addEventListener("pointermove", ev => mostrar(desdeEvento(ev)));
+  svg.addEventListener("pointerdown", ev => mostrar(desdeEvento(ev)));
+  svg.addEventListener("pointerleave", ocultar);
+  svg.addEventListener("focus", () => mostrar(idx));
+  svg.addEventListener("blur", ocultar);
+  svg.addEventListener("keydown", ev => {
+    const paso = ev.shiftKey ? 7 : 1;
+    if(ev.key === "ArrowRight"){ mostrar(idx + paso); ev.preventDefault(); }
+    else if(ev.key === "ArrowLeft"){ mostrar(idx - paso); ev.preventDefault(); }
+    else if(ev.key === "Home"){ mostrar(0); ev.preventDefault(); }
+    else if(ev.key === "End"){ mostrar(G.curva.length - 1); ev.preventDefault(); }
+    else if(ev.key === "Escape"){ ocultar(); }
+  });
+}
+
+function renderVip(data, picks){
+  const V = data.vip_btts;
+  const titulo = '<p class="section-title">💎 Selección VIP · Ambos Marcan</p>';
+  if(!V || V.error || V.vacio || !V.politica){
+    return `<section>${titulo}<div class="empty">Todavía no hay datos para la Selección VIP${V && V.error ? " (" + vipEsc(V.error) + ")" : ""}. Sube los archivos nuevos y corre el workflow una vez.</div></section>`;
+  }
+  const pol = V.politica, M = V.muestra || {};
+  const hist = V.vip || {}, resto = V.resto_jugar || {}, todas = V.todas_jugar || {}, merc = V.mercado || {};
+  const diaTxt = DIA_SELECCIONADO === "hoy" ? "hoy" : (DIA_SELECCIONADO === "manana" ? "mañana" : "pasado mañana");
+
+  // ---------------- 1. los picks del dia ----------------
+  const jugarDia = picks.filter(p => p.nivel_final === "JUGAR");
+  const selDia = jugarDia.filter(p => vipClase(p) && esValidadaReal(p.motivo_btts)).sort(vipOrden);
+  const idsSel = new Set(selDia);
+  const fueraDia = jugarDia.filter(p => !idsSel.has(p));
+  const tarjetaVip = (p) => {
+    const c = vipClase(p), info = VIP_CLASES[c];
+    const prob = p.prob_btts_calibrada != null ? p.prob_btts_calibrada : p.prob_btts;
+    const res = p.resultado_btts;
+    const resHtml = res === true ? '<div class="conf-prob" style="color:var(--win);font-size:15px;">✓ Ganada</div>'
+      : res === false ? '<div class="conf-prob" style="color:var(--loss);font-size:15px;">✕ Perdida</div>'
+      : `<div class="conf-prob">${prob != null ? (prob * 100).toFixed(0) + "%" : "—"}</div>`;
+    const enviado = p.alerta_btts
+      ? '<span style="color:var(--chalk-dim);">📨 enviado al Telegram</span>'
+      : (res == null ? '<span style="color:var(--chalk-dim);">⏳ sale en la próxima corrida</span>' : "");
+    return `<div class="conf-card">
+      <div>
+        <div class="conf-teams">${vipEsc(p.local)} vs ${vipEsc(p.visitante)}</div>
+        <div class="conf-liga">${vipEsc(p.liga || "")} · ${diaBadge(p)}${confirmacionCuotaBadge(p, "btts")}${notaLigaConfianza(p)}</div>
+        <div style="margin-top:6px;display:flex;gap:8px;flex-wrap:wrap;align-items:center;font-size:11px;"><span class="vip-chip ${info.fuerte ? "fuerte" : ""}">${info.chip}</span>${enviado}</div>
+      </div>
+      <div class="conf-tier">
+        <div class="conf-tier-val">${info.nombre}</div>
+        <div class="conf-cuota">cuota ${p.cuota_btts ? p.cuota_btts.toFixed(2) : "—"}${edgeTxt(prob, p.cuota_btts)}</div>
+      </div>
+      ${resHtml}
+    </div>`;
+  };
+  const motivoFuera = (p) => {
+    if(!vipClase(p)) return `cuota ${p.cuota_btts ? p.cuota_btts.toFixed(2) : "—"} fuera de las zonas medidas`;
+    if(!esValidadaReal(p.motivo_btts)) return "la regla que lo disparó no está activa/estable hoy";
+    return "";
+  };
+  const hoyHtml = `
+    <div class="market-hero"><p class="big">${selDia.length}</p>
+      <div class="sub">${selDia.length === 1 ? "pick" : "picks"} en la Selección VIP · ${diaTxt}${jugarDia.length ? ` (de ${jugarDia.length} JUGAR de BTTS)` : ""}</div></div>
+    ${selDia.length ? selDia.map(tarjetaVip).join("") : `<div class="vip-pick-vacio">${jugarDia.length
+        ? "Ningún JUGAR de BTTS pasa el filtro de precio y reglas activas para este día. <b>No enviar nada es una decisión válida:</b> los JUGAR que quedan fuera rinden " + vipPct(resto.roi) + " en el histórico."
+        : "Todavía no hay JUGAR de BTTS para este día."}</div>`}
+    ${fueraDia.length ? `<details class="vip-det"><summary>Ver los ${fueraDia.length} JUGAR de BTTS que NO entran a la selección (no se envían)</summary>
+      <div class="match-list" style="margin-top:8px;">${fueraDia.map(p => `<div class="match-row"><div><div class="match-teams">${vipEsc(p.local)} vs ${vipEsc(p.visitante)}</div><div class="match-liga">${vipEsc(p.liga || "")} · ${motivoFuera(p)}</div></div><span class="match-pct">cuota ${p.cuota_btts ? p.cuota_btts.toFixed(2) : "—"}</span><span class="match-badge no">fuera</span></div>`).join("")}</div></details>` : ""}`;
+
+  // ---------------- 2. veredicto en palabras simples ----------------
+  const z = (hist.alfa != null && hist.alfa_se) ? hist.alfa / hist.alfa_se : null;
+  const ult = (V.por_mes || []).slice(-1)[0];
+  const errMes = (ult && ult.n && hist.sd_apuesta) ? 196 * hist.sd_apuesta / Math.sqrt(ult.n) : null;
+  const veredicto = `
+    <p>Desde el ${vipFechaCorta(hist.desde)}, la Selección VIP suma <b>${vipN(hist.n)}</b> apuestas (≈${vipFmt(hist.picks_por_dia, 1, false)} por día) con ROI <b style="color:${vipCol(hist.roi)};">${vipPct(hist.roi)}</b>.
+      Con 95% de confianza el ROI real está entre <b>${hist.ic95 ? vipFmt(hist.ic95[0]) : "—"}%</b> y <b>${hist.ic95 ? vipFmt(hist.ic95[1]) : "—"}%</b>: ${!hist.ic95 ? "sin datos suficientes." : (hist.ic95[0] > 0 ? "todo el rango está por encima de cero, la ganancia ya es estadísticamente clara (aunque sigue siendo en datos con los que se diseñó la regla)." : (hist.ic95[1] < 0 ? "todo el rango está por debajo de cero: esta selección pierde dinero." : "el rango incluye el cero, así que todavía no está <i>demostrado</i> que gane dinero."))}</p>
+    <p>Enviar <b>todas</b> las JUGAR habría dado <b style="color:${vipCol(todas.roi)};">${vipPct(todas.roi)}</b>, y lo que la selección deja fuera da <b style="color:${vipCol(resto.roi)};">${vipPct(resto.roi)}</b> (${vipN(resto.n)} apuestas, ${vipN(resto.picks_por_dia ? Math.round(resto.picks_por_dia) : 0)} por día). La mejora viene de <b>no regalar</b> esas apuestas, no de acertar más.</p>
+    <p>Frente al mercado completo en su misma banda de cuota y mes, la selección gana <b style="color:${vipCol(hist.alfa)};">${vipFmt(hist.alfa)}</b> puntos de ROI (±${hist.alfa_se ? (1.96 * hist.alfa_se).toFixed(1) : "—"}).
+      ${z != null && z >= 1.96 ? "Esa ventaja ya es estadísticamente clara." : "Con esta muestra todavía puede ser ruido; no se puede afirmar que sea una ventaja real."}
+      ${V.respaldada && V.respaldada.alfa_se && V.respaldada.alfa / V.respaldada.alfa_se >= 1.96 ? `El grupo <b>Respaldada</b> sí la tiene clara (${vipFmt(V.respaldada.alfa)} puntos, ${vipN(V.respaldada.n)} apuestas).` : ""}</p>
+    ${ult && ult.roi != null && ult.roi < 0 ? `<p>El último mes (${vipMesNombre(ult.mes)}) fue de <b style="color:var(--loss);">${vipPct(ult.roi)}</b> con ${ult.n} apuestas. Con ese tamaño el error normal es de ±${errMes != null ? errMes.toFixed(0) : "—"} puntos, así que un mes flojo no prueba nada ni en un sentido ni en el otro.</p>` : ""}
+    <p class="vip-dim" style="font-size:13px;">⚠️ La regla se diseñó mirando estos mismos resultados, así que lo de arriba es más optimista de lo que se puede esperar hacia adelante. La única prueba que cuenta es la de abajo, "En vivo".</p>`;
+
+  // ---------------- 3. prueba en vivo ----------------
+  const L = V.vip_en_vivo || {}, nVivo = L.n || 0;
+  const meta = M.apuestas_para_confirmar_clv_1pct || 96;
+  const sem = vipSemaforo(L, merc.roi);
+  const enVivoHtml = `
+    <div class="vip-tiles">
+      ${vipTile("Apuestas resueltas", vipN(nVivo), `desde el ${vipFechaCorta(pol.congelado_desde)}`)}
+      ${vipTile("Acierto", nVivo ? vipFmt(L.acierto, 1, false) + "%" : "—", nVivo ? `necesario ${vipFmt(L.acierto_necesario, 1, false)}%` : "")}
+      ${vipTile("ROI", nVivo ? vipPct(L.roi) : "—", nVivo && L.ic95 ? `rango ${vipFmt(L.ic95[0])} a ${vipFmt(L.ic95[1])}` : "", nVivo ? vipCol(L.roi) : "")}
+      ${vipTile("Unidades", nVivo ? vipFmt(L.uds) + "u" : "—", nVivo && L.max_caida_u != null ? `peor caída -${vipFmt(L.max_caida_u, 1, false)}u` : "", nVivo ? vipCol(L.uds) : "")}
+    </div>
+    <div class="vip-semaforo ${sem.cls}"><span class="pt"></span>${sem.txt}</div>
+    <div class="vip-prog">
+      <div class="bar-track"><div class="bar-fill" style="width:${Math.min(100, nVivo / meta * 100).toFixed(1)}%;"></div></div>
+      <div class="vip-prog-txt"><span>${vipN(nVivo)} de ~${vipN(meta)} apuestas para una primera lectura del precio (CLV)</span><span>faltan ≈${vipN(Math.max(0, meta - nVivo))}</span></div>
+    </div>
+    <p class="vip-dim" style="font-size:12px;line-height:1.55;margin:12px 0 0;">Las reglas de la selección quedaron <b>congeladas</b> el ${vipFechaCorta(pol.congelado_desde)}: lo que pase de aquí en adelante no se usa para ajustarlas. Para confirmar un ROI de +3% harían falta ≈${vipN(M.apuestas_para_confirmar_roi_3pts)} apuestas (≈${M.dias_para_confirmar_roi_3pts ? (M.dias_para_confirmar_roi_3pts / 365).toFixed(1) : "—"} años a este ritmo); en cambio el CLV se puede leer en ≈${M.dias_para_confirmar_clv_1pct || "—"} días.</p>
+    ${(V.respaldada_en_vivo && V.respaldada_en_vivo.n) || (V.zona_valor_en_vivo && V.zona_valor_en_vivo.n) ? `<div class="vip-scroll" style="margin-top:12px;"><table class="cmp-table"><thead><tr><th>En vivo</th><th class="num">Apuestas</th><th class="num">Acierto</th><th class="num">ROI</th><th class="num">Unidades</th></tr></thead><tbody>
+      ${["respaldada_en_vivo", "zona_valor_en_vivo"].map((k, i) => { const s = V[k] || {}; return `<tr><td>${i ? "Zona de valor" : "Respaldada"}</td><td class="num">${vipN(s.n || 0)}</td><td class="num">${s.n ? vipFmt(s.acierto, 1, false) + "%" : "—"}</td><td class="num" style="color:${vipCol(s.roi)};">${s.n ? vipPct(s.roi) : "—"}</td><td class="num" style="color:${vipCol(s.uds)};">${s.n ? vipFmt(s.uds) + "u" : "—"}</td></tr>`; }).join("")}
+    </tbody></table></div>` : ""}`;
+
+  // ---------------- 4. curva ----------------
+  const curva = V.curva || [];
+  const semanal = curva.filter((_, i) => i % 7 === 0 || i === curva.length - 1);
+  const curvaHtml = `
+    <div class="vip-leyenda">
+      <span><span class="k" style="border-top-color:${VIP_COLOR_VIP};"></span>Selección VIP</span>
+      <span><span class="k" style="border-top-color:${VIP_COLOR_TODAS};"></span>Todas las JUGAR (lo que se enviaba antes)</span>
+      <span>unidades acumuladas, 1u por apuesta${curva.length ? " · " + vipFechaCorta(curva[0].fecha) + " a " + vipFechaCorta(curva[curva.length - 1].fecha) : ""}</span>
+    </div>
+    <div class="chart-card">${vipCurvaSvg(curva)}</div>
+    <details class="vip-det"><summary>Ver la curva como tabla</summary>
+      <div class="vip-scroll"><table class="cmp-table" style="margin-top:8px;"><thead><tr><th>Fecha</th><th class="num">Selección VIP</th><th class="num">Resto de JUGAR</th><th class="num">Todas las JUGAR</th></tr></thead><tbody>
+      ${semanal.map(c => `<tr><td>${vipFechaCorta(c.fecha)}</td><td class="num">${vipFmt(c.vip)}u</td><td class="num">${vipFmt(c.resto)}u</td><td class="num">${vipFmt(c.todas)}u</td></tr>`).join("")}
+      </tbody></table></div></details>`;
+
+  // ---------------- 5. comparacion por grupo ----------------
+  const grupos = `<div class="vip-scroll"><table class="cmp-table">
+    <thead><tr><th>Grupo</th><th class="num">Apuestas</th><th class="num">ROI</th><th class="num">Ventaja</th><th class="num">Acierto / necesario</th><th class="num">Rango 95%</th><th class="num">Cuota</th><th class="num">Unidades</th><th class="num">Peor caída</th></tr></thead>
+    <tbody>
+      ${vipFilaGrupo("💎 Selección VIP", V.vip, "Respaldada + Zona de valor", true)}
+      ${vipFilaGrupo("↳ Respaldada", V.respaldada, "VIP+ 1.40–1.60 o Pilares")}
+      ${vipFilaGrupo("↳ Zona de valor", V.zona_valor, `JUGAR con cuota ${Number(pol.cuota_min).toFixed(2)}–${Number(pol.cuota_max).toFixed(2)}`)}
+      ${V.vip_activa ? vipFilaGrupo("↳ con regla activa hoy", V.vip_activa, "lo que pasa al Telegram (*)") : ""}
+      ${vipFilaGrupo("Resto de JUGAR", V.resto_jugar, "no se envían")}
+      ${vipFilaGrupo("Todas las JUGAR", V.todas_jugar, "lo que se enviaba antes")}
+      ${vipFilaGrupo("Cualquier partido", V.mercado, "a esos precios: lo que cobra la casa", false, true)}
+    </tbody></table></div>
+    <p class="vip-dim" style="font-size:12px;line-height:1.55;margin:10px 0 0;"><b>ROI</b>: ganancia por cada unidad apostada. <b>Ventaja</b>: puntos de ROI por encima de lo que gana el mercado completo en la misma banda de cuota y mes; es la medida honesta, porque a cuota baja <i>todo</i> pierde más. <b>Acierto / necesario</b>: acierto real contra el que hace falta para empatar con esas cuotas. <b>(*)</b> Las reglas se activaron mirando estos mismos resultados, por eso esta fila es más optimista de lo que se puede esperar hacia adelante.</p>`;
+
+  // ---------------- 6. por mes ----------------
+  const porMes = `<div class="vip-scroll"><table class="cmp-table"><thead><tr><th>Mes</th><th class="num">Selección: apuestas</th><th class="num">Acierto</th><th class="num">ROI</th><th class="num">Ventaja</th><th class="num">Resto: apuestas</th><th class="num">Resto: ROI</th></tr></thead><tbody>
+    ${(V.por_mes || []).map(m => `<tr><td>${vipMesNombre(m.mes)}</td><td class="num">${vipN(m.n)}</td><td class="num">${vipFmt(m.acierto, 1, false)}%</td><td class="num" style="color:${vipCol(m.roi)};font-weight:700;">${vipPct(m.roi)}</td><td class="num" style="color:${vipCol(m.alfa)};">${vipFmt(m.alfa)}</td><td class="num">${vipN(m.resto_n)}</td><td class="num" style="color:${vipCol(m.resto_roi)};">${vipPct(m.resto_roi)}</td></tr>`).join("")}
+    </tbody></table></div>`;
+
+  // ---------------- 7. impuesto de la casa por banda de cuota ----------------
+  const _rg = (arr) => arr.length ? `${Math.round(Math.abs(Math.max(...arr.map(b => b.roi_mercado))))}–${Math.round(Math.abs(Math.min(...arr.map(b => b.roi_mercado))))}%` : null;
+  const _bajas = (V.bandas || []).filter(b => b.hi != null && b.hi <= pol.cuota_min + 1e-9 && b.n_mercado >= 100);
+  const _zona = (V.bandas || []).filter(b => b.lo >= pol.cuota_min - 1e-9 && b.hi != null && b.hi <= pol.cuota_max + 1e-9 && b.n_mercado >= 100);
+  const txtBandas = (_rg(_bajas) && _rg(_zona))
+    ? `En cuotas bajas (menos de ${Number(pol.cuota_min).toFixed(2)}) el mercado completo pierde entre ${_rg(_bajas)}; entre ${Number(pol.cuota_min).toFixed(2)} y ${Number(pol.cuota_max).toFixed(2)} pierde entre ${_rg(_zona)}. Por eso las apuestas de cuota baja solo entran si tienen respaldo propio (Respaldada).`
+    : "";
+  const bandas = `<div class="vip-scroll"><table class="cmp-table"><thead><tr><th>Cuota</th><th class="num">Partidos (mercado)</th><th class="num">Acierto real / implícito</th><th class="num">ROI cualquier partido</th><th class="num">JUGAR: apuestas</th><th class="num">JUGAR: ROI</th><th class="num">Selección: apuestas</th><th class="num">Selección: ROI</th></tr></thead><tbody>
+    ${(V.bandas || []).map(b => `<tr><td>${b.banda}</td><td class="num">${vipN(b.n_mercado)}</td><td class="num">${vipFmt(b.acierto_mercado, 1, false)}% <span class="vip-dim">/ ${vipFmt(b.implicita_mercado, 1, false)}%</span></td><td class="num" style="color:${vipCol(b.roi_mercado)};">${vipPct(b.roi_mercado)}</td><td class="num">${vipN(b.n_jugar)}</td><td class="num" style="color:${vipCol(b.roi_jugar)};">${vipPct(b.roi_jugar)}</td><td class="num">${vipN(b.n_vip)}</td><td class="num" style="color:${vipCol(b.roi_vip)};">${b.n_vip >= 20 ? vipPct(b.roi_vip) : (b.n_vip ? '<span class="vip-dim">muy pocas</span>' : "—")}</td></tr>`).join("")}
+    </tbody></table></div>
+    <p class="vip-dim" style="font-size:12px;line-height:1.55;margin:10px 0 0;">Esta es la razón de fondo de la selección: la casa no se queda lo mismo en todas las cuotas. ${txtBandas}</p>`;
+
+  // ---------------- 8. CLV ----------------
+  const cv = (V.clv || {}).vip || {}, cvj = (V.clv || {}).jugar || {};
+  const clvHtml = (cv.n || 0) < 1 && (cvj.n || 0) < 1
+    ? `<div class="vip-aviso">Todavía no hay datos. El sistema guarda desde el 29 de octubre la <b>primera cuota</b> con que se ve cada partido (y desde el 30, la de la alerta); se compara contra la última cuota antes del partido. Si en promedio la cuota del aviso es <b>mejor</b> que la de cierre, hay ventaja real aunque el ROI tarde años en mostrarla. Con ≈${vipN(M.apuestas_para_confirmar_clv_1pct)} apuestas se puede leer.</div>`
+    : `<div class="vip-tiles">
+        ${vipTile("CLV promedio · Selección VIP", cv.n ? vipFmt(cv.medio_pct, 2) + "%" : "—", cv.n ? `${vipN(cv.n)} apuestas · error ±${vipFmt(cv.se_pct != null ? 1.96 * cv.se_pct : null, 2, false)}` : "", cv.n ? vipCol(cv.medio_pct) : "")}
+        ${vipTile("Mejor que el cierre", cv.n ? vipFmt(cv.mejor_que_cierre_pct, 0, false) + "%" : "—", cv.n ? `de los picks la cuota del aviso fue mejor; igual: ${vipFmt(cv.igual_pct, 0, false)}%` : "")}
+        ${vipTile("CLV promedio · todas las JUGAR", cvj.n ? vipFmt(cvj.medio_pct, 2) + "%" : "—", cvj.n ? `${vipN(cvj.n)} apuestas` : "", cvj.n ? vipCol(cvj.medio_pct) : "")}
+      </div>
+      <p class="vip-dim" style="font-size:12px;line-height:1.55;margin:0;">CLV positivo = la cuota que se tomó era mejor que la de cierre. Si es de +1% o más de forma sostenida, hay ventaja de precio. Si es negativo, el mercado se aleja del pick después del aviso.</p>`;
+
+  // ---------------- 9. precio de la casa del usuario ----------------
+  const ch = V.precio_casa || {};
+  let casaHtml;
+  if(!ch.n){
+    casaHtml = `<div class="vip-aviso"><b>Falta el dato más importante para saber si esto gana plata de verdad:</b> cuánto paga tu casa de apuestas frente a la cuota que muestra esta página. Con la combinada ya se vio la diferencia (3 precios reales que anotaste: tu casa pagó ~19% menos que la estimación de la página). Anota 10 partidos en <code>${vipEsc(ch.archivo || "salidas/cuotas_reales.csv")}</code> (fecha, partido, mercado BTTS, cuota que mostraba la página y cuota que te dio tu casa) y aquí aparecerá el ROI de la selección con tus precios reales.</div>`;
+  } else {
+    casaHtml = `<div class="vip-tiles">
+      ${vipTile("Tu casa paga", ch.ratio_mediano != null ? (ch.ratio_mediano * 100).toFixed(1) + "%" : "—", `de la cuota de la página (mediana de ${ch.n} precios)${ch.ic95 ? ` · rango ${(ch.ic95[0] * 100).toFixed(1)}–${(ch.ic95[1] * 100).toFixed(1)}%` : ""}`)}
+      ${ch.roi_vip_a_tu_casa != null ? vipTile("ROI de la selección con tus precios", vipPct(ch.roi_vip_a_tu_casa), `en la página: ${vipPct(ch.roi_vip_feed)}`, vipCol(ch.roi_vip_a_tu_casa)) : vipTile("ROI con tus precios", "—", `faltan precios: con 5 o más se calcula (hay ${ch.n})`)}
+    </div>`;
+  }
+
+  // ---------------- 10. integridad: lo enviado contra lo contado ----------------
+  const it = V.integridad || {};
+  const integHtml = !it.activo
+    ? '<div class="vip-aviso">Todavía no hay alertas registradas. Desde la primera alerta que envíe el código nuevo, cada una queda anotada en el historial con su cuota y su hora, y aquí se compara <b>lo que realmente salió al Telegram</b> contra todo lo que dio JUGAR.</div>'
+    : `<div class="vip-scroll"><table class="cmp-table"><thead><tr><th>Desde el ${vipFechaCorta(it.desde)}</th><th class="num">Apuestas resueltas</th><th class="num">Acierto</th><th class="num">ROI</th><th class="num">Unidades</th></tr></thead><tbody>
+      ${[["📨 Alertas de BTTS enviadas", it.alertas_resueltas], ["JUGAR que no se enviaron", it.jugar_sin_alerta]].map(([n, s]) => `<tr><td>${n}</td><td class="num">${vipN((s || {}).n || 0)}</td><td class="num">${(s || {}).n ? vipFmt(s.acierto, 1, false) + "%" : "—"}</td><td class="num" style="color:${vipCol((s || {}).roi)};">${(s || {}).n ? vipPct(s.roi) : "—"}</td><td class="num" style="color:${vipCol((s || {}).uds)};">${(s || {}).n ? vipFmt(s.uds) + "u" : "—"}</td></tr>`).join("")}
+      </tbody></table></div><p class="vip-dim" style="font-size:12px;margin:8px 0 0;">${vipN(it.alertas_btts)} alertas enviadas, ${vipN(it.alertas_vip)} de la Selección VIP.</p>`;
+
+  // ---------------- 11. reglas ----------------
+  const het = V.heterogeneidad || {};
+  const hetTxt = het.etiquetas
+    ? (het.p != null && het.p >= 0.05
+        ? `Las ${het.etiquetas} etiquetas de señal <b>no se distinguen entre sí</b> (prueba de heterogeneidad p = ${het.p}): una vez que se compara cada una contra el mercado en su misma banda de cuota, ninguna demostró ser mejor que otra. Por eso la selección se basa en el <b>precio</b> y no en el nombre de la etiqueta.`
+        : `Las ${het.etiquetas} etiquetas sí muestran diferencias entre sí (p = ${het.p}); conviene revisar cuáles.`)
+    : "";
+  const reglasHtml = `
+    <div class="vip-verdict" style="border-left-color:var(--line);">
+      <p><b>Quién entra:</b> un partido con señal JUGAR de BTTS, con regla activa y estable hoy, y además:</p>
+      <p>· <b>Respaldada</b>: tier VIP+ con cuota entre 1.40 y 1.60, o la señal Pilares (cuota 1.40–1.55).<br/>· <b>Zona de valor</b>: cuota entre ${Number(pol.cuota_min).toFixed(2)} y ${Number(pol.cuota_max).toFixed(2)}.</p>
+      <p>${pol.solo_vip_en_telegram ? "El Telegram avisa <b>solo</b> de la Selección VIP (los demás JUGAR siguen en la página, marcados \"sin ventaja de precio\")." : "El Telegram avisa de todos los JUGAR (filtro VIP desactivado)."}</p>
+      ${hetTxt ? `<p class="vip-dim" style="font-size:13px;">${hetTxt}</p>` : ""}
+    </div>`;
+
+  return `
+    <section>${titulo}${hoyHtml}</section>
+    <section><p class="section-title">¿Funciona? En palabras simples</p><div class="vip-verdict">${veredicto}</div></section>
+    <section><p class="section-title">🧪 En vivo (la prueba que cuenta)</p>${enVivoHtml}</section>
+    <section><p class="section-title">📈 Ganancia acumulada</p>${curvaHtml}</section>
+    <section><p class="section-title">Comparación por grupo</p>${grupos}</section>
+    <section><p class="section-title">Mes a mes (estabilidad)</p>${porMes}</section>
+    <section><p class="section-title">Cuánto se queda la casa según la cuota</p>${bandas}</section>
+    <section><p class="section-title">¿Conseguimos mejor precio que el cierre? (CLV)</p>${clvHtml}</section>
+    <section><p class="section-title">Lo que paga TU casa</p>${casaHtml}</section>
+    <section><p class="section-title">Lo enviado contra lo contado</p>${integHtml}</section>
+    <section><p class="section-title">Reglas de la selección</p>${reglasHtml}</section>`;
+}
+
 function elegirMejoresPorMercado(picks){
   // REDISEÑADO 24 ago 2026: antes esto elegia UN SOLO ganador entre
   // todos los mercados (elegirMejorCandidato), descartando el resto -
@@ -1647,6 +2183,7 @@ function elegirMejoresPorMercado(picks){
   // picks del dia" se vea de verdad, no solo el mas fuerte de todos.
   const probBtts = (p) => p.prob_btts_calibrada != null ? p.prob_btts_calibrada : p.prob_btts;
   const mejorPorMercado = {};
+  const exigeVipBtts = vipActiva() && vipPol().solo_vip_en_telegram === true && picks.some(p => "vip_btts" in p);
   const actualizar = (mkt, score, p, tier) => {
     if(!mejorPorMercado[mkt] || score > mejorPorMercado[mkt].score){
       mejorPorMercado[mkt] = {p, score, tier, mkt};
@@ -1655,10 +2192,16 @@ function elegirMejoresPorMercado(picks){
   picks.forEach(p => {
     // Ambos Marcan (BTTS)
     // 18 oct 2026: TODO requiere JUGAR + señal validada, activa y estable.
-    const bttsOk = p.nivel_final === "JUGAR" && esValidadaReal(p.motivo_btts);
-    if(bttsOk && p.vip_elite) actualizar("Ambos Marcan", 1000 + (probBtts(p)||0), p, p.vip_elite);
+    // 30 oct 2026: con la Seleccion VIP activa, el BTTS destacado sale SOLO de la
+    // seleccion (primero Respaldada, luego Zona de valor). Antes puntuaba mas el
+    // tier "VIP" (700), pero medido contra el mercado en su misma banda de cuota
+    // rinde 13 puntos MENOS que el promedio, asi que ya no se prioriza.
+    const bttsOk = p.nivel_final === "JUGAR" && esValidadaReal(p.motivo_btts) && (!exigeVipBtts || vipClase(p));
+    if(bttsOk && p.vip_btts === "RESPALDADA") actualizar("Ambos Marcan", 1200 + (probBtts(p)||0), p, "💎 VIP · Respaldada");
+    else if(bttsOk && p.vip_btts === "ZONA_VALOR") actualizar("Ambos Marcan", 1100 + (probBtts(p)||0), p, "💎 VIP · Zona de valor");
+    else if(bttsOk && p.vip_elite) actualizar("Ambos Marcan", 1000 + (probBtts(p)||0), p, p.vip_elite);
     else if(bttsOk && p.senal_btts_optimizada === "VIP+") actualizar("Ambos Marcan", 900 + (probBtts(p)||0), p, "VIP+");
-    else if(bttsOk && p.senal_btts_optimizada === "VIP") actualizar("Ambos Marcan", 700 + (probBtts(p)||0), p, "VIP");
+    else if(bttsOk && p.senal_btts_optimizada === "VIP") actualizar("Ambos Marcan", 450 + (probBtts(p)||0), p, "VIP");
     else if(bttsOk) actualizar("Ambos Marcan", 500 + (probBtts(p)||0), p, "Validada");
     // Over 1.5
     const o15Ok = p.sug_o15 === "JUGAR" && esValidadaReal(p.motivo_o15);
@@ -1806,6 +2349,7 @@ function render(data){
   const notaHt05 = `<div class="empty" style="margin-bottom:16px;">⚠️ Mercado nuevo (agosto 2026) — todavía no hay suficiente historial para confirmar en qué franja de cuota da ganancia real. Revisa esto con cuidado hasta que se acumule más muestra.</div>`;
 
   const panels = {
+    vip: renderVip(data, picks),
     btts: renderMercado(picks, "prob_btts_calibrada", "nivel_final", "senal_btts_optimizada", "cuota_btts", "¿Ambos equipos marcan?", "resultado_btts", "btts", "motivo_btts") + historialBtts,
     o15: renderMercado(picks, "prob_o15_calibrada", "sug_o15", "senal_o15_tier", "cuota_o15", "¿Más de 1.5 goles?", "resultado_o15", "o15", "motivo_o15") + historialO15,
     o25: renderMercado(picks, "prob_o25_calibrada", "sug_o25", "senal_o25", "cuota_o25", "¿Más de 2.5 goles?", "resultado_o25", "o25", "motivo_o25") + historialO25,
@@ -1825,6 +2369,7 @@ function render(data){
   if(tabActivaAntes === "stats"){
     renderChart(data.serie_diaria);
   }
+  try { vipInitCurva(); } catch(e) { console.error("vipInitCurva", e); }
 
   if(totalHist === 0 && picks.length === 0){
     document.getElementById("app").innerHTML = '<div class="empty">Todavía no hay partidos evaluados. Vuelve pronto.</div>';
@@ -1852,6 +2397,12 @@ function cargarDatos(){
 
 cargarDatos();
 setInterval(cargarDatos, 5 * 60 * 1000); // se refresca solo cada 5 minutos
+// 30 oct 2026: la curva de la Seleccion VIP usa un lienzo distinto en pantallas angostas
+let _vipMovilPrev = (typeof vipEsMovil === "function") ? vipEsMovil() : false;
+window.addEventListener("resize", () => {
+  const ahora = vipEsMovil();
+  if(ahora !== _vipMovilPrev){ _vipMovilPrev = ahora; if(DATA) render(DATA); }
+});
 </script>
 
 </body>
