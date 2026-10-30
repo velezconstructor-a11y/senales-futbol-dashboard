@@ -348,6 +348,8 @@
   }
   .vip-scroll .cmp-table tr.vip-dest td{background:rgba(209,154,61,0.07);}
   .vip-scroll .cmp-table tr.vip-dest td:first-child{background:linear-gradient(rgba(209,154,61,0.07), rgba(209,154,61,0.07)), var(--pitch-950);}
+  .vip-scroll .cmp-table tr.vip-tenue td{color:var(--chalk-dim);}
+  .vip-scroll .cmp-table tr.vip-tenue td .vip-nota{color:var(--amber);}
 </style>
 </head>
 <body>
@@ -1431,7 +1433,10 @@ function renderBars(dictHist, orden, etiquetas){
     const roiTxt = (st.profit_u != null && nOf(st) > 0)
       ? ` · <span style="color:${st.profit_u >= 0 ? 'var(--win)' : 'var(--loss)'};">${st.profit_u >= 0 ? '+' : ''}${st.profit_u.toFixed(1)}u (${(st.profit_u/nOf(st)*100).toFixed(0)}%)</span>`
       : "";
-    return `<div class="bar-row"><span class="bar-label">${textoLabel}</span><div class="bar-track"><div class="bar-fill ${cls}" style="width:${pct}%"></div></div><span class="bar-num">${pctTxt(st, true)}${roiTxt}${notaPend}</span></div>`;
+    const recTxt = (st.roi_mitad2 != null && !isNaN(st.roi_mitad2))
+      ? ` · <span title="ROI de la mitad MÁS RECIENTE de las apuestas de esta señal (la otra mitad es la más antigua). Es descriptivo: en la prueba del 30 oct no sirvió para predecir los resultados siguientes." style="color:${st.roi_mitad2 >= 0 ? 'var(--win)' : 'var(--loss)'};opacity:0.85;">reciente ${st.roi_mitad2 >= 0 ? '+' : ''}${st.roi_mitad2.toFixed(0)}%</span>`
+      : "";
+    return `<div class="bar-row"><span class="bar-label">${textoLabel}</span><div class="bar-track"><div class="bar-fill ${cls}" style="width:${pct}%"></div></div><span class="bar-num">${pctTxt(st, true)}${roiTxt}${recTxt}${notaPend}</span></div>`;
   }).join("") + '</div>';
 }
 
@@ -1656,7 +1661,7 @@ function renderEstadisticas(data){
       </div>
       <div class="grid2">
         <div><p class="bar-label" style="margin-bottom:10px;">Por categoría BTTS</p>${renderBars(comparativo.historico.categorias, CATEGORIA_ORDEN)}</div>
-        <div><p class="bar-label" style="margin-bottom:10px;">Por qué se activó JUGAR (BTTS)<span style="display:block;font-weight:normal;opacity:0.6;font-size:0.85em;margin-top:3px;">Cada señal cuenta todos los partidos que le aplican, gane o no la prioridad. Las unidades no son sumables entre señales.</span></p>${renderBars(comparativo.historico.motivos || {}, Object.keys(comparativo.historico.motivos || {}), ETIQUETAS_BTTS)}</div>
+        <div><p class="bar-label" style="margin-bottom:10px;">Por qué se activó JUGAR (BTTS)<span style="display:block;font-weight:normal;opacity:0.6;font-size:0.85em;margin-top:3px;">Cada señal cuenta todos los partidos que le aplican, gane o no la prioridad. Las unidades no son sumables entre señales. <b>Las activas siempre se ven en verde porque el sistema apaga las que pierden</b>, así que el verde no prueba que sigan ganando. «reciente» es la mitad más nueva de sus apuestas (dato informativo: en la prueba del 30 oct no anticipó los resultados siguientes). La medición justa está en la pestaña 💎 Selección VIP → «¿Y las señales activas?».</span></p>${renderBars(comparativo.historico.motivos || {}, Object.keys(comparativo.historico.motivos || {}), ETIQUETAS_BTTS)}</div>
         <div><p class="bar-label" style="margin-bottom:10px;">Por qué se activó JUGAR (Over 1.5)<span style="display:block;font-weight:normal;opacity:0.6;font-size:0.85em;margin-top:3px;">Cada señal cuenta todos los partidos que le aplican, gane o no la prioridad. Las unidades no son sumables entre señales.</span></p>${renderBars(comparativo.historico.motivos_o15 || {}, Object.keys(comparativo.historico.motivos_o15 || {}), ETIQUETAS_O15)}</div>
         <div><p class="bar-label" style="margin-bottom:10px;">Por qué se activó JUGAR (Over 2.5)<span style="display:block;font-weight:normal;opacity:0.6;font-size:0.85em;margin-top:3px;">Cada señal cuenta todos los partidos que le aplican, gane o no la prioridad. Las unidades no son sumables entre señales.</span></p>${renderBars(comparativo.historico.motivos_o25 || {}, Object.keys(comparativo.historico.motivos_o25 || {}), ETIQUETAS_O25)}</div>
         <div><p class="bar-label" style="margin-bottom:10px;">Por qué se activó JUGAR (1er tiempo O0.5)</p>${renderBars(comparativo.historico.motivos_ht05 || {}, Object.keys(comparativo.historico.motivos_ht05 || {}), ETIQUETAS_HT05)}</div>
@@ -1980,6 +1985,85 @@ function vipInitCurva(){
   });
 }
 
+// ---------- 30 oct 2026: las señales activas, "lo que se ve" contra "lo que paso despues" ----------
+// Una señal esta ACTIVA porque su ROI es positivo (el motor apaga las que pierden), asi que la
+// lista de activas siempre se ve en verde. Esta tabla las mide con honestidad: cada apuesta se
+// juzga solo con los partidos anteriores a ella (backtest._estados_honestos).
+function vipFilaConc(nombre, nota, s, opts){
+  opts = opts || {};
+  const sty = opts.destacada ? ' class="vip-dest"' : (opts.tenue ? ' class="vip-tenue"' : "");
+  const celda = `<td class="vip-nom">${nombre}${nota ? `<div class="vip-nota">${nota}</div>` : ""}</td>`;
+  if(!s || !s.n) return `<tr${sty}>${celda}<td class="num vip-dim" colspan="8">sin apuestas</td></tr>`;
+  const ic = s.ic95 ? `${vipFmt(s.ic95[0])} a ${vipFmt(s.ic95[1])}` : "—";
+  return `<tr${sty}>${celda}
+    <td class="num">${vipN(s.n)}</td>
+    <td class="num">${vipFmt(s.picks_por_dia, 1, false)}</td>
+    <td class="num" style="color:${vipCol(s.roi)};font-weight:700;">${vipPct(s.roi)}</td>
+    <td class="num vip-dim">${ic}</td>
+    <td class="num" style="color:${vipCol(s.uds)};">${vipFmt(s.uds)}u</td>
+    <td class="num">${s.max_caida_u != null ? "-" + vipFmt(s.max_caida_u, 1, false) + "u" : "—"}</td>
+    <td class="num">${s.pct_dias_roi_pos != null ? vipFmt(s.pct_dias_roi_pos, 0, false) + "%" : "—"}</td>
+    <td class="num">${s.semanas ? `${s.semanas_pos} de ${s.semanas}` : "—"}</td>
+  </tr>`;
+}
+
+function vipConciliacionHtml(V){
+  const C = V.conciliacion;
+  if(!C || C.error || C.vacio || !(C.todas && C.todas.n)){
+    return '<div class="vip-aviso">Todavía no hay suficiente historia para medir las señales activas con honestidad (hacen falta unas 3 semanas de datos).</div>';
+  }
+  const hoy = C.activas_hoy || {}, hon = C.activas_honesto || {}, apa = C.apagadas_honesto || {}, va = C.vip_activas || {};
+  const tabla = `<div class="vip-scroll"><table class="cmp-table">
+    <thead><tr><th>Desde el ${vipFechaCorta(C.desde)}</th><th class="num">Apuestas</th><th class="num">Por día</th><th class="num">ROI</th><th class="num">Rango 95%</th><th class="num">Unidades</th><th class="num">Peor caída</th><th class="num" title="Porcentaje de días en que el ROI acumulado estuvo por encima de cero">Días en verde</th><th class="num" title="Semanas (lunes a domingo) en que se ganaron unidades">Semanas ganadoras</th></tr></thead>
+    <tbody>
+      ${vipFilaConc("Todos los JUGAR de BTTS", "lo que se enviaba antes", C.todas)}
+      ${C.activas_hoy ? vipFilaConc("Señales activas hoy · como se ven en la tabla", "se eligen mirando TODOS los resultados, incluido el futuro de cada apuesta", hoy, {tenue: true}) : ""}
+      ${vipFilaConc("Señales activas · medidas con honestidad", "cada apuesta se juzga solo con los partidos anteriores a ella", hon)}
+      ${vipFilaConc("Señales apagadas · con honestidad", "las que el sistema habría tenido apagadas ese día", apa)}
+      ${vipFilaConc("💎 Selección VIP + señal activa", "lo que llega al Telegram", va, {destacada: true})}
+      ${vipFilaConc("↳ Respaldada + activa", "VIP+ 1.40–1.60 o Pilares", C.respaldada_activas)}
+      ${vipFilaConc("↳ Zona de valor + activa", "JUGAR con cuota 1.80–2.20", C.zona_valor_activas)}
+    </tbody></table></div>`;
+
+  // cuantas señales activas tienen la mitad mas reciente de sus apuestas en negativo (datos de la tabla de Estadísticas)
+  const mot = (DATA && DATA.comparativo && DATA.comparativo.historico && DATA.comparativo.historico.motivos) || {};
+  const activasConDato = Object.keys(mot).filter(k => REGLAS_ACTIVAS_REAL[k] === true && mot[k].roi_mitad2 != null);
+  const recienteNeg = activasConDato.filter(k => mot[k].roi_mitad2 < 0);
+
+  const dif = (hoy.roi != null && hon.roi != null) ? hoy.roi - hon.roi : null;
+  const ayuda = (hon.roi != null && apa.roi != null) ? hon.roi - apa.roi : null;
+  const lineas = [];
+  if(hon.n){
+    lineas.push(`Medidas con honestidad, las señales activas rinden <b style="color:${vipCol(hon.roi)};">${vipPct(hon.roi)}</b> (${vipN(hon.n)} apuestas)${hoy.n ? `, no los <b style="color:${vipCol(hoy.roi)};">${vipPct(hoy.roi)}</b> que sugiere verlas en la tabla` : ""}.${dif != null && dif > 1 ? ` Esos ${vipFmt(dif, 1, false)} puntos de diferencia son el efecto de escoger las señales después de ver cómo les fue.` : ""}`);
+  }
+  if(ayuda != null){
+    const seDif = (hon.se != null && apa.se != null) ? Math.sqrt(hon.se * hon.se + apa.se * apa.se) : null;
+    const claro = seDif != null && ayuda / seDif >= 1.96;
+    lineas.push(ayuda > 0
+      ? `El motor de activación ${claro ? "<b>sí ayuda</b>" : "<b>parece ayudar</b>"}: las activas rinden ${vipFmt(ayuda, 1, false)} puntos más que las apagadas (${vipPct(apa.roi)})${(claro || seDif == null) ? "" : `, aunque con esta muestra esa diferencia (±${(1.96 * seDif).toFixed(1)} puntos) todavía puede ser ruido`}. Por sí solo no basta para ganar.`
+      : `Hoy el motor de activación <b>no mejora</b> a las apagadas (${vipPct(apa.roi)}).`);
+  }
+  if(va.n){
+    lineas.push(`Lo que más pesa es la <b>combinación</b>: señal activa + zona de precio da <b style="color:${vipCol(va.roi)};">${vipPct(va.roi)}</b> en ${vipN(va.n)} apuestas (≈${vipFmt(va.picks_por_dia, 1, false)} por día), con ganancia en ${va.semanas_pos} de ${va.semanas} semanas, ROI acumulado por encima de cero el ${va.pct_dias_roi_pos != null ? vipFmt(va.pct_dias_roi_pos, 0, false) : "—"}% de los días y peor caída de ${va.max_caida_u != null ? vipFmt(va.max_caida_u, 1, false) : "—"}u.`);
+  }
+  const rango = (va.ic95 && va.ic95[0] <= 0 && va.ic95[1] >= 0)
+    ? ` El rango del 95% de esa fila va de ${vipFmt(va.ic95[0])}% a ${vipFmt(va.ic95[1])}%: incluye el cero, así que todavía no está demostrado.` : "";
+  // Prueba hacia adelante del 30 oct 2026 (704 apuestas de señales activas): las que tenian la mitad reciente en
+  // negativo rindieron 0.0% y las demas -2.7% (diferencia -2.7 +- 12.1 puntos, z=-0.44). Es decir: la mitad reciente
+  // NO anticipo nada. Se dice asi para que nadie la lea como alarma ni como garantia.
+  const reciente = activasConDato.length
+    ? `<p>De las ${activasConDato.length} señales activas de BTTS con estadística propia, <b>${recienteNeg.length}</b> tienen la mitad más reciente de sus apuestas en negativo (columna «reciente» en Estadísticas → Por qué se activó JUGAR): su total sigue en verde por lo que ganaron antes. Ojo, tampoco es una alarma probada: en la prueba hacia adelante del 30 oct, las apuestas de señales con la mitad reciente en negativo rindieron 0.0% y las demás -2.7% (diferencia dentro del ruido). Sirve para no leer el verde como garantía, no para descartar una señal.</p>` : "";
+  return `<div class="vip-verdict" style="border-left-color:var(--line);">
+      <p>Una señal está <b>activa</b> justamente porque su ROI es positivo: el sistema apaga las que pierden. Por eso la lista de activas <b>siempre</b> se ve en verde, y por eso no basta para saber si seguirán ganando. Además, la tabla de Estadísticas mide cada señal «sola» (cuenta todos los partidos en que aplica, no solo las apuestas que salieron). La prueba justa es repetir el sistema día por día, usando solo lo que se sabía antes de cada apuesta:</p>
+    </div>
+    ${tabla}
+    <div class="vip-verdict" style="margin-top:12px;">
+      ${lineas.map(l => `<p>${l}</p>`).join("")}
+      ${reciente}
+      <p class="vip-dim" style="font-size:13px;">⚠️${rango} Los grupos de precio (Respaldada y Zona de valor) se diseñaron mirando estos mismos resultados, así que la fila de la Selección VIP es más optimista de lo que se puede esperar; la prueba definitiva es «En vivo». Los primeros ${C.warmup_dias} días no se miden porque casi ninguna señal tenía todavía los 25 casos mínimos. «Días en verde» = % de días en que el ROI acumulado estuvo por encima de cero.</p>
+    </div>`;
+}
+
 function renderVip(data, picks){
   const V = data.vip_btts;
   const titulo = '<p class="section-title">💎 Selección VIP · Ambos Marcan</p>';
@@ -2094,7 +2178,7 @@ function renderVip(data, picks){
       ${vipFilaGrupo("Todas las JUGAR", V.todas_jugar, "lo que se enviaba antes")}
       ${vipFilaGrupo("Cualquier partido", V.mercado, "a esos precios: lo que cobra la casa", false, true)}
     </tbody></table></div>
-    <p class="vip-dim" style="font-size:12px;line-height:1.55;margin:10px 0 0;"><b>ROI</b>: ganancia por cada unidad apostada. <b>Ventaja</b>: puntos de ROI por encima de lo que gana el mercado completo en la misma banda de cuota y mes; es la medida honesta, porque a cuota baja <i>todo</i> pierde más. <b>Acierto / necesario</b>: acierto real contra el que hace falta para empatar con esas cuotas. <b>(*)</b> Las reglas se activaron mirando estos mismos resultados, por eso esta fila es más optimista de lo que se puede esperar hacia adelante.</p>`;
+    <p class="vip-dim" style="font-size:12px;line-height:1.55;margin:10px 0 0;"><b>ROI</b>: ganancia por cada unidad apostada. <b>Ventaja</b>: puntos de ROI por encima de lo que gana el mercado completo en la misma banda de cuota y mes; es la medida honesta, porque a cuota baja <i>todo</i> pierde más. <b>Acierto / necesario</b>: acierto real contra el que hace falta para empatar con esas cuotas. <b>(*)</b> Las reglas se activaron mirando estos mismos resultados, por eso esta fila es más optimista de lo que se puede esperar hacia adelante. La medida sin esa trampa (cada apuesta juzgada solo con lo anterior) está en «¿Y las señales activas?».</p>`;
 
   // ---------------- 6. por mes ----------------
   const porMes = `<div class="vip-scroll"><table class="cmp-table"><thead><tr><th>Mes</th><th class="num">Selección: apuestas</th><th class="num">Acierto</th><th class="num">ROI</th><th class="num">Ventaja</th><th class="num">Resto: apuestas</th><th class="num">Resto: ROI</th></tr></thead><tbody>
@@ -2162,6 +2246,7 @@ function renderVip(data, picks){
   return `
     <section>${titulo}${hoyHtml}</section>
     <section><p class="section-title">¿Funciona? En palabras simples</p><div class="vip-verdict">${veredicto}</div></section>
+    <section><p class="section-title">🔍 ¿Y las señales activas? Lo que se ve en verde contra lo que pasó después</p>${vipConciliacionHtml(V)}</section>
     <section><p class="section-title">🧪 En vivo (la prueba que cuenta)</p>${enVivoHtml}</section>
     <section><p class="section-title">📈 Ganancia acumulada</p>${curvaHtml}</section>
     <section><p class="section-title">Comparación por grupo</p>${grupos}</section>
