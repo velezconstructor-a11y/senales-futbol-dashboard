@@ -1143,7 +1143,12 @@ function renderCombo(picks){
   // Over1.5/Over2.5/1er tiempo. Se separa: el mensaje corto solo
   // reemplaza Validadas/En seguimiento cuando no hay elegibles, pero
   // Todos los partidos se construye siempre con la lista completa.
-  const DESCUENTO_CORRELACION = 0.275;
+  // CORREGIDO 29 oct 2026: el descuento ya no es 0.275. Se lee de dashboard_data.json
+  // (lo escribe backtest.py a partir de reglas_activas.PRECIOS_REALES_COMBINADA: ~0.48,
+  // medido con precios reales de la casa del usuario). 0.48 solo es el respaldo si el
+  // JSON viejo todavia no trae el campo.
+  const DESCUENTO_CORRELACION = (DATA && DATA.descuento_combo_supuesto != null) ? DATA.descuento_combo_supuesto : 0.48;
+  const NUM_PRECIOS_REALES = (DATA && DATA.descuento_combo_n_precios) ? DATA.descuento_combo_n_precios : null;
   const probDe = (p) => p.prob_combo_calibrada != null ? p.prob_combo_calibrada
                        : (p.prob_combo_v2 != null ? p.prob_combo_v2 : null);
   const fila = (p) => {
@@ -1155,7 +1160,7 @@ function renderCombo(picks){
     // si tu casa paga menos que esto, esta señal pierde dinero.
     const fBE = (DATA && DATA.combo_factor_equilibrio) ? DATA.combo_factor_equilibrio[p.motivo_combo] : null;
     const cuotaMin = (cuotaProducto && fBE != null) ? (1 + (cuotaProducto - 1) * fBE) : null;
-    const minTxt = cuotaMin ? ` <span title="Cuota mínima de la combinada para que esta señal no pierda dinero según su propio historial. La cuota ${cuotaCombo} es una ESTIMACIÓN (producto de las dos cuotas con descuento de ${(DESCUENTO_CORRELACION*100).toFixed(1)}%), no la de tu casa: si tu casa paga menos que ${cuotaMin.toFixed(2)}, no la juegues." style="color:var(--amber);">(mín. ${cuotaMin.toFixed(2)})</span>` : "";
+    const minTxt = cuotaMin ? ` <span title="Cuota mínima de la combinada para que esta señal no pierda dinero según su propio historial. La cuota ${cuotaCombo} es una ESTIMACIÓN (producto de las dos cuotas con un descuento de ${(DESCUENTO_CORRELACION*100).toFixed(0)}% sobre la ganancia${NUM_PRECIOS_REALES ? `, medido con ${NUM_PRECIOS_REALES} precios reales de tu casa` : ''}), no la de tu casa: si tu casa paga menos que ${cuotaMin.toFixed(2)}, no la juegues." style="color:var(--amber);">(mín. ${cuotaMin.toFixed(2)})</span>` : "";
     const resultado = p.resultado_combo;
     let badgeClass, badgeTxt;
     if(resultado === true){ badgeClass = "ganada"; badgeTxt = "✓ Ganada"; }
