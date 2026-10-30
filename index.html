@@ -350,6 +350,25 @@
   .vip-scroll .cmp-table tr.vip-dest td:first-child{background:linear-gradient(rgba(209,154,61,0.07), rgba(209,154,61,0.07)), var(--pitch-950);}
   .vip-scroll .cmp-table tr.vip-tenue td{color:var(--chalk-dim);}
   .vip-scroll .cmp-table tr.vip-tenue td .vip-nota{color:var(--amber);}
+  /* 30 oct 2026: tabla corta (por mes) - cabe en pantallas angostas sin desplazar */
+  .vip-scroll.vip-corta .cmp-table{min-width:0;}
+  @media (max-width:620px){
+    .vip-scroll.vip-corta .cmp-table th{padding-left:6px;padding-right:6px;letter-spacing:.03em;font-size:10px;}
+    .vip-scroll.vip-corta .cmp-table td{padding-left:6px;padding-right:6px;font-size:13px;}
+  }
+  /* 30 oct 2026: tarjeta "activas y estables" en celular: la columna del nombre no debe comerse la pantalla,
+     para que se vean Apuestas / ROI / Unidades sin deslizar */
+  .vip-scroll.vip-corta .cmp-table td.vip-nom{min-width:0;}
+  @media (max-width:620px){
+    .vip-scroll.vip-ae .cmp-table{min-width:0;width:690px;table-layout:fixed;}
+    .vip-scroll.vip-ae .cmp-table th:nth-child(1){width:150px;}
+    .vip-scroll.vip-ae .cmp-table th:nth-child(2){width:84px;}
+    .vip-scroll.vip-ae .cmp-table th:nth-child(3){width:72px;}
+    .vip-scroll.vip-ae .cmp-table th:nth-child(4){width:84px;}
+    .vip-scroll.vip-ae .cmp-table th:nth-child(5){width:76px;}
+    .vip-scroll.vip-ae .cmp-table th:nth-child(6){width:104px;}
+    .vip-scroll.vip-ae .cmp-table th:nth-child(7){width:120px;}
+  }
 </style>
 </head>
 <body>
@@ -1365,7 +1384,7 @@ function renderTickets(comparativo){
     const n = nOf(s);
     const units = n ? `${s.profit_u >= 0 ? "+" : ""}${s.profit_u.toFixed(1)}u` : "—";
     return `
-      <div class="ticket">
+      <div class="ticket"${s && s.nota ? ` title="${vipEsc(s.nota)}"` : ""}>
         <div class="ticket-name"><span>${nombre}</span><span class="ticket-status ${cls}"></span></div>
         <div class="ticket-pct">${pctTxt(s)}</div>
         <div class="ticket-meta"><span>${n} caso${n===1?"":"s"}</span><span class="ticket-units ${cls}">${units}</span></div>
@@ -1647,6 +1666,7 @@ function renderPartidosEnPrueba(data){
 function renderEstadisticas(data){
   const comparativo = data.comparativo;
   return `
+    ${vipActivasEstablesHtml(data)}
     <section><p class="section-title">Por mercado (señales activas hoy, histórico completo)</p><div class="tickets">${renderTickets(comparativo)}</div></section>
     <section><p class="section-title">Hoy · 7 días · histórico</p>${renderCmpTable(comparativo)}</section>
     ${data.serie_diaria && data.serie_diaria.length > 1 ? `
@@ -2062,6 +2082,112 @@ function vipConciliacionHtml(V){
       ${reciente}
       <p class="vip-dim" style="font-size:13px;">⚠️${rango} Los grupos de precio (Respaldada y Zona de valor) se diseñaron mirando estos mismos resultados, así que la fila de la Selección VIP es más optimista de lo que se puede esperar; la prueba definitiva es «En vivo». Los primeros ${C.warmup_dias} días no se miden porque casi ninguna señal tenía todavía los 25 casos mínimos. «Días en verde» = % de días en que el ROI acumulado estuvo por encima de cero.</p>
     </div>`;
+}
+
+// ---------- 30 oct 2026: "¿las señales activas y estables ganan o pierden?" - lo primero de Estadísticas ----------
+// Una sola respuesta, sin la Seleccion VIP de por medio. Llega calculada en dashboard_data.json ->
+// vip_btts.activas_estables (backtest._activas_estables_datos): los JUGAR de BTTS de TODO el historico
+// cuya señal hoy es validada + activa + estable (la misma regla que usa el Telegram).
+function vipVeredictoAE(g){
+  if(!g || !g.n) return {color: "var(--line)", txt: "Todavía no hay apuestas de señales activas y estables."};
+  const lo = g.ic95 ? g.ic95[0] : null, hi = g.ic95 ? g.ic95[1] : null;
+  const rango = g.ic95 ? `${vipFmt(lo)}% a ${vipFmt(hi)}%` : "";
+  const base = `<b style="color:${vipCol(g.roi)};">${vipPct(g.roi)}</b> en ${vipN(g.n)} apuestas (${vipFmt(g.uds)}u)`;
+  if(g.roi >= 0){
+    if(lo != null && lo > 0) return {color: "var(--win)", txt: `<b>Ganan:</b> ${base}, y el rango del 95% (${rango}) queda por encima de cero.`};
+    return {color: "var(--amber)", txt: `<b>No dan pérdida:</b> ${base}. Es poco: ${g.ic95 ? `el rango del 95% (${rango}) incluye el cero, así que todavía no está demostrado que ganen.` : "con tan pocas apuestas todavía no se puede saber si ganan."}`};
+  }
+  if(hi != null && hi < 0) return {color: "var(--loss)", txt: `<b>Sí dan pérdida:</b> ${base}, y el rango del 95% (${rango}) queda por debajo de cero.`};
+  return {color: "var(--loss)", txt: `<b>Hoy dan pérdida:</b> ${base}${g.ic95 ? `, aunque el rango del 95% (${rango}) incluye el cero` : ""}.`};
+}
+
+function vipFilaAE(nombre, nota, s, opts){
+  opts = opts || {};
+  const sty = opts.destacada ? ' class="vip-dest"' : (opts.tenue ? ' class="vip-tenue"' : "");
+  const celda = `<td class="vip-nom">${nombre}${nota ? `<div class="vip-nota">${nota}</div>` : ""}</td>`;
+  if(!s || !s.n) return `<tr${sty}>${celda}<td class="num vip-dim" colspan="6">sin apuestas</td></tr>`;
+  const ic = s.ic95 ? `${vipFmt(s.ic95[0])} a ${vipFmt(s.ic95[1])}` : "—";
+  // orden pensado para el celular: lo primero que se ve (apuestas, ROI, unidades) es lo que responde la pregunta
+  return `<tr${sty}>${celda}
+    <td class="num">${vipN(s.n)}</td>
+    <td class="num" style="color:${vipCol(s.roi)};font-weight:700;">${vipPct(s.roi)}</td>
+    <td class="num" style="color:${vipCol(s.uds)};">${vipFmt(s.uds)}u</td>
+    <td class="num">${s.acierto != null ? vipFmt(s.acierto, 0, false) + "%" : "—"}</td>
+    <td class="num">${s.cuota_media != null ? vipFmt(s.cuota_media, 2, false) : "—"}</td>
+    <td class="num vip-dim">${ic}</td>
+  </tr>`;
+}
+
+function vipActivasEstablesHtml(data){
+  const titulo = '<p class="section-title">✅ Señales activas y estables de BTTS · ¿ganan o pierden?</p>';
+  const V = data && data.vip_btts;
+  const ae = V && V.activas_estables;
+  if(!ae || ae.error || !(ae.activas && ae.activas.n)){
+    let msg;
+    if(ae && ae.error) msg = `No se pudo calcular esta tarjeta (${vipEsc(ae.error)}).`;
+    else if(ae && ae.activas) msg = "Todavía no hay apuestas de señales activas y estables.";
+    else msg = "Todavía no hay datos para esta tarjeta. Sube los archivos nuevos (backtest.py e index.html) y corre el workflow una vez.";
+    return `<section>${titulo}<div class="empty">${msg}</div></section>`;
+  }
+  const g = ae.activas, sv = ae.activas_sin_vip || {}, no = ae.no_activas || {}, todas = ae.todas || {};
+  const ver = vipVeredictoAE(g);
+  const meses = Array.isArray(ae.por_mes) ? ae.por_mes : [];
+  const anios = new Set(meses.map(m => String(m.mes).slice(0, 4)));
+  const hoyMes = (data && data.hoy_referencia) ? String(data.hoy_referencia).slice(0, 7) : "";
+  const anioTxt = (ym) => (anios.size > 1 ? " " + String(ym).slice(0, 4) : "");
+  const nombreMes = (ym) => vipMesNombre(ym) + anioTxt(ym);                       // "octubre" (para frases)
+  const mesCorto = (ym) => {                                                      // "Oct" (para la tabla, que debe caber en el celular)
+    const p = String(ym).split("-");
+    const n = MESES_ES[parseInt(p[1], 10) - 1] || String(ym);
+    return n.charAt(0).toUpperCase() + n.slice(1) + anioTxt(ym);
+  };
+
+  const tabla = `<div class="vip-scroll vip-ae" style="margin-top:12px;"><table class="cmp-table">
+    <thead><tr><th>Del ${vipFechaCorta(ae.desde)} al ${vipFechaCorta(ae.hasta)}</th><th class="num">Apuestas</th><th class="num">ROI</th><th class="num">Unidades</th><th class="num">Acierto</th><th class="num">Cuota media</th><th class="num" title="Entre estos dos valores está el ROI real con 95% de confianza (si cada apuesta fuera independiente)">Rango 95%</th></tr></thead>
+    <tbody>
+      ${vipFilaAE("Señales activas y estables", "todas las apuestas JUGAR de esas señales", g, {destacada: true})}
+      ${vipFilaAE("↳ sin las que entran a la Selección VIP", "quitando Respaldada y Zona de valor", sv)}
+      ${vipFilaAE("Las demás señales", "hoy apagadas, sin validar o inestables", no, {tenue: true})}
+      ${vipFilaAE("Todo lo que marcó JUGAR", "las activas y estables + las demás", todas, {tenue: true})}
+    </tbody></table></div>`;
+
+  const filasMes = meses.map(m => `<tr>
+      <td class="vip-nom">${mesCorto(m.mes)}${m.mes === hoyMes ? '<div class="vip-nota">en curso</div>' : ""}</td>
+      <td class="num">${vipN(m.n)}</td>
+      <td class="num" style="color:${vipCol(m.roi)};font-weight:700;">${vipPct(m.roi)}</td>
+      <td class="num" style="color:${vipCol(m.uds)};">${vipFmt(m.uds)}u</td>
+      <td class="num">${m.sin_vip_n ? `<span style="color:${vipCol(m.sin_vip_roi)};">${vipPct(m.sin_vip_roi)}</span> <span class="vip-nota">(${vipN(m.sin_vip_n)})</span>` : "—"}</td>
+    </tr>`).join("");
+  const tablaMes = meses.length ? `<p class="bar-label" style="margin:16px 0 8px;">Por mes · señales activas y estables</p>
+    <div class="vip-scroll vip-corta"><table class="cmp-table">
+      <thead><tr><th>Mes</th><th class="num">Apuestas</th><th class="num">ROI</th><th class="num">Unidades</th><th class="num" title="ROI quitando las apuestas que entran a la Selección VIP (entre paréntesis, cuántas apuestas quedan)">ROI sin VIP</th></tr></thead>
+      <tbody>${filasMes}</tbody></table></div>` : "";
+
+  // aviso: el mes mas reciente con datos suficientes va en negativo
+  const conDatos = meses.filter(m => m.n >= 20);
+  const ult = conDatos.length ? conDatos[conDatos.length - 1] : null;
+  const avisoMes = (ult && ult.roi < 0)
+    ? `<p>⚠️ <b>El mes más reciente con datos (${nombreMes(ult.mes)}${ult.mes === hoyMes ? ", en curso" : ""}) va en negativo:</b> <span style="color:var(--loss);">${vipPct(ult.roi)}</span> en ${vipN(ult.n)} apuestas (${vipFmt(ult.uds)}u).</p>` : "";
+  // (la frase usa el nombre completo del mes: "octubre")
+  // de donde sale la perdida cuando se suma TODO lo que marco JUGAR
+  const suma = (todas.n && no.n)
+    ? `<p>Si sumas <b>todo lo que marcó JUGAR</b> (${vipN(todas.n)} apuestas), el ROI es <b style="color:${vipCol(todas.roi)};">${vipPct(todas.roi)}</b> (${vipFmt(todas.uds)}u): son las activas y estables (${vipFmt(g.uds)}u) más las ${vipN(no.n)} apuestas de las demás señales (<span style="color:${vipCol(no.roi)};">${vipPct(no.roi)}</span>, ${vipFmt(no.uds)}u).</p>` : "";
+  // sesgo de mirar hacia atras con la lista de hoy
+  const C = V.conciliacion;
+  const hon = (C && !C.error && !C.vacio && C.activas_honesto && C.activas_honesto.n) ? C.activas_honesto : null;
+  const sesgo = `<p class="vip-dim" style="font-size:13px;">⚠️ Estas señales están activas porque <b>ya ganaron</b>: mirando hacia atrás siempre salen mejor de lo que saldrán hacia adelante.${hon ? ` Simulando el sistema día por día, sin ver el futuro, daban <b style="color:${vipCol(hon.roi)};">${vipPct(hon.roi)}</b> en ${vipN(hon.n)} apuestas desde el ${vipFechaCorta(C.desde)} (pestaña 💎 Selección VIP → «¿Y las señales activas?»).` : ""} <b>Activa</b>: el sistema la tiene encendida porque su ROI es positivo con suficientes casos. <b>Estable</b>: su ROI total no es negativo con 25 o más casos. Cuotas del feed: la casa de apuestas puede pagar distinto.</p>`;
+
+  return `<section>${titulo}
+    <div class="vip-verdict" style="border-left-color:${ver.color};">
+      <p style="font-size:15px;">${ver.txt}</p>
+      <p class="vip-dim" style="font-size:13px;">Son las apuestas JUGAR de las señales que hoy están activas y estables (la misma regla de «activa y estable» del Telegram${(V.politica && V.politica.solo_vip_en_telegram) ? ", que además exige entrar a la Selección VIP" : ""}), de todo el histórico: del ${vipFechaCorta(ae.desde)} al ${vipFechaCorta(ae.hasta)}.</p>
+    </div>
+    ${tabla}
+    ${tablaMes}
+    <div class="vip-verdict" style="margin-top:12px;border-left-color:var(--line);">
+      ${avisoMes}${suma}${sesgo}
+    </div>
+  </section>`;
 }
 
 function renderVip(data, picks){
