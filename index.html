@@ -369,6 +369,22 @@
     .vip-scroll.vip-ae .cmp-table th:nth-child(6){width:104px;}
     .vip-scroll.vip-ae .cmp-table th:nth-child(7){width:120px;}
   }
+  /* 30 oct 2026: tablas de los dos grupos de señales (una columna por mes) */
+  .vip-scroll.vip-gr .cmp-table{min-width:0;table-layout:fixed;width:100%;}
+  .vip-scroll.vip-gr .cmp-table td.vip-nom{min-width:0;}
+  .vip-scroll.vip-gr .cmp-table th .vip-nota{text-transform:none;letter-spacing:0;}
+  .vip-solo-movil{display:none;}
+  @media (max-width:620px){
+    .vip-solo-movil{display:block;}
+    .vip-solo-pc{display:none;}
+    /* en el celular se ocultan 'Apuestas' (va debajo del ROI), 'Unid.' y los meses que no cuentan, para que todo quepa sin deslizar */
+    .vip-scroll.vip-gr .cmp-table{table-layout:auto;}
+    .vip-scroll.vip-gr .cmp-table col{width:auto !important;}
+    .vip-scroll.vip-gr .c-n, .vip-scroll.vip-gr .c-u, .vip-scroll.vip-gr .mes-nc{display:none;}
+    .vip-scroll.vip-gr .cmp-table td.vip-nom{width:122px;max-width:122px;font-size:12.5px;}
+    .vip-scroll.vip-gr .cmp-table th{padding-left:5px;padding-right:5px;letter-spacing:.03em;font-size:10px;}
+    .vip-scroll.vip-gr .cmp-table td{padding-left:5px;padding-right:5px;font-size:13px;}
+  }
 </style>
 </head>
 <body>
@@ -1667,6 +1683,7 @@ function renderEstadisticas(data){
   const comparativo = data.comparativo;
   return `
     ${vipActivasEstablesHtml(data)}
+    ${vipGruposSenalesHtml(data)}
     <section><p class="section-title">Por mercado (señales activas hoy, histórico completo)</p><div class="tickets">${renderTickets(comparativo)}</div></section>
     <section><p class="section-title">Hoy · 7 días · histórico</p>${renderCmpTable(comparativo)}</section>
     ${data.serie_diaria && data.serie_diaria.length > 1 ? `
@@ -2187,6 +2204,124 @@ function vipActivasEstablesHtml(data){
     <div class="vip-verdict" style="margin-top:12px;border-left-color:var(--line);">
       ${avisoMes}${suma}${sesgo}
     </div>
+  </section>`;
+}
+
+// ---------- 30 oct 2026: las señales de BTTS con ROI positivo, en dos grupos (pedido del usuario) ----------
+// Llega calculado en dashboard_data.json -> grupos_senales_btts (backtest._grupos_senales_datos): la misma
+// cuenta de «Por qué se activó JUGAR (BTTS)», partida por mes. Periodo = mes. Grupo 1: ganaron en TODOS sus
+// meses. Grupo 2: ningun mes perdido, pero con poca historia. «Sin grupo»: positivas que perdieron algun mes
+// o tienen muy pocas apuestas. Solo informativo: no cambia que señales se envian.
+let VIP_GR_OTRAS_ABIERTO = false;
+function vipU(x){                       // unidades: 1 decimal; 2 si es distinto de cero pero redondea a 0.0
+  if(x == null || isNaN(x)) return "—";
+  return (x !== 0 && Math.abs(x) < 0.05) ? vipFmt(x, 2) : vipFmt(x, 1);
+}
+function vipEstadoSenal(est){
+  if(est === "activa") return '<span style="color:var(--win);">activa</span>';
+  if(est === "en_prueba") return '<span style="color:var(--amber);">en prueba<span class="vip-solo-pc"> (apagada)</span></span>';
+  return '<span class="vip-dim">apagada</span>';
+}
+function vipGruposSenalesHtml(data){
+  const titulo = '<p class="section-title">🏅 Señales de BTTS con ROI positivo · en dos grupos</p>';
+  const G = data && data.grupos_senales_btts;
+  if(!G || G.error || !Array.isArray(G.meses) || !G.meses.length || !G.reglas || !Array.isArray(G.grupo1) || !Array.isArray(G.grupo2)){
+    let msg;
+    if(G && G.error) msg = `No se pudo calcular esta sección (${vipEsc(G.error)}).`;
+    else if(G && !Array.isArray(G.meses)) msg = "Todavía no hay historial suficiente para separar las señales en grupos.";
+    else msg = "Todavía no hay datos para esta sección. Sube los archivos nuevos (backtest.py e index.html) y corre el workflow una vez.";
+    return `<section>${titulo}<div class="empty">${msg}</div></section>`;
+  }
+  const R = G.reglas, g1 = G.grupo1, g2 = G.grupo2, otras = Array.isArray(G.otras) ? G.otras : [];
+  const meses = G.meses, mini = R.min_apuestas_mes, diaMin = R.min_dia_mes_en_curso || 15;
+  const anios = new Set(meses.map(m => String(m).slice(0, 4)));
+  const anioTxt = (ym) => (anios.size > 1 ? " " + String(ym).slice(0, 4) : "");
+  const mesLargo = (ym) => vipMesNombre(ym) + anioTxt(ym);                        // "octubre" (para frases)
+  const mesCorto = (ym) => {                                                      // "Oct" (para el encabezado de la tabla)
+    const p = String(ym).split("-");
+    const n = MESES_ES[parseInt(p[1], 10) - 1] || String(ym);
+    return n.charAt(0).toUpperCase() + n.slice(1) + anioTxt(ym);
+  };
+  const hoyMes = (data && data.hoy_referencia) ? String(data.hoy_referencia).slice(0, 7) : "";
+
+  // por que la señal esta en ese grupo (una frase corta, debajo del nombre)
+  const razon = (f, tipo) => {
+    const k = (f.meses_contados || []).length;
+    if(tipo === 1) return "";                                   // ya lo dice el grupo: ganó todos sus meses
+    if(tipo === 2){                                             // lo que todavia le falta para el Grupo 1
+      const p = [];
+      if(k < R.min_meses_grupo1) p.push(`${k} ${k === 1 ? "mes" : "meses"}`);
+      if(f.n < R.min_apuestas_grupo1) p.push(`${vipN(f.n)} apuestas`);
+      return p.join(" · ");
+    }
+    const per = f.meses_perdidos || [];
+    if(per.length){
+      const t = per.map(ym => `${mesLargo(ym)} (${vipU(f.meses && f.meses[ym] ? f.meses[ym].uds : null)}u)`);
+      return "perdió " + (t.length > 1 ? t.slice(0, -1).join(", ") + " y " + t[t.length - 1] : t[0]);
+    }
+    if(f.n < R.min_apuestas_grupo2) return `solo ${vipN(f.n)} apuestas (mínimo ${R.min_apuestas_grupo2})`;
+    return `ningún mes con ${mini}+ apuestas`;
+  };
+
+  const fila = (f, tipo, ocultos) => {
+    const etq = (typeof ETIQUETAS_BTTS !== "undefined" && ETIQUETAS_BTTS[f.motivo]) || f.motivo;
+    const corto = String(etq).split(" · ")[0];            // nombre de la señal tal como se ve en el dashboard
+    const celdas = meses.map(ym => {
+      const c = f.meses && f.meses[ym];
+      const nc = ocultos.has(ym) ? " mes-nc" : "";
+      if(!c) return `<td class="num vip-dim${nc}">—</td>`;
+      const cuenta = (f.meses_contados || []).indexOf(ym) >= 0;       // la decision la toma el backend
+      const roiM = c.n ? c.uds / c.n * 100 : null;
+      const tip = `${vipN(c.n)} apuestas · ROI ${vipPct(roiM)}` + (cuenta ? "" : (c.n >= mini ? ` · todavía no cuenta: el mes en curso cuenta desde el día ${diaMin}` : ` · no cuenta (menos de ${mini} apuestas)`));
+      return cuenta
+        ? `<td class="num${nc}" style="color:${vipCol(c.uds)};font-weight:600;" title="${vipEsc(tip)}">${vipU(c.uds)}</td>`
+        : `<td class="num vip-dim${nc}" title="${vipEsc(tip)}">${vipU(c.uds)}<span class="vip-nota" style="display:inline;margin-left:3px;">(${vipN(c.n)})</span></td>`;
+    }).join("");
+    const rz = razon(f, tipo);
+    return `<tr>
+      <td class="vip-nom"><span title="${vipEsc(etq)}">${vipEsc(corto)}</span><div class="vip-nota">${vipEstadoSenal(f.estado)}${rz ? " · " + vipEsc(rz) : ""}</div></td>
+      <td class="num c-n">${vipN(f.n)}</td>
+      <td class="num" style="color:${vipCol(f.roi)};font-weight:700;">${vipPct(f.roi)}<span class="vip-nota vip-solo-movil" style="font-weight:400;">${vipN(f.n)} ap.</span></td>
+      <td class="num c-u" style="color:${vipCol(f.uds)};">${vipU(f.uds)}u</td>
+      ${celdas}
+    </tr>`;
+  };
+  const tabla = (lista, tipo) => {
+    // meses en que NINGUNA fila de esta tabla llega al minimo de apuestas: en el celular se ocultan (no deciden nada)
+    const ocultos = new Set(meses.filter(ym => !lista.some(f => (f.meses_contados || []).indexOf(ym) >= 0)));
+    const anchoMes = (100 - 36 - 11 - 10 - 10) / meses.length;
+    return `<div class="vip-scroll vip-gr"><table class="cmp-table">
+      <colgroup><col style="width:36%"><col class="c-n" style="width:11%"><col style="width:10%"><col class="c-u" style="width:10%">${meses.map(ym => `<col class="${ocultos.has(ym) ? "mes-nc" : ""}" style="width:${anchoMes.toFixed(2)}%">`).join("")}</colgroup>
+      <thead><tr><th>Señal</th><th class="num c-n">Apuestas</th><th class="num">ROI</th><th class="num c-u" title="Unidades ganadas o perdidas en total">Unid.</th>${meses.map(ym => `<th class="num${ocultos.has(ym) ? " mes-nc" : ""}" title="Unidades ganadas o perdidas en ${mesLargo(ym)}">${mesCorto(ym)}${ym === hoyMes ? '<div class="vip-nota">en curso</div>' : ""}</th>`).join("")}</tr></thead>
+      <tbody>${lista.map(f => fila(f, tipo, ocultos)).join("")}</tbody></table></div>`;
+  };
+  const bloque = (icono, tit, sub, lista, tipo, vacio) => `
+    <p class="bar-label" style="margin:22px 0 4px;font-size:15px;color:var(--chalk);">${icono} <b>${tit}</b> <span class="vip-dim">(${lista.length})</span></p>
+    <p class="vip-dim" style="font-size:13px;margin:0 0 10px;line-height:1.5;">${sub}</p>
+    ${lista.length ? tabla(lista, tipo) : `<div class="empty" style="padding:22px 16px;">${vacio}</div>`}`;
+
+  const intro = `<div class="vip-verdict" style="border-left-color:var(--line);">
+      <p><b>${vipN(G.n_positivas)} de las ${vipN(G.n_senales)} señales de BTTS tienen ROI positivo</b> (del ${vipFechaCorta(G.desde)} al ${vipFechaCorta(G.hasta)}). Se separan mes por mes: un mes cuenta solo si la señal tuvo ${mini} o más apuestas ese mes (con menos, ganar o perder es azar), y el mes en curso cuenta desde el día ${diaMin}.</p>
+      <p class="vip-dim" style="font-size:13px;">Las columnas de meses son las unidades ganadas (verde) o perdidas (rojo) ese mes. En gris, con las apuestas entre paréntesis, los meses que no cuentan. Es la misma cuenta de «Por qué se activó JUGAR (BTTS)», partida por mes.</p>
+    </div>`;
+
+  const nPrueba1 = g1.filter(f => f.estado === "en_prueba").length;
+  const notas = `<div class="vip-verdict" style="margin-top:16px;border-left-color:var(--line);">
+      <p class="vip-dim" style="font-size:13px;">⚠️ <b>Ganar todos los meses no es una garantía.</b> Una señal sin ninguna ventaja real gana tres meses seguidos 1 de cada 6 veces. Y perder un mes no descarta a una buena: con unas 40 apuestas al mes, una señal que de verdad rinde +8% pierde 1 mes de cada 5.</p>
+      ${nPrueba1 ? `<p class="vip-dim" style="font-size:13px;">${nPrueba1} de las ${g1.length} del Grupo 1 están «en prueba (apagada)»: se diseñaron mirando este mismo historial, así que su récord sale más favorable de lo que se puede esperar. Por eso el sistema no las enciende solo.</p>` : ""}
+      <p class="vip-dim" style="font-size:13px;">Solo cuenta el historial real desde el ${vipFechaCorta(G.desde)} (no el reconstruido de abril-julio). Las unidades no se suman entre señales: un mismo partido cuenta en varias. Esta sección es informativa: no cambia qué señales se envían al Telegram.</p>
+    </div>`;
+
+  const detOtras = otras.length ? `<details class="vip-det" ${VIP_GR_OTRAS_ABIERTO ? "open" : ""} ontoggle="VIP_GR_OTRAS_ABIERTO = this.open">
+      <summary>➖ Sin grupo (${otras.length}): ROI positivo, pero perdieron algún mes o tienen muy pocas apuestas</summary>
+      <div style="margin-top:10px;">${tabla(otras, 0)}</div></details>` : "";
+
+  return `<section>${titulo}
+    ${intro}
+    ${bloque("🏆", "Grupo 1 · Consolidadas", `Ganaron en <b>todos</b> sus meses (mínimo ${R.min_meses_grupo1} meses y ${R.min_apuestas_grupo1} apuestas en total).`, g1, 1, "Ninguna señal ha ganado todos sus meses todavía.")}
+    ${bloque("🌱", "Grupo 2 · Con poca historia", `ROI positivo, <b>ningún mes perdido</b> y al menos ${R.min_apuestas_grupo2} apuestas, pero llevan menos de ${R.min_meses_grupo1} meses o menos de ${R.min_apuestas_grupo1} apuestas. Hay que vigilarlas antes de confiar en ellas como en el Grupo 1.`, g2, 2, "Ninguna señal está en esta situación.")}
+    ${detOtras}
+    ${notas}
   </section>`;
 }
 
