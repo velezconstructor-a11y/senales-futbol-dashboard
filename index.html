@@ -216,6 +216,10 @@
   .match-row:last-child{border-bottom:none;}
   .match-row:nth-child(even){background:rgba(244,247,242,0.015);}
   .match-teams{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+  /* 30 oct 2026: sin esto la columna del nombre no podia encogerse y, con equipos de nombre largo,
+     la cuota y la etiqueta de la derecha quedaban cortadas en el celular (el "..." nunca funcionaba). */
+  .match-row > div:first-child{min-width:0;}
+  .vip-fuera .match-teams{white-space:normal;overflow-wrap:anywhere;}
   .match-liga{font-size:10px;color:var(--chalk-dim);text-transform:uppercase;}
   .match-pct{font-family:var(--mono);font-size:12px;color:var(--chalk-dim);text-align:right;white-space:nowrap;}
   .match-badge{
@@ -1161,7 +1165,7 @@ function renderMercado(picks, probKey, senalKey, tierKey, cuotaKey, resultadoDes
     const enSel = validadas.filter(p => vipClase(p)).sort(vipOrden);
     const fuera = validadas.filter(p => !vipClase(p));
     validadasHtml = renderCardsConfianza(enSel, "Hoy no hay picks de BTTS en la Selección VIP. No enviar nada es una decisión válida.")
-      + (fuera.length ? `<details class="vip-det"><summary>Otros ${fuera.length} JUGAR de BTTS sin ventaja de precio (no se envían al Telegram)</summary><div style="margin-top:8px;">${renderCardsConfianza(fuera, "")}</div></details>` : "");
+      + (fuera.length ? `<details class="vip-det"><summary>Otros ${fuera.length} JUGAR de BTTS que no entran a la Selección VIP (no se envían al Telegram)</summary><div style="margin-top:8px;">${renderCardsConfianza(fuera, "")}</div></details>` : "");
   } else {
     validadasHtml = renderCardsConfianza(validadas, "Sin señales validadas hoy todavía.");
   }
@@ -1801,7 +1805,19 @@ function vipEsc(s){
 }
 function vipPol(){ return (DATA && DATA.vip_btts && DATA.vip_btts.politica) || {}; }
 function vipActiva(){ return !!(DATA && DATA.vip_btts && DATA.vip_btts.politica && !DATA.vip_btts.error && !DATA.vip_btts.vacio); }
-function vipClase(p){ return (p && VIP_CLASES[p.vip_btts]) ? p.vip_btts : null; }
+// 30 oct 2026 (noche): la Seleccion VIP es lo que de verdad se ENVIA al Telegram. Las clases que se
+// envian llegan en data.vip_btts.politica.clases_envio (backend: config.NOTIFY_BTTS_CLASES_VIP; por
+// defecto solo "RESPALDADA"). Si el json es viejo y no trae ese dato, se asumen las dos clases.
+// - vipClaseRegla(p): la clase que le toca al pick por su cuota y su señal (aunque no se envie).
+// - vipClase(p): su clase DENTRO de la seleccion (null si su clase esta "en seguimiento"). Un pick que
+//   ya salio al Telegram (alerta_btts) siempre cuenta, aunque su clase ya no se envie.
+function vipEnvio(){ const v = vipPol().clases_envio; return (Array.isArray(v) && v.length) ? v : ["RESPALDADA", "ZONA_VALOR"]; }
+function vipClaseRegla(p){ return (p && VIP_CLASES[p.vip_btts]) ? p.vip_btts : null; }
+function vipClase(p){
+  const c = vipClaseRegla(p);
+  return (c && (vipEnvio().includes(c) || (p.alerta_btts && VIP_CLASES[p.alerta_btts]))) ? c : null;
+}
+function vipNombresEnvio(){ return vipEnvio().filter(c => VIP_CLASES[c]).map(c => VIP_CLASES[c].nombre).join(" + "); }
 function vipFmt(x, nd, signo){
   if(x == null || isNaN(x)) return "—";
   nd = (nd == null) ? 1 : nd;
@@ -1846,6 +1862,12 @@ function vipNotaBtts(p){
       : `Zona de valor: cuota entre ${Number(pol.cuota_min).toFixed(2)} y ${Number(pol.cuota_max).toFixed(2)}, donde la casa se queda menos. Ver pestaña Selección VIP.`;
     const enviado = p.alerta_btts ? ' · <span title="Esta alerta ya salió al Telegram" style="color:var(--chalk-dim);">📨 enviado</span>' : "";
     return ` · <span class="vip-chip ${info.fuerte ? "fuerte" : ""}" title="${vipEsc(titulo)}">${info.chip}</span>${enviado}`;
+  }
+  const cr = vipClaseRegla(p);
+  if(cr){      // cumple una clase que esta "en seguimiento": se mide en la pagina pero no se envia
+    const zv = (cr === "ZONA_VALOR" ? V.zona_valor : V.respaldada) || {};
+    const t2 = `${VIP_CLASES[cr].nombre}: en seguimiento, no se envía al Telegram. En el histórico rinde ${vipPct(zv.roi)} (${vipN(zv.n)} apuestas) y todavía no demostró ventaja frente al mercado. Ver pestaña Selección VIP.`;
+    return ` · <span class="vip-chip gris" title="${vipEsc(t2)}">${VIP_CLASES[cr].nombre.toLowerCase()} · en seguimiento</span>`;
   }
   const r = V.resto_jugar || {};
   const t = `El sistema dice JUGAR, pero la cuota está fuera de las zonas donde se midió ventaja. En el histórico este grupo rinde ${vipPct(r.roi)} (${vipN(r.n)} apuestas) y no se envía al Telegram.`;
@@ -2093,7 +2115,7 @@ function vipConciliacionHtml(V){
       ${vipFilaConc("Señales apagadas · con honestidad", "las que el sistema habría tenido apagadas ese día", apa)}
       ${vipFilaConc("💎 Selección VIP + señal activa", "lo que llega al Telegram", va, {destacada: true})}
       ${vipFilaConc("↳ Respaldada + activa", "VIP+ 1.40–1.60 o Pilares", C.respaldada_activas)}
-      ${vipFilaConc("↳ Zona de valor + activa", "JUGAR con cuota 1.80–2.20", C.zona_valor_activas)}
+      ${vipFilaConc("↳ Zona de valor + activa", "JUGAR con cuota 1.80–2.20" + (vipEnvio().includes("ZONA_VALOR") ? "" : " · en seguimiento, no se envía"), C.zona_valor_activas)}
     </tbody></table></div>`;
 
   // cuantas señales activas tienen la mitad mas reciente de sus apuestas en negativo (datos de la tabla de Estadísticas)
@@ -2115,7 +2137,7 @@ function vipConciliacionHtml(V){
       : `Hoy el motor de activación <b>no mejora</b> a las apagadas (${vipPct(apa.roi)}).`);
   }
   if(va.n){
-    lineas.push(`Lo que más pesa es la <b>combinación</b>: señal activa + zona de precio da <b style="color:${vipCol(va.roi)};">${vipPct(va.roi)}</b> en ${vipN(va.n)} apuestas (≈${vipFmt(va.picks_por_dia, 1, false)} por día), con ganancia en ${va.semanas_pos} de ${va.semanas} semanas, ROI acumulado por encima de cero el ${va.pct_dias_roi_pos != null ? vipFmt(va.pct_dias_roi_pos, 0, false) : "—"}% de los días y peor caída de ${va.max_caida_u != null ? vipFmt(va.max_caida_u, 1, false) : "—"}u.`);
+    lineas.push(`Lo que más pesa es la <b>combinación</b>: señal activa + ${vipNombresEnvio().replace(" + ", " y ")} da <b style="color:${vipCol(va.roi)};">${vipPct(va.roi)}</b> en ${vipN(va.n)} apuestas (≈${vipFmt(va.picks_por_dia, 1, false)} por día), con ganancia en ${va.semanas_pos} de ${va.semanas} semanas, ROI acumulado por encima de cero el ${va.pct_dias_roi_pos != null ? vipFmt(va.pct_dias_roi_pos, 0, false) : "—"}% de los días y peor caída de ${va.max_caida_u != null ? vipFmt(va.max_caida_u, 1, false) : "—"}u.`);
   }
   const rango = (va.ic95 && va.ic95[0] <= 0 && va.ic95[1] >= 0)
     ? ` El rango del 95% de esa fila va de ${vipFmt(va.ic95[0])}% a ${vipFmt(va.ic95[1])}%: incluye el cero, así que todavía no está demostrado.` : "";
@@ -2197,7 +2219,7 @@ function vipActivasEstablesHtml(data){
     <thead><tr><th>Del ${vipFechaCorta(ae.desde)} al ${vipFechaCorta(ae.hasta)}</th><th class="num">Apuestas</th><th class="num">ROI</th><th class="num">Unidades</th><th class="num">Acierto</th><th class="num">Cuota media</th><th class="num" title="Entre estos dos valores está el ROI real con 95% de confianza (si cada apuesta fuera independiente)">Rango 95%</th></tr></thead>
     <tbody>
       ${vipFilaAE("Señales activas y estables", "todas las apuestas JUGAR de esas señales", g, {destacada: true})}
-      ${vipFilaAE("↳ sin las que entran a la Selección VIP", "quitando Respaldada y Zona de valor", sv)}
+      ${vipFilaAE("↳ sin las que entran a la Selección VIP", `quitando ${vipNombresEnvio()}`, sv)}
       ${vipFilaAE("Las demás señales", "hoy apagadas, sin validar o inestables", no, {tenue: true})}
       ${vipFilaAE("Todo lo que marcó JUGAR", "las activas y estables + las demás", todas, {tenue: true})}
     </tbody></table></div>`;
@@ -2434,7 +2456,19 @@ function renderVip(data, picks){
   const nombreCorto = (m) => vipEsc(String((ETIQUETAS_BTTS && ETIQUETAS_BTTS[m]) || m || "sin señal").split(" · ")[0]);
   const motivoFuera = (p) => {
     if(p.nivel_final !== "JUGAR") return "con la cuota y las reglas de ahora ya no da JUGAR";
-    if(!vipClase(p)) return `cuota ${p.cuota_btts ? p.cuota_btts.toFixed(2) : "—"} fuera de las zonas: Respaldada o de ${Number(pol.cuota_min).toFixed(2)} a ${Number(pol.cuota_max).toFixed(2)}`;
+    if(!vipClase(p)){
+      const cr = vipClaseRegla(p);
+      if(cr){      // cumple una clase que esta en seguimiento
+        const s = (cr === "ZONA_VALOR" ? V.zona_valor : V.respaldada) || {};
+        return `entra por cuota a la ${VIP_CLASES[cr].nombre}, pero esa clase está en seguimiento y no se envía (histórico ${vipPct(s.roi)} en ${vipN(s.n)} apuestas)`;
+      }
+      const cu = Number(p.cuota_btts), cuTxt = (isFinite(cu) && cu > 0) ? cu.toFixed(2) : "—";
+      const sirveResp = vipEnvio().includes("RESPALDADA"), sirveZona = vipEnvio().includes("ZONA_VALOR");
+      if(sirveResp && isFinite(cu) && cu >= 1.40 && cu <= 1.60)      // precio bueno, pero le falta ser VIP+ o Pilares
+        return `cuota ${cuTxt} en el rango de la Respaldada, pero su nivel no es VIP+ ni tiene Pilares`;
+      const zonas = [sirveResp ? "Respaldada (VIP+ 1.40–1.60 o Pilares)" : "", sirveZona ? `${Number(pol.cuota_min).toFixed(2)} a ${Number(pol.cuota_max).toFixed(2)}` : ""].filter(Boolean).join(" o de ");
+      return `cuota ${cuTxt} fuera de las zonas que se envían: ${zonas}`;
+    }
     const m = p.motivo_btts;
     if(!MOTIVOS_VALIDADOS.has(m)) return `su señal «${nombreCorto(m)}» sigue en seguimiento, aún no validada`;
     if(!esEstable(m)){
@@ -2474,15 +2508,22 @@ function renderVip(data, picks){
       ${resHtml}
     </div>`;
   };
+  // Clases que existen pero NO se envian ("en seguimiento"): se miden, se muestran, no llegan al Telegram.
+  const enSeguimiento = Object.keys(VIP_CLASES).filter(c => !vipEnvio().includes(c));
+  const notaSeguimiento = enSeguimiento.length ? `<p class="vip-dim" style="font-size:12px;line-height:1.55;margin:0 0 12px;">Al Telegram solo llega: <b>${vipNombresEnvio()}</b> con señal activa y estable. ${enSeguimiento.map(c => {
+      const s = (c === "ZONA_VALOR" ? V.zona_valor : V.respaldada) || {};
+      const clara = s.alfa != null && s.alfa_se && s.alfa / s.alfa_se >= 1.96;
+      return `La <b>${VIP_CLASES[c].nombre}</b> queda en seguimiento y no se envía: ${vipN(s.n)} apuestas en el histórico, ROI ${vipPct(s.roi)}, ${clara ? "con ventaja clara frente al mercado (se puede activar con NOTIFY_BTTS_CLASES_VIP)" : "sin ventaja demostrada frente al mercado"}.`; }).join(" ")}</p>` : "";
   const hoyHtml = `
     <div class="market-hero"><p class="big">${selDia.length}</p>
       <div class="sub">${selDia.length === 1 ? "pick" : "picks"} en la Selección VIP · ${diaTxt}${baseJugar ? ` (de ${baseJugar} JUGAR de BTTS)` : ""}</div></div>
     <p class="vip-dim" style="font-size:12px;line-height:1.55;margin:0 0 12px;">Esta lista se recalcula cada hora con la cuota y las reglas de ese momento: un partido puede entrar o salir <b>hasta que se envíe</b>. Lo que ya salió al Telegram se queda aquí, con su cuota de envío.</p>
-    ${selDia.length ? selDia.map(tarjetaVip).join("") : `<div class="vip-pick-vacio">${jugarDia.length
+    ${notaSeguimiento}
+    ${selDia.length ? selDia.map(tarjetaVip).join("") :`<div class="vip-pick-vacio">${jugarDia.length
         ? "Ningún JUGAR de BTTS pasa el filtro de precio y reglas activas para este día. <b>No enviar nada es una decisión válida:</b> los JUGAR que quedan fuera rinden " + vipPct(resto.roi) + " en el histórico."
         : "Todavía no hay JUGAR de BTTS para este día."}</div>`}
     ${fueraDia.length ? `<details class="vip-det"><summary>Ver los ${fueraDia.length} JUGAR de BTTS que NO entran a la selección (no se envían)</summary>
-      <div class="match-list" style="margin-top:8px;">${fueraDia.map(p => `<div class="match-row"><div><div class="match-teams">${vipEsc(p.local)} vs ${vipEsc(p.visitante)}</div><div class="match-liga">${vipEsc(p.liga || "")} · ${motivoFuera(p)}</div></div><span class="match-pct">cuota ${p.cuota_btts ? p.cuota_btts.toFixed(2) : "—"}</span><span class="match-badge no">fuera</span></div>`).join("")}</div></details>` : ""}`;
+      <div class="match-list vip-fuera" style="margin-top:8px;">${fueraDia.map(p => `<div class="match-row"><div><div class="match-teams">${vipEsc(p.local)} vs ${vipEsc(p.visitante)}</div><div class="match-liga">${vipEsc(p.liga || "")} · ${motivoFuera(p)}</div></div><span class="match-pct">cuota ${p.cuota_btts ? p.cuota_btts.toFixed(2) : "—"}</span><span class="match-badge no">fuera</span></div>`).join("")}</div></details>` : ""}`;
 
   // ---------------- 2. veredicto en palabras simples ----------------
   const z = (hist.alfa != null && hist.alfa_se) ? hist.alfa / hist.alfa_se : null;
@@ -2516,7 +2557,7 @@ function renderVip(data, picks){
     </div>
     <p class="vip-dim" style="font-size:12px;line-height:1.55;margin:12px 0 0;">Las reglas de la selección quedaron <b>congeladas</b> el ${vipFechaCorta(pol.congelado_desde)}: lo que pase de aquí en adelante no se usa para ajustarlas. Para confirmar un ROI de +3% harían falta ≈${vipN(M.apuestas_para_confirmar_roi_3pts)} apuestas (≈${M.dias_para_confirmar_roi_3pts ? (M.dias_para_confirmar_roi_3pts / 365).toFixed(1) : "—"} años a este ritmo); en cambio el CLV se puede leer en ≈${M.dias_para_confirmar_clv_1pct || "—"} días.</p>
     ${(V.respaldada_en_vivo && V.respaldada_en_vivo.n) || (V.zona_valor_en_vivo && V.zona_valor_en_vivo.n) ? `<div class="vip-scroll" style="margin-top:12px;"><table class="cmp-table"><thead><tr><th>En vivo</th><th class="num">Apuestas</th><th class="num">Acierto</th><th class="num">ROI</th><th class="num">Unidades</th></tr></thead><tbody>
-      ${["respaldada_en_vivo", "zona_valor_en_vivo"].map((k, i) => { const s = V[k] || {}; return `<tr><td>${i ? "Zona de valor" : "Respaldada"}</td><td class="num">${vipN(s.n || 0)}</td><td class="num">${s.n ? vipFmt(s.acierto, 1, false) + "%" : "—"}</td><td class="num" style="color:${vipCol(s.roi)};">${s.n ? vipPct(s.roi) : "—"}</td><td class="num" style="color:${vipCol(s.uds)};">${s.n ? vipFmt(s.uds) + "u" : "—"}</td></tr>`; }).join("")}
+      ${["respaldada_en_vivo", "zona_valor_en_vivo"].map((k, i) => { const s = V[k] || {}; const cl = i ? "ZONA_VALOR" : "RESPALDADA"; return `<tr><td>${i ? "Zona de valor" : "Respaldada"}${vipEnvio().includes(cl) ? "" : ' <span class="vip-dim">· en seguimiento</span>'}</td><td class="num">${vipN(s.n || 0)}</td><td class="num">${s.n ? vipFmt(s.acierto, 1, false) + "%" : "—"}</td><td class="num" style="color:${vipCol(s.roi)};">${s.n ? vipPct(s.roi) : "—"}</td><td class="num" style="color:${vipCol(s.uds)};">${s.n ? vipFmt(s.uds) + "u" : "—"}</td></tr>`; }).join("")}
     </tbody></table></div>` : ""}`;
 
   // ---------------- 4. curva ----------------
@@ -2538,10 +2579,12 @@ function renderVip(data, picks){
   const grupos = `<div class="vip-scroll"><table class="cmp-table">
     <thead><tr><th>Grupo</th><th class="num">Apuestas</th><th class="num">ROI</th><th class="num">Ventaja</th><th class="num">Acierto / necesario</th><th class="num">Rango 95%</th><th class="num">Cuota</th><th class="num">Unidades</th><th class="num">Peor caída</th></tr></thead>
     <tbody>
-      ${vipFilaGrupo("💎 Selección VIP", V.vip, "Respaldada + Zona de valor", true)}
-      ${vipFilaGrupo("↳ Respaldada", V.respaldada, "VIP+ 1.40–1.60 o Pilares")}
-      ${vipFilaGrupo("↳ Zona de valor", V.zona_valor, `JUGAR con cuota ${Number(pol.cuota_min).toFixed(2)}–${Number(pol.cuota_max).toFixed(2)}`)}
+      ${vipFilaGrupo("💎 Selección VIP", V.vip, `${vipNombresEnvio()} · lo que se envía`, true)}
+      ${vipEnvio().includes("RESPALDADA") ? vipFilaGrupo("↳ Respaldada", V.respaldada, "VIP+ 1.40–1.60 o Pilares") : ""}
+      ${vipEnvio().includes("ZONA_VALOR") ? vipFilaGrupo("↳ Zona de valor", V.zona_valor, `JUGAR con cuota ${Number(pol.cuota_min).toFixed(2)}–${Number(pol.cuota_max).toFixed(2)}`) : ""}
       ${V.vip_activa ? vipFilaGrupo("↳ con regla activa hoy", V.vip_activa, "lo que pasa al Telegram (*)") : ""}
+      ${!vipEnvio().includes("RESPALDADA") ? vipFilaGrupo("En seguimiento · Respaldada", V.respaldada, "VIP+ 1.40–1.60 o Pilares · no se envía") : ""}
+      ${!vipEnvio().includes("ZONA_VALOR") ? vipFilaGrupo("En seguimiento · Zona de valor", V.zona_valor, `JUGAR con cuota ${Number(pol.cuota_min).toFixed(2)}–${Number(pol.cuota_max).toFixed(2)} · no se envía`) : ""}
       ${vipFilaGrupo("Resto de JUGAR", V.resto_jugar, "no se envían")}
       ${vipFilaGrupo("Todas las JUGAR", V.todas_jugar, "lo que se enviaba antes")}
       ${vipFilaGrupo("Cualquier partido", V.mercado, "a esos precios: lo que cobra la casa", false, true)}
@@ -2606,7 +2649,7 @@ function renderVip(data, picks){
   const reglasHtml = `
     <div class="vip-verdict" style="border-left-color:var(--line);">
       <p><b>Quién entra:</b> un partido con señal JUGAR de BTTS, con regla activa y estable hoy, y además:</p>
-      <p>· <b>Respaldada</b>: tier VIP+ con cuota entre 1.40 y 1.60, o la señal Pilares (cuota 1.40–1.55).<br/>· <b>Zona de valor</b>: cuota entre ${Number(pol.cuota_min).toFixed(2)} y ${Number(pol.cuota_max).toFixed(2)}.</p>
+      <p>· <b>Respaldada</b>: tier VIP+ con cuota entre 1.40 y 1.60, o la señal Pilares (cuota 1.40–1.55)${vipEnvio().includes("RESPALDADA") ? "" : " — <i>en seguimiento: se mide, no se envía</i>"}.<br/>· <b>Zona de valor</b>: cuota entre ${Number(pol.cuota_min).toFixed(2)} y ${Number(pol.cuota_max).toFixed(2)}${vipEnvio().includes("ZONA_VALOR") ? "" : " — <i>en seguimiento: se mide, no se envía</i>"}.</p>
       <p>${pol.solo_vip_en_telegram ? "El Telegram avisa <b>solo</b> de la Selección VIP (los demás JUGAR siguen en la página, marcados \"sin ventaja de precio\")." : "El Telegram avisa de todos los JUGAR (filtro VIP desactivado)."}</p>
       ${hetTxt ? `<p class="vip-dim" style="font-size:13px;">${hetTxt}</p>` : ""}
     </div>`;
