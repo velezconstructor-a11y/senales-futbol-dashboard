@@ -331,6 +331,15 @@
   .vip-det{margin-top:12px;font-size:12px;color:var(--chalk-dim);font-family:var(--mono);}
   .vip-det summary{cursor:pointer;padding:4px 0;}
   .vip-det summary:hover{color:var(--chalk);}
+  /* La formula, variable por variable (31 oct 2026): una tarjeta por variable, sin tabla ancha en el movil */
+  .vf-item{padding:10px 0;border-top:1px solid var(--line);}
+  .vf-item:first-child{border-top:none;padding-top:2px;}
+  .vf-top{display:flex;justify-content:space-between;align-items:baseline;gap:2px 14px;flex-wrap:wrap;}
+  .vf-nom{font-weight:600;font-size:14px;}
+  .vf-rango{font-family:var(--mono);font-size:13px;color:var(--amber);}
+  .vf-q{font-size:12px;line-height:1.5;color:var(--chalk-dim);margin-top:3px;}
+  .vf-a{font-size:12px;line-height:1.5;color:var(--chalk-dim);margin-top:3px;font-family:var(--mono);}
+  .vf-a b{color:var(--chalk);}
   .vip-chart{position:relative;}
   .vip-chart svg{display:block;width:100%;height:auto;touch-action:pan-y;}
   .vip-chart svg:focus-visible{outline:2px solid var(--amber);outline-offset:2px;border-radius:6px;}
@@ -2429,6 +2438,85 @@ function vipGruposSenalesHtml(data){
   </section>`;
 }
 
+// ---------------------------------------------------------------------------
+// LA FORMULA, VARIABLE POR VARIABLE  (31 oct 2026)
+// Pedido del usuario: "la mejor combinacion de variables, cada una con su rango de dato".
+// No cambia que partidos entran: muestra, para cada partido, el valor de cada variable de
+// la formula de la Respaldada (data.vip_btts.formula y picks[].chk, que arma reglas_activas.py
+// con las mismas cifras de signals.py) contra el rango que exige.
+// ---------------------------------------------------------------------------
+const VIP_CHK_CORTO = {
+  prob: "Prob. de BTTS del sistema", lam: "Goles esperados del equipo más flojo",
+  fallo_local: "Local: partidos sin marcar", fallo_vis: "Visitante: partidos sin marcar",
+  cs_local: "Local: partidos con arco en cero", cs_vis: "Visitante: partidos con arco en cero",
+  sot: "Tiros al arco (total)", gc_vis: "Goles que recibe el visitante", cuota: "Cuota"
+};
+function vipFmtChk(k, v){
+  if(v == null || !isFinite(v)) return "sin dato";
+  if(k === "prob") return (v * 100).toFixed(0) + "%";
+  if(k === "fallo_local" || k === "fallo_vis" || k === "cs_local" || k === "cs_vis") return v.toFixed(0) + "%";
+  if(k === "sot") return v.toFixed(0);
+  if(k === "gc_vis") return v.toFixed(1);
+  return v.toFixed(2);
+}
+function vipRangoChk(k, thr){
+  if(k === "cuota") return Array.isArray(thr) ? thr[0].toFixed(2) + " a " + thr[1].toFixed(2) : "";
+  if(k === "prob") return "≥ " + (thr * 100).toFixed(0) + "%";
+  if(k === "fallo_local" || k === "fallo_vis" || k === "cs_local" || k === "cs_vis") return "≤ " + thr + "%";
+  return "≥ " + thr;
+}
+function vipChkHtml(p){
+  const c = p && p.chk;
+  if(!c || !Array.isArray(c.i) || !c.i.length) return "";
+  const oks = c.i.filter(x => x[3] === true).length;
+  // sin dato: signals.py deja pasar el porcentaje de partidos sin marcar / arco en cero y los tiros cuando vienen
+  // vacios (ok = true con valor null) -> se dice "pasa" para que no parezca que se midió; la prob./goles/cuota
+  // sin dato salen "?" (no se puede decidir).
+  const marca = (ok, v) => ok === true
+    ? (v == null ? '<span class="vip-dim" title="Sin dato: el sistema lo deja pasar">pasa</span>' : '<span style="color:var(--win);font-weight:700;">✓</span>')
+    : (ok === false ? '<span style="color:var(--loss);font-weight:700;">✕</span>' : '<span class="vip-dim">?</span>');
+  const filas = c.i.map(([k, v, thr, ok]) => `<tr><td>${vipEsc(VIP_CHK_CORTO[k] || k)}</td><td class="num" style="font-weight:700;color:${ok === false ? "var(--loss)" : "var(--chalk)"};">${vipFmtChk(k, v)}</td><td class="num vip-dim">${vipRangoChk(k, thr)}</td><td class="num">${marca(ok, v)}</td></tr>`).join("");
+  // El titulo dice la verdad sobre ESTE partido: cumple la formula, o no la cumple (la Zona de valor entra solo por la cuota)
+  const n = c.i.length;
+  const titulo = c.ok ? `Cumple la fórmula ${vipEsc(c.via || "VIP+")}: ${oks} de ${n}`
+    : (p.vip_btts === "ZONA_VALOR" || p.alerta_btts === "ZONA_VALOR"
+        ? `Entró solo por la cuota (zona de valor) · de la fórmula de la Respaldada cumple ${oks} de ${n}`
+        : `Fórmula de la Respaldada: cumple ${oks} de ${n}`);
+  return `<details class="vip-det vip-chk"><summary>${titulo} · ver variable por variable</summary><div class="vip-scroll vip-corta"><table class="cmp-table" style="margin-top:6px;"><thead><tr><th>Variable</th><th class="num">Este partido</th><th class="num">Debe estar en</th><th class="num"></th></tr></thead><tbody>${filas}</tbody></table></div></details>`;
+}
+function vipFallaTxt(p){      // " — le falla: ..." con las variables de la formula que NO cumple (sin contar la cuota)
+  const c = p && p.chk;
+  if(!c || !Array.isArray(c.i)) return "";
+  const f = c.i.filter(x => x[3] === false && x[0] !== "cuota");
+  const s = c.i.filter(x => x[3] == null);      // sin dato y el sistema no puede decidir (prob., goles esperados, goles que recibe, cuota)
+  if(!f.length && !s.length) return c.via ? "" : ` — cumple todas las variables de la fórmula, pero su etiqueta principal es «${vipEsc(p.senal_btts_optimizada || "otra señal")}», no VIP+ (esa etiqueta tiene prioridad)`;
+  const partes = f.map(([k, v, thr]) => `${VIP_CHK_CORTO[k] || k} ${vipFmtChk(k, v)} (pide ${vipRangoChk(k, thr)})`);
+  if(s.length) partes.push("sin dato: " + s.map(x => (VIP_CHK_CORTO[x[0]] || x[0]).toLowerCase()).join(", "));
+  return " — le falla: " + partes.join(" · ");
+}
+function vipFormulaHtml(V){
+  const fo = V && V.formula;
+  if(!fo || !Array.isArray(fo.variables)) return "";
+  const pr = fo.prueba || {}, bs = pr.busqueda_semanal || {}, bc = pr.busqueda_cautelosa || {}, fm = pr.formula_mismas_semanas || {}, cp = pr.casa_se_equivoca_por_partido || {};
+  const R = V.respaldada || {};
+  // una tarjeta por variable (nombre + rango arriba, explicacion abajo): una tabla de 3 columnas no cabe en el movil
+  const aporteTxt = (v) => (Array.isArray(v.a) && v.a.length === 2)
+    ? `<div class="vf-a">Aporte medido: <b>${vipFmt(v.a[0], 1)}</b> puntos de acierto sobre lo que ya paga la cuota (±${vipFmt(v.a[1], 1, false)}${Math.abs(v.a[0]) <= v.a[1] ? ": no se distingue de cero" : ""})</div>` : "";
+  const lista = fo.variables.map(v => `<div class="vf-item"><div class="vf-top"><span class="vf-nom">${vipEsc(v.n)}</span><span class="vf-rango">${vipEsc(v.r)}</span></div><div class="vf-q">${vipEsc(v.q)}</div>${aporteTxt(v)}</div>`).join("");
+  const nAporte = fo.aporte_n ? vipN(fo.aporte_n) : null;
+  const resultado = R.n
+    ? `<p>Resultado de esta fórmula (grupo <b>Respaldada</b>, desde el ${vipFechaCorta(R.desde)}): <b>${vipN(R.n)}</b> apuestas, acierto <b>${vipFmt(R.acierto, 1, false)}%</b> contra <b>${vipFmt(R.acierto_necesario, 1, false)}%</b> que hacía falta para empatar con esas cuotas (${R.brecha_pp != null ? (R.brecha_pp >= 0 ? "+" : "") + vipFmt(R.brecha_pp, 1, false) : "—"} puntos), ROI <b style="color:${vipCol(R.roi)};">${vipPct(R.roi)}</b> (rango 95%: ${R.ic95 ? vipFmt(R.ic95[0]) + "% a " + vipFmt(R.ic95[1]) + "%" : "—"}). ${R.ic95 && R.ic95[0] <= 0 ? "El rango incluye el cero: es lo mejor que hay, pero todavía no está <i>demostrado</i>." : ""}</p>` : "";
+  return `
+    <p class="vip-dim" style="font-size:13px;line-height:1.55;margin:0 0 10px;">Un partido entra a la <b>Respaldada</b> cuando cumple <b>todas</b> estas condiciones a la vez (es la fórmula VIP+ del sistema). La señal <b>Pilares</b> es la misma sin las dos primeras filas y con cuota ${Number((fo.ventana_pilares || [1.4, 1.55])[0]).toFixed(2)} a ${Number((fo.ventana_pilares || [1.4, 1.55])[1]).toFixed(2)}. Cada partido de arriba trae su propia tabla con el valor real de cada variable.</p>
+    <div class="vf-lista">${lista}</div>
+    ${nAporte ? `<p class="vip-dim" style="font-size:12px;line-height:1.55;margin:10px 0 0;"><b>Qué es el «aporte medido»:</b> con ${nAporte} partidos resueltos de cuota 1.40 a 1.60, cuánto más acierta (sobre lo que ya paga la cuota) un partido que cumple la condición que uno que no la cumple. <b>Ninguna variable sola se distingue del azar</b> (el margen de error es de ±3 a ±5 puntos): lo que se midió con ventaja es el conjunto completo con la cuota en 1.40 a 1.60, no una variable aislada.</p>` : ""}
+    <div class="vip-verdict" style="margin-top:14px;">
+      ${resultado}
+      <p><b>¿Se puede armar una combinación mejor?</b> Se probó (${vipEsc(pr.fecha || "")}): cada semana el computador buscó, usando solo el pasado, la combinación de hasta 3 variables que mejor funcionaba en las dos mitades del tiempo. En el pasado daba <b>+${vipFmt(bs.roi_pasado, 1, false)}%</b>; aplicada a la semana siguiente dio <b style="color:var(--loss);">${vipFmt(bs.roi_siguiente_semana, 1)}%</b> (${bs.apuestas} apuestas, ${bs.semanas} semanas). Versiones más cuidadosas: ${vipFmt(bc.roi_min, 1)}% a ${vipFmt(bc.roi_max, 1)}%. Es un espejismo: la "mejor combinación" cambia de variables cada semana. En esas mismas semanas la fórmula de arriba dio <b style="color:var(--win);">+${vipFmt(fm.roi, 1, false)}%</b> (${fm.apuestas} apuestas, ventaja de +${vipFmt(fm.alfa, 1, false)} puntos sobre el mercado).</p>
+      <p><b>¿Detecta cuándo la casa se equivoca?</b> Partido por partido, no: ordenar los partidos por la diferencia entre la probabilidad del sistema y la de la cuota no encuentra los errores de la casa (ninguna de las 10 partes dio ROI positivo; la de mayor diferencia dio ${vipFmt(cp.decil_mayor_diferencia_roi_cruda, 1)}%). Lo que sí está medido es el <b>grupo</b>: con todas las condiciones y cuota entre ${Number((fo.ventana || [1.4, 1.6])[0]).toFixed(2)} y ${Number((fo.ventana || [1.4, 1.6])[1]).toFixed(2)}, el BTTS salió más de lo que paga la cuota.</p>
+    </div>`;
+}
+
 function renderVip(data, picks){
   const V = data.vip_btts;
   const titulo = '<p class="section-title">💎 Selección VIP · Ambos Marcan</p>';
@@ -2465,7 +2553,7 @@ function renderVip(data, picks){
       const cu = Number(p.cuota_btts), cuTxt = (isFinite(cu) && cu > 0) ? cu.toFixed(2) : "—";
       const sirveResp = vipEnvio().includes("RESPALDADA"), sirveZona = vipEnvio().includes("ZONA_VALOR");
       if(sirveResp && isFinite(cu) && cu >= 1.40 && cu <= 1.60)      // precio bueno, pero le falta ser VIP+ o Pilares
-        return `cuota ${cuTxt} en el rango de la Respaldada, pero su nivel no es VIP+ ni tiene Pilares`;
+        return `cuota ${cuTxt} en el rango de la Respaldada, pero su nivel no es VIP+ ni tiene Pilares${vipFallaTxt(p)}`;
       const zonas = [sirveResp ? "Respaldada (VIP+ 1.40–1.60 o Pilares)" : "", sirveZona ? `${Number(pol.cuota_min).toFixed(2)} a ${Number(pol.cuota_max).toFixed(2)}` : ""].filter(Boolean).join(" o de ");
       return `cuota ${cuTxt} fuera de las zonas que se envían: ${zonas}`;
     }
@@ -2500,6 +2588,7 @@ function renderVip(data, picks){
         <div class="conf-liga">${vipEsc(p.liga || "")} · ${diaBadge(p)}${confirmacionCuotaBadge(p, "btts")}${notaLigaConfianza(p)}</div>
         <div style="margin-top:6px;display:flex;gap:8px;flex-wrap:wrap;align-items:center;font-size:11px;"><span class="vip-chip ${info.fuerte ? "fuerte" : ""}">${info.chip}</span>${enviado}</div>
         ${aviso}
+        ${vipChkHtml(p)}
       </div>
       <div class="conf-tier">
         <div class="conf-tier-val">${info.nombre}</div>
@@ -2656,6 +2745,7 @@ function renderVip(data, picks){
 
   return `
     <section>${titulo}${hoyHtml}</section>
+    ${vipFormulaHtml(V) ? `<section><p class="section-title">🧮 La fórmula, variable por variable</p>${vipFormulaHtml(V)}</section>` : ""}
     <section><p class="section-title">¿Funciona? En palabras simples</p><div class="vip-verdict">${veredicto}</div></section>
     <section><p class="section-title">🔍 ¿Y las señales activas? Lo que se ve en verde contra lo que pasó después</p>${vipConciliacionHtml(V)}</section>
     <section><p class="section-title">🧪 En vivo (la prueba que cuenta)</p>${enVivoHtml}</section>
