@@ -550,7 +550,7 @@ const ETIQUETAS_COMBO = {
     "idx_combo_top05": "🧭 Índice Combinada · 5% más alto · EN PRUEBA (apagada) · promedio de 5 variables: GF total, equilibrio de goles concedidos, goles sobre lo esperado del visitante, arco en cero máx y fallo×arco en cero (a la baja)",
 };
 
-const SENALES_EN_PRUEBA = new Set(["estable_gc_fallo_plus","estable_btts_fallo_plus","atlas_plus","centinela_plus","centinela_elite_plus","bastion_plus","bastion_elite_plus","esmeralda_cuota_1.45-1.55_plus","cumbre_xga137","cumbre_xga137_fallo20","stake9_fallo_gc","s1_vip_valor","s2_rescate_valor","s3_ambar_granate_valor","mezcla_01","mezcla_02","mezcla_03","mezcla_04","mezcla_05","mezcla_06","mezcla_07","mezcla_08","mezcla_09","mezcla_10","mezcla_11","mezcla_12","mezcla_13","mezcla_14","stake9_mezcla","camino_normal_VIP_Fuerte_edge_ok_mezcla","perfil_xga_sot_btts_mezcla","vanguard_mezcla","perfil_calibrado_xga_fallo_mezcla","camino_normal_Stake10_cuota_alta_gcmin_mezcla","idx_btts_top20","idx_btts_top10","idx_btts_top05"]);
+const SENALES_EN_PRUEBA = new Set(["estable_gc_fallo_plus","estable_btts_fallo_plus","atlas_plus","centinela_plus","centinela_elite_plus","bastion_plus","bastion_elite_plus","esmeralda_cuota_1.45-1.55_plus","cumbre_xga137","cumbre_xga137_fallo20","stake9_fallo_gc","s1_vip_valor","s2_rescate_valor","s3_ambar_granate_valor","mezcla_01","mezcla_02","mezcla_03","mezcla_04","mezcla_05","mezcla_06","mezcla_07","mezcla_08","mezcla_09","mezcla_10","mezcla_11","mezcla_12","mezcla_13","mezcla_14","stake9_mezcla","camino_normal_VIP_Fuerte_edge_ok_mezcla","perfil_xga_sot_btts_mezcla","vanguard_mezcla","perfil_calibrado_xga_fallo_mezcla","camino_normal_Stake10_cuota_alta_gcmin_mezcla","idx_btts_top20","idx_btts_top10","idx_btts_top05","idx_o25_top20","idx_o25_top10","idx_o25_top05","idx_combo_top20","idx_combo_top10","idx_combo_top05"]);
 const ETIQUETAS_BTTS = {
     "camino_normal_VIP+": "camino normal (VIP+)",
     "camino_normal_VIP+_refinada": "💎 VIP+ refinada · SOT total≤14 + xGA mín≥1.2",
@@ -694,6 +694,19 @@ const ETIQUETAS_BTTS = {
     "franja1.55-1.65_nota3var": "🎯 franja 1.55-1.65: +SOT≥9 (nota, muestra chica)",
 };
 
+// AGREGADO 30 oct 2026: señales APAGADAS en prueba (indices, versiones "+", etc.) que tambien aplican al
+// partido, como etiqueta extra. Antes solo la tarjeta de BTTS las mostraba: en Over 2.5 y en la
+// Combinada el dato ni siquiera llegaba a la pagina. Los 3 niveles de un indice son anidados (top 5%
+// => tambien top 10% y 20%): en la tarjeta se muestra solo el mas alto; Estadisticas cuenta cada nivel.
+function etiquetasEnPrueba(lista, motivoPrincipal, diccionario, prefijoIdx){
+  const tags = String(lista || "").split("|");
+  const nivelIdx = [prefijoIdx + "top05", prefijoIdx + "top10", prefijoIdx + "top20"].find(t => tags.includes(t));
+  return tags
+    .filter(t => SENALES_EN_PRUEBA.has(t) && t !== motivoPrincipal
+                 && !(t.startsWith("idx_") && (!t.startsWith(prefijoIdx) || t !== nivelIdx)))    // de los indices, solo el del mercado y su nivel mas alto
+    .map(t => `<span title="Señal apagada en prueba: aplica a este partido pero no decide el JUGAR" style="color:var(--amber);opacity:0.9;">${diccionario[t] || t}</span>`);
+}
+
 function notaRescateBtts(p){
   // Muestra que camino especifico produjo (o intento producir) la señal
   // de BTTS. CORREGIDO 24 ago 2026: antes exigia nivel_final==='JUGAR',
@@ -706,7 +719,11 @@ function notaRescateBtts(p){
   // siempre que haya un motivo real, distinguiendo con opacidad si
   // ademas genero JUGAR o se quedo en EVITAR.
   const motivo = p.motivo_btts;
-  if(!motivo || motivo === "ninguno_evitar_final" || motivo === "candado_sin_cuota") return "";
+  if(!motivo || motivo === "ninguno_evitar_final" || motivo === "candado_sin_cuota"){
+    // sin señal principal, pero puede tener una etiqueta en prueba (p. ej. el Índice BTTS)
+    const solo = etiquetasEnPrueba(p.motivos_btts_todos, motivo, ETIQUETAS_BTTS, "idx_btts_");
+    return solo.length ? " · " + solo.join("<br>") : "";
+  }
   const esRescate = motivo.startsWith("rescate_");
   const texto = ETIQUETAS_BTTS[motivo] || motivo;
   const color = esRescate ? "var(--amber)" : "var(--chalk-dim)";
@@ -714,13 +731,7 @@ function notaRescateBtts(p){
   // AGREGADO 18 oct 2026: señales APAGADAS en prueba (versiones "+", Cumbre y
   // Stake 9 mejoradas) que tambien aplican a este partido: se muestran como
   // etiqueta extra para poder ver como les va, aunque no decidan el JUGAR.
-  const _tagsBtts = String(p.motivos_btts_todos || "").split("|");
-  // Los 3 niveles del Índice BTTS son anidados (top 5% => también top 10% y 20%):
-  // en la tarjeta se muestra solo el más alto; Estadísticas cuenta cada nivel.
-  const _nivelIdx = ["idx_btts_top05","idx_btts_top10","idx_btts_top20"].find(t => _tagsBtts.includes(t));
-  const enPrueba = _tagsBtts
-    .filter(t => SENALES_EN_PRUEBA.has(t) && t !== motivo && !(t.startsWith("idx_btts_") && t !== _nivelIdx))
-    .map(t => `<span title="Señal apagada en prueba: aplica a este partido pero no decide el JUGAR" style="color:var(--amber);opacity:0.9;">${ETIQUETAS_BTTS[t] || t}</span>`);
+  const enPrueba = etiquetasEnPrueba(p.motivos_btts_todos, motivo, ETIQUETAS_BTTS, "idx_btts_");
   const extra = enPrueba.length ? "<br>" + enPrueba.join("<br>") : "";
   return ` · <span title="Por que se activo esta señal de BTTS" style="color:${color};opacity:${opacidad};">${texto}</span>${extra}`;
 }
@@ -799,12 +810,17 @@ function notaRescateO25(p){
   // sug_o25==='JUGAR' para mostrarse - Estadisticas cuenta todos los
   // partidos con el motivo, hayan llegado a JUGAR o no.
   const motivo = p.motivo_o25;
-  if(!motivo || motivo === "ninguno_evitar_o25" || motivo === "candado_sin_cuota") return "";
+  // 30 oct 2026: tambien se muestran las etiquetas en prueba (Índice Over 2.5) que aplican al partido
+  const enPrueba = etiquetasEnPrueba(p.motivos_o25_todos, motivo, ETIQUETAS_O25, "idx_o25_");
+  const extra = enPrueba.length ? "<br>" + enPrueba.join("<br>") : "";
+  if(!motivo || motivo === "ninguno_evitar_o25" || motivo === "candado_sin_cuota"){
+    return enPrueba.length ? " · " + enPrueba.join("<br>") : "";
+  }
   const esRescate = motivo.startsWith("rescate_") || motivo.startsWith("o25_");
   const texto = ETIQUETAS_O25[motivo] || motivo;
   const color = esRescate ? "var(--amber)" : "var(--chalk-dim)";
   const opacidad = p.sug_o25 === "JUGAR" ? "1" : "0.6";
-  return ` · <span title="Por que se activo esta señal de Over 2.5" style="color:${color};opacity:${opacidad};">${texto}</span>`;
+  return ` · <span title="Por que se activo esta señal de Over 2.5" style="color:${color};opacity:${opacidad};">${texto}</span>${extra}`;
 }
 
 function notaBttsMinAlto(p){
@@ -1280,7 +1296,11 @@ function renderCombo(picks){
     if(resultado === true){ badgeClass = "ganada"; badgeTxt = "✓ Ganada"; }
     else if(resultado === false){ badgeClass = "perdida"; badgeTxt = "✕ Perdida"; }
     else { badgeClass = p.senal_btts_o25 === 'VIP' ? 'si' : 'no'; badgeTxt = p.senal_btts_o25 === 'VIP' ? 'VIP' : (p.senal_btts_o25 || 'Sin datos'); }
-    const motivo = ETIQUETAS_COMBO[p.motivo_combo] ? ` · <span style="color:var(--amber);">${ETIQUETAS_COMBO[p.motivo_combo]}</span>` : (p.motivo_combo && p.motivo_combo !== "ninguno_evitar_combo" ? ` · <span style="color:var(--amber);">${p.motivo_combo}</span>` : "");
+    // 30 oct 2026: tambien las etiquetas en prueba (Índice Combinada) que aplican al partido
+    const enPruebaCombo = etiquetasEnPrueba(p.motivos_combo_todos, p.motivo_combo, ETIQUETAS_COMBO, "idx_combo_");
+    const extraCombo = enPruebaCombo.length ? enPruebaCombo.join("<br>") : "";
+    const motivoPpal = ETIQUETAS_COMBO[p.motivo_combo] ? `<span style="color:var(--amber);">${ETIQUETAS_COMBO[p.motivo_combo]}</span>` : (p.motivo_combo && p.motivo_combo !== "ninguno_evitar_combo" ? `<span style="color:var(--amber);">${p.motivo_combo}</span>` : "");
+    const motivo = (motivoPpal || extraCombo) ? " · " + motivoPpal + (motivoPpal && extraCombo ? "<br>" : "") + extraCombo : "";
     const probCombo = probDe(p);
     const probTxt = probCombo != null ? ` · ${(probCombo*100).toFixed(0)}%` : "";
     return `
