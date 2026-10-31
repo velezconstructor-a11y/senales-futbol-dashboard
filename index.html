@@ -2418,10 +2418,32 @@ function renderVip(data, picks){
   const diaTxt = DIA_SELECCIONADO === "hoy" ? "hoy" : (DIA_SELECCIONADO === "manana" ? "mañana" : "pasado mañana");
 
   // ---------------- 1. los picks del dia ----------------
+  // CAMBIO 30 oct 2026: la lista se recalcula cada hora (para los partidos pendientes se
+  // vuelve a calcular todo con la cuota y las reglas del momento). Antes, un partido que YA
+  // salió al Telegram desaparecía de esta lista si despues dejaba de dar JUGAR, su cuota se
+  // salía de la zona o su regla se apagaba. Ahora lo ya enviado se queda, con la cuota con la
+  // que salió; solo lo que aún NO se ha enviado entra y sale con las condiciones de ahora.
   const jugarDia = picks.filter(p => p.nivel_final === "JUGAR");
-  const selDia = jugarDia.filter(p => vipClase(p) && esValidadaReal(p.motivo_btts)).sort(vipOrden);
+  const enviadaVip = (p) => !!(p.alerta_btts && vipClase(p));
+  const cumpleHoy = (p) => p.nivel_final === "JUGAR" && !!vipClase(p) && esValidadaReal(p.motivo_btts);
+  const selDia = Array.from(new Set([...picks.filter(enviadaVip), ...jugarDia.filter(cumpleHoy)])).sort(vipOrden);
   const idsSel = new Set(selDia);
   const fueraDia = jugarDia.filter(p => !idsSel.has(p));
+  const baseJugar = new Set([...jugarDia, ...selDia]).size;
+  const hhmm = (f) => { const m = String(f || "").match(/(\d{2}:\d{2})\s*$/); return m ? m[1] : ""; };
+  const nombreCorto = (m) => vipEsc(String((ETIQUETAS_BTTS && ETIQUETAS_BTTS[m]) || m || "sin señal").split(" · ")[0]);
+  const motivoFuera = (p) => {
+    if(p.nivel_final !== "JUGAR") return "con la cuota y las reglas de ahora ya no da JUGAR";
+    if(!vipClase(p)) return `cuota ${p.cuota_btts ? p.cuota_btts.toFixed(2) : "—"} fuera de las zonas: Respaldada o de ${Number(pol.cuota_min).toFixed(2)} a ${Number(pol.cuota_max).toFixed(2)}`;
+    const m = p.motivo_btts;
+    if(!MOTIVOS_VALIDADOS.has(m)) return `su señal «${nombreCorto(m)}» sigue en seguimiento, aún no validada`;
+    if(!esEstable(m)){
+      const s = ESTADISTICAS_MOTIVOS[m], n = nOf(s);
+      return `«${nombreCorto(m)}» lleva ROI real ${vipPct(n ? (s.profit_u ?? 0) / n * 100 : null)} en ${n} casos y debe ser ≥ 0 para enviarse`;
+    }
+    if(REGLAS_ACTIVAS_REAL[m] !== true) return `el sistema apagó «${nombreCorto(m)}» por ROI o estabilidad`;
+    return "";
+  };
   const tarjetaVip = (p) => {
     const c = vipClase(p), info = VIP_CLASES[c];
     const prob = p.prob_btts_calibrada != null ? p.prob_btts_calibrada : p.prob_btts;
@@ -2429,30 +2451,33 @@ function renderVip(data, picks){
     const resHtml = res === true ? '<div class="conf-prob" style="color:var(--win);font-size:15px;">✓ Ganada</div>'
       : res === false ? '<div class="conf-prob" style="color:var(--loss);font-size:15px;">✕ Perdida</div>'
       : `<div class="conf-prob">${prob != null ? (prob * 100).toFixed(0) + "%" : "—"}</div>`;
-    const enviado = p.alerta_btts
-      ? '<span style="color:var(--chalk-dim);">📨 enviado al Telegram</span>'
+    const sent = enviadaVip(p);
+    const precioEnvio = (sent && Number(p.cuota_btts_alerta) > 1) ? Number(p.cuota_btts_alerta) : null;
+    const precio = precioEnvio || p.cuota_btts;
+    const precioAhora = (precioEnvio && p.cuota_btts && Math.abs(p.cuota_btts - precioEnvio) >= 0.005) ? p.cuota_btts : null;
+    const enviado = sent
+      ? `<span style="color:var(--chalk-dim);">📨 enviado al Telegram${hhmm(p.fecha_alerta) ? " · " + hhmm(p.fecha_alerta) : ""}</span>`
       : (res == null ? '<span style="color:var(--chalk-dim);">⏳ sale en la próxima corrida</span>' : "");
+    const aviso = (sent && res == null && !cumpleHoy(p))
+      ? `<div class="vip-dim" style="font-size:11px;line-height:1.5;margin-top:5px;">Hoy ya no cumple: ${motivoFuera(p)}. Como ya salió al Telegram, se queda aquí.</div>` : "";
     return `<div class="conf-card">
       <div>
         <div class="conf-teams">${vipEsc(p.local)} vs ${vipEsc(p.visitante)}</div>
         <div class="conf-liga">${vipEsc(p.liga || "")} · ${diaBadge(p)}${confirmacionCuotaBadge(p, "btts")}${notaLigaConfianza(p)}</div>
         <div style="margin-top:6px;display:flex;gap:8px;flex-wrap:wrap;align-items:center;font-size:11px;"><span class="vip-chip ${info.fuerte ? "fuerte" : ""}">${info.chip}</span>${enviado}</div>
+        ${aviso}
       </div>
       <div class="conf-tier">
         <div class="conf-tier-val">${info.nombre}</div>
-        <div class="conf-cuota">cuota ${p.cuota_btts ? p.cuota_btts.toFixed(2) : "—"}${edgeTxt(prob, p.cuota_btts)}</div>
+        <div class="conf-cuota">cuota ${precio ? Number(precio).toFixed(2) : "—"}${sent && precioEnvio ? " (enviada)" : ""}${precioAhora ? ` <span class="vip-dim">· ahora ${Number(precioAhora).toFixed(2)}</span>` : ""}${edgeTxt(prob, precio)}</div>
       </div>
       ${resHtml}
     </div>`;
   };
-  const motivoFuera = (p) => {
-    if(!vipClase(p)) return `cuota ${p.cuota_btts ? p.cuota_btts.toFixed(2) : "—"} fuera de las zonas medidas`;
-    if(!esValidadaReal(p.motivo_btts)) return "la regla que lo disparó no está activa/estable hoy";
-    return "";
-  };
   const hoyHtml = `
     <div class="market-hero"><p class="big">${selDia.length}</p>
-      <div class="sub">${selDia.length === 1 ? "pick" : "picks"} en la Selección VIP · ${diaTxt}${jugarDia.length ? ` (de ${jugarDia.length} JUGAR de BTTS)` : ""}</div></div>
+      <div class="sub">${selDia.length === 1 ? "pick" : "picks"} en la Selección VIP · ${diaTxt}${baseJugar ? ` (de ${baseJugar} JUGAR de BTTS)` : ""}</div></div>
+    <p class="vip-dim" style="font-size:12px;line-height:1.55;margin:0 0 12px;">Esta lista se recalcula cada hora con la cuota y las reglas de ese momento: un partido puede entrar o salir <b>hasta que se envíe</b>. Lo que ya salió al Telegram se queda aquí, con su cuota de envío.</p>
     ${selDia.length ? selDia.map(tarjetaVip).join("") : `<div class="vip-pick-vacio">${jugarDia.length
         ? "Ningún JUGAR de BTTS pasa el filtro de precio y reglas activas para este día. <b>No enviar nada es una decisión válida:</b> los JUGAR que quedan fuera rinden " + vipPct(resto.roi) + " en el histórico."
         : "Todavía no hay JUGAR de BTTS para este día."}</div>`}
