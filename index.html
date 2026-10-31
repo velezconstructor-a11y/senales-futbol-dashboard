@@ -385,6 +385,20 @@
     .vip-scroll.vip-gr .cmp-table th{padding-left:5px;padding-right:5px;letter-spacing:.03em;font-size:10px;}
     .vip-scroll.vip-gr .cmp-table td{padding-left:5px;padding-right:5px;font-size:13px;}
   }
+  /* 30 oct 2026: tabla «¿Y en vivo?» de los grupos (5 columnas, sin una columna por mes) */
+  .vip-scroll.vip-gv .cmp-table{min-width:0;}
+  .vip-scroll.vip-gv .cmp-table td.vip-nom{min-width:200px;}
+  @media (max-width:620px){
+    .vip-scroll.vip-gv .cmp-table td.vip-nom{min-width:0;width:128px;max-width:128px;font-size:12.5px;}
+    .vip-scroll.vip-gv .cmp-table th{padding-left:5px;padding-right:5px;letter-spacing:.03em;font-size:10px;}
+    .vip-scroll.vip-gv .cmp-table td{padding-left:5px;padding-right:5px;font-size:13px;}
+  }
+  /* 30 oct 2026: en la tabla «¿Y en vivo?» el encabezado «Ap.» solo en el celular */
+  .vip-scroll.vip-gv .vip-solo-movil{display:none;}
+  @media (max-width:620px){
+    .vip-scroll.vip-gv .vip-solo-movil{display:inline;}
+    .vip-scroll.vip-gv .vip-solo-pc{display:none;}
+  }
 </style>
 </head>
 <body>
@@ -2263,9 +2277,10 @@ function vipGruposSenalesHtml(data){
     return `ningún mes con ${mini}+ apuestas`;
   };
 
+  const etiquetaDe = (f) => (typeof ETIQUETAS_BTTS !== "undefined" && ETIQUETAS_BTTS[f.motivo]) || f.motivo;
+  const cortoDe = (f) => String(etiquetaDe(f)).split(" · ")[0];     // nombre de la señal tal como se ve en el dashboard
   const fila = (f, tipo, ocultos) => {
-    const etq = (typeof ETIQUETAS_BTTS !== "undefined" && ETIQUETAS_BTTS[f.motivo]) || f.motivo;
-    const corto = String(etq).split(" · ")[0];            // nombre de la señal tal como se ve en el dashboard
+    const etq = etiquetaDe(f), corto = cortoDe(f);
     const celdas = meses.map(ym => {
       const c = f.meses && f.meses[ym];
       const nc = ocultos.has(ym) ? " mes-nc" : "";
@@ -2300,15 +2315,61 @@ function vipGruposSenalesHtml(data){
     <p class="vip-dim" style="font-size:13px;margin:0 0 10px;line-height:1.5;">${sub}</p>
     ${lista.length ? tabla(lista, tipo) : `<div class="empty" style="padding:22px 16px;">${vacio}</div>`}`;
 
+  // ---- ¿Y en vivo? lo que llevan desde que se calculan partido a partido (el resto de su record se calculo hacia atras) ----
+  // f.vivo: objeto = se calculo hacia atras (desde = cuando empezo a calcularse en vivo; null = fecha no registrada);
+  //         null = 100% en vivo desde que existe; undefined = JSON viejo (no se sabe: no se dice nada).
+  const enGrupos = g1.map(f => ({f, g: 1})).concat(g2.map(f => ({f, g: 2})));
+  const esObj = (v) => v !== null && typeof v === "object";
+  const conVivo = enGrupos.filter(x => esObj(x.f.vivo));
+  const soloVivo = enGrupos.filter(x => x.f.vivo === null);
+  const nRetro1 = g1.filter(f => esObj(f.vivo)).length;
+  const filaVivo = (x) => {
+    const f = x.f, v = x.f.vivo;
+    const sub = v.desde ? `Grupo ${x.g} · en vivo desde el ${vipEsc(vipFechaCorta(v.desde))}` : `Grupo ${x.g}`;
+    const nom = `<td class="vip-nom"><span title="${vipEsc(etiquetaDe(f))}">${vipEsc(cortoDe(f))}</span><div class="vip-nota">${sub}</div></td>`;
+    if(!v.desde || v.n == null) return `<tr>${nom}<td class="num vip-dim" colspan="4">no se registró desde cuándo se calcula en vivo</td></tr>`;
+    if(!v.n) return `<tr>${nom}<td class="num">0</td><td class="num vip-dim" colspan="3">sin apuestas todavía</td></tr>`;
+    return `<tr>${nom}
+      <td class="num">${vipN(v.n)}</td>
+      <td class="num" style="color:${vipCol(v.roi)};font-weight:700;">${vipPct(v.roi)}</td>
+      <td class="num vip-dim" title="Margen de error del 95%: el ROI real puede estar ese número de puntos por encima o por debajo">${v.margen != null ? "±" + vipFmt(v.margen, 0, false) : "—"}</td>
+      <td class="num" style="color:${vipCol(v.uds)};">${vipU(v.uds)}u</td></tr>`;
+  };
+  let bloqueVivo = "";
+  if(conVivo.length){
+    const medidas = conVivo.map(x => x.f.vivo).filter(v => v.desde && v.n);
+    const pos = medidas.filter(v => v.uds > 0).length;
+    const sobre = medidas.filter(v => v.roi != null && v.margen != null && v.roi - v.margen > 0).length;     // rango del 95% todo por encima de 0
+    const bajo = medidas.filter(v => v.roi != null && v.margen != null && v.roi + v.margen < 0).length;      // rango del 95% todo por debajo de 0
+    const partes = [];
+    if(sobre) partes.push(`${sobre} ${sobre === 1 ? "queda" : "quedan"} por encima de cero (buena señal, pero mirando ${medidas.length} a la vez alguna sale así por azar)`);
+    if(bajo) partes.push(`${bajo} ${bajo === 1 ? "queda" : "quedan"} por debajo de cero (mala señal)`);
+    const frase = (!sobre && !bajo)
+      ? "Con tan pocas apuestas el margen de error (±) es enorme: en ninguna el rango del 95% se aparta de cero, así que todavía no prueba nada, ni a favor ni en contra."
+      : `Con el margen de error (±) del 95%: ${partes.join("; ")}. Las demás siguen dentro del margen y no se puede decir nada.`;
+    const lista100 = soloVivo.map(x => {
+      const k = (x.f.meses_contados || []).length;
+      return `${vipEsc(cortoDe(x.f))} (${vipN(x.f.n)} apuestas${k ? ", " + k + (k === 1 ? " mes" : " meses") : ""})`;
+    }).join(", ");
+    bloqueVivo = `
+    <p class="bar-label" style="margin:22px 0 4px;font-size:15px;color:var(--chalk);">🔎 <b>¿Y en vivo?</b> <span class="vip-dim">(${conVivo.length})</span></p>
+    <p class="vip-dim" style="font-size:13px;margin:0 0 10px;line-height:1.5;">Casi todo el récord de estas señales se calculó <b>hacia atrás</b>, con los mismos partidos con los que se diseñaron, así que sale mejor de lo que se puede esperar. La prueba real es lo que llevan <b>desde que se calculan partido a partido</b>:</p>
+    <div class="vip-scroll vip-gv"><table class="cmp-table">
+      <thead><tr><th>Señal</th><th class="num"><span class="vip-solo-pc">Apuestas</span><span class="vip-solo-movil">Ap.</span></th><th class="num">ROI</th><th class="num" title="Margen de error del 95%, en puntos de ROI">±</th><th class="num">Unid.</th></tr></thead>
+      <tbody>${conVivo.map(filaVivo).join("")}</tbody></table></div>
+    <div class="vip-verdict" style="margin-top:10px;border-left-color:var(--line);">
+      <p class="vip-dim" style="font-size:13px;">${medidas.length ? `${pos} de ${medidas.length} van en positivo en vivo. ` : ""}${medidas.length ? frase : "Todavía no hay apuestas en vivo para medirlas."}</p>
+      ${soloVivo.length ? `<p class="vip-dim" style="font-size:13px;"><b>100% en vivo</b> (su récord completo se calculó partido a partido): ${lista100}. Es el récord más creíble de la lista; aun así llevan pocos meses.</p>` : ""}
+    </div>`;
+  }
+
   const intro = `<div class="vip-verdict" style="border-left-color:var(--line);">
       <p><b>${vipN(G.n_positivas)} de las ${vipN(G.n_senales)} señales de BTTS tienen ROI positivo</b> (del ${vipFechaCorta(G.desde)} al ${vipFechaCorta(G.hasta)}). Se separan mes por mes: un mes cuenta solo si la señal tuvo ${mini} o más apuestas ese mes (con menos, ganar o perder es azar), y el mes en curso cuenta desde el día ${diaMin}.</p>
       <p class="vip-dim" style="font-size:13px;">Las columnas de meses son las unidades ganadas (verde) o perdidas (rojo) ese mes. En gris, con las apuestas entre paréntesis, los meses que no cuentan. Es la misma cuenta de «Por qué se activó JUGAR (BTTS)», partida por mes.</p>
     </div>`;
 
-  const nPrueba1 = g1.filter(f => f.estado === "en_prueba").length;
   const notas = `<div class="vip-verdict" style="margin-top:16px;border-left-color:var(--line);">
       <p class="vip-dim" style="font-size:13px;">⚠️ <b>Ganar todos los meses no es una garantía.</b> Una señal sin ninguna ventaja real gana tres meses seguidos 1 de cada 6 veces. Y perder un mes no descarta a una buena: con unas 40 apuestas al mes, una señal que de verdad rinde +8% pierde 1 mes de cada 5.</p>
-      ${nPrueba1 ? `<p class="vip-dim" style="font-size:13px;">${nPrueba1} de las ${g1.length} del Grupo 1 están «en prueba (apagada)»: se diseñaron mirando este mismo historial, así que su récord sale más favorable de lo que se puede esperar. Por eso el sistema no las enciende solo.</p>` : ""}
       <p class="vip-dim" style="font-size:13px;">Solo cuenta el historial real desde el ${vipFechaCorta(G.desde)} (no el reconstruido de abril-julio). Las unidades no se suman entre señales: un mismo partido cuenta en varias. Esta sección es informativa: no cambia qué señales se envían al Telegram.</p>
     </div>`;
 
@@ -2318,8 +2379,9 @@ function vipGruposSenalesHtml(data){
 
   return `<section>${titulo}
     ${intro}
-    ${bloque("🏆", "Grupo 1 · Consolidadas", `Ganaron en <b>todos</b> sus meses (mínimo ${R.min_meses_grupo1} meses y ${R.min_apuestas_grupo1} apuestas en total).`, g1, 1, "Ninguna señal ha ganado todos sus meses todavía.")}
+    ${bloque("🏆", "Grupo 1 · Ganaron todos los meses", `Ganaron en <b>todos</b> sus meses (mínimo ${R.min_meses_grupo1} meses y ${R.min_apuestas_grupo1} apuestas en total).${nRetro1 ? ` <b>Ojo:</b> ${nRetro1 === g1.length ? "todas" : nRetro1 + " de las " + g1.length} se calcularon en buena parte <b>hacia atrás</b> (con partidos ya jugados). Mira «¿Y en vivo?» más abajo.` : ""}`, g1, 1, "Ninguna señal ha ganado todos sus meses todavía.")}
     ${bloque("🌱", "Grupo 2 · Con poca historia", `ROI positivo, <b>ningún mes perdido</b> y al menos ${R.min_apuestas_grupo2} apuestas, pero llevan menos de ${R.min_meses_grupo1} meses o menos de ${R.min_apuestas_grupo1} apuestas. Hay que vigilarlas antes de confiar en ellas como en el Grupo 1.`, g2, 2, "Ninguna señal está en esta situación.")}
+    ${bloqueVivo}
     ${detOtras}
     ${notas}
   </section>`;
