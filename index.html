@@ -2607,6 +2607,10 @@ function renderVip(data, picks){
   const selDia = Array.from(new Set([...picks.filter(enviadaVip), ...jugarDia.filter(cumpleHoy)])).sort(vipOrden);
   const idsSel = new Set(selDia);
   const fueraDia = jugarDia.filter(p => !idsSel.has(p));
+  // 1 nov 2026 (pedido del usuario): los que quedaron fuera tambien muestran si ganaron o perdieron, con su resumen
+  const resFuera = (() => { const j = fueraDia.filter(p => (p.resultado_btts === true || p.resultado_btts === false) && Number(p.cuota_btts) > 1);
+    const g = j.filter(p => p.resultado_btts === true).length, u = j.reduce((a, p) => a + (p.resultado_btts === true ? Number(p.cuota_btts) - 1 : -1), 0);
+    return {n: j.length, g, roi: j.length ? u / j.length * 100 : null}; })();
   const baseJugar = new Set([...jugarDia, ...selDia]).size;
   const hhmm = (f) => { const m = String(f || "").match(/(\d{2}:\d{2})\s*$/); return m ? m[1] : ""; };
   const nombreCorto = (m) => vipEsc(String((ETIQUETAS_BTTS && ETIQUETAS_BTTS[m]) || m || "sin señal").split(" · ")[0]);
@@ -2691,8 +2695,8 @@ function renderVip(data, picks){
     ${selDia.length ? selDia.map(tarjetaVip).join("") :`<div class="vip-pick-vacio">${jugarDia.length
         ? "Ningún JUGAR de BTTS pasa el filtro de precio y reglas activas para este día. <b>No enviar nada es una decisión válida:</b> los JUGAR que quedan fuera rinden " + vipPct(resto.roi) + " en el histórico."
         : "Todavía no hay JUGAR de BTTS para este día."}</div>`}
-    ${fueraDia.length ? `<details class="vip-det"><summary>Ver los ${fueraDia.length} JUGAR de BTTS que NO entran a la selección (no se envían)</summary>
-      <div class="match-list vip-fuera" style="margin-top:8px;">${fueraDia.map(p => `<div class="match-row"><div><div class="match-teams">${vipEsc(p.local)} vs ${vipEsc(p.visitante)}</div><div class="match-liga">${vipEsc(p.liga || "")} · ${motivoFuera(p)}</div></div><span class="match-pct">cuota ${p.cuota_btts ? p.cuota_btts.toFixed(2) : "—"}</span><span class="match-badge no">fuera</span></div>`).join("")}</div></details>` : ""}`;
+    ${fueraDia.length ? `<details class="vip-det"><summary>Ver los ${fueraDia.length} JUGAR de BTTS que NO entran a la selección (no se envían)${resFuera.n ? ` · jugados ${resFuera.n}: ${resFuera.g} ganados, ROI ${vipPct(resFuera.roi)}` : ""}</summary>
+      <div class="match-list vip-fuera" style="margin-top:8px;">${fueraDia.map(p => `<div class="match-row"><div><div class="match-teams">${vipEsc(p.local)} vs ${vipEsc(p.visitante)}</div><div class="match-liga">${vipEsc(p.liga || "")} · ${motivoFuera(p)}</div></div><span class="match-pct">cuota ${p.cuota_btts ? p.cuota_btts.toFixed(2) : "—"}</span>${p.resultado_btts === true ? '<span class="match-badge si">✓ Ganada</span>' : (p.resultado_btts === false ? '<span class="match-badge no">✕ Perdida</span>' : '<span class="match-badge no">fuera</span>')}</div>`).join("")}</div></details>` : ""}`;
 
   // ---------------- 2. veredicto en palabras simples ----------------
   const z = (hist.alfa != null && hist.alfa_se) ? hist.alfa / hist.alfa_se : null;
