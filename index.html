@@ -2557,6 +2557,16 @@ function vipFormulaHtml(V){
 // el piso de cuota y que tanto volumen trae. Todo llega calculado en data.vip_btts
 // (backtest._vip_btts_datos: segunda_linea*, politica.segunda_*).
 // ---------------------------------------------------------------------------
+// 1 nov 2026: que reviso el detector Valor detectado en la ultima corrida (politica.valor_modelo.ultima_corrida)
+function vipValorUltima(pol){
+  const vm = pol.valor_modelo || {}, u = vm.ultima_corrida;
+  if(!u) return `<div class="vf-q">Última revisión: todavía no hay corridas con el detector.</div>`;
+  if(!u.ok) return `<div class="vf-q" style="color:var(--loss);">Última revisión (${vipEsc(u.hora || "")}): no corrió — ${vipEsc(u.motivo || "sin detalle")}.</div>`;
+  const evMin = Math.round((u.ev_min || vm.ev_min || 0.15) * 100);
+  const lista = (u.mejores || []).slice(0, 3).map(m => `${vipEsc(m.partido)} (cuota ${Number(m.cuota).toFixed(2)}, modelo ${Math.round((m.prob || 0) * 100)}%, valor ${m.ev >= 0 ? "+" : ""}${Math.round(m.ev * 100)}%${m.marcado ? " ✓ marcado" : ""})`).join(" · ");
+  return `<div class="vf-q">✅ Última revisión ${vipEsc(u.hora || "")}: revisó <b>${vipN(u.en_franja || 0)}</b> partidos con cuota ${Number(vm.cuota_min || 1.85).toFixed(2)}–${Number(vm.cuota_max || 2.2).toFixed(2)} y marcó <b>${vipN(u.marcados || 0)}</b> (pide valor de +${evMin}% o más).${lista ? ` Los más cercanos: ${lista}.` : ""}</div>`;
+}
+
 function vipSegundaHtml(V){
   const S = V.segunda_linea || {}, pol = V.politica || {};
   const lista = V.segunda_linea_senales || [];
@@ -2568,6 +2578,7 @@ function vipSegundaHtml(V){
     const b = s.bajo_piso || {};
     return `<div class="vf-item"><div class="vf-top"><span class="vf-nom">${vipEsc(vipNombreRaw(s.motivo))}${s.encendida ? "" : ' <span class="vip-dim">· apagada hoy: no cuenta</span>'}</span><span class="vf-rango" style="color:${s.n ? vipCol(s.roi) : "var(--chalk-dim)"};">${s.n ? vipPct(s.roi) + " · " + vipN(s.n) + " apuestas" : "sin apuestas"}</span></div>
       ${s.n ? `<div class="vf-a">Ventaja <b>${vipFmt(s.alfa)}</b> pts · <b>${vipFmt(s.uds)}u</b> · acierto <b>${vipFmt(s.acierto, 1, false)}%</b>${s.n < 30 ? " · muestra chica" : ""}</div>` : ""}
+      ${s.motivo === "valor_detectado" ? vipValorUltima(pol) : ""}
       ${s.historico_semana_a_semana ? `<div class="vf-q">Incluye ${vipN(s.historico_semana_a_semana)} apuestas medidas semana a semana sin ver el futuro (desde el ${vipFechaCorta(s.historico_desde)}): el modelo se entrenó solo con partidos anteriores a cada semana.</div>` : ""}
       <div class="vf-q">Bajo ${Number(s.piso != null ? s.piso : cmin).toFixed(2)} (no entra): ${b.n ? `${vipN(b.n)} apuestas, ROI <b style="color:${vipCol(b.roi)};">${vipPct(b.roi)}</b>` : "sin apuestas"}. En vivo desde el ${vipFechaCorta(pol.segunda_desde)}: ${s.n_vivo ? `${vipN(s.n_vivo)} apuestas, ROI ${vipPct(s.roi_vivo)}` : "todavía sin apuestas"}.</div></div>`; }).join("");
   const resultado = S.n
