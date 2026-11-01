@@ -2567,6 +2567,31 @@ function vipValorUltima(pol){
   return `<div class="vf-q">✅ Última revisión ${vipEsc(u.hora || "")}: revisó <b>${vipN(u.en_franja || 0)}</b> partidos con cuota ${Number(vm.cuota_min || 1.85).toFixed(2)}–${Number(vm.cuota_max || 2.2).toFixed(2)} y marcó <b>${vipN(u.marcados || 0)}</b> (pide valor de +${evMin}% o más).${lista ? ` Los más cercanos: ${lista}.` : ""}</div>`;
 }
 
+// 1 nov 2026: CUOTA ALTA = picks del VIP con cuota 1.70-2.20 (segunda linea en cuota alta + Valor detectado).
+// Todo llega calculado en data.vip_btts.cuota_alta* (backtest._vip_btts_datos).
+function vipCuotaAltaHtml(V, selDia){
+  const S = V.cuota_alta || {}, viv = V.cuota_alta_en_vivo || {}, mk = V.cuota_alta_mercado || {}, sem = V.cuota_alta_semanas || {};
+  const r = V.cuota_alta_rango || [1.7, 2.2], rTxt = `${Number(r[0]).toFixed(2)} a ${Number(r[1]).toFixed(2)}`;
+  const hoy = (selDia || []).filter(p => vipClase(p) === "SEGUNDA_LINEA" && Number(p.cuota_btts_alerta > 1 ? p.cuota_btts_alerta : p.cuota_btts) >= r[0] && Number(p.cuota_btts_alerta > 1 ? p.cuota_btts_alerta : p.cuota_btts) <= r[1] + 1e-9);
+  const fila = (t, x, sub) => `<tr><td>${t}${sub ? `<div class="vip-dim" style="font-size:11px;">${sub}</div>` : ""}</td><td class="num">${vipN(x.n || 0)}</td><td class="num">${x.n ? vipFmt(x.acierto, 1, false) + "%" : "—"}</td><td class="num">${x.n ? vipFmt(x.cuota_media, 2, false) : "—"}</td><td class="num" style="color:${vipCol(x.roi)};">${x.n ? vipPct(x.roi) : "—"}</td><td class="num" style="color:${vipCol(x.uds)};">${x.n ? vipFmt(x.uds) + "u" : "—"}</td></tr>`;
+  const meses = (V.cuota_alta_por_mes || []).filter(m => m.n >= 5).map(m => `${MESES_ES[Number(m.mes.slice(5, 7)) - 1]} ${vipPct(m.roi)} (${m.n})`).join(" · ");
+  const senales = (V.cuota_alta_por_senal || []).filter(x => x.n).sort((a, b) => b.n - a.n).map(x => `${vipEsc(vipNombreRaw(x.motivo))} <b>${vipN(x.n)}</b> (${vipPct(x.roi)})`).join(" · ");
+  return `
+    <p class="vip-dim" style="font-size:13px;line-height:1.55;margin:0 0 10px;">Los picks del VIP con cuota de <b>${rTxt}</b>: la <b>Segunda línea</b> cuando su cuota es alta y el detector <b>💎 Valor detectado</b>. No agrega partidos nuevos: separa los de cuota alta, les pone el chip <b>📈 CUOTA ALTA</b> y los mide aparte. ${hoy.length ? `Hoy hay <b>${hoy.length}</b> en la lista de arriba.` : "Hoy no hay ninguno en la lista."}</p>
+    <div class="vip-scroll"><table class="cmp-table"><thead><tr><th>Cuota ${rTxt}</th><th class="num">Apuestas</th><th class="num">Acierto</th><th class="num">Cuota media</th><th class="num">ROI</th><th class="num">Unidades</th></tr></thead><tbody>
+      ${fila("📈 Cuota alta · histórico", S, sem.semanas ? `ganó en ${sem.positivas} de ${sem.semanas} semanas · peor caída -${vipFmt(S.max_caida_u, 1, false)}u` : "")}
+      ${fila("📈 Cuota alta · en vivo", viv, `desde el ${vipFechaCorta((V.politica || {}).segunda_desde)}`)}
+      ${fila("Todo el mercado con esa cuota", mk, "lo que pasa si se apuesta a todo")}
+    </tbody></table></div>
+    <div class="vip-verdict" style="margin-top:12px;">
+      ${meses ? `<p><b>Mes a mes:</b> ${meses}.</p>` : ""}
+      ${senales ? `<p><b>De dónde salen:</b> ${senales}. Un partido puede tener varias.</p>` : ""}
+      <p><b>Por qué estas y no "las que más ganan en cuota alta":</b> se probó elegir cada semana las señales que mejor iban en cuota alta y apostar la semana siguiente; con 6 formas distintas de elegir, todas perdieron en las semanas nuevas (de -0.1% a -7.4%). Lo que ganaba hacia atrás era suerte. Por eso aquí solo entran señales con su propio respaldo.</p>
+      <p><b>Por qué hasta ${Number(r[1]).toFixed(2)} y no 2.50:</b> de 2.20 a 2.50 ninguna señal tiene muestra (13 partidos en tres meses). Si con el tiempo aparece, se sube el techo.</p>
+    </div>
+    <p class="vip-dim" style="font-size:12px;line-height:1.55;margin:10px 0 0;">⚠️ El histórico de Valor detectado se midió semana a semana sin ver el futuro; el de la Segunda línea, con los mismos datos con que se eligieron sus señales (optimista). La prueba que cuenta es la fila «en vivo».</p>`;
+}
+
 function vipSegundaHtml(V){
   const S = V.segunda_linea || {}, pol = V.politica || {};
   const lista = V.segunda_linea_senales || [];
@@ -2675,12 +2700,13 @@ function renderVip(data, picks){
     const aviso = (sent && res == null && !cumpleHoy(p))
       ? `<div class="vip-dim" style="font-size:11px;line-height:1.5;margin-top:5px;">Hoy ya no cumple: ${motivoFuera(p)}. Como ya salió al Telegram, se queda aquí.</div>` : "";
     const segTxt = c === "SEGUNDA_LINEA"
-      ? `<div class="vip-dim" style="font-size:11px;line-height:1.5;margin-top:5px;">Por: <b>${vipEsc(vipSenalesSegunda(p).map(vipNombreRaw).join(" + ") || "señal de la segunda línea")}</b> · cuota desde ${Number(pol.segunda_cuota_min || 1.5).toFixed(2)}</div>` : "";
+      ? `<div class="vip-dim" style="font-size:11px;line-height:1.5;margin-top:5px;">Por: <b>${vipEsc(vipSenalesSegunda(p).map(vipNombreRaw).join(" + ") || "señal de la segunda línea")}</b> · cuota desde ${(vipSenalesSegunda(p).length ? Math.min(...vipSenalesSegunda(p).map(vipPisoSeg)) : Number(pol.segunda_cuota_min || 1.5)).toFixed(2)}</div>` : "";
+    const caR = V.cuota_alta_rango || [1.7, 2.2], esCA = c === "SEGUNDA_LINEA" && Number(precio) >= caR[0] && Number(precio) <= caR[1] + 1e-9;
     return `<div class="conf-card">
       <div>
         <div class="conf-teams">${vipEsc(p.local)} vs ${vipEsc(p.visitante)}</div>
         <div class="conf-liga">${vipEsc(p.liga || "")} · ${diaBadge(p)}${confirmacionCuotaBadge(p, "btts")}${notaLigaConfianza(p)}</div>
-        <div style="margin-top:6px;display:flex;gap:8px;flex-wrap:wrap;align-items:center;font-size:11px;"><span class="vip-chip ${info.fuerte ? "fuerte" : ""}">${info.chip}</span>${enviado}</div>
+        <div style="margin-top:6px;display:flex;gap:8px;flex-wrap:wrap;align-items:center;font-size:11px;"><span class="vip-chip ${info.fuerte ? "fuerte" : ""}">${info.chip}</span>${esCA ? '<span class="vip-chip">📈 CUOTA ALTA</span>' : ""}${enviado}</div>
         ${segTxt}
         ${aviso}
         ${vipChkHtml(p)}
@@ -2845,6 +2871,7 @@ function renderVip(data, picks){
     ${vipFormulaHtml(V) ? `<section><p class="section-title">🧮 La fórmula, variable por variable</p>${vipFormulaHtml(V)}</section>` : ""}
     <section><p class="section-title">¿Funciona? En palabras simples</p><div class="vip-verdict">${veredicto}</div></section>
     ${vipSegundaHtml(V) ? `<section><p class="section-title">🥈 Segunda línea · qué señales la forman</p>${vipSegundaHtml(V)}</section>` : ""}
+    ${V.cuota_alta && V.cuota_alta.n ? `<section><p class="section-title">📈 Cuota alta · ${Number((V.cuota_alta_rango || [1.7])[0]).toFixed(2)} a ${Number((V.cuota_alta_rango || [0, 2.2])[1]).toFixed(2)}</p>${vipCuotaAltaHtml(V, selDia)}</section>` : ""}
     <section><p class="section-title">🔍 ¿Y las señales activas? Lo que se ve en verde contra lo que pasó después</p>${vipConciliacionHtml(V)}</section>
     <section><p class="section-title">🧪 En vivo (la prueba que cuenta)</p>${enVivoHtml}</section>
     <section><p class="section-title">📈 Ganancia acumulada</p>${curvaHtml}</section>
