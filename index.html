@@ -1158,7 +1158,7 @@ function renderMercado(picks, probKey, senalKey, tierKey, cuotaKey, resultadoDes
         <div class="conf-card">
           <div>
             <div class="conf-teams">${p.local} vs ${p.visitante}</div>
-            <div class="conf-liga">${p.liga || ""} · ${diaBadge(p)}${mercadoKey === 'btts' ? vipNotaBtts(p) : ''}${respaldoBadge(p)}${confirmacionCuotaBadge(p, mercadoKey)}${notaLigaConfianza(p)}${mercadoKey === 'ht05' ? notaOver15Ht(p) : ''}${mercadoKey === 'btts' ? notaRescateBtts(p) : ''}${mercadoKey === 'o25' ? notaRescateO25(p) : ''}${mercadoKey === 'o15' ? notaRescateO15(p) : ''}${mercadoKey === 'ht05' ? notaRescateHt05(p) : ''}${mercadoKey === 'btts' ? notaBttsMinAlto(p) : ''}</div>
+            <div class="conf-liga">${p.liga || ""} · ${diaBadge(p)}${ccChip(p, mercadoKey, p[senalKey] === "JUGAR")}${mercadoKey === 'btts' ? vipNotaBtts(p) : ''}${respaldoBadge(p)}${confirmacionCuotaBadge(p, mercadoKey)}${notaLigaConfianza(p)}${mercadoKey === 'ht05' ? notaOver15Ht(p) : ''}${mercadoKey === 'btts' ? notaRescateBtts(p) : ''}${mercadoKey === 'o25' ? notaRescateO25(p) : ''}${mercadoKey === 'o15' ? notaRescateO15(p) : ''}${mercadoKey === 'ht05' ? notaRescateHt05(p) : ''}${mercadoKey === 'btts' ? notaBttsMinAlto(p) : ''}</div>
             ${badgesExtra(p)}
           </div>
           <div class="conf-tier">
@@ -1207,7 +1207,7 @@ function renderMercado(picks, probKey, senalKey, tierKey, cuotaKey, resultadoDes
         <div class="conf-card">
           <div>
             <div class="conf-teams">${p.local} vs ${p.visitante}</div>
-            <div class="conf-liga">${p.liga || ""} · ${diaBadge(p)}${mercadoKey === 'btts' ? vipNotaBtts(p) : ''}${respaldoBadge(p)}${confirmacionCuotaBadge(p, mercadoKey)}${notaLigaConfianza(p)}${mercadoKey === 'ht05' ? notaOver15Ht(p) : ''}${mercadoKey === 'btts' ? notaRescateBtts(p) : ''}${mercadoKey === 'o25' ? notaRescateO25(p) : ''}${mercadoKey === 'o15' ? notaRescateO15(p) : ''}${mercadoKey === 'ht05' ? notaRescateHt05(p) : ''}${mercadoKey === 'btts' ? notaBttsMinAlto(p) : ''}</div>
+            <div class="conf-liga">${p.liga || ""} · ${diaBadge(p)}${ccChip(p, mercadoKey, p[senalKey] === "JUGAR")}${mercadoKey === 'btts' ? vipNotaBtts(p) : ''}${respaldoBadge(p)}${confirmacionCuotaBadge(p, mercadoKey)}${notaLigaConfianza(p)}${mercadoKey === 'ht05' ? notaOver15Ht(p) : ''}${mercadoKey === 'btts' ? notaRescateBtts(p) : ''}${mercadoKey === 'o25' ? notaRescateO25(p) : ''}${mercadoKey === 'o15' ? notaRescateO15(p) : ''}${mercadoKey === 'ht05' ? notaRescateHt05(p) : ''}${mercadoKey === 'btts' ? notaBttsMinAlto(p) : ''}</div>
             ${badgesExtra(p)}
           </div>
           <div class="conf-tier">
@@ -1260,7 +1260,7 @@ function renderMercado(picks, probKey, senalKey, tierKey, cuotaKey, resultadoDes
           <div class="match-row">
             <div>
               <div class="match-teams">${p.local} vs ${p.visitante}</div>
-              <div class="match-liga">${tierTxt}${p.liga || ""} · ${diaBadge(p)}${mercadoKey === 'btts' ? vipNotaBtts(p) : ''}${respaldoBadge(p)}${confirmacionCuotaBadge(p, mercadoKey)}${notaLigaConfianza(p)}${mercadoKey === 'ht05' ? notaOver15Ht(p) : ''}${mercadoKey === 'btts' ? notaRescateBtts(p) : ''}${mercadoKey === 'o25' ? notaRescateO25(p) : ''}${mercadoKey === 'o15' ? notaRescateO15(p) : ''}${mercadoKey === 'ht05' ? notaRescateHt05(p) : ''}${mercadoKey === 'btts' ? notaBttsMinAlto(p) : ''}</div>
+              <div class="match-liga">${tierTxt}${p.liga || ""} · ${diaBadge(p)}${ccChip(p, mercadoKey, p[senalKey] === "JUGAR")}${mercadoKey === 'btts' ? vipNotaBtts(p) : ''}${respaldoBadge(p)}${confirmacionCuotaBadge(p, mercadoKey)}${notaLigaConfianza(p)}${mercadoKey === 'ht05' ? notaOver15Ht(p) : ''}${mercadoKey === 'btts' ? notaRescateBtts(p) : ''}${mercadoKey === 'o25' ? notaRescateO25(p) : ''}${mercadoKey === 'o15' ? notaRescateO15(p) : ''}${mercadoKey === 'ht05' ? notaRescateHt05(p) : ''}${mercadoKey === 'btts' ? notaBttsMinAlto(p) : ''}</div>
               ${badgesExtra(p)}
             </div>
             <span class="match-pct">cuota ${cuotaTxt} · ${pctT}${edgeTxt(prob, p[cuotaKey])}</span>
@@ -1329,7 +1329,7 @@ function renderCombo(picks){
       <div class="match-row">
         <div>
           <div class="match-teams">${p.local} vs ${p.visitante}</div>
-          <div class="match-liga">${p.liga || ""} · ${diaBadge(p)}${respaldoBadge(p)}${notaLigaConfianza(p)}${motivo}</div>
+          <div class="match-liga">${p.liga || ""} · ${diaBadge(p)}${ccChip(p, "combo", p.senal_btts_o25 === "VIP")}${respaldoBadge(p)}${notaLigaConfianza(p)}${motivo}</div>
         </div>
         <span class="match-pct">cuota ${cuotaCombo}${minTxt} · ${badgeTxt}${probTxt}</span>
         <span class="match-badge ${badgeClass}">${badgeTxt}</span>
@@ -1735,11 +1735,46 @@ function renderPartidosEnPrueba(data){
   return `<section><p class="section-title">🔬 Partidos de las señales en prueba (apagadas)</p><p class="bar-label" style="opacity:0.7;font-weight:normal;margin-bottom:12px;">Todos los partidos recientes que cumplen cada señal, se jueguen o no. "no se juega" = la decisión real del sistema fue otra y este partido no recibe alerta.</p>${bloques}</section>`;
 }
 
+// 2 nov 2026: CUOTA DE MAYOR CONFIANZA (cuota_confianza.py). p.cuota_confianza = {mercado: [{senal, rango, roi}]}
+// solo con rangos que "se mantuvieron". La etiqueta se muestra cuando ese mercado da JUGAR.
+const CC_MERCADO = {btts: "BTTS", o15: "Over 1.5", o25: "Over 2.5", combo: "Combinada"};
+function ccNombre(mk, s){
+  const d = mk === "BTTS" ? ETIQUETAS_BTTS : (mk === "Over 2.5" ? ETIQUETAS_O25 : (mk === "Over 1.5" ? ETIQUETAS_O15 : ETIQUETAS_COMBO));
+  return String((d && d[s]) || s).split(" · ")[0];
+}
+function ccChip(p, mercadoKey, jugar){
+  const mk = CC_MERCADO[mercadoKey];
+  const lst = mk && jugar && p && p.cuota_confianza && p.cuota_confianza[mk];
+  if(!lst || !lst.length) return "";
+  const det = lst.map(x => `${ccNombre(mk, x.senal)}: ${Number(x.rango[0]).toFixed(2)}–${Number(x.rango[1]).toFixed(2)} (ROI ${x.roi > 0 ? "+" : ""}${x.roi}%)`).join(" · ");
+  return ` · <span class="vip-chip" title="${vipEsc("La cuota está en el rango donde esta señal más ganó: " + det)}">🎯 CUOTA DE MAYOR CONFIANZA</span><span class="vip-dim" style="font-size:11px;"> ${vipEsc(det)}</span>`;
+}
+function ccTablaHtml(data){
+  const C = data.cuota_confianza || {};
+  const mks = ["BTTS", "Over 2.5", "Combinada", "Over 1.5"].filter(m => C[m]);
+  if(!mks.length) return "";
+  const on = REGLAS_ACTIVAS_REAL || {};
+  const bloques = mks.map(mk => {
+    const filas = Object.entries(C[mk]).filter(([s, r]) => r.rango).sort((a, b) => (b[1].uds || 0) - (a[1].uds || 0));
+    const sin = Object.values(C[mk]).filter(r => !r.rango).length;
+    const ok = filas.filter(([s, r]) => r.se_mantuvo).length;
+    return `<details class="vip-det"${mk === "BTTS" ? " open" : ""}><summary>${mk}: ${filas.length} señales con rango (${ok} se mantuvieron)${sin ? ` · ${sin} sin ningún rango que gane` : ""}</summary>
+      <div class="vip-scroll" style="margin-top:8px;"><table class="cmp-table"><thead><tr><th>Señal</th><th class="num">Rango de confianza</th><th class="num">Apuestas</th><th class="num">Acierto</th><th class="num">ROI</th><th class="num">Unidades</th><th class="num">Fuera del rango</th><th class="num">Señal completa</th><th class="num">1ª / 2ª mitad</th><th>¿Se mantuvo?</th></tr></thead><tbody>
+      ${filas.map(([s, r]) => `<tr><td>${vipEsc(ccNombre(mk, s))}${on[s] === true ? ' <span class="vip-dim">· encendida</span>' : ""}</td><td class="num"><b>${Number(r.rango[0]).toFixed(2)}–${Number(r.rango[1]).toFixed(2)}</b></td><td class="num">${vipN(r.n)}</td><td class="num">${vipFmt(r.acierto, 1, false)}%</td><td class="num" style="color:${vipCol(r.roi)};">${vipPct(r.roi)}</td><td class="num" style="color:${vipCol(r.uds)};">${vipFmt(r.uds)}u</td><td class="num" style="color:${vipCol(r.roi_fuera)};">${r.n_fuera ? vipPct(r.roi_fuera) + ` (${vipN(r.n_fuera)})` : "—"}</td><td class="num" style="color:${vipCol(r.roi_total)};">${vipPct(r.roi_total)} (${vipN(r.n_total)})</td><td class="num">${vipPct(r.mitad1.roi)} / ${vipPct(r.mitad2.roi)}</td><td>${r.se_mantuvo ? "✓ sí · lleva etiqueta" : '<span class="vip-dim">✗ no · sin etiqueta</span>'}</td></tr>`).join("")}
+      </tbody></table></div></details>`;
+  }).join("");
+  return `<section><p class="section-title">🎯 Cuota de mayor confianza por señal</p>
+    <p class="vip-dim" style="font-size:13px;line-height:1.55;margin:0 0 10px;">Para cada señal, el rango de cuota que <b>más unidades ganó</b> en todo su historial (mínimo 15 partidos y ROI positivo). Se recalcula cada hora. Los picks de hoy con JUGAR cuya cuota cae en ese rango llevan la etiqueta <b>🎯 CUOTA DE MAYOR CONFIANZA</b>, pero solo si el rango <b>se mantuvo</b>: ganó en la primera y en la segunda mitad de su historia.</p>
+    ${bloques}
+    <p class="vip-dim" style="font-size:12px;line-height:1.55;margin:10px 0 0;">⚠️ Es lo que pasó, no una garantía: cuando el rango se elige con la primera mitad de la historia de cada señal y se mide en la segunda, mejora solo la mitad de las veces (42 de 82 señales, medido el 2 nov). Por eso la etiqueta exige que el rango haya ganado en las dos mitades, y aun así hay que mirarla como una pista, no como una regla segura.</p></section>`;
+}
+
 function renderEstadisticas(data){
   const comparativo = data.comparativo;
   return `
     ${vipActivasEstablesHtml(data)}
     ${vipGruposSenalesHtml(data)}
+    ${ccTablaHtml(data)}
     <section><p class="section-title">Por mercado (señales activas hoy, histórico completo)</p><div class="tickets">${renderTickets(comparativo)}</div></section>
     <section><p class="section-title">Hoy · 7 días · histórico</p>${renderCmpTable(comparativo)}</section>
     ${data.serie_diaria && data.serie_diaria.length > 1 ? `
@@ -2705,7 +2740,7 @@ function renderVip(data, picks){
     return `<div class="conf-card">
       <div>
         <div class="conf-teams">${vipEsc(p.local)} vs ${vipEsc(p.visitante)}</div>
-        <div class="conf-liga">${vipEsc(p.liga || "")} · ${diaBadge(p)}${confirmacionCuotaBadge(p, "btts")}${notaLigaConfianza(p)}</div>
+        <div class="conf-liga">${vipEsc(p.liga || "")} · ${diaBadge(p)}${ccChip(p, "btts", true)}${confirmacionCuotaBadge(p, "btts")}${notaLigaConfianza(p)}</div>
         <div style="margin-top:6px;display:flex;gap:8px;flex-wrap:wrap;align-items:center;font-size:11px;"><span class="vip-chip ${info.fuerte ? "fuerte" : ""}">${info.chip}</span>${esCA ? '<span class="vip-chip">📈 CUOTA ALTA</span>' : ""}${enviado}</div>
         ${segTxt}
         ${aviso}
