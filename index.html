@@ -731,18 +731,20 @@ function nombreCortoSenal(dic, t){
   return (t.startsWith("idx_") && partes[1]) ? partes[0] + " " + partes[1] : partes[0];
 }
 function resumenSenales(lista, motivoPrincipal, dic, prefijoIdx){
-  const tags = Array.from(new Set(String(lista || "").split("|").map(t => t.trim()).filter(Boolean)));
+  // 2 nov 2026 (ajuste): debajo del enunciado principal, primero las ENCENDIDAS que tambien aplican y luego
+  // las APAGADAS (en prueba o apagadas por el motor), una por linea, con su formula. La principal no se repite.
+  const tags = Array.from(new Set(String(lista || "").split("|").map(t => t.trim())))
+    .filter(t => t && t !== motivoPrincipal && !t.startsWith("ninguno") && t !== "candado_sin_cuota");
   const on = REGLAS_ACTIVAS_REAL || {};
-  const activas = tags.filter(t => t !== motivoPrincipal && on[t] === true && !SENALES_EN_PRUEBA.has(t));
-  const prueba = etiquetasEnPrueba(lista, motivoPrincipal, dic, prefijoIdx);
-  if(!activas.length && !prueba.length) return "";
-  const act = activas.length
-    ? `<span style="color:var(--chalk-dim);">✅ también aplican ${activas.length === 1 ? "1 encendida" : activas.length + " encendidas"}: </span>${activas.map(t => `<span title="${vipEsc(dic[t] || t)}" style="color:var(--chalk);">${vipEsc(nombreCortoSenal(dic, t))}</span>`).join('<span style="color:var(--chalk-dim);"> · </span>')}`
-    : "";
-  const pr = prueba.length
-    ? `<details class="sen-prueba" style="display:inline;"><summary style="display:inline;cursor:pointer;color:var(--chalk-dim);list-style:none;">${act ? " · " : ""}🔬 ${prueba.length} en prueba ▸</summary><div style="margin-top:4px;line-height:1.5;">${prueba.join("<br>")}</div></details>`
-    : "";
-  return `<div style="font-size:11px;line-height:1.5;margin-top:3px;text-transform:none;letter-spacing:0;">${act}${pr}</div>`;
+  const nivelIdx = [prefijoIdx + "top05", prefijoIdx + "top10", prefijoIdx + "top20"].find(t => tags.includes(t));
+  const valida = t => !(t.startsWith("idx_") && (!t.startsWith(prefijoIdx) || t !== nivelIdx));   // de los indices, solo el nivel mas alto
+  const activas = tags.filter(t => valida(t) && on[t] === true && !SENALES_EN_PRUEBA.has(t));
+  const apagadas = tags.filter(t => valida(t) && !activas.includes(t));
+  if(!activas.length && !apagadas.length) return "";
+  const linea = (t, enc) => enc
+    ? `<span title="Señal encendida: también aplica a este partido" style="color:var(--win);">✅ ${vipEsc(dic[t] || t)}</span>`
+    : `<span title="Señal apagada: aplica a este partido pero no decide el JUGAR" style="color:var(--amber);opacity:0.9;">${vipEsc(dic[t] || t)}${/apagada|EN PRUEBA|SEGUIMIENTO/i.test(dic[t] || "") ? "" : " · apagada"}</span>`;
+  return "<br>" + [...activas.map(t => linea(t, true)), ...apagadas.map(t => linea(t, false))].join("<br>");
 }
 
 function notaRescateBtts(p){
@@ -1766,12 +1768,13 @@ function ccNombre(mk, s){
 // 2 nov 2026 (ajuste): solo cuentan las señales ENCENDIDAS hoy; se muestra la de mayor ROI y el resto queda en el detalle.
 function ccChip(p, mercadoKey, jugar){
   const mk = CC_MERCADO[mercadoKey];
-  const lst = ((mk && jugar && p && p.cuota_confianza && p.cuota_confianza[mk]) || [])
-    .filter(x => (REGLAS_ACTIVAS_REAL || {})[x.senal] === true).sort((a, b) => (b.roi || 0) - (a.roi || 0));
+  // 2 nov 2026 (ajuste): solo se analiza la señal que se lleva el partido (la principal de ese mercado)
+  const principal = {BTTS: p && p.motivo_btts, "Over 2.5": p && p.motivo_o25, "Over 1.5": p && p.motivo_o15, Combinada: p && p.motivo_combo}[mk];
+  const lst = ((mk && jugar && p && p.cuota_confianza && p.cuota_confianza[mk]) || []).filter(x => x.senal === principal);
   if(!lst.length) return "";
   const txt = x => `${ccNombre(mk, x.senal)} ${Number(x.rango[0]).toFixed(2)}–${Number(x.rango[1]).toFixed(2)} (ROI ${x.roi > 0 ? "+" : ""}${x.roi}%)`;
   const det = lst.map(txt).join(" · ");
-  return ` · <span class="vip-chip" title="${vipEsc("La cuota está en el rango donde su señal más ganó: " + det)}">🎯 CUOTA DE MAYOR CONFIANZA</span><span class="vip-dim" style="font-size:11px;"> ${vipEsc(txt(lst[0]))}${lst.length > 1 ? ` y ${lst.length - 1} más` : ""}</span>`;
+  return ` · <span class="vip-chip" title="${vipEsc("La cuota está en el rango donde su señal más ganó: " + det)}">🎯 CUOTA DE MAYOR CONFIANZA</span><span class="vip-dim" style="font-size:11px;"> ${vipEsc(txt(lst[0]))}</span>`;
 }
 function ccTablaHtml(data){
   const C = data.cuota_confianza || {};
@@ -1788,7 +1791,7 @@ function ccTablaHtml(data){
       </tbody></table></div></details>`;
   }).join("");
   return `<section><p class="section-title">🎯 Cuota de mayor confianza por señal</p>
-    <p class="vip-dim" style="font-size:13px;line-height:1.55;margin:0 0 10px;">Para cada señal, el rango de cuota que <b>más unidades ganó</b> en todo su historial (mínimo 15 partidos y ROI positivo). Se recalcula cada hora. Los picks de hoy con JUGAR cuya cuota cae en el rango de una de sus señales <b>encendidas</b> llevan la etiqueta <b>🎯 CUOTA DE MAYOR CONFIANZA</b>, pero solo si el rango <b>se mantuvo</b>: ganó en la primera y en la segunda mitad de su historia.</p>
+    <p class="vip-dim" style="font-size:13px;line-height:1.55;margin:0 0 10px;">Para cada señal, el rango de cuota que <b>más unidades ganó</b> en todo su historial (mínimo 15 partidos y ROI positivo). Se recalcula cada hora. Los picks de hoy con JUGAR cuya cuota cae en el rango de <b>la señal que se lleva el partido</b> (la principal) llevan la etiqueta <b>🎯 CUOTA DE MAYOR CONFIANZA</b>, pero solo si el rango <b>se mantuvo</b>: ganó en la primera y en la segunda mitad de su historia.</p>
     ${bloques}
     <p class="vip-dim" style="font-size:12px;line-height:1.55;margin:10px 0 0;">⚠️ Es lo que pasó, no una garantía: cuando el rango se elige con la primera mitad de la historia de cada señal y se mide en la segunda, mejora solo la mitad de las veces (42 de 82 señales, medido el 2 nov). Por eso la etiqueta exige que el rango haya ganado en las dos mitades, y aun así hay que mirarla como una pista, no como una regla segura.</p></section>`;
 }
