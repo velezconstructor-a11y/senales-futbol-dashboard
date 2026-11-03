@@ -2781,13 +2781,23 @@ function renderVip(data, picks){
       ? `<div class="vip-dim" style="font-size:11px;line-height:1.5;margin-top:5px;">Hoy ya no cumple: ${motivoFuera(p)}. Como ya salió al Telegram, se queda aquí.</div>` : "";
     const segTxt = c === "SEGUNDA_LINEA"
       ? `<div class="vip-dim" style="font-size:11px;line-height:1.5;margin-top:5px;">Por: <b>${vipEsc(vipSenalesSegunda(p).map(vipNombreRaw).join(" + ") || "señal de la segunda línea")}</b> · cuota desde ${(vipSenalesSegunda(p).length ? Math.min(...vipSenalesSegunda(p).map(vipPisoSeg)) : Number(pol.segunda_cuota_min || 1.5)).toFixed(2)}</div>` : "";
+    // 2 nov 2026: cuota de mayor confianza de la señal principal, con la cuota con que SALIO (o la de ahora si aun no sale)
+    const ccR = ((((DATA && DATA.cuota_confianza) || {}).BTTS) || {})[p.motivo_btts];
+    const ccPrecio = Number(precio);
+    const ccDentro = !!(ccR && ccR.rango && ccR.se_mantuvo && ccPrecio >= ccR.rango[0] - 1e-9 && ccPrecio < ccR.rango[1] - 1e-9);
+    const ccNom = vipEsc(ccNombre("BTTS", p.motivo_btts || ""));
+    const ccTxt = !p.motivo_btts ? "" : `<div class="vip-dim" style="font-size:11px;line-height:1.5;margin-top:5px;">🎯 Cuota de confianza de <b>${ccNom}</b> (la señal principal): ${
+      !ccR ? "todavía no tiene rango (menos de 30 partidos)"
+      : !ccR.rango ? "no tiene ningún rango de cuota que gane"
+      : `${Number(ccR.rango[0]).toFixed(2)}–${Number(ccR.rango[1]).toFixed(2)} (ROI ${vipPct(ccR.roi)} · ${vipFmt(ccR.uds)}u${ccR.se_mantuvo ? "" : " · no se mantuvo"}) · ${ccDentro ? `<b style="color:var(--win);">✓ la cuota ${ccPrecio.toFixed(2)} está en el rango</b>` : `la cuota ${isFinite(ccPrecio) ? ccPrecio.toFixed(2) : "—"} ${ccR.se_mantuvo ? "está fuera" : (ccPrecio >= ccR.rango[0] - 1e-9 && ccPrecio < ccR.rango[1] - 1e-9 ? "está en el rango, pero el rango no se mantuvo" : "está fuera")}`}`}</div>`;
     const caR = V.cuota_alta_rango || [1.7, 2.2], esCA = c === "SEGUNDA_LINEA" && Number(precio) >= caR[0] && Number(precio) <= caR[1] + 1e-9;
     return `<div class="conf-card">
       <div>
         <div class="conf-teams">${vipEsc(p.local)} vs ${vipEsc(p.visitante)}</div>
-        <div class="conf-liga">${vipEsc(p.liga || "")} · ${diaBadge(p)}${ccChip(p, "btts", true)}${confirmacionCuotaBadge(p, "btts")}${notaLigaConfianza(p)}</div>
-        <div style="margin-top:6px;display:flex;gap:8px;flex-wrap:wrap;align-items:center;font-size:11px;"><span class="vip-chip ${info.fuerte ? "fuerte" : ""}">${info.chip}</span>${esCA ? '<span class="vip-chip">📈 CUOTA ALTA</span>' : ""}${enviado}</div>
+        <div class="conf-liga">${vipEsc(p.liga || "")} · ${diaBadge(p)}${confirmacionCuotaBadge(p, "btts")}${notaLigaConfianza(p)}</div>
+        <div style="margin-top:6px;display:flex;gap:8px;flex-wrap:wrap;align-items:center;font-size:11px;"><span class="vip-chip ${info.fuerte ? "fuerte" : ""}">${info.chip}</span>${esCA ? '<span class="vip-chip">📈 CUOTA ALTA</span>' : ""}${ccDentro ? '<span class="vip-chip">🎯 CUOTA DE MAYOR CONFIANZA</span>' : ""}${enviado}</div>
         ${segTxt}
+        ${ccTxt}
         ${aviso}
         ${vipChkHtml(p)}
       </div>
