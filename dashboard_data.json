@@ -1,5 +1,5 @@
 {
-  "actualizado": "2026-11-02T19:19:32.164192-05:00",
+  "actualizado": "2026-11-02T19:26:49.559075-05:00",
   "hoy_referencia": "2026-11-02",
   "manana_referencia": "2026-11-03",
   "pasado_manana_referencia": "2026-11-04",
@@ -11385,7 +11385,7 @@
           "marcados": 0,
           "a_jugar": 0,
           "entrenado_con": 11244,
-          "hora": "2026-11-02 19:18",
+          "hora": "2026-11-02 19:26",
           "en_franja": 12,
           "ev_min": 0.15,
           "mejores": [
@@ -20148,20 +20148,20 @@
       "cuota_confianza": {
         "BTTS": [
           {
-            "senal": "topacio",
-            "rango": [
-              1.65,
-              2.05
-            ],
-            "roi": 19.9
-          },
-          {
             "senal": "apuesta_top_btts_gcmin",
             "rango": [
               1.45,
               1.95
             ],
             "roi": 17.3
+          },
+          {
+            "senal": "topacio",
+            "rango": [
+              1.65,
+              2.05
+            ],
+            "roi": 19.9
           }
         ]
       },
@@ -20404,6 +20404,14 @@
       "cuota_confianza": {
         "BTTS": [
           {
+            "senal": "camino_normal_VIP+",
+            "rango": [
+              1.4,
+              1.7
+            ],
+            "roi": 9.0
+          },
+          {
             "senal": "idx_btts_top20",
             "rango": [
               1.4,
@@ -20418,14 +20426,6 @@
               1.55
             ],
             "roi": 16.3
-          },
-          {
-            "senal": "camino_normal_VIP+",
-            "rango": [
-              1.4,
-              1.7
-            ],
-            "roi": 9.0
           }
         ]
       },
@@ -21876,6 +21876,14 @@
       "cuota_confianza": {
         "BTTS": [
           {
+            "senal": "idx_btts_top20",
+            "rango": [
+              1.4,
+              1.55
+            ],
+            "roi": 10.6
+          },
+          {
             "senal": "granate",
             "rango": [
               1.35,
@@ -21890,14 +21898,6 @@
               1.55
             ],
             "roi": 16.3
-          },
-          {
-            "senal": "idx_btts_top20",
-            "rango": [
-              1.4,
-              1.55
-            ],
-            "roi": 10.6
           }
         ],
         "Over 2.5": [
@@ -22167,12 +22167,12 @@
       "cuota_confianza": {
         "BTTS": [
           {
-            "senal": "idx_btts_top10",
+            "senal": "atlas_plus",
             "rango": [
-              1.4,
+              1.45,
               1.55
             ],
-            "roi": 16.3
+            "roi": 29.0
           },
           {
             "senal": "idx_btts_top20",
@@ -22183,20 +22183,20 @@
             "roi": 10.6
           },
           {
+            "senal": "idx_btts_top10",
+            "rango": [
+              1.4,
+              1.55
+            ],
+            "roi": 16.3
+          },
+          {
             "senal": "rescate_ataque_balanceado_alta_failed_bajo",
             "rango": [
               1.5,
               1.9
             ],
             "roi": 22.9
-          },
-          {
-            "senal": "atlas_plus",
-            "rango": [
-              1.45,
-              1.55
-            ],
-            "roi": 29.0
           }
         ]
       },
@@ -23023,12 +23023,12 @@
       "cuota_confianza": {
         "BTTS": [
           {
-            "senal": "VIP_reforzado",
+            "senal": "centinela_elite",
             "rango": [
-              1.45,
-              1.55
+              1.4,
+              1.5
             ],
-            "roi": 23.4
+            "roi": 12.5
           },
           {
             "senal": "estable_gc_fallo",
@@ -23039,20 +23039,12 @@
             "roi": 17.9
           },
           {
-            "senal": "estable_btts_fallo",
+            "senal": "VIP_reforzado",
             "rango": [
               1.45,
               1.55
             ],
-            "roi": 15.0
-          },
-          {
-            "senal": "estable_btts_fallo_plus",
-            "rango": [
-              1.45,
-              1.55
-            ],
-            "roi": 18.6
+            "roi": 23.4
           },
           {
             "senal": "diamante_amplio",
@@ -23063,60 +23055,12 @@
             "roi": 13.5
           },
           {
-            "senal": "centinela_elite",
-            "rango": [
-              1.4,
-              1.5
-            ],
-            "roi": 12.5
-          },
-          {
-            "senal": "camino_normal_VIP+",
-            "rango": [
-              1.4,
-              1.7
-            ],
-            "roi": 9.0
-          },
-          {
-            "senal": "diamante_elite",
-            "rango": [
-              1.45,
-              1.55
-            ],
-            "roi": 9.1
-          },
-          {
-            "senal": "s1_vip_valor",
-            "rango": [
-              1.45,
-              1.55
-            ],
-            "roi": 9.9
-          },
-          {
-            "senal": "estable_gc_fallo_plus",
-            "rango": [
-              1.45,
-              1.55
-            ],
-            "roi": 23.9
-          },
-          {
-            "senal": "centinela_plus",
+            "senal": "centinela_elite_plus",
             "rango": [
               1.45,
               1.7
             ],
-            "roi": 23.8
-          },
-          {
-            "senal": "bastion_elite",
-            "rango": [
-              1.35,
-              1.5
-            ],
-            "roi": 12.4
+            "roi": 21.4
           },
           {
             "senal": "bastion_plus",
@@ -23127,12 +23071,60 @@
             "roi": 19.9
           },
           {
-            "senal": "bastion_elite_plus",
+            "senal": "diamante_elite",
+            "rango": [
+              1.45,
+              1.55
+            ],
+            "roi": 9.1
+          },
+          {
+            "senal": "estable_btts_fallo",
+            "rango": [
+              1.45,
+              1.55
+            ],
+            "roi": 15.0
+          },
+          {
+            "senal": "camino_normal_VIP+",
             "rango": [
               1.4,
               1.7
             ],
-            "roi": 14.9
+            "roi": 9.0
+          },
+          {
+            "senal": "centinela_plus",
+            "rango": [
+              1.45,
+              1.7
+            ],
+            "roi": 23.8
+          },
+          {
+            "senal": "estable_btts_fallo_plus",
+            "rango": [
+              1.45,
+              1.55
+            ],
+            "roi": 18.6
+          },
+          {
+            "senal": "bastion_elite",
+            "rango": [
+              1.35,
+              1.5
+            ],
+            "roi": 12.4
+          },
+          {
+            "senal": "estable_gc_fallo_plus",
+            "rango": [
+              1.45,
+              1.55
+            ],
+            "roi": 23.9
           },
           {
             "senal": "idx_btts_top20",
@@ -23143,12 +23135,20 @@
             "roi": 10.6
           },
           {
-            "senal": "centinela_elite_plus",
+            "senal": "bastion_elite_plus",
             "rango": [
-              1.45,
+              1.4,
               1.7
             ],
-            "roi": 21.4
+            "roi": 14.9
+          },
+          {
+            "senal": "s1_vip_valor",
+            "rango": [
+              1.45,
+              1.55
+            ],
+            "roi": 9.9
           },
           {
             "senal": "idx_btts_top10",
@@ -27741,70 +27741,6 @@
             "roi": 17.9
           },
           {
-            "senal": "estable_btts_fallo",
-            "rango": [
-              1.45,
-              1.55
-            ],
-            "roi": 15.0
-          },
-          {
-            "senal": "estable_btts_fallo_plus",
-            "rango": [
-              1.45,
-              1.55
-            ],
-            "roi": 18.6
-          },
-          {
-            "senal": "diamante_amplio",
-            "rango": [
-              1.45,
-              1.55
-            ],
-            "roi": 13.5
-          },
-          {
-            "senal": "diamante_elite",
-            "rango": [
-              1.45,
-              1.55
-            ],
-            "roi": 9.1
-          },
-          {
-            "senal": "estable_gc_fallo_plus",
-            "rango": [
-              1.45,
-              1.55
-            ],
-            "roi": 23.9
-          },
-          {
-            "senal": "centinela_plus",
-            "rango": [
-              1.45,
-              1.7
-            ],
-            "roi": 23.8
-          },
-          {
-            "senal": "bastion_plus",
-            "rango": [
-              1.35,
-              1.55
-            ],
-            "roi": 19.9
-          },
-          {
-            "senal": "rescate_ataque_balanceado_alta_gf_btts",
-            "rango": [
-              1.3,
-              1.8
-            ],
-            "roi": 9.1
-          },
-          {
             "senal": "centinela_failed_bajo",
             "rango": [
               1.4,
@@ -27819,6 +27755,70 @@
               1.55
             ],
             "roi": 11.3
+          },
+          {
+            "senal": "rescate_ataque_balanceado_alta_gf_btts",
+            "rango": [
+              1.3,
+              1.8
+            ],
+            "roi": 9.1
+          },
+          {
+            "senal": "diamante_amplio",
+            "rango": [
+              1.45,
+              1.55
+            ],
+            "roi": 13.5
+          },
+          {
+            "senal": "bastion_plus",
+            "rango": [
+              1.35,
+              1.55
+            ],
+            "roi": 19.9
+          },
+          {
+            "senal": "diamante_elite",
+            "rango": [
+              1.45,
+              1.55
+            ],
+            "roi": 9.1
+          },
+          {
+            "senal": "estable_btts_fallo",
+            "rango": [
+              1.45,
+              1.55
+            ],
+            "roi": 15.0
+          },
+          {
+            "senal": "centinela_plus",
+            "rango": [
+              1.45,
+              1.7
+            ],
+            "roi": 23.8
+          },
+          {
+            "senal": "estable_btts_fallo_plus",
+            "rango": [
+              1.45,
+              1.55
+            ],
+            "roi": 18.6
+          },
+          {
+            "senal": "estable_gc_fallo_plus",
+            "rango": [
+              1.45,
+              1.55
+            ],
+            "roi": 23.9
           },
           {
             "senal": "idx_btts_top20",
@@ -29202,68 +29202,12 @@
             "roi": 23.4
           },
           {
-            "senal": "estable_btts_fallo",
-            "rango": [
-              1.45,
-              1.55
-            ],
-            "roi": 15.0
-          },
-          {
-            "senal": "estable_btts_fallo_plus",
-            "rango": [
-              1.45,
-              1.55
-            ],
-            "roi": 18.6
-          },
-          {
-            "senal": "camino_normal_VIP+_refinada",
-            "rango": [
-              1.45,
-              1.55
-            ],
-            "roi": 17.2
-          },
-          {
             "senal": "diamante_amplio",
             "rango": [
               1.45,
               1.55
             ],
             "roi": 13.5
-          },
-          {
-            "senal": "camino_normal_VIP+",
-            "rango": [
-              1.4,
-              1.7
-            ],
-            "roi": 9.0
-          },
-          {
-            "senal": "diamante_elite",
-            "rango": [
-              1.45,
-              1.55
-            ],
-            "roi": 9.1
-          },
-          {
-            "senal": "s1_vip_valor",
-            "rango": [
-              1.45,
-              1.55
-            ],
-            "roi": 9.9
-          },
-          {
-            "senal": "estable_gc_fallo_plus",
-            "rango": [
-              1.45,
-              1.55
-            ],
-            "roi": 23.9
           },
           {
             "senal": "bastion_plus",
@@ -29274,12 +29218,44 @@
             "roi": 19.9
           },
           {
-            "senal": "bastion_elite_plus",
+            "senal": "diamante_elite",
+            "rango": [
+              1.45,
+              1.55
+            ],
+            "roi": 9.1
+          },
+          {
+            "senal": "estable_btts_fallo",
+            "rango": [
+              1.45,
+              1.55
+            ],
+            "roi": 15.0
+          },
+          {
+            "senal": "camino_normal_VIP+",
             "rango": [
               1.4,
               1.7
             ],
-            "roi": 14.9
+            "roi": 9.0
+          },
+          {
+            "senal": "estable_btts_fallo_plus",
+            "rango": [
+              1.45,
+              1.55
+            ],
+            "roi": 18.6
+          },
+          {
+            "senal": "estable_gc_fallo_plus",
+            "rango": [
+              1.45,
+              1.55
+            ],
+            "roi": 23.9
           },
           {
             "senal": "idx_btts_top20",
@@ -29288,6 +29264,30 @@
               1.55
             ],
             "roi": 10.6
+          },
+          {
+            "senal": "bastion_elite_plus",
+            "rango": [
+              1.4,
+              1.7
+            ],
+            "roi": 14.9
+          },
+          {
+            "senal": "s1_vip_valor",
+            "rango": [
+              1.45,
+              1.55
+            ],
+            "roi": 9.9
+          },
+          {
+            "senal": "camino_normal_VIP+_refinada",
+            "rango": [
+              1.45,
+              1.55
+            ],
+            "roi": 17.2
           }
         ]
       },
@@ -32046,6 +32046,14 @@
             "roi": 11.3
           },
           {
+            "senal": "atlas_plus",
+            "rango": [
+              1.45,
+              1.55
+            ],
+            "roi": 29.0
+          },
+          {
             "senal": "idx_btts_top20",
             "rango": [
               1.4,
@@ -32060,14 +32068,6 @@
               1.55
             ],
             "roi": 16.3
-          },
-          {
-            "senal": "atlas_plus",
-            "rango": [
-              1.45,
-              1.55
-            ],
-            "roi": 29.0
           }
         ],
         "Over 2.5": [
@@ -32432,6 +32432,14 @@
       "cuota_confianza": {
         "BTTS": [
           {
+            "senal": "idx_btts_top20",
+            "rango": [
+              1.4,
+              1.55
+            ],
+            "roi": 10.6
+          },
+          {
             "senal": "top_btts_equilibrada",
             "rango": [
               1.4,
@@ -32446,14 +32454,6 @@
               1.55
             ],
             "roi": 16.3
-          },
-          {
-            "senal": "idx_btts_top20",
-            "rango": [
-              1.4,
-              1.55
-            ],
-            "roi": 10.6
           }
         ]
       },
@@ -33030,22 +33030,6 @@
             "roi": 23.4
           },
           {
-            "senal": "estable_btts_fallo",
-            "rango": [
-              1.45,
-              1.55
-            ],
-            "roi": 15.0
-          },
-          {
-            "senal": "estable_btts_fallo_plus",
-            "rango": [
-              1.45,
-              1.55
-            ],
-            "roi": 18.6
-          },
-          {
             "senal": "diamante_amplio",
             "rango": [
               1.45,
@@ -33054,44 +33038,12 @@
             "roi": 13.5
           },
           {
-            "senal": "camino_normal_VIP+",
-            "rango": [
-              1.4,
-              1.7
-            ],
-            "roi": 9.0
-          },
-          {
-            "senal": "diamante_elite",
-            "rango": [
-              1.45,
-              1.55
-            ],
-            "roi": 9.1
-          },
-          {
-            "senal": "s1_vip_valor",
-            "rango": [
-              1.45,
-              1.55
-            ],
-            "roi": 9.9
-          },
-          {
-            "senal": "estable_gc_fallo_plus",
-            "rango": [
-              1.45,
-              1.55
-            ],
-            "roi": 23.9
-          },
-          {
-            "senal": "centinela_plus",
+            "senal": "centinela_elite_plus",
             "rango": [
               1.45,
               1.7
             ],
-            "roi": 23.8
+            "roi": 21.4
           },
           {
             "senal": "bastion_plus",
@@ -33102,12 +33054,52 @@
             "roi": 19.9
           },
           {
-            "senal": "bastion_elite_plus",
+            "senal": "diamante_elite",
+            "rango": [
+              1.45,
+              1.55
+            ],
+            "roi": 9.1
+          },
+          {
+            "senal": "estable_btts_fallo",
+            "rango": [
+              1.45,
+              1.55
+            ],
+            "roi": 15.0
+          },
+          {
+            "senal": "camino_normal_VIP+",
             "rango": [
               1.4,
               1.7
             ],
-            "roi": 14.9
+            "roi": 9.0
+          },
+          {
+            "senal": "centinela_plus",
+            "rango": [
+              1.45,
+              1.7
+            ],
+            "roi": 23.8
+          },
+          {
+            "senal": "estable_btts_fallo_plus",
+            "rango": [
+              1.45,
+              1.55
+            ],
+            "roi": 18.6
+          },
+          {
+            "senal": "estable_gc_fallo_plus",
+            "rango": [
+              1.45,
+              1.55
+            ],
+            "roi": 23.9
           },
           {
             "senal": "idx_btts_top20",
@@ -33118,12 +33110,20 @@
             "roi": 10.6
           },
           {
-            "senal": "centinela_elite_plus",
+            "senal": "bastion_elite_plus",
             "rango": [
-              1.45,
+              1.4,
               1.7
             ],
-            "roi": 21.4
+            "roi": 14.9
+          },
+          {
+            "senal": "s1_vip_valor",
+            "rango": [
+              1.45,
+              1.55
+            ],
+            "roi": 9.9
           },
           {
             "senal": "idx_btts_top10",
@@ -33304,12 +33304,12 @@
       "cuota_confianza": {
         "BTTS": [
           {
-            "senal": "VIP_reforzado",
+            "senal": "centinela_elite",
             "rango": [
-              1.45,
-              1.55
+              1.4,
+              1.5
             ],
-            "roi": 23.4
+            "roi": 12.5
           },
           {
             "senal": "estable_gc_fallo",
@@ -33320,20 +33320,12 @@
             "roi": 17.9
           },
           {
-            "senal": "estable_btts_fallo",
+            "senal": "VIP_reforzado",
             "rango": [
               1.45,
               1.55
             ],
-            "roi": 15.0
-          },
-          {
-            "senal": "estable_btts_fallo_plus",
-            "rango": [
-              1.45,
-              1.55
-            ],
-            "roi": 18.6
+            "roi": 23.4
           },
           {
             "senal": "diamante_amplio",
@@ -33344,60 +33336,12 @@
             "roi": 13.5
           },
           {
-            "senal": "centinela_elite",
-            "rango": [
-              1.4,
-              1.5
-            ],
-            "roi": 12.5
-          },
-          {
-            "senal": "camino_normal_VIP+",
-            "rango": [
-              1.4,
-              1.7
-            ],
-            "roi": 9.0
-          },
-          {
-            "senal": "diamante_elite",
-            "rango": [
-              1.45,
-              1.55
-            ],
-            "roi": 9.1
-          },
-          {
-            "senal": "s1_vip_valor",
-            "rango": [
-              1.45,
-              1.55
-            ],
-            "roi": 9.9
-          },
-          {
-            "senal": "estable_gc_fallo_plus",
-            "rango": [
-              1.45,
-              1.55
-            ],
-            "roi": 23.9
-          },
-          {
-            "senal": "centinela_plus",
+            "senal": "centinela_elite_plus",
             "rango": [
               1.45,
               1.7
             ],
-            "roi": 23.8
-          },
-          {
-            "senal": "bastion_elite",
-            "rango": [
-              1.35,
-              1.5
-            ],
-            "roi": 12.4
+            "roi": 21.4
           },
           {
             "senal": "bastion_plus",
@@ -33408,20 +33352,60 @@
             "roi": 19.9
           },
           {
-            "senal": "top_btts_equilibrada",
+            "senal": "diamante_elite",
             "rango": [
-              1.4,
+              1.45,
+              1.55
+            ],
+            "roi": 9.1
+          },
+          {
+            "senal": "estable_btts_fallo",
+            "rango": [
+              1.45,
               1.55
             ],
             "roi": 15.0
           },
           {
-            "senal": "bastion_elite_plus",
+            "senal": "camino_normal_VIP+",
             "rango": [
               1.4,
               1.7
             ],
-            "roi": 14.9
+            "roi": 9.0
+          },
+          {
+            "senal": "centinela_plus",
+            "rango": [
+              1.45,
+              1.7
+            ],
+            "roi": 23.8
+          },
+          {
+            "senal": "estable_btts_fallo_plus",
+            "rango": [
+              1.45,
+              1.55
+            ],
+            "roi": 18.6
+          },
+          {
+            "senal": "bastion_elite",
+            "rango": [
+              1.35,
+              1.5
+            ],
+            "roi": 12.4
+          },
+          {
+            "senal": "estable_gc_fallo_plus",
+            "rango": [
+              1.45,
+              1.55
+            ],
+            "roi": 23.9
           },
           {
             "senal": "idx_btts_top20",
@@ -33432,12 +33416,28 @@
             "roi": 10.6
           },
           {
-            "senal": "centinela_elite_plus",
+            "senal": "bastion_elite_plus",
             "rango": [
-              1.45,
+              1.4,
               1.7
             ],
-            "roi": 21.4
+            "roi": 14.9
+          },
+          {
+            "senal": "s1_vip_valor",
+            "rango": [
+              1.45,
+              1.55
+            ],
+            "roi": 9.9
+          },
+          {
+            "senal": "top_btts_equilibrada",
+            "rango": [
+              1.4,
+              1.55
+            ],
+            "roi": 15.0
           },
           {
             "senal": "idx_btts_top10",
@@ -33750,12 +33750,12 @@
       "cuota_confianza": {
         "BTTS": [
           {
-            "senal": "VIP_reforzado",
+            "senal": "centinela_elite",
             "rango": [
-              1.45,
-              1.55
+              1.4,
+              1.5
             ],
-            "roi": 23.4
+            "roi": 12.5
           },
           {
             "senal": "estable_gc_fallo",
@@ -33766,20 +33766,12 @@
             "roi": 17.9
           },
           {
-            "senal": "estable_btts_fallo",
+            "senal": "VIP_reforzado",
             "rango": [
               1.45,
               1.55
             ],
-            "roi": 15.0
-          },
-          {
-            "senal": "estable_btts_fallo_plus",
-            "rango": [
-              1.45,
-              1.55
-            ],
-            "roi": 18.6
+            "roi": 23.4
           },
           {
             "senal": "diamante_amplio",
@@ -33790,60 +33782,12 @@
             "roi": 13.5
           },
           {
-            "senal": "centinela_elite",
-            "rango": [
-              1.4,
-              1.5
-            ],
-            "roi": 12.5
-          },
-          {
-            "senal": "camino_normal_VIP+",
-            "rango": [
-              1.4,
-              1.7
-            ],
-            "roi": 9.0
-          },
-          {
-            "senal": "diamante_elite",
-            "rango": [
-              1.45,
-              1.55
-            ],
-            "roi": 9.1
-          },
-          {
-            "senal": "s1_vip_valor",
-            "rango": [
-              1.45,
-              1.55
-            ],
-            "roi": 9.9
-          },
-          {
-            "senal": "estable_gc_fallo_plus",
-            "rango": [
-              1.45,
-              1.55
-            ],
-            "roi": 23.9
-          },
-          {
-            "senal": "centinela_plus",
+            "senal": "centinela_elite_plus",
             "rango": [
               1.45,
               1.7
             ],
-            "roi": 23.8
-          },
-          {
-            "senal": "bastion_elite",
-            "rango": [
-              1.35,
-              1.5
-            ],
-            "roi": 12.4
+            "roi": 21.4
           },
           {
             "senal": "bastion_plus",
@@ -33854,12 +33798,60 @@
             "roi": 19.9
           },
           {
-            "senal": "bastion_elite_plus",
+            "senal": "diamante_elite",
+            "rango": [
+              1.45,
+              1.55
+            ],
+            "roi": 9.1
+          },
+          {
+            "senal": "estable_btts_fallo",
+            "rango": [
+              1.45,
+              1.55
+            ],
+            "roi": 15.0
+          },
+          {
+            "senal": "camino_normal_VIP+",
             "rango": [
               1.4,
               1.7
             ],
-            "roi": 14.9
+            "roi": 9.0
+          },
+          {
+            "senal": "centinela_plus",
+            "rango": [
+              1.45,
+              1.7
+            ],
+            "roi": 23.8
+          },
+          {
+            "senal": "estable_btts_fallo_plus",
+            "rango": [
+              1.45,
+              1.55
+            ],
+            "roi": 18.6
+          },
+          {
+            "senal": "bastion_elite",
+            "rango": [
+              1.35,
+              1.5
+            ],
+            "roi": 12.4
+          },
+          {
+            "senal": "estable_gc_fallo_plus",
+            "rango": [
+              1.45,
+              1.55
+            ],
+            "roi": 23.9
           },
           {
             "senal": "idx_btts_top20",
@@ -33870,12 +33862,20 @@
             "roi": 10.6
           },
           {
-            "senal": "centinela_elite_plus",
+            "senal": "bastion_elite_plus",
             "rango": [
-              1.45,
+              1.4,
               1.7
             ],
-            "roi": 21.4
+            "roi": 14.9
+          },
+          {
+            "senal": "s1_vip_valor",
+            "rango": [
+              1.45,
+              1.55
+            ],
+            "roi": 9.9
           },
           {
             "senal": "idx_btts_top10",
@@ -34064,6 +34064,14 @@
       "cuota_confianza": {
         "BTTS": [
           {
+            "senal": "camino_normal_VIP+",
+            "rango": [
+              1.4,
+              1.7
+            ],
+            "roi": 9.0
+          },
+          {
             "senal": "idx_btts_top20",
             "rango": [
               1.4,
@@ -34078,14 +34086,6 @@
               1.55
             ],
             "roi": 16.3
-          },
-          {
-            "senal": "camino_normal_VIP+",
-            "rango": [
-              1.4,
-              1.7
-            ],
-            "roi": 9.0
           }
         ],
         "Over 2.5": [
@@ -34545,12 +34545,12 @@
             "roi": 13.5
           },
           {
-            "senal": "centinela_plus",
+            "senal": "centinela_elite_plus",
             "rango": [
               1.45,
               1.7
             ],
-            "roi": 23.8
+            "roi": 21.4
           },
           {
             "senal": "bastion_plus",
@@ -34561,12 +34561,12 @@
             "roi": 19.9
           },
           {
-            "senal": "bastion_elite_plus",
+            "senal": "centinela_plus",
             "rango": [
-              1.4,
+              1.45,
               1.7
             ],
-            "roi": 14.9
+            "roi": 23.8
           },
           {
             "senal": "idx_btts_top20",
@@ -34577,12 +34577,12 @@
             "roi": 10.6
           },
           {
-            "senal": "centinela_elite_plus",
+            "senal": "bastion_elite_plus",
             "rango": [
-              1.45,
+              1.4,
               1.7
             ],
-            "roi": 21.4
+            "roi": 14.9
           }
         ],
         "Combinada": [
@@ -37673,22 +37673,6 @@
             "roi": 23.4
           },
           {
-            "senal": "estable_btts_fallo",
-            "rango": [
-              1.45,
-              1.55
-            ],
-            "roi": 15.0
-          },
-          {
-            "senal": "estable_btts_fallo_plus",
-            "rango": [
-              1.45,
-              1.55
-            ],
-            "roi": 18.6
-          },
-          {
             "senal": "diamante_amplio",
             "rango": [
               1.45,
@@ -37697,44 +37681,12 @@
             "roi": 13.5
           },
           {
-            "senal": "camino_normal_VIP+",
-            "rango": [
-              1.4,
-              1.7
-            ],
-            "roi": 9.0
-          },
-          {
-            "senal": "diamante_elite",
-            "rango": [
-              1.45,
-              1.55
-            ],
-            "roi": 9.1
-          },
-          {
-            "senal": "s1_vip_valor",
-            "rango": [
-              1.45,
-              1.55
-            ],
-            "roi": 9.9
-          },
-          {
-            "senal": "estable_gc_fallo_plus",
-            "rango": [
-              1.45,
-              1.55
-            ],
-            "roi": 23.9
-          },
-          {
-            "senal": "centinela_plus",
+            "senal": "centinela_elite_plus",
             "rango": [
               1.45,
               1.7
             ],
-            "roi": 23.8
+            "roi": 21.4
           },
           {
             "senal": "bastion_plus",
@@ -37745,12 +37697,52 @@
             "roi": 19.9
           },
           {
-            "senal": "bastion_elite_plus",
+            "senal": "diamante_elite",
+            "rango": [
+              1.45,
+              1.55
+            ],
+            "roi": 9.1
+          },
+          {
+            "senal": "estable_btts_fallo",
+            "rango": [
+              1.45,
+              1.55
+            ],
+            "roi": 15.0
+          },
+          {
+            "senal": "camino_normal_VIP+",
             "rango": [
               1.4,
               1.7
             ],
-            "roi": 14.9
+            "roi": 9.0
+          },
+          {
+            "senal": "centinela_plus",
+            "rango": [
+              1.45,
+              1.7
+            ],
+            "roi": 23.8
+          },
+          {
+            "senal": "estable_btts_fallo_plus",
+            "rango": [
+              1.45,
+              1.55
+            ],
+            "roi": 18.6
+          },
+          {
+            "senal": "estable_gc_fallo_plus",
+            "rango": [
+              1.45,
+              1.55
+            ],
+            "roi": 23.9
           },
           {
             "senal": "idx_btts_top20",
@@ -37761,12 +37753,20 @@
             "roi": 10.6
           },
           {
-            "senal": "centinela_elite_plus",
+            "senal": "bastion_elite_plus",
             "rango": [
-              1.45,
+              1.4,
               1.7
             ],
-            "roi": 21.4
+            "roi": 14.9
+          },
+          {
+            "senal": "s1_vip_valor",
+            "rango": [
+              1.45,
+              1.55
+            ],
+            "roi": 9.9
           },
           {
             "senal": "idx_btts_top10",
@@ -38322,6 +38322,14 @@
       "cuota_confianza": {
         "BTTS": [
           {
+            "senal": "camino_normal_VIP+",
+            "rango": [
+              1.4,
+              1.7
+            ],
+            "roi": 9.0
+          },
+          {
             "senal": "top_btts_equilibrada",
             "rango": [
               1.4,
@@ -38344,14 +38352,6 @@
               1.55
             ],
             "roi": 16.3
-          },
-          {
-            "senal": "camino_normal_VIP+",
-            "rango": [
-              1.4,
-              1.7
-            ],
-            "roi": 9.0
           }
         ]
       },
@@ -40915,22 +40915,6 @@
             "roi": 23.4
           },
           {
-            "senal": "estable_btts_fallo",
-            "rango": [
-              1.45,
-              1.55
-            ],
-            "roi": 15.0
-          },
-          {
-            "senal": "estable_btts_fallo_plus",
-            "rango": [
-              1.45,
-              1.55
-            ],
-            "roi": 18.6
-          },
-          {
             "senal": "diamante_amplio",
             "rango": [
               1.45,
@@ -40939,44 +40923,12 @@
             "roi": 13.5
           },
           {
-            "senal": "camino_normal_VIP+",
-            "rango": [
-              1.4,
-              1.7
-            ],
-            "roi": 9.0
-          },
-          {
-            "senal": "diamante_elite",
-            "rango": [
-              1.45,
-              1.55
-            ],
-            "roi": 9.1
-          },
-          {
-            "senal": "s1_vip_valor",
-            "rango": [
-              1.45,
-              1.55
-            ],
-            "roi": 9.9
-          },
-          {
-            "senal": "estable_gc_fallo_plus",
-            "rango": [
-              1.45,
-              1.55
-            ],
-            "roi": 23.9
-          },
-          {
-            "senal": "centinela_plus",
+            "senal": "centinela_elite_plus",
             "rango": [
               1.45,
               1.7
             ],
-            "roi": 23.8
+            "roi": 21.4
           },
           {
             "senal": "bastion_plus",
@@ -40987,12 +40939,52 @@
             "roi": 19.9
           },
           {
-            "senal": "bastion_elite_plus",
+            "senal": "diamante_elite",
+            "rango": [
+              1.45,
+              1.55
+            ],
+            "roi": 9.1
+          },
+          {
+            "senal": "estable_btts_fallo",
+            "rango": [
+              1.45,
+              1.55
+            ],
+            "roi": 15.0
+          },
+          {
+            "senal": "camino_normal_VIP+",
             "rango": [
               1.4,
               1.7
             ],
-            "roi": 14.9
+            "roi": 9.0
+          },
+          {
+            "senal": "centinela_plus",
+            "rango": [
+              1.45,
+              1.7
+            ],
+            "roi": 23.8
+          },
+          {
+            "senal": "estable_btts_fallo_plus",
+            "rango": [
+              1.45,
+              1.55
+            ],
+            "roi": 18.6
+          },
+          {
+            "senal": "estable_gc_fallo_plus",
+            "rango": [
+              1.45,
+              1.55
+            ],
+            "roi": 23.9
           },
           {
             "senal": "idx_btts_top20",
@@ -41003,12 +40995,20 @@
             "roi": 10.6
           },
           {
-            "senal": "centinela_elite_plus",
+            "senal": "bastion_elite_plus",
             "rango": [
-              1.45,
+              1.4,
               1.7
             ],
-            "roi": 21.4
+            "roi": 14.9
+          },
+          {
+            "senal": "s1_vip_valor",
+            "rango": [
+              1.45,
+              1.55
+            ],
+            "roi": 9.9
           },
           {
             "senal": "idx_btts_top10",
@@ -41859,12 +41859,12 @@
       "cuota_confianza": {
         "BTTS": [
           {
-            "senal": "VIP_reforzado",
+            "senal": "centinela_elite",
             "rango": [
-              1.45,
-              1.55
+              1.4,
+              1.5
             ],
-            "roi": 23.4
+            "roi": 12.5
           },
           {
             "senal": "estable_gc_fallo",
@@ -41875,20 +41875,12 @@
             "roi": 17.9
           },
           {
-            "senal": "estable_btts_fallo",
+            "senal": "VIP_reforzado",
             "rango": [
               1.45,
               1.55
             ],
-            "roi": 15.0
-          },
-          {
-            "senal": "estable_btts_fallo_plus",
-            "rango": [
-              1.45,
-              1.55
-            ],
-            "roi": 18.6
+            "roi": 23.4
           },
           {
             "senal": "diamante_amplio",
@@ -41899,60 +41891,12 @@
             "roi": 13.5
           },
           {
-            "senal": "centinela_elite",
-            "rango": [
-              1.4,
-              1.5
-            ],
-            "roi": 12.5
-          },
-          {
-            "senal": "camino_normal_VIP+",
-            "rango": [
-              1.4,
-              1.7
-            ],
-            "roi": 9.0
-          },
-          {
-            "senal": "diamante_elite",
-            "rango": [
-              1.45,
-              1.55
-            ],
-            "roi": 9.1
-          },
-          {
-            "senal": "s1_vip_valor",
-            "rango": [
-              1.45,
-              1.55
-            ],
-            "roi": 9.9
-          },
-          {
-            "senal": "estable_gc_fallo_plus",
-            "rango": [
-              1.45,
-              1.55
-            ],
-            "roi": 23.9
-          },
-          {
-            "senal": "centinela_plus",
+            "senal": "centinela_elite_plus",
             "rango": [
               1.45,
               1.7
             ],
-            "roi": 23.8
-          },
-          {
-            "senal": "bastion_elite",
-            "rango": [
-              1.35,
-              1.5
-            ],
-            "roi": 12.4
+            "roi": 21.4
           },
           {
             "senal": "bastion_plus",
@@ -41963,12 +41907,60 @@
             "roi": 19.9
           },
           {
-            "senal": "bastion_elite_plus",
+            "senal": "diamante_elite",
+            "rango": [
+              1.45,
+              1.55
+            ],
+            "roi": 9.1
+          },
+          {
+            "senal": "estable_btts_fallo",
+            "rango": [
+              1.45,
+              1.55
+            ],
+            "roi": 15.0
+          },
+          {
+            "senal": "camino_normal_VIP+",
             "rango": [
               1.4,
               1.7
             ],
-            "roi": 14.9
+            "roi": 9.0
+          },
+          {
+            "senal": "centinela_plus",
+            "rango": [
+              1.45,
+              1.7
+            ],
+            "roi": 23.8
+          },
+          {
+            "senal": "estable_btts_fallo_plus",
+            "rango": [
+              1.45,
+              1.55
+            ],
+            "roi": 18.6
+          },
+          {
+            "senal": "bastion_elite",
+            "rango": [
+              1.35,
+              1.5
+            ],
+            "roi": 12.4
+          },
+          {
+            "senal": "estable_gc_fallo_plus",
+            "rango": [
+              1.45,
+              1.55
+            ],
+            "roi": 23.9
           },
           {
             "senal": "idx_btts_top20",
@@ -41979,12 +41971,20 @@
             "roi": 10.6
           },
           {
-            "senal": "centinela_elite_plus",
+            "senal": "bastion_elite_plus",
             "rango": [
-              1.45,
+              1.4,
               1.7
             ],
-            "roi": 21.4
+            "roi": 14.9
+          },
+          {
+            "senal": "s1_vip_valor",
+            "rango": [
+              1.45,
+              1.55
+            ],
+            "roi": 9.9
           },
           {
             "senal": "idx_btts_top10",
@@ -43872,12 +43872,12 @@
       "cuota_confianza": {
         "BTTS": [
           {
-            "senal": "VIP_reforzado",
+            "senal": "centinela_elite",
             "rango": [
-              1.45,
-              1.55
+              1.4,
+              1.5
             ],
-            "roi": 23.4
+            "roi": 12.5
           },
           {
             "senal": "estable_gc_fallo",
@@ -43888,20 +43888,12 @@
             "roi": 17.9
           },
           {
-            "senal": "estable_btts_fallo",
+            "senal": "VIP_reforzado",
             "rango": [
               1.45,
               1.55
             ],
-            "roi": 15.0
-          },
-          {
-            "senal": "estable_btts_fallo_plus",
-            "rango": [
-              1.45,
-              1.55
-            ],
-            "roi": 18.6
+            "roi": 23.4
           },
           {
             "senal": "diamante_amplio",
@@ -43912,60 +43904,12 @@
             "roi": 13.5
           },
           {
-            "senal": "centinela_elite",
-            "rango": [
-              1.4,
-              1.5
-            ],
-            "roi": 12.5
-          },
-          {
-            "senal": "camino_normal_VIP+",
-            "rango": [
-              1.4,
-              1.7
-            ],
-            "roi": 9.0
-          },
-          {
-            "senal": "diamante_elite",
-            "rango": [
-              1.45,
-              1.55
-            ],
-            "roi": 9.1
-          },
-          {
-            "senal": "s1_vip_valor",
-            "rango": [
-              1.45,
-              1.55
-            ],
-            "roi": 9.9
-          },
-          {
-            "senal": "estable_gc_fallo_plus",
-            "rango": [
-              1.45,
-              1.55
-            ],
-            "roi": 23.9
-          },
-          {
-            "senal": "centinela_plus",
+            "senal": "centinela_elite_plus",
             "rango": [
               1.45,
               1.7
             ],
-            "roi": 23.8
-          },
-          {
-            "senal": "bastion_elite",
-            "rango": [
-              1.35,
-              1.5
-            ],
-            "roi": 12.4
+            "roi": 21.4
           },
           {
             "senal": "bastion_plus",
@@ -43976,12 +43920,60 @@
             "roi": 19.9
           },
           {
-            "senal": "bastion_elite_plus",
+            "senal": "diamante_elite",
+            "rango": [
+              1.45,
+              1.55
+            ],
+            "roi": 9.1
+          },
+          {
+            "senal": "estable_btts_fallo",
+            "rango": [
+              1.45,
+              1.55
+            ],
+            "roi": 15.0
+          },
+          {
+            "senal": "camino_normal_VIP+",
             "rango": [
               1.4,
               1.7
             ],
-            "roi": 14.9
+            "roi": 9.0
+          },
+          {
+            "senal": "centinela_plus",
+            "rango": [
+              1.45,
+              1.7
+            ],
+            "roi": 23.8
+          },
+          {
+            "senal": "estable_btts_fallo_plus",
+            "rango": [
+              1.45,
+              1.55
+            ],
+            "roi": 18.6
+          },
+          {
+            "senal": "bastion_elite",
+            "rango": [
+              1.35,
+              1.5
+            ],
+            "roi": 12.4
+          },
+          {
+            "senal": "estable_gc_fallo_plus",
+            "rango": [
+              1.45,
+              1.55
+            ],
+            "roi": 23.9
           },
           {
             "senal": "idx_btts_top20",
@@ -43992,12 +43984,20 @@
             "roi": 10.6
           },
           {
-            "senal": "centinela_elite_plus",
+            "senal": "bastion_elite_plus",
             "rango": [
-              1.45,
+              1.4,
               1.7
             ],
-            "roi": 21.4
+            "roi": 14.9
+          },
+          {
+            "senal": "s1_vip_valor",
+            "rango": [
+              1.45,
+              1.55
+            ],
+            "roi": 9.9
           },
           {
             "senal": "idx_btts_top10",
@@ -44720,68 +44720,12 @@
             "roi": 23.4
           },
           {
-            "senal": "estable_btts_fallo",
-            "rango": [
-              1.45,
-              1.55
-            ],
-            "roi": 15.0
-          },
-          {
-            "senal": "estable_btts_fallo_plus",
-            "rango": [
-              1.45,
-              1.55
-            ],
-            "roi": 18.6
-          },
-          {
-            "senal": "camino_normal_VIP+_refinada",
-            "rango": [
-              1.45,
-              1.55
-            ],
-            "roi": 17.2
-          },
-          {
             "senal": "diamante_amplio",
             "rango": [
               1.45,
               1.55
             ],
             "roi": 13.5
-          },
-          {
-            "senal": "camino_normal_VIP+",
-            "rango": [
-              1.4,
-              1.7
-            ],
-            "roi": 9.0
-          },
-          {
-            "senal": "diamante_elite",
-            "rango": [
-              1.45,
-              1.55
-            ],
-            "roi": 9.1
-          },
-          {
-            "senal": "s1_vip_valor",
-            "rango": [
-              1.45,
-              1.55
-            ],
-            "roi": 9.9
-          },
-          {
-            "senal": "estable_gc_fallo_plus",
-            "rango": [
-              1.45,
-              1.55
-            ],
-            "roi": 23.9
           },
           {
             "senal": "bastion_plus",
@@ -44792,12 +44736,44 @@
             "roi": 19.9
           },
           {
-            "senal": "bastion_elite_plus",
+            "senal": "diamante_elite",
+            "rango": [
+              1.45,
+              1.55
+            ],
+            "roi": 9.1
+          },
+          {
+            "senal": "estable_btts_fallo",
+            "rango": [
+              1.45,
+              1.55
+            ],
+            "roi": 15.0
+          },
+          {
+            "senal": "camino_normal_VIP+",
             "rango": [
               1.4,
               1.7
             ],
-            "roi": 14.9
+            "roi": 9.0
+          },
+          {
+            "senal": "estable_btts_fallo_plus",
+            "rango": [
+              1.45,
+              1.55
+            ],
+            "roi": 18.6
+          },
+          {
+            "senal": "estable_gc_fallo_plus",
+            "rango": [
+              1.45,
+              1.55
+            ],
+            "roi": 23.9
           },
           {
             "senal": "idx_btts_top20",
@@ -44806,6 +44782,30 @@
               1.55
             ],
             "roi": 10.6
+          },
+          {
+            "senal": "bastion_elite_plus",
+            "rango": [
+              1.4,
+              1.7
+            ],
+            "roi": 14.9
+          },
+          {
+            "senal": "s1_vip_valor",
+            "rango": [
+              1.45,
+              1.55
+            ],
+            "roi": 9.9
+          },
+          {
+            "senal": "camino_normal_VIP+_refinada",
+            "rango": [
+              1.45,
+              1.55
+            ],
+            "roi": 17.2
           }
         ]
       },
@@ -45202,6 +45202,14 @@
             "roi": 11.3
           },
           {
+            "senal": "atlas_plus",
+            "rango": [
+              1.45,
+              1.55
+            ],
+            "roi": 29.0
+          },
+          {
             "senal": "idx_btts_top20",
             "rango": [
               1.4,
@@ -45216,14 +45224,6 @@
               1.55
             ],
             "roi": 16.3
-          },
-          {
-            "senal": "atlas_plus",
-            "rango": [
-              1.45,
-              1.55
-            ],
-            "roi": 29.0
           }
         ],
         "Over 2.5": [
@@ -46810,6 +46810,14 @@
       "cuota_confianza": {
         "BTTS": [
           {
+            "senal": "idx_btts_top20",
+            "rango": [
+              1.4,
+              1.55
+            ],
+            "roi": 10.6
+          },
+          {
             "senal": "top_btts_equilibrada",
             "rango": [
               1.4,
@@ -46824,14 +46832,6 @@
               1.55
             ],
             "roi": 16.3
-          },
-          {
-            "senal": "idx_btts_top20",
-            "rango": [
-              1.4,
-              1.55
-            ],
-            "roi": 10.6
           }
         ]
       },
@@ -46980,12 +46980,12 @@
       "cuota_confianza": {
         "BTTS": [
           {
-            "senal": "VIP_reforzado",
+            "senal": "centinela_elite",
             "rango": [
-              1.45,
-              1.55
+              1.4,
+              1.5
             ],
-            "roi": 23.4
+            "roi": 12.5
           },
           {
             "senal": "estable_gc_fallo",
@@ -46996,20 +46996,12 @@
             "roi": 17.9
           },
           {
-            "senal": "estable_btts_fallo",
+            "senal": "VIP_reforzado",
             "rango": [
               1.45,
               1.55
             ],
-            "roi": 15.0
-          },
-          {
-            "senal": "estable_btts_fallo_plus",
-            "rango": [
-              1.45,
-              1.55
-            ],
-            "roi": 18.6
+            "roi": 23.4
           },
           {
             "senal": "diamante_amplio",
@@ -47020,60 +47012,12 @@
             "roi": 13.5
           },
           {
-            "senal": "centinela_elite",
-            "rango": [
-              1.4,
-              1.5
-            ],
-            "roi": 12.5
-          },
-          {
-            "senal": "camino_normal_VIP+",
-            "rango": [
-              1.4,
-              1.7
-            ],
-            "roi": 9.0
-          },
-          {
-            "senal": "diamante_elite",
-            "rango": [
-              1.45,
-              1.55
-            ],
-            "roi": 9.1
-          },
-          {
-            "senal": "s1_vip_valor",
-            "rango": [
-              1.45,
-              1.55
-            ],
-            "roi": 9.9
-          },
-          {
-            "senal": "estable_gc_fallo_plus",
-            "rango": [
-              1.45,
-              1.55
-            ],
-            "roi": 23.9
-          },
-          {
-            "senal": "centinela_plus",
+            "senal": "centinela_elite_plus",
             "rango": [
               1.45,
               1.7
             ],
-            "roi": 23.8
-          },
-          {
-            "senal": "bastion_elite",
-            "rango": [
-              1.35,
-              1.5
-            ],
-            "roi": 12.4
+            "roi": 21.4
           },
           {
             "senal": "bastion_plus",
@@ -47084,20 +47028,60 @@
             "roi": 19.9
           },
           {
-            "senal": "top_btts_equilibrada",
+            "senal": "diamante_elite",
             "rango": [
-              1.4,
+              1.45,
+              1.55
+            ],
+            "roi": 9.1
+          },
+          {
+            "senal": "estable_btts_fallo",
+            "rango": [
+              1.45,
               1.55
             ],
             "roi": 15.0
           },
           {
-            "senal": "bastion_elite_plus",
+            "senal": "camino_normal_VIP+",
             "rango": [
               1.4,
               1.7
             ],
-            "roi": 14.9
+            "roi": 9.0
+          },
+          {
+            "senal": "centinela_plus",
+            "rango": [
+              1.45,
+              1.7
+            ],
+            "roi": 23.8
+          },
+          {
+            "senal": "estable_btts_fallo_plus",
+            "rango": [
+              1.45,
+              1.55
+            ],
+            "roi": 18.6
+          },
+          {
+            "senal": "bastion_elite",
+            "rango": [
+              1.35,
+              1.5
+            ],
+            "roi": 12.4
+          },
+          {
+            "senal": "estable_gc_fallo_plus",
+            "rango": [
+              1.45,
+              1.55
+            ],
+            "roi": 23.9
           },
           {
             "senal": "idx_btts_top20",
@@ -47108,12 +47092,28 @@
             "roi": 10.6
           },
           {
-            "senal": "centinela_elite_plus",
+            "senal": "bastion_elite_plus",
             "rango": [
-              1.45,
+              1.4,
               1.7
             ],
-            "roi": 21.4
+            "roi": 14.9
+          },
+          {
+            "senal": "s1_vip_valor",
+            "rango": [
+              1.45,
+              1.55
+            ],
+            "roi": 9.9
+          },
+          {
+            "senal": "top_btts_equilibrada",
+            "rango": [
+              1.4,
+              1.55
+            ],
+            "roi": 15.0
           },
           {
             "senal": "idx_btts_top10",
@@ -47189,6 +47189,14 @@
       "cuota_confianza": {
         "BTTS": [
           {
+            "senal": "camino_normal_VIP+",
+            "rango": [
+              1.4,
+              1.7
+            ],
+            "roi": 9.0
+          },
+          {
             "senal": "idx_btts_top20",
             "rango": [
               1.4,
@@ -47203,14 +47211,6 @@
               1.55
             ],
             "roi": 16.3
-          },
-          {
-            "senal": "camino_normal_VIP+",
-            "rango": [
-              1.4,
-              1.7
-            ],
-            "roi": 9.0
           }
         ],
         "Over 2.5": [
@@ -47296,12 +47296,12 @@
             "roi": 13.5
           },
           {
-            "senal": "centinela_plus",
+            "senal": "centinela_elite_plus",
             "rango": [
               1.45,
               1.7
             ],
-            "roi": 23.8
+            "roi": 21.4
           },
           {
             "senal": "bastion_plus",
@@ -47312,12 +47312,12 @@
             "roi": 19.9
           },
           {
-            "senal": "bastion_elite_plus",
+            "senal": "centinela_plus",
             "rango": [
-              1.4,
+              1.45,
               1.7
             ],
-            "roi": 14.9
+            "roi": 23.8
           },
           {
             "senal": "idx_btts_top20",
@@ -47328,12 +47328,12 @@
             "roi": 10.6
           },
           {
-            "senal": "centinela_elite_plus",
+            "senal": "bastion_elite_plus",
             "rango": [
-              1.45,
+              1.4,
               1.7
             ],
-            "roi": 21.4
+            "roi": 14.9
           }
         ],
         "Combinada": [
@@ -48765,22 +48765,6 @@
             "roi": 23.4
           },
           {
-            "senal": "estable_btts_fallo",
-            "rango": [
-              1.45,
-              1.55
-            ],
-            "roi": 15.0
-          },
-          {
-            "senal": "estable_btts_fallo_plus",
-            "rango": [
-              1.45,
-              1.55
-            ],
-            "roi": 18.6
-          },
-          {
             "senal": "diamante_amplio",
             "rango": [
               1.45,
@@ -48789,44 +48773,12 @@
             "roi": 13.5
           },
           {
-            "senal": "camino_normal_VIP+",
-            "rango": [
-              1.4,
-              1.7
-            ],
-            "roi": 9.0
-          },
-          {
-            "senal": "diamante_elite",
-            "rango": [
-              1.45,
-              1.55
-            ],
-            "roi": 9.1
-          },
-          {
-            "senal": "s1_vip_valor",
-            "rango": [
-              1.45,
-              1.55
-            ],
-            "roi": 9.9
-          },
-          {
-            "senal": "estable_gc_fallo_plus",
-            "rango": [
-              1.45,
-              1.55
-            ],
-            "roi": 23.9
-          },
-          {
-            "senal": "centinela_plus",
+            "senal": "centinela_elite_plus",
             "rango": [
               1.45,
               1.7
             ],
-            "roi": 23.8
+            "roi": 21.4
           },
           {
             "senal": "bastion_plus",
@@ -48837,12 +48789,52 @@
             "roi": 19.9
           },
           {
-            "senal": "bastion_elite_plus",
+            "senal": "diamante_elite",
+            "rango": [
+              1.45,
+              1.55
+            ],
+            "roi": 9.1
+          },
+          {
+            "senal": "estable_btts_fallo",
+            "rango": [
+              1.45,
+              1.55
+            ],
+            "roi": 15.0
+          },
+          {
+            "senal": "camino_normal_VIP+",
             "rango": [
               1.4,
               1.7
             ],
-            "roi": 14.9
+            "roi": 9.0
+          },
+          {
+            "senal": "centinela_plus",
+            "rango": [
+              1.45,
+              1.7
+            ],
+            "roi": 23.8
+          },
+          {
+            "senal": "estable_btts_fallo_plus",
+            "rango": [
+              1.45,
+              1.55
+            ],
+            "roi": 18.6
+          },
+          {
+            "senal": "estable_gc_fallo_plus",
+            "rango": [
+              1.45,
+              1.55
+            ],
+            "roi": 23.9
           },
           {
             "senal": "idx_btts_top20",
@@ -48853,12 +48845,20 @@
             "roi": 10.6
           },
           {
-            "senal": "centinela_elite_plus",
+            "senal": "bastion_elite_plus",
             "rango": [
-              1.45,
+              1.4,
               1.7
             ],
-            "roi": 21.4
+            "roi": 14.9
+          },
+          {
+            "senal": "s1_vip_valor",
+            "rango": [
+              1.45,
+              1.55
+            ],
+            "roi": 9.9
           },
           {
             "senal": "idx_btts_top10",
@@ -49241,6 +49241,14 @@
       "cuota_confianza": {
         "BTTS": [
           {
+            "senal": "camino_normal_VIP+",
+            "rango": [
+              1.4,
+              1.7
+            ],
+            "roi": 9.0
+          },
+          {
             "senal": "top_btts_equilibrada",
             "rango": [
               1.4,
@@ -49263,14 +49271,6 @@
               1.55
             ],
             "roi": 16.3
-          },
-          {
-            "senal": "camino_normal_VIP+",
-            "rango": [
-              1.4,
-              1.7
-            ],
-            "roi": 9.0
           }
         ]
       },
@@ -50647,6 +50647,14 @@
       "cuota_confianza": {
         "BTTS": [
           {
+            "senal": "idx_btts_top20",
+            "rango": [
+              1.4,
+              1.55
+            ],
+            "roi": 10.6
+          },
+          {
             "senal": "granate",
             "rango": [
               1.35,
@@ -50661,14 +50669,6 @@
               1.55
             ],
             "roi": 16.3
-          },
-          {
-            "senal": "idx_btts_top20",
-            "rango": [
-              1.4,
-              1.55
-            ],
-            "roi": 10.6
           }
         ],
         "Over 2.5": [
@@ -51468,70 +51468,6 @@
             "roi": 17.9
           },
           {
-            "senal": "estable_btts_fallo",
-            "rango": [
-              1.45,
-              1.55
-            ],
-            "roi": 15.0
-          },
-          {
-            "senal": "estable_btts_fallo_plus",
-            "rango": [
-              1.45,
-              1.55
-            ],
-            "roi": 18.6
-          },
-          {
-            "senal": "diamante_amplio",
-            "rango": [
-              1.45,
-              1.55
-            ],
-            "roi": 13.5
-          },
-          {
-            "senal": "diamante_elite",
-            "rango": [
-              1.45,
-              1.55
-            ],
-            "roi": 9.1
-          },
-          {
-            "senal": "estable_gc_fallo_plus",
-            "rango": [
-              1.45,
-              1.55
-            ],
-            "roi": 23.9
-          },
-          {
-            "senal": "centinela_plus",
-            "rango": [
-              1.45,
-              1.7
-            ],
-            "roi": 23.8
-          },
-          {
-            "senal": "bastion_plus",
-            "rango": [
-              1.35,
-              1.55
-            ],
-            "roi": 19.9
-          },
-          {
-            "senal": "rescate_ataque_balanceado_alta_gf_btts",
-            "rango": [
-              1.3,
-              1.8
-            ],
-            "roi": 9.1
-          },
-          {
             "senal": "centinela_failed_bajo",
             "rango": [
               1.4,
@@ -51546,6 +51482,70 @@
               1.55
             ],
             "roi": 11.3
+          },
+          {
+            "senal": "rescate_ataque_balanceado_alta_gf_btts",
+            "rango": [
+              1.3,
+              1.8
+            ],
+            "roi": 9.1
+          },
+          {
+            "senal": "diamante_amplio",
+            "rango": [
+              1.45,
+              1.55
+            ],
+            "roi": 13.5
+          },
+          {
+            "senal": "bastion_plus",
+            "rango": [
+              1.35,
+              1.55
+            ],
+            "roi": 19.9
+          },
+          {
+            "senal": "diamante_elite",
+            "rango": [
+              1.45,
+              1.55
+            ],
+            "roi": 9.1
+          },
+          {
+            "senal": "estable_btts_fallo",
+            "rango": [
+              1.45,
+              1.55
+            ],
+            "roi": 15.0
+          },
+          {
+            "senal": "centinela_plus",
+            "rango": [
+              1.45,
+              1.7
+            ],
+            "roi": 23.8
+          },
+          {
+            "senal": "estable_btts_fallo_plus",
+            "rango": [
+              1.45,
+              1.55
+            ],
+            "roi": 18.6
+          },
+          {
+            "senal": "estable_gc_fallo_plus",
+            "rango": [
+              1.45,
+              1.55
+            ],
+            "roi": 23.9
           },
           {
             "senal": "idx_btts_top20",
