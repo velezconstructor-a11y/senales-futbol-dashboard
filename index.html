@@ -789,7 +789,8 @@ function notaRescateBtts(p){
   // Stake 9 mejoradas) que tambien aplican a este partido: se muestran como
   // etiqueta extra para poder ver como les va, aunque no decidan el JUGAR.
   const extra = resumenSenales(p.motivos_btts_todos, motivo, ETIQUETAS_BTTS, "idx_btts_", "BTTS", ccCuotaMercado(p, "BTTS"));
-  return ` · <span title="Por que se activo esta señal de BTTS" style="color:${color};opacity:${opacidad};">${texto}</span>${extra}`;
+  // 2 nov 2026: el rango de cuota de confianza de la señal PRINCIPAL tambien va en el enunciado
+  return ` · <span title="Por que se activo esta señal de BTTS" style="color:${color};opacity:${opacidad};">${texto}</span>${ccRangoTxt("BTTS", motivo, ccCuotaMercado(p, "BTTS"))}${extra}`;
 }
 
 // AGREGADO 24 ago 2026: equivalente de notaRescateBtts, pero para Over
@@ -875,7 +876,7 @@ function notaRescateO25(p){
   const texto = ETIQUETAS_O25[motivo] || motivo;
   const color = esRescate ? "var(--amber)" : "var(--chalk-dim)";
   const opacidad = p.sug_o25 === "JUGAR" ? "1" : "0.6";
-  return ` · <span title="Por que se activo esta señal de Over 2.5" style="color:${color};opacity:${opacidad};">${texto}</span>${extra}`;
+  return ` · <span title="Por que se activo esta señal de Over 2.5" style="color:${color};opacity:${opacidad};">${texto}</span>${ccRangoTxt("Over 2.5", motivo, ccCuotaMercado(p, "Over 2.5"))}${extra}`;
 }
 
 function notaBttsMinAlto(p){
@@ -1361,7 +1362,7 @@ function renderCombo(picks){
     // 30 oct 2026: tambien las etiquetas en prueba (Índice Combinada) que aplican al partido
     const extraCombo = resumenSenales(p.motivos_combo_todos, p.motivo_combo, ETIQUETAS_COMBO, "idx_combo_", "Combinada", ccCuotaMercado(p, "Combinada"));
     const motivoPpal = ETIQUETAS_COMBO[p.motivo_combo] ? `<span style="color:var(--amber);">${ETIQUETAS_COMBO[p.motivo_combo]}</span>` : (p.motivo_combo && p.motivo_combo !== "ninguno_evitar_combo" ? `<span style="color:var(--amber);">${p.motivo_combo}</span>` : "");
-    const motivo = (motivoPpal || extraCombo) ? (motivoPpal ? " · " + motivoPpal : "") + extraCombo : "";
+    const motivo = (motivoPpal || extraCombo) ? (motivoPpal ? " · " + motivoPpal + ccRangoTxt("Combinada", p.motivo_combo, ccCuotaMercado(p, "Combinada")) : "") + extraCombo : "";
     const probCombo = probDe(p);
     const probTxt = probCombo != null ? ` · ${(probCombo*100).toFixed(0)}%` : "";
     return `
@@ -1792,7 +1793,7 @@ function ccChip(p, mercadoKey, jugar){
   if(!lst.length) return "";
   const txt = x => `${ccNombre(mk, x.senal)} ${Number(x.rango[0]).toFixed(2)}–${Number(x.rango[1]).toFixed(2)} (ROI ${x.roi > 0 ? "+" : ""}${x.roi}%)`;
   const det = lst.map(txt).join(" · ");
-  return ` · <span class="vip-chip" title="${vipEsc("La cuota está en el rango donde su señal más ganó: " + det)}">🎯 CUOTA DE MAYOR CONFIANZA</span><span class="vip-dim" style="font-size:11px;"> ${vipEsc(txt(lst[0]))}</span>`;
+  return ` · <span class="vip-chip" title="${vipEsc("La cuota está en el rango donde su señal más ganó: " + det)}">🎯 CUOTA DE MAYOR CONFIANZA</span>`;   // el rango y su ROI ya salen junto a la señal principal (ccRangoTxt)
 }
 function ccTablaHtml(data){
   const C = data.cuota_confianza || {};
