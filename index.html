@@ -765,6 +765,18 @@ function resumenSenales(lista, motivoPrincipal, dic, prefijoIdx, mk, cuota){
   return "<br>" + [...activas.map(t => linea(t, true)), ...apagadas.map(t => linea(t, false))].join("<br>");
 }
 
+// 3 nov 2026: nota del detector Valor detectado en cada partido con cuota 1.85-2.20 (valor_modelo.py):
+// probabilidad del modelo contra la que paga la casa. Verde si pasa el corte (+15%) y se marco.
+function notaValorDetectado(p){
+  const pv = Number(p.prob_valor), ev = Number(p.ev_valor), c = Number(p.cuota_btts);
+  const vm = ((DATA && DATA.vip_btts && DATA.vip_btts.politica) || {}).valor_modelo || {};
+  const lo = Number(vm.cuota_min || 1.85), hi = Number(vm.cuota_max || 2.2), corte = Number(vm.ev_min || 0.15);
+  if(!(isFinite(pv) && pv > 0 && isFinite(ev) && c >= lo && c <= hi)) return "";
+  const marcado = String(p.motivos_btts_todos || "").split("|").includes("valor_detectado") || ev > corte;
+  const txt = `💎 Valor detectado: modelo ${Math.round(pv * 100)}% · la cuota ${c.toFixed(2)} paga como ${Math.round(100 / c)}% · valor ${ev >= 0 ? "+" : ""}${Math.round(ev * 100)}%`;
+  return `<br><span title="Detector Valor detectado: entra si el valor esperado pasa de +${Math.round(corte * 100)}% con cuota ${lo.toFixed(2)}–${hi.toFixed(2)}" style="${marcado ? "color:var(--win);font-weight:600;" : "color:var(--chalk-dim);"}">${txt}${marcado ? " ✓ DETECTADO" : ` · no llega a +${Math.round(corte * 100)}%`}</span>`;
+}
+
 function notaRescateBtts(p){
   // Muestra que camino especifico produjo (o intento producir) la señal
   // de BTTS. CORREGIDO 24 ago 2026: antes exigia nivel_final==='JUGAR',
@@ -779,7 +791,7 @@ function notaRescateBtts(p){
   const motivo = p.motivo_btts;
   if(!motivo || motivo === "ninguno_evitar_final" || motivo === "candado_sin_cuota"){
     // sin señal principal, pero puede tener una etiqueta en prueba (p. ej. el Índice BTTS)
-    return resumenSenales(p.motivos_btts_todos, motivo, ETIQUETAS_BTTS, "idx_btts_", "BTTS", ccCuotaMercado(p, "BTTS"));
+    return notaValorDetectado(p) + resumenSenales(p.motivos_btts_todos, motivo, ETIQUETAS_BTTS, "idx_btts_", "BTTS", ccCuotaMercado(p, "BTTS"));
   }
   const esRescate = motivo.startsWith("rescate_");
   const texto = ETIQUETAS_BTTS[motivo] || motivo;
@@ -790,7 +802,7 @@ function notaRescateBtts(p){
   // etiqueta extra para poder ver como les va, aunque no decidan el JUGAR.
   const extra = resumenSenales(p.motivos_btts_todos, motivo, ETIQUETAS_BTTS, "idx_btts_", "BTTS", ccCuotaMercado(p, "BTTS"));
   // 2 nov 2026: el rango de cuota de confianza de la señal PRINCIPAL tambien va en el enunciado
-  return ` · <span title="Por que se activo esta señal de BTTS" style="color:${color};opacity:${opacidad};">${texto}</span>${ccRangoTxt("BTTS", motivo, ccCuotaMercado(p, "BTTS"))}${extra}`;
+  return ` · <span title="Por que se activo esta señal de BTTS" style="color:${color};opacity:${opacidad};">${texto}</span>${ccRangoTxt("BTTS", motivo, ccCuotaMercado(p, "BTTS"))}${notaValorDetectado(p)}${extra}`;
 }
 
 // AGREGADO 24 ago 2026: equivalente de notaRescateBtts, pero para Over
@@ -2798,6 +2810,7 @@ function renderVip(data, picks){
         <div class="conf-liga">${vipEsc(p.liga || "")} · ${diaBadge(p)}${confirmacionCuotaBadge(p, "btts")}${notaLigaConfianza(p)}</div>
         <div style="margin-top:6px;display:flex;gap:8px;flex-wrap:wrap;align-items:center;font-size:11px;"><span class="vip-chip ${info.fuerte ? "fuerte" : ""}">${info.chip}</span>${esCA ? '<span class="vip-chip">📈 CUOTA ALTA</span>' : ""}${ccDentro ? '<span class="vip-chip">🎯 CUOTA DE MAYOR CONFIANZA</span>' : ""}${enviado}</div>
         ${segTxt}
+        ${notaValorDetectado(p) ? `<div style="font-size:11px;line-height:1.5;margin-top:3px;">${notaValorDetectado(p).replace(/^<br>/, "")}</div>` : ""}
         ${ccTxt}
         ${aviso}
         ${vipChkHtml(p)}
