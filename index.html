@@ -730,7 +730,24 @@ function nombreCortoSenal(dic, t){
   const partes = String((dic && dic[t]) || t).split(" · ");
   return (t.startsWith("idx_") && partes[1]) ? partes[0] + " " + partes[1] : partes[0];
 }
-function resumenSenales(lista, motivoPrincipal, dic, prefijoIdx){
+// 2 nov 2026: rango de cuota de mayor confianza de una señal (data.cuota_confianza, ver cuota_confianza.py)
+function ccCuotaMercado(p, mk){
+  const n = x => { const v = Number(x); return isFinite(v) && v > 1 ? v : null; };
+  if(mk === "BTTS") return n(p.cuota_btts);
+  if(mk === "Over 2.5") return n(p.cuota_o25);
+  if(mk === "Over 1.5") return n(p.cuota_o15);
+  const cb = n(p.cuota_btts), c25 = n(p.cuota_o25), d = Number((DATA && DATA.descuento_combo_supuesto) || 0);
+  return (cb && c25) ? 1 + (cb * c25 - 1) * (1 - d) : null;
+}
+function ccRangoTxt(mk, t, cuota){
+  const C = (DATA && DATA.cuota_confianza) || {};
+  const r = (C[mk] || {})[t];
+  if(!r) return C[mk] ? ` <span class="vip-dim" style="font-size:0.95em;">· 🎯 menos de 30 partidos, sin rango todavía</span>` : "";
+  if(!r.rango) return ` <span class="vip-dim" style="font-size:0.95em;">· 🎯 sin rango de cuota que gane</span>`;
+  const dentro = cuota != null && cuota >= r.rango[0] - 1e-9 && cuota < r.rango[1] - 1e-9;
+  return ` <span style="font-size:0.95em;color:var(--chalk-dim);" title="Rango de cuota donde esta señal más unidades ganó (${vipN(r.n)} partidos; en las dos mitades de su historia: ${vipPct(r.mitad1.roi)} / ${vipPct(r.mitad2.roi)})">· 🎯 ${Number(r.rango[0]).toFixed(2)}–${Number(r.rango[1]).toFixed(2)} (ROI ${vipPct(r.roi)} · ${vipFmt(r.uds)}u${r.se_mantuvo ? "" : " · no se mantuvo"})${dentro ? ' <b style="color:var(--win);">✓ cuota de hoy en el rango</b>' : ""}</span>`;
+}
+function resumenSenales(lista, motivoPrincipal, dic, prefijoIdx, mk, cuota){
   // 2 nov 2026 (ajuste): debajo del enunciado principal, primero las ENCENDIDAS que tambien aplican y luego
   // las APAGADAS (en prueba o apagadas por el motor), una por linea, con su formula. La principal no se repite.
   const tags = Array.from(new Set(String(lista || "").split("|").map(t => t.trim())))
@@ -741,9 +758,10 @@ function resumenSenales(lista, motivoPrincipal, dic, prefijoIdx){
   const activas = tags.filter(t => valida(t) && on[t] === true && !SENALES_EN_PRUEBA.has(t));
   const apagadas = tags.filter(t => valida(t) && !activas.includes(t));
   if(!activas.length && !apagadas.length) return "";
+  const rg = t => mk ? ccRangoTxt(mk, t, cuota) : "";
   const linea = (t, enc) => enc
-    ? `<span title="Señal encendida: también aplica a este partido" style="color:var(--win);">✅ ${vipEsc(dic[t] || t)}</span>`
-    : `<span title="Señal apagada: aplica a este partido pero no decide el JUGAR" style="color:var(--amber);opacity:0.9;">${vipEsc(dic[t] || t)}${/apagada|EN PRUEBA|SEGUIMIENTO/i.test(dic[t] || "") ? "" : " · apagada"}</span>`;
+    ? `<span title="Señal encendida: también aplica a este partido" style="color:var(--win);">✅ ${vipEsc(dic[t] || t)}</span>${rg(t)}`
+    : `<span title="Señal apagada: aplica a este partido pero no decide el JUGAR" style="color:var(--amber);opacity:0.9;">${vipEsc(dic[t] || t)}${/apagada|EN PRUEBA|SEGUIMIENTO/i.test(dic[t] || "") ? "" : " · apagada"}</span>${rg(t)}`;
   return "<br>" + [...activas.map(t => linea(t, true)), ...apagadas.map(t => linea(t, false))].join("<br>");
 }
 
@@ -761,7 +779,7 @@ function notaRescateBtts(p){
   const motivo = p.motivo_btts;
   if(!motivo || motivo === "ninguno_evitar_final" || motivo === "candado_sin_cuota"){
     // sin señal principal, pero puede tener una etiqueta en prueba (p. ej. el Índice BTTS)
-    return resumenSenales(p.motivos_btts_todos, motivo, ETIQUETAS_BTTS, "idx_btts_");
+    return resumenSenales(p.motivos_btts_todos, motivo, ETIQUETAS_BTTS, "idx_btts_", "BTTS", ccCuotaMercado(p, "BTTS"));
   }
   const esRescate = motivo.startsWith("rescate_");
   const texto = ETIQUETAS_BTTS[motivo] || motivo;
@@ -770,7 +788,7 @@ function notaRescateBtts(p){
   // AGREGADO 18 oct 2026: señales APAGADAS en prueba (versiones "+", Cumbre y
   // Stake 9 mejoradas) que tambien aplican a este partido: se muestran como
   // etiqueta extra para poder ver como les va, aunque no decidan el JUGAR.
-  const extra = resumenSenales(p.motivos_btts_todos, motivo, ETIQUETAS_BTTS, "idx_btts_");
+  const extra = resumenSenales(p.motivos_btts_todos, motivo, ETIQUETAS_BTTS, "idx_btts_", "BTTS", ccCuotaMercado(p, "BTTS"));
   return ` · <span title="Por que se activo esta señal de BTTS" style="color:${color};opacity:${opacidad};">${texto}</span>${extra}`;
 }
 
@@ -849,7 +867,7 @@ function notaRescateO25(p){
   // partidos con el motivo, hayan llegado a JUGAR o no.
   const motivo = p.motivo_o25;
   // 30 oct 2026: tambien se muestran las etiquetas en prueba (Índice Over 2.5) que aplican al partido
-  const extra = resumenSenales(p.motivos_o25_todos, motivo, ETIQUETAS_O25, "idx_o25_");
+  const extra = resumenSenales(p.motivos_o25_todos, motivo, ETIQUETAS_O25, "idx_o25_", "Over 2.5", ccCuotaMercado(p, "Over 2.5"));
   if(!motivo || motivo === "ninguno_evitar_o25" || motivo === "candado_sin_cuota"){
     return extra;
   }
@@ -1341,7 +1359,7 @@ function renderCombo(picks){
     else if(resultado === false){ badgeClass = "perdida"; badgeTxt = "✕ Perdida"; }
     else { badgeClass = p.senal_btts_o25 === 'VIP' ? 'si' : 'no'; badgeTxt = p.senal_btts_o25 === 'VIP' ? 'VIP' : (p.senal_btts_o25 || 'Sin datos'); }
     // 30 oct 2026: tambien las etiquetas en prueba (Índice Combinada) que aplican al partido
-    const extraCombo = resumenSenales(p.motivos_combo_todos, p.motivo_combo, ETIQUETAS_COMBO, "idx_combo_");
+    const extraCombo = resumenSenales(p.motivos_combo_todos, p.motivo_combo, ETIQUETAS_COMBO, "idx_combo_", "Combinada", ccCuotaMercado(p, "Combinada"));
     const motivoPpal = ETIQUETAS_COMBO[p.motivo_combo] ? `<span style="color:var(--amber);">${ETIQUETAS_COMBO[p.motivo_combo]}</span>` : (p.motivo_combo && p.motivo_combo !== "ninguno_evitar_combo" ? `<span style="color:var(--amber);">${p.motivo_combo}</span>` : "");
     const motivo = (motivoPpal || extraCombo) ? (motivoPpal ? " · " + motivoPpal : "") + extraCombo : "";
     const probCombo = probDe(p);
