@@ -1800,6 +1800,11 @@ function ccNombre(mk, s){
   return (s.startsWith("idx_") && partes[1]) ? partes[0] + " " + partes[1] : partes[0];
 }
 // 2 nov 2026 (ajuste): solo cuentan las señales ENCENDIDAS hoy; se muestra la de mayor ROI y el resto queda en el detalle.
+// 7 nov 2026: nombre COMPLETO de la señal (con su formula), para la tabla de cuota de mayor confianza
+function ccNombreCompleto(mk, s){
+  const d = mk === "BTTS" ? ETIQUETAS_BTTS : (mk === "Over 2.5" ? ETIQUETAS_O25 : (mk === "Over 1.5" ? ETIQUETAS_O15 : ETIQUETAS_COMBO));
+  return String((d && d[s]) || s);
+}
 function ccChip(p, mercadoKey, jugar){
   const mk = CC_MERCADO[mercadoKey];
   // 2 nov 2026 (ajuste): solo se analiza la señal que se lleva el partido (la principal de ese mercado)
@@ -1821,7 +1826,7 @@ function ccTablaHtml(data){
     const ok = filas.filter(([s, r]) => r.se_mantuvo).length;
     return `<details class="vip-det"${mk === "BTTS" ? " open" : ""}><summary>${mk}: ${filas.length} señales con rango (${ok} se mantuvieron)${sin ? ` · ${sin} sin ningún rango que gane` : ""}</summary>
       <div class="vip-scroll" style="margin-top:8px;"><table class="cmp-table"><thead><tr><th>Señal</th><th class="num">Rango de confianza</th><th class="num">Apuestas</th><th class="num">Acierto</th><th class="num">ROI</th><th class="num">Unidades</th><th class="num">Fuera del rango</th><th class="num">Señal completa</th><th class="num">1ª / 2ª mitad</th><th>¿Se mantuvo?</th></tr></thead><tbody>
-      ${filas.map(([s, r]) => `<tr><td>${vipEsc(ccNombre(mk, s))}${on[s] === true ? ' <span class="vip-dim">· encendida</span>' : ""}</td><td class="num"><b>${Number(r.rango[0]).toFixed(2)}–${Number(r.rango[1]).toFixed(2)}</b></td><td class="num">${vipN(r.n)}</td><td class="num">${vipFmt(r.acierto, 1, false)}%</td><td class="num" style="color:${vipCol(r.roi)};">${vipPct(r.roi)}</td><td class="num" style="color:${vipCol(r.uds)};">${vipFmt(r.uds)}u</td><td class="num" style="color:${vipCol(r.roi_fuera)};">${r.n_fuera ? vipPct(r.roi_fuera) + ` (${vipN(r.n_fuera)})` : "—"}</td><td class="num" style="color:${vipCol(r.roi_total)};">${vipPct(r.roi_total)} (${vipN(r.n_total)})</td><td class="num">${vipPct(r.mitad1.roi)} / ${vipPct(r.mitad2.roi)}</td><td>${r.se_mantuvo ? "✓ sí · lleva etiqueta" : '<span class="vip-dim">✗ no · sin etiqueta</span>'}</td></tr>`).join("")}
+      ${filas.map(([s, r]) => `<tr><td style="min-width:260px;max-width:420px;white-space:normal;">${vipEsc(ccNombreCompleto(mk, s))}${on[s] === true ? ' <span class="vip-dim">· encendida</span>' : ""}</td><td class="num"><b>${Number(r.rango[0]).toFixed(2)}–${Number(r.rango[1]).toFixed(2)}</b></td><td class="num">${vipN(r.n)}</td><td class="num">${vipFmt(r.acierto, 1, false)}%</td><td class="num" style="color:${vipCol(r.roi)};">${vipPct(r.roi)}</td><td class="num" style="color:${vipCol(r.uds)};">${vipFmt(r.uds)}u</td><td class="num" style="color:${vipCol(r.roi_fuera)};">${r.n_fuera ? vipPct(r.roi_fuera) + ` (${vipN(r.n_fuera)})` : "—"}</td><td class="num" style="color:${vipCol(r.roi_total)};">${vipPct(r.roi_total)} (${vipN(r.n_total)})</td><td class="num">${vipPct(r.mitad1.roi)} / ${vipPct(r.mitad2.roi)}</td><td>${r.se_mantuvo ? "✓ sí · lleva etiqueta" : '<span class="vip-dim">✗ no · sin etiqueta</span>'}</td></tr>`).join("")}
       </tbody></table></div></details>`;
   }).join("");
   return `<section><p class="section-title">🎯 Cuota de mayor confianza por señal</p>
