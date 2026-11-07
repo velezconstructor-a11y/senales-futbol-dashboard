@@ -2695,6 +2695,60 @@ function vipCuotaAltaHtml(V, selDia){
     <p class="vip-dim" style="font-size:12px;line-height:1.55;margin:10px 0 0;">⚠️ El histórico de Valor detectado se midió semana a semana sin ver el futuro; el de la Segunda línea, con los mismos datos con que se eligieron sus señales (optimista). La prueba que cuenta es la fila «en vivo».</p>`;
 }
 
+// 7 nov 2026 (pedido: "que entren al VIP las señales encendidas con «✓ cuota de hoy en el rango»"):
+// la medicion de esos partidos (data.vip_btts.frase_rango, ver cuota_confianza.frase_dia_a_dia). No se envian.
+function vipFraseRangoHtml(V, dia){
+  const F = V.frase_rango;
+  if(!F || F.error || !F.dia) return "";
+  const x = (o) => (o && o.n) ? `<b style="color:${vipCol(o.roi)};">${vipPct(o.roi)}</b> <span class="vip-dim">· ${vipN(o.n)}</span>` : '<span class="vip-dim">—</span>';
+  const azar = (r) => r.azar_prob == null ? '<span class="vip-dim">—</span>'
+    : (r.azar_prob <= 10 ? `<b style="color:var(--win);">✅ real</b> <span class="vip-dim">(${vipFmt(r.azar_prob, 0, false)}%)</span>`
+                         : `🎲 azar <span class="vip-dim">(${vipFmt(r.azar_prob, 0, false)}%)</span>`);
+  const ver = (r) => {
+    const nv = r.dia_nuevos || {};
+    if(r.veredicto === "ya_vip") return `<b style="color:var(--win);">✅ Ya está en el VIP</b>${nv.n >= 10 && nv.roi < 0 ? '<div class="vip-dim" style="font-size:11px;">lo que queda afuera perdió: bien que no entre</div>' : ""}`;
+    if(r.veredicto === "merece") return '<b style="color:var(--win);">✅ Candidata a VIP</b><div class="vip-dim" style="font-size:11px;">sus nuevos ganaron y su rango no es azar</div>';
+    if(r.veredicto === "gano_azar") return '<b style="color:var(--amber);">⚠️ En observación</b><div class="vip-dim" style="font-size:11px;">sus nuevos ganaron, pero su rango no se distingue del azar</div>';
+    if(r.veredicto === "poca_muestra") return '<span class="vip-dim">⏳ Poca muestra</span>';
+    return `<b style="color:var(--loss);">❌ No merece VIP</b><div class="vip-dim" style="font-size:11px;">con la frase, fuera del VIP, ${nv.roi < 0 ? "perdió" : "no llegó a +3%"}</div>`;
+  };
+  const H = F.hoy || {}, D = F.dia || {}, T = F.nuevos_tramos || [], viv = F.en_vivo || {}, sem = F.semanas || {};
+  const merecen = (F.senales || []).filter(r => r.veredicto === "merece").map(r => vipNombreRaw(r.motivo));
+  const hoy = (dia || []).filter(p => p.nivel_final === "JUGAR" && p.rango_obs && (p.rango_obs.senales || []).length && !vipClase(p));
+  const listaHoy = hoy.length
+    ? `<div class="vip-scroll" style="margin-top:8px;"><table class="cmp-table"><thead><tr><th>Partido</th><th class="num">Cuota</th><th>Señales encendidas con «✓ cuota de hoy en el rango»</th></tr></thead><tbody>
+      ${hoy.map(p => { const c = Number(p.cuota_btts_actual > 1 ? p.cuota_btts_actual : p.cuota_btts); return `<tr><td>${vipEsc(p.local)} vs ${vipEsc(p.visitante)}<div class="vip-dim" style="font-size:11px;">${vipEsc(p.liga || "")}</div></td><td class="num">${isFinite(c) ? c.toFixed(2) : "—"}</td><td style="white-space:normal;">${p.rango_obs.senales.map(z => `${vipEsc(vipNombreRaw(z.senal))}${z.rango ? ` <span class="vip-dim">${Number(z.rango[0]).toFixed(2)}–${Number(z.rango[1]).toFixed(2)}</span>` : ""}`).join("<br>")}</td></tr>`; }).join("")}
+      </tbody></table></div>`
+    : '<p class="vip-dim" style="font-size:13px;margin:8px 0 0;">Hoy no hay partidos con la frase fuera del VIP.</p>';
+  const filas = (F.senales || []).map(r => `<tr>
+      <td style="min-width:180px;white-space:normal;" title="${vipEsc((ETIQUETAS_BTTS && ETIQUETAS_BTTS[r.motivo]) || r.motivo)}">${vipEsc(vipNombreRaw(r.motivo))}</td>
+      <td class="num">${r.rango ? `${Number(r.rango[0]).toFixed(2)}–${Number(r.rango[1]).toFixed(2)}` : '<span class="vip-dim">—</span>'}</td>
+      <td class="num">${x(r.atras)}</td>
+      <td class="num">${azar(r)}</td>
+      <td class="num">${x(r.dia_ya_vip)}</td>
+      <td class="num">${x(r.dia_nuevos)}</td>
+      <td class="num">${r.vip_pct == null ? "—" : vipFmt(r.vip_pct, 0, false) + "%"}</td>
+      <td style="min-width:170px;white-space:normal;">${ver(r)}</td></tr>`).join("");
+  return `
+    <p class="vip-dim" style="font-size:13px;line-height:1.55;margin:0 0 10px;">Partidos con JUGAR de BTTS donde, al lado de una <b>señal encendida</b> (la principal o cualquier otra encendida del partido), sale <b>«✓ cuota de hoy en el rango»</b>. Aquí se mide si los que <b>no son</b> ya Respaldada ni Segunda línea merecen entrar al VIP. <b>No se envían al Telegram.</b></p>
+    <div class="vip-verdict" style="margin-bottom:12px;">
+      <p><b>Resultado:</b> ${merecen.length ? `candidatas a VIP: <b>${merecen.map(vipEsc).join(", ")}</b> (primero pasan por la prueba en vivo).` : "<b>todavía ninguna merece entrar.</b> Los partidos con la frase que <b>ya son VIP</b> ganan; los que entrarían como <b>nuevos</b> pierden."}</p>
+      <p><b>Por qué mirando hacia atrás parece que sí:</b> el rango de hoy se calculó con esos mismos partidos, así que en el pasado casi siempre «gana». La prueba justa es la frase <b>como se veía ese día</b>, antes de jugarse el partido (rango calculado solo con los partidos anteriores). Ahí, los nuevos con la frase dieron ${x(D.nuevos)}${T.length === 2 ? ` (hasta el ${vipFechaCorta(F.hasta_tramo1)}: ${x(T[0])}; desde el ${vipFechaCorta(F.corte)}: ${x(T[1])})` : ""}, y los nuevos <b>sin</b> la frase ${x(D.sin_frase_nuevos)}: la frase no los separa.</p>
+      ${F.azar_media != null ? `<p><b>Por qué el rango engaña:</b> se elige mirando los resultados, entre unas 100 ventanas de cuota, y siempre hay una que salió bien. Si cada señal rindiera <b>igual en todas las cuotas</b>, su mejor rango igual mostraría <b>${vipPct(F.azar_media)}</b> en promedio; los rangos reales muestran <b>${vipPct(F.azar_real_media)}</b>. Solo <b>${F.azar_reales} de ${F.azar_senales}</b> se distinguen del azar.</p>` : ""}
+    </div>
+    <div class="vip-scroll vip-corta"><table class="cmp-table"><thead><tr><th style="white-space:normal;">JUGAR desde el ${vipFechaCorta(F.desde_hist)}</th><th class="num" style="white-space:normal;">Mirando hacia atrás<div class="vip-dim" style="font-size:10px;text-transform:none;">rango de hoy</div></th><th class="num" style="white-space:normal;">Como se veía ese día<div class="vip-dim" style="font-size:10px;text-transform:none;">la prueba justa</div></th></tr></thead><tbody>
+      <tr><td style="white-space:normal;min-width:110px;">Con la frase · ya son VIP</td><td class="num">${x(H.ya_vip)}</td><td class="num">${x(D.ya_vip)}</td></tr>
+      <tr><td style="white-space:normal;min-width:110px;"><b>Con la frase · nuevos</b> (lo que se agregaría)</td><td class="num">${x(H.nuevos)}</td><td class="num">${x(D.nuevos)}${sem.semanas ? `<div class="vip-dim" style="font-size:11px;white-space:normal;">ganó ${sem.positivas} de ${sem.semanas} semanas</div>` : ""}</td></tr>
+      <tr><td style="white-space:normal;min-width:110px;">Sin la frase · nuevos</td><td class="num">${x(H.sin_frase_nuevos)}</td><td class="num">${x(D.sin_frase_nuevos)}</td></tr>
+      <tr><td style="white-space:normal;min-width:110px;">🔭 Con la frase · nuevos · <b>en vivo</b> desde el ${vipFechaCorta(F.desde_vivo)}</td><td class="num"><span class="vip-dim">—</span></td><td class="num">${x(viv)}</td></tr>
+    </tbody></table></div>
+    <p class="section-title" style="font-size:14px;margin-top:16px;">Señal por señal</p>
+    <div class="vip-scroll"><table class="cmp-table"><thead><tr><th>Señal encendida</th><th class="num">Rango de hoy</th><th class="num">Hacia atrás con la frase</th><th class="num">¿Rango real o azar?</th><th class="num">Ese día · ya VIP</th><th class="num">Ese día · nuevos</th><th class="num">En el VIP</th><th>Veredicto</th></tr></thead><tbody>${filas}</tbody></table></div>
+    <p class="section-title" style="font-size:14px;margin-top:16px;">🔭 Partidos del día con la frase, fuera del VIP (en observación)</p>
+    ${listaHoy}
+    <p class="vip-dim" style="font-size:12px;line-height:1.55;margin:10px 0 0;">«Mirando hacia atrás» = cada partido con el rango que la señal tiene hoy (optimista: el rango se eligió con esos mismos partidos). «Como se veía ese día» = el rango que la señal tenía antes de jugarse el partido, que es lo que habría visto quien apostaba. «Nuevos» = JUGAR que no son Respaldada ni Segunda línea. «¿Rango real o azar?» = en qué % de 300 simulaciones de la señal rindiendo igual en todas las cuotas su mejor rango salió igual o mejor que el real (10% o menos = real). «En el VIP» = % de sus partidos con la frase que ya son Respaldada o Segunda línea. Un partido cuenta en cada señal que muestra la frase. Pasaría al envío si en vivo junta unas 60 apuestas con ROI de +3% o más. Precio: el de la alerta o el primero visto, igual que el resto de esta pestaña. Se recalcula cada hora.</p>`;
+}
+
 function vipSegundaHtml(V){
   const S = V.segunda_linea || {}, pol = V.politica || {};
   const lista = V.segunda_linea_senales || [];
@@ -2716,7 +2770,7 @@ function vipSegundaHtml(V){
   const volumen = vol.dias
     ? `<p><b>Volumen:</b> ≈${vipFmt(vol.media, 1, false)} por día en promedio; ${vol.dias_9_o_mas} de ${vol.dias} días tuvieron 9 o más y el máximo fue ${vol.max}. La página solo ve las etiquetas que quedaron guardadas, así que en vivo el volumen puede ser algo mayor.</p>` : "";
   return `
-    <p class="vip-dim" style="font-size:13px;line-height:1.55;margin:0 0 10px;">Además de la <b>Respaldada</b>, ${envia ? "llegan al Telegram" : "se miden (no se envían)"} los JUGAR de BTTS con cuota de <b>${cmin}</b> a <b>${cmax}</b> (<b>Bronce + JUGAR</b> desde <b>${vipPisoSeg("bronce_jugar").toFixed(2)}</b>${(pol.segunda_senales || []).includes("valor_detectado") ? `; <b>Valor detectado</b> desde <b>${vipPisoSeg("valor_detectado").toFixed(2)}</b>` : ""}) que tengan al menos una de estas ${lista.length} señales <b>encendidas hoy</b>. Cuatro salieron entre las mejores en la revisión de dos meses; la quinta, <b>Apuesta TOP BTTS+GC bajo</b>, es la única de las señales nuevas que pasó todas las pruebas hacia atrás (ganó en los tres tramos de la historia). Las cifras de abajo usan solo las etiquetas que la página tiene guardadas (la de la TOP, desde el 9 oct), por eso salen más bajas que en esa revisión, que repitió el motor sobre todo el historial. La sexta, <b>Bronce + JUGAR</b> (1 nov), no es una fórmula nueva: es el nivel de confianza BRONCE que existe desde el inicio, aplicado solo cuando el partido ya da JUGAR; con Evitar pierde. La séptima, <b>Valor detectado</b> (1 nov), busca errores de cuota en cuota alta: un modelo calcula la probabilidad de BTTS con las estadísticas y las cuotas de goles y 1X2, y entra cuando la cuota paga bastante más de lo que debería (puede convertir un Evitar en JUGAR). Una señal sale sola de la lista si el motor la apaga.</p>
+    <p class="vip-dim" style="font-size:13px;line-height:1.55;margin:0 0 10px;">Además de la <b>Respaldada</b>, ${envia ? "llegan al Telegram" : "se miden (no se envían)"} los JUGAR de BTTS con cuota de <b>${cmin}</b> a <b>${cmax}</b> (<b>Bronce + JUGAR</b> desde <b>${vipPisoSeg("bronce_jugar").toFixed(2)}</b>${(pol.segunda_senales || []).includes("valor_detectado") ? `; <b>Valor detectado</b> desde <b>${vipPisoSeg("valor_detectado").toFixed(2)}</b>` : ""}) que tengan al menos una de estas ${lista.length} señales <b>encendidas hoy</b>: los dos <b>rescates de ataque balanceado</b> y <b>Apuesta TOP BTTS+GC bajo</b> (las que pasaron las pruebas hacia atrás), <b>Bronce + JUGAR</b> (el nivel de confianza BRONCE que existe desde el inicio, solo cuando el partido ya da JUGAR; con Evitar pierde) y <b>Valor detectado</b> (un modelo que busca errores de cuota en cuota alta y puede convertir un Evitar en JUGAR). El <b>7 nov</b> salieron <b>Granate</b> y <b>Diamante amplio</b>: dentro de esta línea ya no ganaban (98 apuestas, +1.1%; segunda mitad −8.4%; en vivo −22% en 16). Siguen encendidas como señales, pero ya no entran al VIP. Las cifras de abajo usan solo las etiquetas que la página tiene guardadas. Una señal sale sola de la lista si el motor la apaga.</p>
     ${pol.valor_modelo && pol.valor_modelo.disponible === false ? `<p class="vip-dim" style="font-size:12px;line-height:1.55;margin:0 0 10px;color:var(--loss);">⚠️ El detector <b>Valor detectado</b> no está corriendo: falta instalar <b>scikit-learn</b> en el workflow. Mientras tanto no marca partidos.</p>` : ""}
     <div class="vf-lista">${tarjetas}</div>
     <div class="vip-verdict" style="margin-top:14px;">${resultado}${piso}${volumen}</div>
@@ -2986,6 +3040,7 @@ function renderVip(data, picks){
     <section><p class="section-title">¿Funciona? En palabras simples</p><div class="vip-verdict">${veredicto}</div></section>
     ${vipSegundaHtml(V) ? `<section><p class="section-title">🥈 Segunda línea · qué señales la forman</p>${vipSegundaHtml(V)}</section>` : ""}
     ${V.cuota_alta && V.cuota_alta.n ? `<section><p class="section-title">📈 Cuota alta · ${Number((V.cuota_alta_rango || [1.7])[0]).toFixed(2)} a ${Number((V.cuota_alta_rango || [0, 2.2])[1]).toFixed(2)}</p>${vipCuotaAltaHtml(V, selDia)}</section>` : ""}
+    ${vipFraseRangoHtml(V, picks) ? `<section><p class="section-title">🎯 «✓ Cuota de hoy en el rango» en señales encendidas · ¿merece VIP?</p>${vipFraseRangoHtml(V, picks)}</section>` : ""}
     <section><p class="section-title">🔍 ¿Y las señales activas? Lo que se ve en verde contra lo que pasó después</p>${vipConciliacionHtml(V)}</section>
     <section><p class="section-title">🧪 En vivo (la prueba que cuenta)</p>${enVivoHtml}</section>
     <section><p class="section-title">📈 Ganancia acumulada</p>${curvaHtml}</section>
