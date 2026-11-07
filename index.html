@@ -534,7 +534,7 @@ function notaLigaConfianza(p){
 // nota de cada partido de la combinada usen el mismo texto siempre.
 const ETIQUETAS_COMBO = {
     "combo_pilares": "🧱 Pilares (Combinada) · BTTS cuota 1.40-1.55 · SOT total≥10 + visitante recibe≥1.6 goles + fallo≤20-25% + arco en cero≤40% en ambos (sin modelo, sin Stake10)",
-    "combo_vip_plus": "👑 VIP+ (Combinada) · cuota 1.45-1.60 · fallo máx≤20%",
+    "combo_vip_plus": "👑 VIP+ (Combinada) · sin filtro de cuota (se diseñó con cuota 1.45-1.60) · fallo máx≤20%",
     "combo_diamante_elite": "💎 Diamante Élite (Combinada) · misma fórmula BTTS · cuota BTTS 1.45-1.55 + SOT total≥10 + GC máx≥1.8 + fallo≤25%",
     // "combo_btts_vipmas", "combo_original_revisar", "combo_original_vip"
     // eliminadas 23 ago 2026 - motivos del diseño anterior a las 3 bandas
@@ -747,7 +747,7 @@ function ccRangoTxt(mk, t, cuota){
   const r = (C[mk] || {})[t];
   if(!r) return C[mk] ? ` <span class="vip-dim" style="font-size:0.95em;">· 🎯 menos de 30 partidos, sin rango todavía</span>` : "";
   if(!r.rango) return ` <span class="vip-dim" style="font-size:0.95em;">· 🎯 sin rango de cuota que gane</span>`;
-  const dentro = cuota != null && cuota >= r.rango[0] - 1e-9 && cuota < r.rango[1] - 1e-9;
+  const dentro = cuota != null && cuota >= r.rango[0] - 1e-9 && cuota <= r.rango[1] + 1e-9;   // 7 nov 2026: extremos incluidos
   return ` <span style="font-size:0.95em;color:var(--chalk-dim);" title="Rango de cuota donde esta señal más unidades ganó (${vipN(r.n)} partidos; en las dos mitades de su historia: ${vipPct(r.mitad1.roi)} / ${vipPct(r.mitad2.roi)})">· 🎯 ${Number(r.rango[0]).toFixed(2)}–${Number(r.rango[1]).toFixed(2)} (ROI ${vipPct(r.roi)} · ${vipFmt(r.uds)}u${r.se_mantuvo ? "" : " · no se mantuvo"})${dentro ? ' <b style="color:var(--win);">✓ cuota de hoy en el rango</b>' : ""}</span>`;
 }
 function resumenSenales(lista, motivoPrincipal, dic, prefijoIdx, mk, cuota){
@@ -852,7 +852,7 @@ function notaRescateHt05(p){
 }
 
 const ETIQUETAS_O25 = {
-    "o25_vip_plus": "👑 VIP+ (Over 2.5) · cuota 1.45-1.60 · SOT total≥8 + GF total≥3.5 + GC máx≥1.8",
+    "o25_vip_plus": "👑 VIP+ (Over 2.5) · sin filtro de cuota (se diseñó con cuota 1.45-1.60) · SOT total≥8 + GF total≥3.5 + GC máx≥1.8",
     "o25_centinela": "🗿 Centinela (Over 2.5) · misma fórmula BTTS · cuota BTTS 1.45-1.65 + SOT máx≥6 + GF mín≥1.0 + GC máx≥1.8",
     "o25_vip_reforzado": "🛡️ VIP Reforzado (Over 2.5) · misma fórmula BTTS · probabilidad calibrada≥64%",
     "camino_normal_o25": "camino normal (VIP/Fuerte)",
@@ -1815,6 +1815,8 @@ function ccChip(p, mercadoKey, jugar){
   const det = lst.map(txt).join(" · ");
   return ` · <span class="vip-chip" title="${vipEsc("La cuota está en el rango donde su señal más ganó: " + det)}">🎯 CUOTA DE MAYOR CONFIANZA</span>`;   // el rango y su ROI ya salen junto a la señal principal (ccRangoTxt)
 }
+// 7 nov 2026: que cuota se usa en cada tabla (la misma con la que se disparo la señal)
+const CC_PRECIO_TXT = {"BTTS": "BTTS", "Over 2.5": "Over 2.5", "Over 1.5": "Over 1.5", "Combinada": "la combinada estimada (BTTS × Over 2.5)"};
 function ccTablaHtml(data){
   const C = data.cuota_confianza || {};
   const mks = ["BTTS", "Over 2.5", "Combinada", "Over 1.5"].filter(m => C[m]);
@@ -1824,13 +1826,13 @@ function ccTablaHtml(data){
     const filas = Object.entries(C[mk]).filter(([s, r]) => r.rango).sort((a, b) => (b[1].uds || 0) - (a[1].uds || 0));
     const sin = Object.values(C[mk]).filter(r => !r.rango).length;
     const ok = filas.filter(([s, r]) => r.se_mantuvo).length;
-    return `<details class="vip-det"${mk === "BTTS" ? " open" : ""}><summary>${mk}: ${filas.length} señales con rango (${ok} se mantuvieron)${sin ? ` · ${sin} sin ningún rango que gane` : ""}</summary>
+    return `<details class="vip-det"${mk === "BTTS" ? " open" : ""}><summary>${mk} · medido con la cuota de ${CC_PRECIO_TXT[mk] || mk} · ${filas.length} señales con rango (${ok} se mantuvieron)${sin ? ` · ${sin} sin ningún rango que gane` : ""}</summary>
       <div class="vip-scroll" style="margin-top:8px;"><table class="cmp-table"><thead><tr><th>Señal</th><th class="num">Rango de confianza</th><th class="num">Apuestas</th><th class="num">Acierto</th><th class="num">ROI</th><th class="num">Unidades</th><th class="num">Fuera del rango</th><th class="num">Señal completa</th><th class="num">1ª / 2ª mitad</th><th>¿Se mantuvo?</th></tr></thead><tbody>
       ${filas.map(([s, r]) => `<tr><td style="min-width:260px;max-width:420px;white-space:normal;">${vipEsc(ccNombreCompleto(mk, s))}${on[s] === true ? ' <span class="vip-dim">· encendida</span>' : ""}</td><td class="num"><b>${Number(r.rango[0]).toFixed(2)}–${Number(r.rango[1]).toFixed(2)}</b></td><td class="num">${vipN(r.n)}</td><td class="num">${vipFmt(r.acierto, 1, false)}%</td><td class="num" style="color:${vipCol(r.roi)};">${vipPct(r.roi)}</td><td class="num" style="color:${vipCol(r.uds)};">${vipFmt(r.uds)}u</td><td class="num" style="color:${vipCol(r.roi_fuera)};">${r.n_fuera ? vipPct(r.roi_fuera) + ` (${vipN(r.n_fuera)})` : "—"}</td><td class="num" style="color:${vipCol(r.roi_total)};">${vipPct(r.roi_total)} (${vipN(r.n_total)})</td><td class="num">${vipPct(r.mitad1.roi)} / ${vipPct(r.mitad2.roi)}</td><td>${r.se_mantuvo ? "✓ sí · lleva etiqueta" : '<span class="vip-dim">✗ no · sin etiqueta</span>'}</td></tr>`).join("")}
       </tbody></table></div></details>`;
   }).join("");
   return `<section><p class="section-title">🎯 Cuota de mayor confianza por señal</p>
-    <p class="vip-dim" style="font-size:13px;line-height:1.55;margin:0 0 10px;">Para cada señal, el rango de cuota que <b>más unidades ganó</b> en todo su historial (mínimo 15 partidos y ROI positivo). Se recalcula cada hora. Los picks de hoy con JUGAR cuya cuota cae en el rango de <b>la señal que se lleva el partido</b> (la principal) llevan la etiqueta <b>🎯 CUOTA DE MAYOR CONFIANZA</b>, pero solo si el rango <b>se mantuvo</b>: ganó en la primera y en la segunda mitad de su historia.</p>
+    <p class="vip-dim" style="font-size:13px;line-height:1.55;margin:0 0 10px;">Para cada señal, el rango de cuota que <b>más unidades ganó</b> en todo su historial (mínimo 15 partidos y ROI positivo), medido con la <b>cuota con la que se disparó la señal</b> y ajustado a las cuotas que de verdad jugó, así que siempre queda dentro de la franja de cuota de su fórmula. Se recalcula cada hora. Los picks de hoy con JUGAR cuya cuota cae en el rango de <b>la señal que se lleva el partido</b> (la principal) llevan la etiqueta <b>🎯 CUOTA DE MAYOR CONFIANZA</b>, pero solo si el rango <b>se mantuvo</b>: ganó en la primera y en la segunda mitad de su historia.</p>
     ${bloques}
     <p class="vip-dim" style="font-size:12px;line-height:1.55;margin:10px 0 0;">⚠️ Es lo que pasó, no una garantía: cuando el rango se elige con la primera mitad de la historia de cada señal y se mide en la segunda, mejora solo la mitad de las veces (42 de 82 señales, medido el 2 nov). Por eso la etiqueta exige que el rango haya ganado en las dos mitades, y aun así hay que mirarla como una pista, no como una regla segura.</p></section>`;
 }
