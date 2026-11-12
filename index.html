@@ -2695,6 +2695,89 @@ function vipCuotaAltaHtml(V, selDia){
     <p class="vip-dim" style="font-size:12px;line-height:1.55;margin:10px 0 0;">⚠️ El histórico de Valor detectado se midió semana a semana sin ver el futuro; el de la Segunda línea, con los mismos datos con que se eligieron sus señales (optimista). La prueba que cuenta es la fila «en vivo».</p>`;
 }
 
+// 12 nov 2026 (pedido: "identificar las señales, los rangos de cuotas, la estabilidad, el ROI ... de BTTS y dar el
+// siguiente paso en el VIP"): mapa de señales BTTS (data.vip_btts.mapa_btts, ver backtest._mapa_senales_btts).
+function vipMapaHtml(V){
+  const M = V.mapa_btts;
+  if(!M || M.error || !(M.senales || []).length) return "";
+  const S = M.senales;
+  const cnt = (k) => S.filter(r => r.veredicto === k).length;
+  const enc = S.filter(r => r.estado === "encendida").length;
+  const meta = M.prueba_meta || 60, rec = M.recuperacion || {};
+  const pc = (x) => x == null ? '<span class="vip-dim">—</span>' : `<b style="color:${vipCol(x)};">${vipPct(x)}</b>`;
+  const estado = (r) => r.estado === "encendida" ? "🟢 Encendida" : (r.estado === "en_prueba" ? "🧪 En prueba" : "⛔ Apagada por tendencia");
+  const papel = (r) => {
+    if(r.estado === "en_prueba"){
+      const nv = r.nuevos || {};
+      return nv.n ? `nuevos: ${pc(nv.roi)} <span class="vip-dim">· ${nv.n >= meta ? `${vipN(nv.n)} ✓` : `${vipN(nv.n)} de ${meta}`}</span>` : '<span class="vip-dim">sin nuevos</span>';
+    }
+    if(r.rol === "segunda") return "🥈 Segunda línea";
+    if(r.rol === "respaldada") return "⭐ Respaldada";
+    return `<span class="vip-dim">fuera del VIP${r.vip_pct != null ? ` · ${vipFmt(r.vip_pct, 0, false)}% de sus JUGAR son VIP` : ""}</span>`;
+  };
+  const rango = (r) => {
+    if(!r.rango) return '<span class="vip-dim">—</span>';
+    const t = `${Number(r.rango[0]).toFixed(2)}–${Number(r.rango[1]).toFixed(2)}`;
+    const a = r.azar_prob == null ? "" : (r.azar_prob <= 10 ? ` <span style="color:var(--win);">✅ real</span>` : ` <span class="vip-dim">🎲 azar</span>`);
+    return t + a;
+  };
+  const ver = (r) => {
+    if(r.veredicto === "nucleo") return `<b style="color:var(--win);">✅ Núcleo del VIP</b>${r.floja ? `<div style="font-size:11px;color:var(--amber);">⚠️ viene floja: 2ª mitad ${vipPct(r.mitad2)}, 30 días ${vipPct(r.roi30)}</div>` : ""}`;
+    if(r.veredicto === "estable") return '<b style="color:var(--win);">✅ Estable</b><div class="vip-dim" style="font-size:11px;">da JUGAR, pero casi no entra al VIP</div>';
+    if(r.veredicto === "vigilar") return `<b style="color:var(--amber);">⚠️ Vigilar</b><div class="vip-dim" style="font-size:11px;">2ª mitad ${vipPct(r.mitad2)} · 30 días ${vipPct(r.roi30)}</div>`;
+    if(r.veredicto === "candidata") return '<b style="color:var(--win);">⭐ Lista para subir al VIP</b><div class="vip-dim" style="font-size:11px;">cumplió la prueba en vivo</div>';
+    if(r.veredicto === "en_prueba"){
+      const nv = r.nuevos || {}, falta = Math.max(0, meta - (nv.n || 0));
+      const det = falta > 0 ? `faltan ${vipN(falta)} apuestas nuevas${nv.n && nv.roi < 3 ? "; hoy no llega a +3%" : ""}`
+                            : (nv.roi < 3 ? "ya tiene la muestra, pero no llega a +3%" : "ya tiene la muestra, pero una mitad salió negativa");
+      return `🧪 En prueba<div class="vip-dim" style="font-size:11px;">${det}</div>`;
+    }
+    return `<b style="color:var(--loss);">⛔ Apagada</b><div class="vip-dim" style="font-size:11px;">vuelve sola si sus últimos ${rec.dias || 30} días dan ${vipPct(rec.roi_min || 3)} o más con ${rec.min_casos || 15}+ casos (hoy ${vipPct(r.roi30)})</div>`;
+  };
+  const filas = S.map(r => `<tr>
+      <td style="min-width:180px;white-space:normal;">${vipEsc(vipNombreRaw(r.senal))}${(() => { const full = String((ETIQUETAS_BTTS && ETIQUETAS_BTTS[r.senal]) || ""); const resto = full.split(" · ").slice(1).join(" · "); return resto ? `<div class="vip-dim" style="font-size:11px;line-height:1.4;">${vipEsc(resto)}</div>` : ""; })()}</td>
+      <td>${estado(r)}</td>
+      <td style="white-space:normal;min-width:130px;">${papel(r)}</td>
+      <td class="num">${vipN(r.n)}</td>
+      <td class="num">${vipFmt(r.acierto, 1, false)}%</td>
+      <td class="num">${vipFmt(r.cuota_media, 2, false)}</td>
+      <td class="num">${r.n < 10 ? `<span class="vip-dim">${vipPct(r.roi)}<br>poca muestra</span>` : pc(r.roi)}</td>
+      <td class="num">${r.frac_pos != null ? vipFmt(r.frac_pos, 0, false) + "% del tiempo" : "—"}<div class="vip-dim" style="font-size:11px;">${r.semanas ? `${r.semanas_pos} de ${r.semanas} semanas +` : ""}</div></td>
+      <td class="num">${pc(r.mitad1)} → ${pc(r.mitad2)}<div class="vip-dim" style="font-size:11px;">30 días: ${r.n30 ? `${vipPct(r.roi30)} (${vipN(r.n30)})` : "—"}</div></td>
+      <td class="num">${rango(r)}</td>
+      <td style="min-width:170px;white-space:normal;">${ver(r)}</td></tr>`).join("");
+  const JV = M.jugar_vip || {}, JN = M.jugar_no_vip || {};
+  return `
+    <p class="vip-dim" style="font-size:13px;line-height:1.55;margin:0 0 10px;">Todas las señales de BTTS que hoy importan: las <b>encendidas</b>, las que están <b>en prueba</b> y las que se <b>apagaron por tendencia</b>. Se miden con todas sus apariciones y la cuota de la señal, igual que el motor, con partidos resueltos hasta el ${vipFechaCorta(M.hasta)}. Se recalcula cada hora.</p>
+    <div class="vip-verdict" style="margin-bottom:12px;">
+      <p><b>La ventaja está en el filtro del VIP:</b> desde el ${vipFechaCorta(M.jugar_desde)}, los JUGAR que entran al VIP dieron ${pc(JV.roi)} <span class="vip-dim">(${vipN(JV.n)})</span> y los JUGAR que quedan fuera ${pc(JN.roi)} <span class="vip-dim">(${vipN(JN.n)})</span>. Por eso solo se envía el VIP.</p>
+      <p><b>Hoy:</b> ${enc} encendidas (${cnt("nucleo")} forman el VIP, ${cnt("estable")} estables fuera del VIP, ${cnt("vigilar")} a vigilar) · ${cnt("apagada_tendencia")} apagadas por tendencia (vuelven solas si se recuperan) · ${cnt("en_prueba") + cnt("candidata")} en prueba${cnt("candidata") ? ` (<b>${cnt("candidata")} lista${cnt("candidata") > 1 ? "s" : ""} para subir</b>)` : ""}. Una en prueba sube a la Segunda línea con ${meta} apuestas nuevas (que no sean ya VIP), ROI de +3% o más y las dos mitades positivas.</p>
+      <p><b>¿Una señal top nueva?</b> En la revisión del 12 nov se probaron 16.880 reglas con las estadísticas de los equipos, elegidas con julio-septiembre: en octubre-noviembre las 40 mejores dieron una mediana de −4.2% y solo 10 siguieron ganando. Tampoco funcionó el desajuste entre mercados ni el modelo de valor, salvo lo que ya hace Valor detectado. Ninguna pasa la prueba; las candidatas se siguen midiendo en vivo aquí abajo.</p>
+    </div>
+    <div class="vip-scroll"><table class="cmp-table"><thead><tr><th>Señal</th><th>Estado</th><th>Papel en el VIP</th><th class="num">Apuestas</th><th class="num">Acierto</th><th class="num">Cuota media</th><th class="num">ROI</th><th class="num">Estabilidad</th><th class="num">Tendencia<div class="vip-dim" style="font-size:10px;text-transform:none;">1ª → 2ª mitad</div></th><th class="num">Rango de cuota</th><th>Veredicto</th></tr></thead><tbody>${filas}</tbody></table></div>
+    <p class="vip-dim" style="font-size:12px;line-height:1.55;margin:10px 0 0;">«Estabilidad» = % del tiempo en que su ROI acumulado estuvo por encima de 0 (la regla del motor pide 60%) y semanas positivas. «Tendencia» = ROI de la primera y la segunda mitad de su historia y de los últimos 30 días. «Rango de cuota» = el de mayor confianza; «✅ real» si se distingue del azar, «🎲 azar» si no (ver la sección de la frase «✓ cuota de hoy en el rango»). «Núcleo del VIP» = es parte de la Respaldada o de la Segunda línea. Para las en prueba, «nuevos» = sus partidos con cuota 1.40–2.20 que no son ya VIP.</p>`;
+}
+
+// 12 nov 2026: banca y stake del VIP (data.vip_btts.banca, ver backtest._banca_vip)
+function vipBancaHtml(V){
+  const B = V.banca;
+  if(!B || B.error || !B.historial || !B.historial.n) return "";
+  const Hh = B.historial, E = B.enviado || {};
+  const u = Hh.unidad_pct;
+  return `
+    <div class="vip-tiles">
+      ${vipTile("Caída máxima", `−${vipFmt(Hh.caida_max_u, 1, false)} u`, `historial (${vipN(Hh.n)} apuestas)${E.n ? ` · enviado: −${vipFmt(E.caida_max_u, 1, false)} u` : ""}`, "var(--loss)")}
+      ${vipTile("Peor racha", `${vipN(Hh.peor_racha)} fallos seguidos`, E.n ? `enviado: ${vipN(E.peor_racha)} seguidos` : "")}
+      ${vipTile("Peor día", `${vipFmt(Hh.peor_dia_u, 1)} u`, `mejor día ${vipFmt(Hh.mejor_dia_u, 1)} u`, "var(--loss)")}
+      ${vipTile("Picks por día", vipFmt(Hh.picks_por_dia, 1, false), `máximo ${vipN(Hh.max_picks_dia)} en un día${E.n ? ` · enviado: ${vipFmt(E.picks_por_dia, 1, false)} por día` : ""}`)}
+      ${u ? vipTile("Unidad sugerida", `1u = ${vipFmt(u, 1, false)}% de la banca`, "apuesta fija, sin subir tras perder") : ""}
+    </div>
+    ${Hh.caida_tipica_u != null ? `<div class="vip-verdict">
+      <p><b>Cuánto puede caer:</b> simulando ${vipN(Hh.sim_apuestas)} apuestas con los resultados reales del VIP, la caída típica es de unas <b>${vipFmt(Hh.caida_tipica_u, 1, false)} u</b> y una mala (la peor de cada 20) de <b>${vipFmt(Hh.caida_mala_u, 1, false)} u</b>. Si la ventaja desapareciera, una caída mala llegaría a <b>${vipFmt(Hh.caida_sin_ventaja_u, 1, false)} u</b>.</p>
+      <p><b>Por eso 1u = ${vipFmt(u, 1, false)}% de la banca:</b> así, aun en el peor caso sin ventaja, la caída no pasaría de ~${vipFmt(Hh.caida_sin_ventaja_u * u, 0, false)}% de la banca, y en una racha normal se pierde ${vipFmt(Hh.caida_tipica_u * u, 0, false)}% o menos. Apuesta siempre la misma unidad; no la subas para recuperar.</p>
+    </div>` : ""}`;
+}
+
 // 7 nov 2026 (pedido: "que entren al VIP las señales encendidas con «✓ cuota de hoy en el rango»"):
 // la medicion de esos partidos (data.vip_btts.frase_rango, ver cuota_confianza.frase_dia_a_dia). No se envian.
 function vipFraseRangoHtml(V, dia){
@@ -3038,12 +3121,14 @@ function renderVip(data, picks){
     <section>${titulo}${hoyHtml}</section>
     ${vipFormulaHtml(V) ? `<section><p class="section-title">🧮 La fórmula, variable por variable</p>${vipFormulaHtml(V)}</section>` : ""}
     <section><p class="section-title">¿Funciona? En palabras simples</p><div class="vip-verdict">${veredicto}</div></section>
+    ${vipMapaHtml(V) ? `<section><p class="section-title">🧭 Mapa de señales BTTS · estado, estabilidad, ROI y papel en el VIP</p>${vipMapaHtml(V)}</section>` : ""}
     ${vipSegundaHtml(V) ? `<section><p class="section-title">🥈 Segunda línea · qué señales la forman</p>${vipSegundaHtml(V)}</section>` : ""}
     ${V.cuota_alta && V.cuota_alta.n ? `<section><p class="section-title">📈 Cuota alta · ${Number((V.cuota_alta_rango || [1.7])[0]).toFixed(2)} a ${Number((V.cuota_alta_rango || [0, 2.2])[1]).toFixed(2)}</p>${vipCuotaAltaHtml(V, selDia)}</section>` : ""}
     ${vipFraseRangoHtml(V, picks) ? `<section><p class="section-title">🎯 «✓ Cuota de hoy en el rango» en señales encendidas · ¿merece VIP?</p>${vipFraseRangoHtml(V, picks)}</section>` : ""}
     <section><p class="section-title">🔍 ¿Y las señales activas? Lo que se ve en verde contra lo que pasó después</p>${vipConciliacionHtml(V)}</section>
     <section><p class="section-title">🧪 En vivo (la prueba que cuenta)</p>${enVivoHtml}</section>
     <section><p class="section-title">📈 Ganancia acumulada</p>${curvaHtml}</section>
+    ${vipBancaHtml(V) ? `<section><p class="section-title">🏦 Banca y stake · cuánto puede caer y cuánto apostar</p>${vipBancaHtml(V)}</section>` : ""}
     <section><p class="section-title">Comparación por grupo</p>${grupos}</section>
     <section><p class="section-title">Mes a mes (estabilidad)</p>${porMes}</section>
     <section><p class="section-title">Cuánto se queda la casa según la cuota</p>${bandas}</section>
