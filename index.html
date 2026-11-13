@@ -440,6 +440,7 @@
 const TABS = [
   {id:"btts",  label:"Ambos Marcan"},
   {id:"vip",   label:"💎 Selección VIP"},
+  {id:"rango", label:"🎯 En su rango"},
   {id:"o15",   label:"Over 1.5"},
   {id:"o25",   label:"Over 2.5"},
   {id:"combo", label:"BTTS+O2.5"},
@@ -457,6 +458,9 @@ let REGLAS_ACTIVAS_REAL = {};
 // mercado activa (tabActivaAntes) - sin esto, cada refresco de 5 min te
 // devolveria siempre a "Hoy".
 let DIA_SELECCIONADO = "hoy";
+// 13 nov 2026: filtros de la pestaña «En su rango»
+let RANGO_MK = "todos";
+let RANGO_SOLO_ON = false;
 // AGREGADO 24 ago 2026: modo de orden para las listas de "Detalle" -
 // el usuario pidio poder ver las señales ordenadas de mayor a menor
 // ROI%, o de mas a menos unidades ganadas, en vez del orden fijo
@@ -1928,6 +1932,106 @@ function cambiarOrdenDetalle(modo){
 }
 
 // ============================================================================
+// PESTAÑA «EN SU RANGO» (13 nov 2026)
+// ============================================================================
+// Pedido del usuario: "otra pestaña adicional donde se muestren todos los partidos de los diferentes mercados de las
+// señales en su rango de cuota". Lee data.en_rango (backtest.export -> cuota_confianza.lista_en_rango y
+// resumen_en_rango_mercados): por partido y mercado, las señales (encendidas o apagadas) cuya cuota cae dentro de su
+// rango de mayor confianza.
+const RANGO_MERCADOS = ["BTTS", "Over 2.5", "Over 1.5", "Combinada"];
+const RANGO_MK_TXT = {"BTTS": "Ambos Marcan", "Over 2.5": "Over 2.5", "Over 1.5": "Over 1.5", "Combinada": "BTTS + Over 2.5"};
+function cambiarRangoMk(mk){ RANGO_MK = mk; if(DATA) render(DATA); }
+function cambiarRangoOn(v){ RANGO_SOLO_ON = !!v; if(DATA) render(DATA); }
+
+function renderEnRango(data){
+  const E = data.en_rango;
+  if(!E || E.error || !E.lista) return '<div class="empty">Todavía no hay datos de esta pestaña. Corre el workflow una vez con el backtest.py nuevo.</div>';
+  const fechaSel = {hoy: data.hoy_referencia, manana: data.manana_referencia, pasado: data.pasado_manana_referencia}[DIA_SELECCIONADO] || data.hoy_referencia;
+  const hoyRef = data.hoy_referencia || "";
+  const on = (s) => REGLAS_ACTIVAS_REAL[s] === true;
+  const pc = (x) => x == null ? '<span class="vip-dim">—</span>' : `<b style="color:${vipCol(x)};">${vipPct(x)}</b>`;
+  const st = (o) => (o && o.bets) ? `${vipFmt(o.acierto_pct, 1, false)}% <span class="vip-dim">· ${vipN(o.bets)}</span> · ${pc(o.roi_pct)} <span class="vip-dim">· ${o.profit_u >= 0 ? "+" : ""}${vipFmt(o.profit_u, 1, false)}u</span>` : '<span class="vip-dim">—</span>';
+  // filas (partido x mercado) que pasan los filtros
+  const filas = [];
+  for(const x of E.lista){
+    for(const mk of RANGO_MERCADOS){
+      const m = x.m && x.m[mk];
+      if(!m) continue;
+      if(RANGO_MK !== "todos" && RANGO_MK !== mk) continue;
+      const sen = RANGO_SOLO_ON ? m.s.filter(z => on(z[0])) : m.s;
+      if(!sen.length) continue;
+      filas.push({x, mk, m, sen});
+    }
+  }
+  const ordenMk = (mk) => RANGO_MERCADOS.indexOf(mk);
+  const nOnF = (f) => f.sen.filter(z => on(z[0])).length;
+  const delDia = filas.filter(f => f.x.fecha === fechaSel)
+    .sort((a, b) => ordenMk(a.mk) - ordenMk(b.mk) || nOnF(b) - nOnF(a) || b.sen.length - a.sen.length || a.m.cuota - b.m.cuota);
+  const pasadas = filas.filter(f => f.x.fecha < hoyRef && f.m.res != null);
+  const cuenta = (mk) => filas.filter(f => f.x.fecha === fechaSel && (mk === "todos" || f.mk === mk)).length;
+  const chip = (mk, txt) => `<button onclick="cambiarRangoMk('${mk}')" class="tab-btn ${RANGO_MK === mk ? "active" : ""}" style="padding:4px 12px;font-size:12px;">${txt} <span class="vip-dim">(${cuenta(mk)})</span></button>`;
+  const decTxt = (f) => {
+    const d = f.m.dec;
+    let t = d === "JUGAR" ? '<b style="color:var(--win);">JUGAR</b>' : (d === "VIP" ? '<b style="color:var(--win);">VIP</b>' : (d && d !== "—" ? `<span class="vip-dim">${vipEsc(d)}</span>` : '<span class="vip-dim">—</span>'));
+    if(f.m.vip) t += `<div style="font-size:11px;color:var(--win);">💎 ${vipEsc(String(f.m.vip).replace("_", " ").toLowerCase())}</div>`;
+    return t;
+  };
+  const resTxt = (m) => m.res == null ? '<span class="vip-dim">⏳</span>' : (m.res ? '<b style="color:var(--win);">✅ Ganada</b>' : '<b style="color:var(--loss);">❌ Perdida</b>');
+  // encendidas primero (de mayor a menor ROI en su rango); se muestran 3 y el resto queda en "+N más"
+  const senUna = (mk, z) => `<div style="line-height:1.45;" title="${vipEsc(ccNombreCompleto(mk, z[0]))}">${on(z[0]) ? "🟢" : "⚪"} ${vipEsc(ccNombre(mk, z[0]))} <span class="vip-dim">${Number(z[1]).toFixed(2)}–${Number(z[2]).toFixed(2)}${z[3] != null ? ` · ${vipPct(z[3])}` : ""}</span></div>`;
+  const senTxt = (f) => {
+    const L = [...f.sen].sort((a, b) => (on(b[0]) - on(a[0])) || ((b[3] || 0) - (a[3] || 0)));
+    const nOn = L.filter(z => on(z[0])).length;
+    const cab = `<div class="vip-dim" style="font-size:11px;margin-bottom:2px;">${vipN(L.length)} señal${L.length === 1 ? "" : "es"} en su rango${nOn ? ` · <span style="color:var(--win);">${vipN(nOn)} encendida${nOn === 1 ? "" : "s"}</span>` : ""}</div>`;
+    const top = L.slice(0, 3).map(z => senUna(f.mk, z)).join("");
+    const resto = L.slice(3);
+    return cab + top + (resto.length ? `<details><summary class="vip-dim" style="cursor:pointer;font-size:11px;">+${vipN(resto.length)} más</summary>${resto.map(z => senUna(f.mk, z)).join("")}</details>` : "");
+  };
+  const fila = (f, conFecha) => `<tr>
+      <td style="min-width:170px;white-space:normal;">${conFecha ? `<span class="vip-dim">${vipFechaCorta(f.x.fecha)}</span> · ` : ""}${vipEsc(f.x.local)} vs ${vipEsc(f.x.visitante)}<div class="vip-dim" style="font-size:11px;">${vipEsc(f.x.liga || "")}</div></td>
+      <td>${vipEsc(RANGO_MK_TXT[f.mk] || f.mk)}</td>
+      <td class="num"><b>${Number(f.m.cuota).toFixed(2)}</b></td>
+      <td style="min-width:220px;white-space:normal;font-size:12px;">${senTxt(f)}</td>
+      <td>${decTxt(f)}</td>
+      <td>${resTxt(f.m)}</td></tr>`;
+  const cab = '<thead><tr><th>Partido</th><th>Mercado</th><th class="num">Cuota</th><th>Señales con la cuota en su rango<div class="vip-dim" style="font-size:10px;text-transform:none;">🟢 encendida · ⚪ apagada · rango · ROI en el rango</div></th><th>Sistema</th><th>Resultado</th></tr></thead>';
+  // resumen de los ultimos dias (ya jugados), por mercado, a la cuota mostrada
+  const resumenPasado = (lista) => {
+    const n = lista.length; if(!n) return null;
+    const g = lista.filter(f => f.m.res).length;
+    const u = lista.reduce((a, f) => a + (f.m.res ? f.m.cuota - 1 : -1), 0);
+    return {bets: n, acierto_pct: g / n * 100, roi_pct: u / n * 100, profit_u: u};
+  };
+  const filasPasado = RANGO_MERCADOS.filter(mk => RANGO_MK === "todos" || RANGO_MK === mk).map(mk => {
+    const L = pasadas.filter(f => f.mk === mk);
+    const Lon = L.filter(f => f.sen.some(z => on(z[0])));
+    return `<tr><td>${vipEsc(RANGO_MK_TXT[mk])}</td><td class="num">${st(resumenPasado(L))}</td><td class="num">${st(resumenPasado(Lon))}</td></tr>`;
+  }).join("");
+  const R = E.resumen || {};
+  const filasHist = RANGO_MERCADOS.filter(mk => R[mk]).map(mk => `<tr><td>${vipEsc(RANGO_MK_TXT[mk])}<div class="vip-dim" style="font-size:11px;">${vipN(R[mk].n_senales)} señal${R[mk].n_senales === 1 ? "" : "es"} con rango</div></td><td class="num">${st(R[mk].partidos)}</td><td class="num">${st(R[mk].partidos_semana)}</td></tr>`).join("");
+  const diaTxt = DIA_SELECCIONADO === "hoy" ? "de hoy" : (DIA_SELECCIONADO === "manana" ? "de mañana" : "de pasado mañana");
+  return `
+    <section><p class="section-title">🎯 Partidos con señales en su rango de cuota · ${vipFechaCorta(fechaSel)}</p>
+      <p class="vip-dim" style="font-size:13px;line-height:1.55;margin:0 0 10px;">Todos los partidos ${diaTxt} en los que alguna señal, <b>encendida o apagada</b>, tiene la cuota dentro de su <b>rango de mayor ganancia</b>, en los 4 mercados. Es la misma frase «✓ cuota de hoy en el rango» de las tarjetas, reunida en un solo lugar. El día se cambia arriba (Hoy / Mañana / Pasado mañana). <b>No es una selección para apostar</b>: el VIP sigue siendo lo que se envía.</p>
+      <div style="display:flex;flex-wrap:wrap;gap:6px;align-items:center;margin:0 0 10px;">
+        ${chip("todos", "Todos")}${RANGO_MERCADOS.map(mk => chip(mk, RANGO_MK_TXT[mk])).join("")}
+        <label style="margin-left:8px;font-size:12px;cursor:pointer;"><input type="checkbox" ${RANGO_SOLO_ON ? "checked" : ""} onchange="cambiarRangoOn(this.checked)"> Solo señales encendidas</label>
+      </div>
+      ${delDia.length ? `<p class="vip-dim" style="font-size:12px;margin:0 0 6px;">${vipN(delDia.length)} partido${delDia.length === 1 ? "" : "s"} · ${vipN(delDia.filter(f => nOnF(f) > 0).length)} con al menos una señal encendida en su rango. Primero los de más señales encendidas.</p><div class="vip-scroll"><table class="cmp-table">${cab}<tbody>${delDia.map(f => fila(f, false)).join("")}</tbody></table></div>`
+                      : '<div class="empty">No hay partidos con señales en su rango para este día y este filtro.</div>'}
+    </section>
+    <section><p class="section-title">📅 Cómo les fue · últimos ${vipN(E.dias_atras)} días (partidos ya jugados)</p>
+      <div class="vip-scroll vip-corta"><table class="cmp-table"><thead><tr><th>Mercado</th><th class="num">Todas las señales en su rango<div class="vip-dim" style="font-size:10px;text-transform:none;">acierto · partidos · ROI · unidades</div></th><th class="num">Con al menos una encendida</th></tr></thead><tbody>${filasPasado}</tbody></table></div>
+      <p class="vip-dim" style="font-size:12px;line-height:1.55;margin:8px 0 0;">Cada partido cuenta una vez por mercado, a la cuota que se muestra. Del ${vipFechaCorta(E.desde)} a ayer. Se mide con el rango de hoy, que ya incluye estos partidos, así que sale un poco optimista.</p>
+      ${pasadas.length ? `<details style="margin-top:10px;"><summary class="vip-dim" style="cursor:pointer;">Ver los ${vipN(pasadas.length)} partidos jugados</summary><div class="vip-scroll" style="margin-top:8px;"><table class="cmp-table">${cab}<tbody>${pasadas.sort((a, b) => b.x.fecha.localeCompare(a.x.fecha) || ordenMk(a.mk) - ordenMk(b.mk)).map(f => fila(f, true)).join("")}</tbody></table></div></details>` : ""}
+    </section>
+    ${filasHist ? `<section><p class="section-title">📊 Todo el historial · todas las señales en su rango</p>
+      <div class="vip-scroll vip-corta"><table class="cmp-table"><thead><tr><th>Mercado</th><th class="num">Con el rango de hoy<div class="vip-dim" style="font-size:10px;text-transform:none;">mirando hacia atrás</div></th><th class="num">Con el rango de cada semana<div class="vip-dim" style="font-size:10px;text-transform:none;">la prueba justa</div></th></tr></thead><tbody>${filasHist}</tbody></table></div>
+      <p class="vip-dim" style="font-size:12px;line-height:1.55;margin:8px 0 0;">Acierto · partidos · ROI · unidades. Cada partido cuenta una vez por mercado. El rango de hoy se eligió con esos mismos partidos, así que hacia atrás casi siempre gana; la columna de la derecha usa el rango que cada señal tenía al empezar cada semana (solo con sus partidos anteriores), que es lo que habría visto quien apostaba.</p>
+    </section>` : ""}`;
+}
+
+// ============================================================================
 // SELECCION VIP DE BTTS (30 oct 2026)
 // ============================================================================
 // Toda la medicion llega calculada en dashboard_data.json -> "vip_btts"
@@ -3391,6 +3495,7 @@ function render(data){
 
   const panels = {
     vip: renderVip(data, picks),
+    rango: renderEnRango(data),
     btts: renderMercado(picks, "prob_btts_calibrada", "nivel_final", "senal_btts_optimizada", "cuota_btts", "¿Ambos equipos marcan?", "resultado_btts", "btts", "motivo_btts") + historialBtts,
     o15: renderMercado(picks, "prob_o15_calibrada", "sug_o15", "senal_o15_tier", "cuota_o15", "¿Más de 1.5 goles?", "resultado_o15", "o15", "motivo_o15") + historialO15,
     o25: renderMercado(picks, "prob_o25_calibrada", "sug_o25", "senal_o25", "cuota_o25", "¿Más de 2.5 goles?", "resultado_o25", "o25", "motivo_o25") + historialO25,
