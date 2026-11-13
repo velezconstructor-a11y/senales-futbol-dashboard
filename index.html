@@ -461,6 +461,7 @@ let DIA_SELECCIONADO = "hoy";
 // 13 nov 2026: filtros de la pestaña «En su rango»
 let RANGO_MK = "todos";
 let RANGO_SOLO_ON = false;
+let RANGO_SOLO_JUGAR = false;   // 13 nov 2026
 // AGREGADO 24 ago 2026: modo de orden para las listas de "Detalle" -
 // el usuario pidio poder ver las señales ordenadas de mayor a menor
 // ROI%, o de mas a menos unidades ganadas, en vez del orden fijo
@@ -1942,6 +1943,8 @@ const RANGO_MERCADOS = ["BTTS", "Over 2.5", "Over 1.5", "Combinada"];
 const RANGO_MK_TXT = {"BTTS": "Ambos Marcan", "Over 2.5": "Over 2.5", "Over 1.5": "Over 1.5", "Combinada": "BTTS + Over 2.5"};
 function cambiarRangoMk(mk){ RANGO_MK = mk; if(DATA) render(DATA); }
 function cambiarRangoOn(v){ RANGO_SOLO_ON = !!v; if(DATA) render(DATA); }
+function cambiarRangoJugar(v){ RANGO_SOLO_JUGAR = !!v; if(DATA) render(DATA); }
+const RANGO_JUGAR_VAL = {"BTTS": "JUGAR", "Over 2.5": "JUGAR", "Over 1.5": "JUGAR", "Combinada": "VIP"};
 
 function renderEnRango(data){
   const E = data.en_rango;
@@ -1958,6 +1961,7 @@ function renderEnRango(data){
       const m = x.m && x.m[mk];
       if(!m) continue;
       if(RANGO_MK !== "todos" && RANGO_MK !== mk) continue;
+      if(RANGO_SOLO_JUGAR && m.dec !== RANGO_JUGAR_VAL[mk]) continue;
       const sen = RANGO_SOLO_ON ? m.s.filter(z => on(z[0])) : m.s;
       if(!sen.length) continue;
       filas.push({x, mk, m, sen});
@@ -2009,6 +2013,18 @@ function renderEnRango(data){
   }).join("");
   const R = E.resumen || {};
   const filasHist = RANGO_MERCADOS.filter(mk => R[mk]).map(mk => `<tr><td>${vipEsc(RANGO_MK_TXT[mk])}<div class="vip-dim" style="font-size:11px;">${vipN(R[mk].n_senales)} señal${R[mk].n_senales === 1 ? "" : "es"} con rango</div></td><td class="num">${st(R[mk].partidos)}</td><td class="num">${st(R[mk].partidos_semana)}</td></tr>`).join("");
+  // 13 nov 2026: con "Solo los que dicen JUGAR", cuanto acerto historicamente esa misma seleccion, por mercado
+  const R0 = E.resumen || {};
+  const kHoy = RANGO_SOLO_ON ? "jugar_on_partidos" : "jugar_partidos", kSem = kHoy + "_semana";
+  const mksEsp = RANGO_MERCADOS.filter(mk => (RANGO_MK === "todos" || RANGO_MK === mk) && R0[mk] && R0[mk][kSem] && R0[mk][kSem].bets);
+  const minimo = (o) => (o && o.cuota_prom) ? `${vipFmt(100 / o.cuota_prom, 0, false)}%` : "—";
+  const esperadoHtml = RANGO_SOLO_JUGAR ? (mksEsp.length ? `<div class="vip-verdict" style="margin:0 0 12px;">
+      <p><b>¿Cuánto acertó esta misma selección en el historial?</b> (JUGAR + ${RANGO_SOLO_ON ? "al menos una señal <b>encendida</b>" : "cualquier señal"} en su rango)</p>
+      <div class="vip-scroll vip-corta"><table class="cmp-table"><thead><tr><th>Mercado</th><th class="num">Prueba justa<div class="vip-dim" style="font-size:10px;text-transform:none;">rango de cada semana</div></th><th class="num">Acierto mínimo<div class="vip-dim" style="font-size:10px;text-transform:none;">para no perder</div></th><th class="num">Mirando hacia atrás<div class="vip-dim" style="font-size:10px;text-transform:none;">rango de hoy</div></th></tr></thead><tbody>
+        ${mksEsp.map(mk => `<tr><td>${vipEsc(RANGO_MK_TXT[mk])}</td><td class="num">${st(R0[mk][kSem])}</td><td class="num">${minimo(R0[mk][kSem])}</td><td class="num">${st(R0[mk][kHoy])}</td></tr>`).join("")}
+      </tbody></table></div>
+      <p class="vip-dim" style="font-size:12px;margin-top:6px;">La «prueba justa» es lo que se puede esperar: juzga cada partido con el rango que la señal tenía esa semana. «Mirando hacia atrás» sale más alto porque el rango de hoy se eligió con esos mismos partidos.${RANGO_SOLO_ON ? "" : " Marca también «Solo señales encendidas»: esa selección aguanta mejor."}</p>
+    </div>` : '<div class="empty" style="margin:0 0 12px;">Todavía no hay historial de esta selección: corre el workflow con el backtest.py nuevo.</div>') : "";
   const diaTxt = DIA_SELECCIONADO === "hoy" ? "de hoy" : (DIA_SELECCIONADO === "manana" ? "de mañana" : "de pasado mañana");
   return `
     <section><p class="section-title">🎯 Partidos con señales en su rango de cuota · ${vipFechaCorta(fechaSel)}</p>
@@ -2016,7 +2032,9 @@ function renderEnRango(data){
       <div style="display:flex;flex-wrap:wrap;gap:6px;align-items:center;margin:0 0 10px;">
         ${chip("todos", "Todos")}${RANGO_MERCADOS.map(mk => chip(mk, RANGO_MK_TXT[mk])).join("")}
         <label style="margin-left:8px;font-size:12px;cursor:pointer;"><input type="checkbox" ${RANGO_SOLO_ON ? "checked" : ""} onchange="cambiarRangoOn(this.checked)"> Solo señales encendidas</label>
+        <label style="margin-left:8px;font-size:12px;cursor:pointer;"><input type="checkbox" ${RANGO_SOLO_JUGAR ? "checked" : ""} onchange="cambiarRangoJugar(this.checked)"> Solo los que dicen JUGAR</label>
       </div>
+      ${esperadoHtml}
       ${delDia.length ? `<p class="vip-dim" style="font-size:12px;margin:0 0 6px;">${vipN(delDia.length)} partido${delDia.length === 1 ? "" : "s"} · ${vipN(delDia.filter(f => nOnF(f) > 0).length)} con al menos una señal encendida en su rango. Primero los de más señales encendidas.</p><div class="vip-scroll"><table class="cmp-table">${cab}<tbody>${delDia.map(f => fila(f, false)).join("")}</tbody></table></div>`
                       : '<div class="empty">No hay partidos con señales en su rango para este día y este filtro.</div>'}
     </section>
