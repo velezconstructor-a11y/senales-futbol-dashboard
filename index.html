@@ -1827,7 +1827,11 @@ function ccNombre(mk, s){
   const d = mk === "BTTS" ? ETIQUETAS_BTTS : (mk === "Over 2.5" ? ETIQUETAS_O25 : (mk === "Over 1.5" ? ETIQUETAS_O15 : ETIQUETAS_COMBO));
   const partes = String((d && d[s]) || s).split(" · ");
   // las señales "Índice" comparten el primer nombre: se agrega el tramo (20% / 10% / 5% más alto)
-  return (s.startsWith("idx_") && partes[1]) ? partes[0] + " " + partes[1] : partes[0];
+  if(s.startsWith("idx_") && partes[1]) return partes[0] + " " + partes[1];
+  // 13 nov 2026: varias de Over 2.5 se llaman solo por su banda de cuota ("🎯 cuota 1.55-1.65 · xGA máx≤1.4 + ..."):
+  // se agrega la fórmula para poder distinguirlas
+  if(/^\W*cuota\s/i.test(partes[0]) && partes[1]) return partes[0] + " · " + partes[1];
+  return partes[0];
 }
 // 2 nov 2026 (ajuste): solo cuentan las señales ENCENDIDAS hoy; se muestra la de mayor ROI y el resto queda en el detalle.
 // 7 nov 2026: nombre COMPLETO de la señal (con su formula), para la tabla de cuota de mayor confianza
@@ -2026,6 +2030,39 @@ function renderEnRango(data){
       <p class="vip-dim" style="font-size:12px;margin-top:6px;">La «prueba justa» es lo que se puede esperar: juzga cada partido con el rango que la señal tenía esa semana. «Mirando hacia atrás» sale más alto porque el rango de hoy se eligió con esos mismos partidos.${RANGO_SOLO_ON ? "" : " Marca también «Solo señales encendidas»: esa selección aguanta mejor."}</p>
     </div>` : '<div class="empty" style="margin:0 0 12px;">Todavía no hay historial de esta selección: corre el workflow con el backtest.py nuevo.</div>') : "";
   const diaTxt = DIA_SELECCIONADO === "hoy" ? "de hoy" : (DIA_SELECCIONADO === "manana" ? "de mañana" : "de pasado mañana");
+  // 13 nov 2026 (pedido: "cuales de las señales apagadas en su rango son estables para meterlas dentro de la alta
+  // confiabilidad"): prueba justa semana a semana, data.en_rango.alta_conf (cuota_confianza.prueba_alta_confiabilidad)
+  const AC = (E.alta_conf && !E.alta_conf.error) ? E.alta_conf : null;
+  const mksAC = AC ? RANGO_MERCADOS.filter(mk => AC[mk] && (((AC[mk].apagadas_estables || {}).bets) || ((AC[mk].encendidas || {}).bets))) : [];
+  const sumanAC = (o) => { const a = o.apagadas_estables || {}, e = o.encendidas || {}, c = o.con_apagadas || {};
+    return a.bets >= 100 && a.roi_pct > 2 && (!e.bets || c.roi_pct >= e.roi_pct); };
+  const verAC = (o) => {
+    const a = o.apagadas_estables || {};
+    if(!a.bets) return '<span class="vip-dim">no hay apagadas estables</span>';
+    if(sumanAC(o)) return '<b style="color:var(--win);">✅ Podrían entrar</b>';
+    if(a.roi_pct <= 0) return '<b style="color:var(--loss);">❌ No entran</b><div class="vip-dim" style="font-size:11px;">después perdieron</div>';
+    if(a.bets < 100) return '<b style="color:var(--amber);">⏳ Todavía no</b><div class="vip-dim" style="font-size:11px;">poca muestra</div>';
+    return `<b style="color:var(--loss);">❌ No entran</b><div class="vip-dim" style="font-size:11px;">${a.roi_pct <= 2 ? "quedaron casi en cero" : "bajan el ROI de las encendidas"}</div>`;
+  };
+  const mesesAC = (o) => Object.entries(o.apagadas_por_mes || {}).filter(([m, z]) => z.bets >= 10)
+    .map(([m, z]) => `${MESES_ES[parseInt(m.slice(5, 7), 10) - 1]} <span style="color:${vipCol(z.roi_pct)};">${vipPct(z.roi_pct)}</span>`).join(" · ");
+  const minAC = (o) => (o && o.cuota_prom) ? `<div class="vip-dim" style="font-size:11px;">acierto mínimo ${vipFmt(100 / o.cuota_prom, 0, false)}%</div>` : "";
+  const celAC = "white-space:normal;min-width:130px;";
+  const st2AC = (o) => (o && o.bets) ? `<b style="color:${vipCol(o.roi_pct)};">${vipPct(o.roi_pct)}</b> <span class="vip-dim" style="font-size:11px;">ROI</span><div class="vip-dim" style="font-size:11px;">${vipFmt(o.acierto_pct, 1, false)}% · ${vipN(o.bets)} partidos · ${o.profit_u >= 0 ? "+" : ""}${vipFmt(o.profit_u, 1, false)}u</div>` : '<span class="vip-dim">—</span>';
+  const okAC = mksAC.filter(mk => sumanAC(AC[mk]));
+  const hoyAC = mksAC.filter(mk => (AC[mk].apagadas_hoy || []).length).map(mk => `<p style="font-size:13px;"><b>${vipEsc(RANGO_MK_TXT[mk] || mk)}:</b> ${AC[mk].apagadas_hoy.map(z => `${vipEsc(ccNombre(mk, z.senal))} <span class="vip-dim">(${Number(z.rango[0]).toFixed(2)}–${Number(z.rango[1]).toFixed(2)} · ${vipPct(z.roi)} en ${vipN(z.n)}${z.estado === "en_prueba" ? " · en prueba" : ""})</span>`).join(", ")}.</p>`).join("");
+  const altaConfHtml = mksAC.length ? `<section><p class="section-title">⭐ Alta confiabilidad: ¿entran las apagadas que se ven estables?</p>
+      <p class="vip-dim" style="font-size:13px;line-height:1.55;margin:0 0 10px;">Si una señal <b>apagada</b> se ve estable dentro de su rango (mismo criterio que «💎 Señales muy estables» del VIP), ¿conviene tratarla como encendida? <b>Prueba justa:</b> al empezar cada semana, cada señal se juzga solo con sus partidos anteriores (su rango y su estabilidad) y se miden los partidos de esa semana con la cuota dentro de ese rango.</p>
+      <div class="vip-verdict" style="margin:0 0 12px;">
+        <p>${okAC.length ? `En <b>${okAC.map(mk => vipEsc(RANGO_MK_TXT[mk] || mk)).join(" y ")}</b> las apagadas estables sí ganaron después: podrían sumarse (revísalo antes de encender nada).`
+          : "Alta confiabilidad = solo las 🟢 <b>encendidas</b>. <b>Ninguna apagada entra:</b> las que se veían estables en su rango, juzgadas solo con su pasado, después no ganaron, y sumarlas baja el ROI."}</p>
+        ${hoyAC ? `<p class="vip-dim" style="font-size:12px;margin-top:8px;">Apagadas que hoy se ven estables en su rango (rango · ROI dentro · partidos):</p>${hoyAC}` : ""}
+      </div>
+      <div class="vip-scroll vip-corta"><table class="cmp-table"><thead><tr><th>Mercado</th><th class="num" style="white-space:normal;">Solo encendidas</th><th class="num" style="white-space:normal;">Encendidas + apagadas estables</th><th class="num" style="white-space:normal;">Solo las apagadas estables<div class="vip-dim" style="font-size:10px;text-transform:none;">mes a mes</div></th><th>Veredicto</th></tr></thead><tbody>
+        ${mksAC.map(mk => { const o = AC[mk]; return `<tr><td>${vipEsc(RANGO_MK_TXT[mk] || mk)}</td><td class="num" style="${celAC}">${st2AC(o.encendidas)}</td><td class="num" style="${celAC}">${st2AC(o.con_apagadas)}</td><td class="num" style="${celAC}">${st2AC(o.apagadas_estables)}${minAC(o.apagadas_estables)}${mesesAC(o) ? `<div style="font-size:11px;">${mesesAC(o)}</div>` : ""}</td><td style="min-width:110px;white-space:normal;">${verAC(o)}</td></tr>`; }).join("")}
+      </tbody></table></div>
+      <p class="vip-dim" style="font-size:12px;line-height:1.55;margin:8px 0 0;">ROI arriba; debajo acierto · partidos · unidades. Cada partido cuenta una vez por mercado, a la cuota de la señal. «Solo encendidas» usa la lista de encendidas de hoy, así que sale algo optimista. Entrarían si ganan después con 100+ partidos, ROI de más de +2% y sin bajar el ROI de las encendidas. Se recalcula cada hora. No es garantía ni consejo financiero.</p>
+    </section>` : "";
   return `
     <section><p class="section-title">🎯 Partidos con señales en su rango de cuota · ${vipFechaCorta(fechaSel)}</p>
       <p class="vip-dim" style="font-size:13px;line-height:1.55;margin:0 0 10px;">Todos los partidos ${diaTxt} en los que alguna señal, <b>encendida o apagada</b>, tiene la cuota dentro de su <b>rango de mayor ganancia</b>, en los 4 mercados. Es la misma frase «✓ cuota de hoy en el rango» de las tarjetas, reunida en un solo lugar. El día se cambia arriba (Hoy / Mañana / Pasado mañana). <b>No es una selección para apostar</b>: el VIP sigue siendo lo que se envía.</p>
@@ -2046,7 +2083,8 @@ function renderEnRango(data){
     ${filasHist ? `<section><p class="section-title">📊 Todo el historial · todas las señales en su rango</p>
       <div class="vip-scroll vip-corta"><table class="cmp-table"><thead><tr><th>Mercado</th><th class="num">Con el rango de hoy<div class="vip-dim" style="font-size:10px;text-transform:none;">mirando hacia atrás</div></th><th class="num">Con el rango de cada semana<div class="vip-dim" style="font-size:10px;text-transform:none;">la prueba justa</div></th></tr></thead><tbody>${filasHist}</tbody></table></div>
       <p class="vip-dim" style="font-size:12px;line-height:1.55;margin:8px 0 0;">Acierto · partidos · ROI · unidades. Cada partido cuenta una vez por mercado. El rango de hoy se eligió con esos mismos partidos, así que hacia atrás casi siempre gana; la columna de la derecha usa el rango que cada señal tenía al empezar cada semana (solo con sus partidos anteriores), que es lo que habría visto quien apostaba.</p>
-    </section>` : ""}`;
+    </section>` : ""}
+    ${altaConfHtml}`;
 }
 
 // ============================================================================
@@ -2936,6 +2974,8 @@ function vipEstabHtml(V){
   const top = S.filter(r => r.veredicto !== "a_medias"), resto = S.filter(r => r.veredicto === "a_medias");
   const nombres = (k) => S.filter(r => r.veredicto === k).map(r => `${vipEsc(vipNombreRaw(r.senal))} <span class="vip-dim">(${Number(r.rango[0]).toFixed(2)}–${Number(r.rango[1]).toFixed(2)})</span>`).join(", ");
   const apEst = S.filter(r => r.veredicto === "estable" && (r.estado === "apagada" || r.estado === "apagada_tendencia"));
+  // 13 nov 2026: prueba justa semana a semana de las apagadas «estables» (data.en_rango.alta_conf, misma cifra que la pestaña «En su rango»)
+  const acApag = (((DATA && DATA.en_rango && DATA.en_rango.alta_conf) || {}).BTTS || {}).apagadas_estables;
   const reales = S.filter(r => r.azar_prob != null && r.azar_prob <= 10 && r.veredicto !== "a_medias");
   const fuera = S.filter(r => r.veredicto.startsWith("muy_estable") && r.vip_fuera && r.vip_fuera.n >= 10);
   const cab = `<thead><tr><th>Señal</th><th>Estado</th><th class="num">Rango de cuota</th><th class="num">Dentro del rango</th><th class="num">4 tramos de tiempo<div class="vip-dim" style="font-size:10px;text-transform:none;">ROI de cada cuarto de su historia</div></th><th class="num">Semanas +</th><th class="num">Últimos 30 días</th><th class="num">Sin trampa<div class="vip-dim" style="font-size:10px;text-transform:none;">rango de cada día</div></th><th class="num">En el VIP<div class="vip-dim" style="font-size:10px;text-transform:none;">dentro / fuera del rango</div></th><th>Veredicto</th></tr></thead>`;
@@ -2946,7 +2986,7 @@ function vipEstabHtml(V){
       ${nombres("muy_estable_corta") ? `<p><b>💎 Muy estables, pero con historia corta</b> (menos de ${vipN(E.min_semanas)} semanas o poca prueba sin trampa): ${nombres("muy_estable_corta")}.</p>` : ""}
       ${reales.length ? `<p><b>Rango que se distingue del azar:</b> ${reales.map(r => vipEsc(vipNombreRaw(r.senal))).join(", ")}. En las demás, el rango ayuda a describir dónde ganó, pero no es una prueba de que ahí gane más.</p>` : ""}
       ${fuera.length ? `<p><b>El VIP juega fuera de su rango:</b> ${fuera.map(r => `${vipEsc(vipNombreRaw(r.senal))}: dentro ${xn(r.vip_dentro)}, fuera ${xn(r.vip_fuera)}`).join(" · ")}.</p>` : ""}
-      ${apEst.length ? `<p><b>Apagadas que se ven estables en su rango:</b> ${apEst.map(r => vipEsc(vipNombreRaw(r.senal))).join(", ")}. No se encienden todavía: su prueba sin trampa tiene pocos partidos y algún tramo negativo.</p>` : ""}
+      ${apEst.length ? `<p><b>Apagadas que se ven estables en su rango:</b> ${apEst.map(r => vipEsc(vipNombreRaw(r.senal))).join(", ")}. No se encienden todavía: su prueba sin trampa tiene pocos partidos y algún tramo negativo.${acApag && acApag.bets ? ` Y ojo: probado semana a semana (cada señal juzgada solo con su pasado), las apagadas de BTTS que se veían estables en su rango dieron después <b>${vipFmt(acApag.acierto_pct, 1, false)}%</b> de acierto y <b style="color:${vipCol(acApag.roi_pct)};">${vipPct(acApag.roi_pct)}</b> de ROI en ${vipN(acApag.bets)} partidos (detalle en la pestaña «🎯 En su rango»).` : ""}</p>` : ""}
     </div>
     <div class="vip-scroll"><table class="cmp-table">${cab}<tbody>${top.map(fila).join("")}</tbody></table></div>
     ${resto.length ? `<details style="margin-top:10px;"><summary class="vip-dim" style="cursor:pointer;">Ver las ${vipN(resto.length)} que no son estables dentro de su rango</summary><div class="vip-scroll" style="margin-top:8px;"><table class="cmp-table">${cab}<tbody>${resto.map(fila).join("")}</tbody></table></div></details>` : ""}
