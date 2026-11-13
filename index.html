@@ -1519,6 +1519,31 @@ function renderTickets(comparativo){
   }).join("");
 }
 
+// 12 nov 2026 (pedido del usuario): en "Por mercado", el % de acierto de la Seleccion VIP de BTTS y el de las señales
+// BTTS activas solo cuando la cuota cae en el rango de mayor ganancia de su señal (data.vip_btts.tarjetas_btts).
+function renderTicketsBttsExtra(data){
+  const T = (data && data.vip_btts && data.vip_btts.tarjetas_btts) || null;
+  if(!T || T.error) return "";
+  const u = (s) => nOf(s) ? `${s.profit_u >= 0 ? "+" : ""}${Number(s.profit_u).toFixed(1)}u` : "—";
+  const corto = (s) => nOf(s) ? `${Number(s.acierto_pct).toFixed(0)}% · ${nOf(s)} casos · ${u(s)}` : "—";
+  const tk = (nombre, s, sub, titulo) => {
+    const cls = statusClass(s), n = nOf(s);
+    return `
+      <div class="ticket"${titulo ? ` title="${vipEsc(titulo)}"` : ""}>
+        <div class="ticket-name"><span>${nombre}</span><span class="ticket-status ${cls}"></span></div>
+        <div class="ticket-pct">${pctTxt(s)}</div>
+        <div class="ticket-meta"><span>${n} caso${n === 1 ? "" : "s"}</span><span class="ticket-units ${cls}">${u(s)}</span></div>
+        ${sub ? `<div style="font-family:var(--mono);font-size:11px;color:var(--chalk-dim);margin-top:8px;line-height:1.45;">${sub}</div>` : ""}
+      </div>`;
+  };
+  return tk("BTTS · Selección VIP", T.vip,
+            `en vivo desde el ${vipFechaCorta(T.vip_desde_vivo)}: ${corto(T.vip_vivo)}`,
+            "Lo que va al VIP de BTTS (Respaldada + Segunda línea), todo el historial, con el precio de la alerta o el primero visto. Es el mismo número de la pestaña VIP.")
+       + (T.rango_todas && nOf(T.rango_todas.partidos) ? tk("BTTS · todas las señales en su rango", T.rango_todas.partidos,
+            `cada señal por separado: ${corto(T.rango_todas.senales)}<br>con el rango que tenía cada semana: ${corto(T.rango_todas.partidos_semana)}`,
+            `Las ${T.rango_todas.n_senales} señales de BTTS con rango de mayor ganancia (encendidas y apagadas), con todos sus partidos, JUGAR o no, contados solo cuando la cuota cae dentro del rango de su señal. Cada partido cuenta una vez. El número grande usa el rango de hoy, que se eligió con esos mismos partidos (sale optimista); la última línea usa el rango que cada señal tenía al empezar cada semana.`) : "");
+}
+
 function renderCmpTable(comparativo){
   const {hoy, recientes, historico} = comparativo;
   const filas = MERCADO_ORDEN.map((nombre, i) => {
@@ -1843,7 +1868,8 @@ function renderEstadisticas(data){
     ${vipActivasEstablesHtml(data)}
     ${vipGruposSenalesHtml(data)}
     ${ccTablaHtml(data)}
-    <section><p class="section-title">Por mercado (señales activas hoy, histórico completo)</p><div class="tickets">${renderTickets(comparativo)}</div></section>
+    <section><p class="section-title">Por mercado (señales activas hoy, histórico completo)</p><div class="tickets">${renderTickets(comparativo)}${renderTicketsBttsExtra(data)}</div>
+      ${renderTicketsBttsExtra(data) ? `<p class="vip-dim" style="font-size:12px;line-height:1.55;margin:10px 0 0;">«BTTS · Selección VIP» = lo que se envía al VIP (Respaldada + Segunda línea), igual que en la pestaña VIP. «BTTS · todas las señales en su rango» = todas las señales de BTTS con rango de mayor ganancia, encendidas y apagadas, con todos sus partidos (JUGAR o no), contados solo cuando la cuota cae dentro del rango de su señal; cada partido cuenta una vez. El rango de hoy se eligió con esos mismos partidos, por eso abajo va también la cifra con el rango que cada señal tenía al empezar cada semana.</p>` : ""}</section>
     <section><p class="section-title">Hoy · 7 días · histórico</p>${renderCmpTable(comparativo)}</section>
     ${data.serie_diaria && data.serie_diaria.length > 1 ? `
     <section><p class="section-title">Tendencia diaria — BTTS</p><div class="chart-card"><div class="chart-wrap"><canvas id="trendChart"></canvas></div></div></section>` : ""}
