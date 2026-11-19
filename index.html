@@ -2168,7 +2168,15 @@ function vipMesNombre(ym){
   const p = String(ym || "").split("-");
   return p.length === 2 ? MESES_ES_LARGO[parseInt(p[1], 10) - 1] : (ym || "");
 }
+// 19 nov 2026: niveles del VIP (reglas_activas.nivel_vip_btts): 🟢 NIVEL_1 = 1 unidad, 🟡 NIVEL_2 = media unidad
+const VIP_NIVELES = {
+  NIVEL_1: {emoji: "🟢", corto: "1 UNIDAD", largo: "Nivel 1 · 1 unidad", que: "Segunda línea y Respaldada con Corona"},
+  NIVEL_2: {emoji: "🟡", corto: "½ UNIDAD", largo: "Nivel 2 · ½ unidad", que: "Respaldada sin Corona"},
+};
+function vipNivel(p){ return (p && VIP_NIVELES[p.vip_nivel]) ? p.vip_nivel : null; }
 function vipOrden(a, b){
+  const nv = (p) => p.vip_nivel === "NIVEL_1" ? 0 : (p.vip_nivel === "NIVEL_2" ? 1 : 2);
+  if(nv(a) !== nv(b)) return nv(a) - nv(b);
   const pr = (p) => p.vip_btts === "RESPALDADA" ? 0 : (p.vip_btts === "SEGUNDA_LINEA" ? 1 : (p.vip_btts === "ZONA_VALOR" ? 2 : 3));
   if(pr(a) !== pr(b)) return pr(a) - pr(b);
   const pa = a.prob_btts_calibrada != null ? a.prob_btts_calibrada : (a.prob_btts || 0);
@@ -2994,6 +3002,31 @@ function vipEstabHtml(V){
 }
 
 // 12 nov 2026: banca y stake del VIP (data.vip_btts.banca, ver backtest._banca_vip)
+// 19 nov 2026: rendimiento por nivel (data.vip_btts.niveles, ver backtest._vip_btts_datos)
+function vipNivelesHtml(V){
+  const N = V.niveles;
+  if(!N || N.error || !N.NIVEL_1 || !N.NIVEL_1.total || !N.NIVEL_1.total.n) return "";
+  const meses = Array.from(new Set(["NIVEL_1", "NIVEL_2"].flatMap(k => ((N[k] || {}).por_mes || []).map(m => m.mes)))).sort().slice(-4);
+  const celdaMes = (k, mes) => { const m = ((N[k] || {}).por_mes || []).find(z => z.mes === mes);
+    return m && m.n ? `<span style="color:${vipCol(m.roi)};">${vipPct(m.roi)}</span> <span class="vip-dim">(${vipN(m.n)})</span>` : '<span class="vip-dim">—</span>'; };
+  const celda = (r) => r && r.n ? `<b style="color:${vipCol(r.roi)};">${vipPct(r.roi)}</b><div class="vip-dim" style="font-size:11px;">${vipFmt(r.acierto, 1, false)}% · ${vipN(r.n)} picks · ${vipFmt(r.uds)}u</div>` : '<span class="vip-dim">—</span>';
+  const fila = (k) => { const z = N[k] || {}; const nv = VIP_NIVELES[k];
+    return `<tr><td style="white-space:normal;min-width:150px;"><b>${nv.emoji} ${nv.largo}</b><div class="vip-dim" style="font-size:11px;">${nv.que}</div></td><td class="num" style="white-space:normal;min-width:118px;">${celda(z.total)}</td>${meses.map(m => `<td class="num">${celdaMes(k, m)}</td>`).join("")}<td class="num" style="white-space:normal;min-width:118px;">${celda(z.en_vivo)}</td></tr>`; };
+  const F = (N.formas || {}).ult45 || {}, Ft = (N.formas || {}).total || {};
+  const forma = (r, nom) => r && r.n ? `<tr><td>${nom}</td><td class="num">${vipN(r.n)}</td><td class="num" style="color:${vipCol(r.roi)};">${vipPct(r.roi)}</td><td class="num" style="color:${vipCol(r.uds)};">${vipFmt(r.uds)}u</td><td class="num">−${vipFmt(r.caida_max_u, 1, false)}u</td></tr>` : "";
+  const envia = N.nivel_2_envia !== false;
+  return `
+    <div class="vip-verdict" style="margin:0 0 12px;">
+      <p>🟢 <b>1 unidad:</b> Segunda línea y Respaldada con Corona. 🟡 <b>½ unidad:</b> Respaldada sin Corona, que venía bien hasta septiembre y desde octubre pierde.</p>
+      <p>Al Telegram los 🟡 ${envia ? "llegan marcados «NIVEL 2 · apostar ½ unidad»" : "<b>ya no se envían</b> (NOTIFY_BTTS_NIVEL_2=false)"}. Cada alerta dice su nivel y su cuota mínima. Hasta hoy el nivel de cada pick se calcula con las reglas de hoy; desde ahora queda guardado al enviarse${N.con_nivel_guardado ? ` (${vipN(N.con_nivel_guardado)} picks ya con nivel guardado)` : ""}, así que «En vivo» irá midiendo exactamente lo que salió.</p>
+    </div>
+    <div class="vip-scroll vip-corta"><table class="cmp-table"><thead><tr><th>Nivel</th><th class="num">Total</th>${meses.map(m => `<th class="num">${MESES_ES[parseInt(m.slice(5, 7), 10) - 1]}</th>`).join("")}<th class="num" style="white-space:normal;">En vivo<div class="vip-dim" style="font-size:10px;text-transform:none;">desde el ${vipFechaCorta((vipPol() || {}).congelado_desde)}</div></th></tr></thead><tbody>${fila("NIVEL_1")}${fila("NIVEL_2")}${N.regla_quitada && N.regla_quitada.total && N.regla_quitada.total.n ? `<tr><td style="white-space:normal;min-width:150px;"><span class="vip-dim"><b>Enviados por reglas que ya se quitaron</b></span><div class="vip-dim" style="font-size:11px;">p. ej. Diamante y Granate (fuera desde el 7 nov); con las reglas de hoy no serían VIP</div></td><td class="num" style="white-space:normal;min-width:118px;">${celda(N.regla_quitada.total)}</td>${meses.map(() => '<td class="num"><span class="vip-dim">—</span></td>').join("")}<td class="num" style="white-space:normal;">${celda(N.regla_quitada.en_vivo)}</td></tr>` : ""}</tbody></table></div>
+    ${F.todo_1u && F.todo_1u.n ? `<p class="vip-dim" style="font-size:12px;margin:12px 0 6px;">Qué habría dado cada forma de apostar en los últimos 45 días (desde el ${vipFechaCorta(N.desde_ult45)}):</p>
+    <div class="vip-scroll vip-corta"><table class="cmp-table"><thead><tr><th>Forma de apostar</th><th class="num">Picks</th><th class="num">ROI</th><th class="num">Unidades</th><th class="num" style="white-space:normal;">Caída máx.</th></tr></thead><tbody>
+      ${forma(F.todo_1u, "Todo a 1 unidad")}${forma(F.amarillo_media, "🟡 a ½ unidad")}${forma(F.sin_amarillo, "Sin los 🟡")}
+    </tbody></table></div>` : ""}
+    <p class="vip-dim" style="font-size:12px;line-height:1.55;margin:8px 0 0;">Desde el inicio: todo a 1 unidad ${vipPct((Ft.todo_1u || {}).roi)}, 🟡 a ½ unidad ${vipPct((Ft.amarillo_media || {}).roi)}, sin los 🟡 ${vipPct((Ft.sin_amarillo || {}).roi)}. Ojo: la separación por nivel se ve con los mismos datos (Corona existe desde el 9 oct), así que hacia adelante se espera menos; la prueba que cuenta es la columna «En vivo». No es garantía ni consejo financiero.</p>`;
+}
 function vipBancaHtml(V){
   const B = V.banca;
   if(!B || B.error || !B.historial || !B.historial.n) return "";
@@ -3158,6 +3191,14 @@ function renderVip(data, picks){
     if(REGLAS_ACTIVAS_REAL[m] !== true) return `el sistema apagó «${nombreCorto(m)}» por ROI o estabilidad`;
     return "";
   };
+  // 19 nov 2026: chip del nivel (🟢 1 unidad / 🟡 ½ unidad), con lo que dice el Telegram
+  const NV = V.niveles && !V.niveles.error ? V.niveles : null;
+  const nivelChip = (p) => {
+    const k = vipNivel(p); if(!k) return "";
+    const t = NV && NV[k] && NV[k].total && NV[k].total.n ? `${VIP_NIVELES[k].que}: ${vipN(NV[k].total.n)} picks, ROI ${vipPct(NV[k].total.roi)}` : VIP_NIVELES[k].que;
+    const noVa = k === "NIVEL_2" && NV && NV.nivel_2_envia === false;
+    return `<span class="vip-chip" style="border-color:${k === "NIVEL_1" ? "var(--win)" : "var(--amber)"};color:${k === "NIVEL_1" ? "var(--win)" : "var(--amber)"};" title="${vipEsc(t)}">${VIP_NIVELES[k].emoji} ${VIP_NIVELES[k].corto}${noVa ? " · NO SE ENVÍA" : ""}</span>`;
+  };
   const tarjetaVip = (p) => {
     const c = vipClase(p), info = VIP_CLASES[c];
     const prob = p.prob_btts_calibrada != null ? p.prob_btts_calibrada : p.prob_btts;
@@ -3190,7 +3231,7 @@ function renderVip(data, picks){
       <div>
         <div class="conf-teams">${vipEsc(p.local)} vs ${vipEsc(p.visitante)}</div>
         <div class="conf-liga">${vipEsc(p.liga || "")} · ${diaBadge(p)}${confirmacionCuotaBadge(p, "btts")}${notaLigaConfianza(p)}</div>
-        <div style="margin-top:6px;display:flex;gap:8px;flex-wrap:wrap;align-items:center;font-size:11px;"><span class="vip-chip ${info.fuerte ? "fuerte" : ""}">${info.chip}</span>${esCA ? '<span class="vip-chip">📈 CUOTA ALTA</span>' : ""}${ccDentro ? '<span class="vip-chip">🎯 CUOTA DE MAYOR CONFIANZA</span>' : ""}${enviado}</div>
+        <div style="margin-top:6px;display:flex;gap:8px;flex-wrap:wrap;align-items:center;font-size:11px;">${nivelChip(p)}<span class="vip-chip ${info.fuerte ? "fuerte" : ""}">${info.chip}</span>${esCA ? '<span class="vip-chip">📈 CUOTA ALTA</span>' : ""}${ccDentro ? '<span class="vip-chip">🎯 CUOTA DE MAYOR CONFIANZA</span>' : ""}${enviado}</div>
         ${segTxt}
         ${notaValorDetectado(p) ? `<div style="font-size:11px;line-height:1.5;margin-top:3px;">${notaValorDetectado(p).replace(/^<br>/, "")}</div>` : ""}
         ${ccTxt}
@@ -3212,7 +3253,7 @@ function renderVip(data, picks){
       return `La <b>${VIP_CLASES[c].nombre}</b> queda en seguimiento y no se envía: ${vipN(s.n)} apuestas en el histórico, ROI ${vipPct(s.roi)}, ${clara ? "con ventaja clara frente al mercado (se puede activar con NOTIFY_BTTS_CLASES_VIP)" : "sin ventaja demostrada frente al mercado"}.`; }).join(" ")}</p>` : "";
   const hoyHtml = `
     <div class="market-hero"><p class="big">${selDia.length}</p>
-      <div class="sub">${selDia.length === 1 ? "pick" : "picks"} en la Selección VIP · ${diaTxt}${baseJugar ? ` (de ${baseJugar} JUGAR de BTTS)` : ""}</div></div>
+      <div class="sub">${selDia.length === 1 ? "pick" : "picks"} en la Selección VIP · ${diaTxt}${baseJugar ? ` (de ${baseJugar} JUGAR de BTTS)` : ""}${(() => { const n1 = selDia.filter(p => p.vip_nivel === "NIVEL_1").length, n2 = selDia.filter(p => p.vip_nivel === "NIVEL_2").length; return [n1 ? `🟢 ${n1} a 1 unidad` : "", n2 ? `🟡 ${n2} a ½ unidad` : ""].filter(Boolean).map(t => " · " + t).join(""); })()}</div></div>
     <p class="vip-dim" style="font-size:12px;line-height:1.55;margin:0 0 12px;">Esta lista se recalcula cada hora con la cuota y las reglas de ese momento: un partido puede entrar o salir <b>hasta que se envíe</b>. Lo que ya salió al Telegram se queda aquí, con su cuota de envío.</p>
     ${notaSeguimiento}
     ${selDia.length ? selDia.map(tarjetaVip).join("") :`<div class="vip-pick-vacio">${jugarDia.length
@@ -3354,6 +3395,7 @@ function renderVip(data, picks){
 
   return `
     <section>${titulo}${hoyHtml}</section>
+    ${vipNivelesHtml(V) ? `<section><p class="section-title">🟢🟡 Niveles del VIP · cuánto apostar en cada pick</p>${vipNivelesHtml(V)}</section>` : ""}
     ${vipFormulaHtml(V) ? `<section><p class="section-title">🧮 La fórmula, variable por variable</p>${vipFormulaHtml(V)}</section>` : ""}
     <section><p class="section-title">¿Funciona? En palabras simples</p><div class="vip-verdict">${veredicto}</div></section>
     ${vipMapaHtml(V) ? `<section><p class="section-title">🧭 Mapa de señales BTTS · estado, estabilidad, ROI y papel en el VIP</p>${vipMapaHtml(V)}</section>` : ""}
