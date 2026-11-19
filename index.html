@@ -358,6 +358,9 @@
   @media (max-width:620px){
     .vip-scroll .cmp-table{min-width:760px;}
     .vip-tile .val{font-size:24px;}
+    /* 19 nov 2026: en «En su rango» la columna de señales es ancha; en celular la del partido no se queda fija
+       para que, al deslizar, cada señal (acierto atrás / justa / 30 días) se lea completa */
+    .rango-tabla .cmp-table td:first-child, .rango-tabla .cmp-table th:first-child{position:static;}
   }
   .vip-scroll .cmp-table tr.vip-dest td{background:rgba(209,154,61,0.07);}
   .vip-scroll .cmp-table tr.vip-dest td:first-child{background:linear-gradient(rgba(209,154,61,0.07), rgba(209,154,61,0.07)), var(--pitch-950);}
@@ -1986,7 +1989,18 @@ function renderEnRango(data){
   };
   const resTxt = (m) => m.res == null ? '<span class="vip-dim">⏳</span>' : (m.res ? '<b style="color:var(--win);">✅ Ganada</b>' : '<b style="color:var(--loss);">❌ Perdida</b>');
   // encendidas primero (de mayor a menor ROI en su rango); se muestran 3 y el resto queda en "+N más"
-  const senUna = (mk, z) => `<div style="line-height:1.45;" title="${vipEsc(ccNombreCompleto(mk, z[0]))}">${on(z[0]) ? "🟢" : "⚪"} ${vipEsc(ccNombre(mk, z[0]))} <span class="vip-dim">${Number(z[1]).toFixed(2)}–${Number(z[2]).toFixed(2)}${z[3] != null ? ` · ${vipPct(z[3])}` : ""}</span></div>`;
+  // 19 nov 2026 (pedido: "que muestre el % de acierto en cada señal en el rango" y la prueba justa al lado):
+  // data.en_rango.justa = {mercado: {señal: {atras, dia, reciente}}} (cuota_confianza.justa_por_senal)
+  const JU = (E.justa && !E.justa.error) ? E.justa : null;
+  const jNum = (b) => (b && b.n) ? `${vipFmt(b.acierto, 0, false)}% · ${vipPct(b.roi)} (${vipN(b.n)})` : "sin partidos";
+  const senUna = (mk, z) => {
+    const j = JU && JU[mk] ? JU[mk][z[0]] : null;
+    const at = j && j.atras, di = j && j.dia, re = j && j.reciente;
+    const ic = (di && di.n >= 30) ? (di.roi > 0 ? "✅" : "❌") : "⏳";
+    const tRe = re && re.n && re.rango ? `Últimos 30 días (desde el ${vipFechaCorta(re.desde)}) con el rango que tenía antes: ${Number(re.rango[0]).toFixed(2)}–${Number(re.rango[1]).toFixed(2)}` : "";
+    const lin2 = j ? `<div style="font-size:11px;line-height:1.45;padding-left:18px;margin-bottom:3px;"><span class="vip-dim" title="Con el rango de HOY, elegido con esos mismos partidos: siempre se ve bien">atrás ${jNum(at)}</span> · <span style="color:${di && di.n ? vipCol(di.roi) : "var(--chalk-dim)"};" title="Prueba justa: cada día con el rango que la señal tenía con sus partidos anteriores${di && di.n < 30 ? " (menos de 30 partidos: poca muestra)" : ""}">${ic} justa ${jNum(di)}</span>${re && re.n ? ` · <span class="vip-dim" title="${vipEsc(tRe)}">30 días ${jNum(re)}</span>` : ""}</div>` : "";
+    return `<div style="line-height:1.45;" title="${vipEsc(ccNombreCompleto(mk, z[0]))}">${on(z[0]) ? "🟢" : "⚪"} ${vipEsc(ccNombre(mk, z[0]))} <span class="vip-dim">${Number(z[1]).toFixed(2)}–${Number(z[2]).toFixed(2)}${!j && z[3] != null ? ` · ${vipPct(z[3])}` : ""}</span></div>${lin2}`;
+  };
   const senTxt = (f) => {
     const L = [...f.sen].sort((a, b) => (on(b[0]) - on(a[0])) || ((b[3] || 0) - (a[3] || 0)));
     const nOn = L.filter(z => on(z[0])).length;
@@ -2002,7 +2016,7 @@ function renderEnRango(data){
       <td style="min-width:220px;white-space:normal;font-size:12px;">${senTxt(f)}</td>
       <td>${decTxt(f)}</td>
       <td>${resTxt(f.m)}</td></tr>`;
-  const cab = '<thead><tr><th>Partido</th><th>Mercado</th><th class="num">Cuota</th><th>Señales con la cuota en su rango<div class="vip-dim" style="font-size:10px;text-transform:none;">🟢 encendida · ⚪ apagada · rango · ROI en el rango</div></th><th>Sistema</th><th>Resultado</th></tr></thead>';
+  const cab = '<thead><tr><th>Partido</th><th>Mercado</th><th class="num">Cuota</th><th>Señales con la cuota en su rango<div class="vip-dim" style="font-size:10px;text-transform:none;white-space:normal;">🟢 encendida · ⚪ apagada · rango · acierto · ROI (partidos): «atrás» con el rango de hoy · «justa» con el rango que tenía antes de cada día · «30 días» lo último</div></th><th>Sistema</th><th>Resultado</th></tr></thead>';
   // resumen de los ultimos dias (ya jugados), por mercado, a la cuota mostrada
   const resumenPasado = (lista) => {
     const n = lista.length; if(!n) return null;
@@ -2030,6 +2044,14 @@ function renderEnRango(data){
       <p class="vip-dim" style="font-size:12px;margin-top:6px;">La «prueba justa» es lo que se puede esperar: juzga cada partido con el rango que la señal tenía esa semana. «Mirando hacia atrás» sale más alto porque el rango de hoy se eligió con esos mismos partidos.${RANGO_SOLO_ON ? "" : " Marca también «Solo señales encendidas»: esa selección aguanta mejor."}</p>
     </div>` : '<div class="empty" style="margin:0 0 12px;">Todavía no hay historial de esta selección: corre el workflow con el backtest.py nuevo.</div>') : "";
   const diaTxt = DIA_SELECCIONADO === "hoy" ? "de hoy" : (DIA_SELECCIONADO === "manana" ? "de mañana" : "de pasado mañana");
+  // 19 nov 2026: resumen de la prueba justa por señal (cuota_confianza.justa_por_senal, "_resumen")
+  const JR = JU && JU._resumen ? JU._resumen : null;
+  const mksJR = JR ? RANGO_MERCADOS.filter(mk => JR[mk] && JR[mk].senales) : [];
+  const justaResHtml = mksJR.length ? `<div class="vip-verdict" style="margin:0 0 12px;font-size:13px;">
+      <p><b>Cómo leer cada señal:</b> «atrás» es el acierto con el rango de hoy, que se eligió conociendo los resultados, así que siempre se ve bien. «Justa» es lo que habría pasado usando cada día el rango que la señal tenía antes (✅ ganó, ❌ perdió, ⏳ menos de 30 partidos).</p>
+      <p>${mksJR.map(mk => { const r = JR[mk]; return `<b>${vipEsc(RANGO_MK_TXT[mk] || mk)}</b>: ${vipN(r.atras_positivas)} de ${vipN(r.senales)} señal${r.senales === 1 ? "" : "es"} se ve${r.senales === 1 ? "" : "n"} en positivo mirando atrás; con la prueba justa, ${vipN(r.justa_positivas)}`; }).join(" · ")}.</p>
+      <p>Y quedarse cada semana solo con las ✅ (las que hasta ese día aguantaban) tampoco ganó la semana siguiente: ${mksJR.filter(mk => JR[mk].las_que_aguantan && JR[mk].las_que_aguantan.n).map(mk => { const a = JR[mk].las_que_aguantan; return `${vipEsc(RANGO_MK_TXT[mk] || mk)} ${vipFmt(a.acierto, 1, false)}% de acierto, <b style="color:${vipCol(a.roi)};">${vipPct(a.roi)}</b> (${vipN(a.n)} partidos)`; }).join(" · ")}. Por eso aquí no hay picks seguros: lo único que ha ganado de verdad es la Selección VIP de BTTS.</p>
+    </div>` : "";
   // 13 nov 2026 (pedido: "cuales de las señales apagadas en su rango son estables para meterlas dentro de la alta
   // confiabilidad"): prueba justa semana a semana, data.en_rango.alta_conf (cuota_confianza.prueba_alta_confiabilidad)
   const AC = (E.alta_conf && !E.alta_conf.error) ? E.alta_conf : null;
@@ -2072,13 +2094,14 @@ function renderEnRango(data){
         <label style="margin-left:8px;font-size:12px;cursor:pointer;"><input type="checkbox" ${RANGO_SOLO_JUGAR ? "checked" : ""} onchange="cambiarRangoJugar(this.checked)"> Solo los que dicen JUGAR</label>
       </div>
       ${esperadoHtml}
-      ${delDia.length ? `<p class="vip-dim" style="font-size:12px;margin:0 0 6px;">${vipN(delDia.length)} partido${delDia.length === 1 ? "" : "s"} · ${vipN(delDia.filter(f => nOnF(f) > 0).length)} con al menos una señal encendida en su rango. Primero los de más señales encendidas.</p><div class="vip-scroll"><table class="cmp-table">${cab}<tbody>${delDia.map(f => fila(f, false)).join("")}</tbody></table></div>`
+      ${justaResHtml}
+      ${delDia.length ? `<p class="vip-dim" style="font-size:12px;margin:0 0 6px;">${vipN(delDia.length)} partido${delDia.length === 1 ? "" : "s"} · ${vipN(delDia.filter(f => nOnF(f) > 0).length)} con al menos una señal encendida en su rango. Primero los de más señales encendidas.</p><div class="vip-scroll rango-tabla"><table class="cmp-table">${cab}<tbody>${delDia.map(f => fila(f, false)).join("")}</tbody></table></div>`
                       : '<div class="empty">No hay partidos con señales en su rango para este día y este filtro.</div>'}
     </section>
     <section><p class="section-title">📅 Cómo les fue · últimos ${vipN(E.dias_atras)} días (partidos ya jugados)</p>
       <div class="vip-scroll vip-corta"><table class="cmp-table"><thead><tr><th>Mercado</th><th class="num">Todas las señales en su rango<div class="vip-dim" style="font-size:10px;text-transform:none;">acierto · partidos · ROI · unidades</div></th><th class="num">Con al menos una encendida</th></tr></thead><tbody>${filasPasado}</tbody></table></div>
       <p class="vip-dim" style="font-size:12px;line-height:1.55;margin:8px 0 0;">Cada partido cuenta una vez por mercado, a la cuota que se muestra. Del ${vipFechaCorta(E.desde)} a ayer. Se mide con el rango de hoy, que ya incluye estos partidos, así que sale un poco optimista.</p>
-      ${pasadas.length ? `<details style="margin-top:10px;"><summary class="vip-dim" style="cursor:pointer;">Ver los ${vipN(pasadas.length)} partidos jugados</summary><div class="vip-scroll" style="margin-top:8px;"><table class="cmp-table">${cab}<tbody>${pasadas.sort((a, b) => b.x.fecha.localeCompare(a.x.fecha) || ordenMk(a.mk) - ordenMk(b.mk)).map(f => fila(f, true)).join("")}</tbody></table></div></details>` : ""}
+      ${pasadas.length ? `<details style="margin-top:10px;"><summary class="vip-dim" style="cursor:pointer;">Ver los ${vipN(pasadas.length)} partidos jugados</summary><div class="vip-scroll rango-tabla" style="margin-top:8px;"><table class="cmp-table">${cab}<tbody>${pasadas.sort((a, b) => b.x.fecha.localeCompare(a.x.fecha) || ordenMk(a.mk) - ordenMk(b.mk)).map(f => fila(f, true)).join("")}</tbody></table></div></details>` : ""}
     </section>
     ${filasHist ? `<section><p class="section-title">📊 Todo el historial · todas las señales en su rango</p>
       <div class="vip-scroll vip-corta"><table class="cmp-table"><thead><tr><th>Mercado</th><th class="num">Con el rango de hoy<div class="vip-dim" style="font-size:10px;text-transform:none;">mirando hacia atrás</div></th><th class="num">Con el rango de cada semana<div class="vip-dim" style="font-size:10px;text-transform:none;">la prueba justa</div></th></tr></thead><tbody>${filasHist}</tbody></table></div>
