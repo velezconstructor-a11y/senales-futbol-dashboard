@@ -2198,6 +2198,9 @@ const VIP_NIVELES = {
 };
 function vipNivel(p){ return (p && VIP_NIVELES[p.vip_nivel]) ? p.vip_nivel : null; }
 function vipOrden(a, b){
+  // 20 nov 2026: de mayor a menor confianza por grupo (reglas_activas.grupo_vip_btts: 1 Corona ... 7 Respaldada sin Corona)
+  const gr = (p) => (p.vip_grupo != null ? p.vip_grupo : 9);
+  if(gr(a) !== gr(b)) return gr(a) - gr(b);
   const nv = (p) => p.vip_nivel === "NIVEL_1" ? 0 : (p.vip_nivel === "NIVEL_2" ? 1 : 2);
   if(nv(a) !== nv(b)) return nv(a) - nv(b);
   const pr = (p) => p.vip_btts === "RESPALDADA" ? 0 : (p.vip_btts === "SEGUNDA_LINEA" ? 1 : (p.vip_btts === "ZONA_VALOR" ? 2 : 3));
@@ -3274,12 +3277,32 @@ function renderVip(data, picks){
       const s = vipResumenClase(V, c);
       const clara = s.alfa != null && s.alfa_se && s.alfa / s.alfa_se >= 1.96;
       return `La <b>${VIP_CLASES[c].nombre}</b> queda en seguimiento y no se envía: ${vipN(s.n)} apuestas en el histórico, ROI ${vipPct(s.roi)}, ${clara ? "con ventaja clara frente al mercado (se puede activar con NOTIFY_BTTS_CLASES_VIP)" : "sin ventaja demostrada frente al mercado"}.`; }).join(" ")}</p>` : "";
+  // 20 nov 2026: la lista va por grupos de confianza, cada uno con su record (data.vip_btts.niveles.grupos)
+  const GRP = (V.niveles && V.niveles.grupos) || {};
+  const listaPorGrupo = (lista) => {
+    let html = "", act = null, pos = 0;
+    for(const p of lista){
+      const g = p.vip_grupo != null ? String(p.vip_grupo) : "x";
+      if(g !== act){
+        act = g; pos += 1;
+        const G = GRP[g], t = G && G.total, v = G && G.en_vivo;
+        const nombre = G ? G.nombre : "Otros";
+        const rec = t && t.n ? `${vipFmt(t.acierto, 1, false)}% de acierto · ROI <b style="color:${vipCol(t.roi)};">${vipPct(t.roi)}</b> (${vipN(t.n)} picks)${v && v.n ? ` · en vivo ${vipFmt(v.acierto, 1, false)}% · <span style="color:${vipCol(v.roi)};">${vipPct(v.roi)}</span> (${vipN(v.n)})` : ""}` : "";
+        const n = lista.filter(q => String(q.vip_grupo) === g).length;
+        html += `<div style="display:flex;flex-wrap:wrap;gap:6px 12px;align-items:baseline;margin:${pos === 1 ? "4px" : "18px"} 0 8px;padding:6px 10px;border-left:3px solid ${g === "7" ? "var(--amber)" : "var(--win)"};background:rgba(255,255,255,0.03);border-radius:6px;">
+          <b style="font-size:14px;">${pos}. ${vipEsc(nombre)}</b><span class="vip-dim" style="font-size:12px;">${n} ${n === 1 ? "partido" : "partidos"}</span>
+          ${rec ? `<span class="vip-dim" style="font-size:12px;">${rec}</span>` : ""}${g === "4" && v && v.n && v.roi < 0 ? '<span style="font-size:12px;color:var(--amber);">ojo: pocos picks en vivo y van perdiendo</span>' : ""}</div>`;
+      }
+      html += tarjetaVip(p);
+    }
+    return html;
+  };
   const hoyHtml = `
     <div class="market-hero"><p class="big">${selDia.length}</p>
       <div class="sub">${selDia.length === 1 ? "pick" : "picks"} en la Selección VIP · ${diaTxt}${baseJugar ? ` (de ${baseJugar} JUGAR de BTTS)` : ""}${(() => { const n1 = selDia.filter(p => p.vip_nivel === "NIVEL_1").length, n2 = selDia.filter(p => p.vip_nivel === "NIVEL_2").length; return [n1 ? `🟢 ${n1} a 1 unidad` : "", n2 ? `🟡 ${n2} a ½ unidad` : ""].filter(Boolean).map(t => " · " + t).join(""); })()}</div></div>
     <p class="vip-dim" style="font-size:12px;line-height:1.55;margin:0 0 12px;">Esta lista se recalcula cada hora con la cuota y las reglas de ese momento: un partido puede entrar o salir <b>hasta que se envíe</b>. Lo que ya salió al Telegram se queda aquí, con su cuota de envío.</p>
     ${notaSeguimiento}
-    ${selDia.length ? selDia.map(tarjetaVip).join("") :`<div class="vip-pick-vacio">${jugarDia.length
+    ${selDia.length ? listaPorGrupo(selDia) :`<div class="vip-pick-vacio">${jugarDia.length
         ? "Ningún JUGAR de BTTS pasa el filtro de precio y reglas activas para este día. <b>No enviar nada es una decisión válida:</b> los JUGAR que quedan fuera rinden " + vipPct(resto.roi) + " en el histórico."
         : "Todavía no hay JUGAR de BTTS para este día."}</div>`}
     ${fueraDia.length ? `<details class="vip-det"><summary>Ver los ${fueraDia.length} JUGAR de BTTS que NO entran a la selección (no se envían)${resFuera.n ? ` · jugados ${resFuera.n}: ${resFuera.g} ganados, ROI ${vipPct(resFuera.roi)}` : ""}</summary>
