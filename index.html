@@ -2194,7 +2194,7 @@ function vipMesNombre(ym){
 // 19 nov 2026: niveles del VIP (reglas_activas.nivel_vip_btts): 🟢 NIVEL_1 = 1 unidad, 🟡 NIVEL_2 = media unidad
 const VIP_NIVELES = {
   NIVEL_1: {emoji: "🟢", corto: "1 UNIDAD", largo: "Nivel 1 · 1 unidad", que: "Segunda línea y Respaldada con Corona"},
-  NIVEL_2: {emoji: "🟡", corto: "½ UNIDAD", largo: "Nivel 2 · ½ unidad", que: "Respaldada sin Corona"},
+  NIVEL_2: {emoji: "🟡", corto: "½ UNIDAD", largo: "Nivel 2 · ½ unidad", que: "Respaldada sin Corona y Estable GC+Fallo ＋ (en prueba)"},
 };
 function vipNivel(p){ return (p && VIP_NIVELES[p.vip_nivel]) ? p.vip_nivel : null; }
 function vipOrden(a, b){
@@ -3289,7 +3289,7 @@ function renderVip(data, picks){
         const nombre = G ? G.nombre : "Otros";
         const rec = t && t.n ? `${vipFmt(t.acierto, 1, false)}% de acierto · ROI <b style="color:${vipCol(t.roi)};">${vipPct(t.roi)}</b> (${vipN(t.n)} picks)${v && v.n ? ` · en vivo ${vipFmt(v.acierto, 1, false)}% · <span style="color:${vipCol(v.roi)};">${vipPct(v.roi)}</span> (${vipN(v.n)})` : ""}` : "";
         const n = lista.filter(q => String(q.vip_grupo) === g).length;
-        html += `<div style="display:flex;flex-wrap:wrap;gap:6px 12px;align-items:baseline;margin:${pos === 1 ? "4px" : "18px"} 0 8px;padding:6px 10px;border-left:3px solid ${g === "7" ? "var(--amber)" : "var(--win)"};background:rgba(255,255,255,0.03);border-radius:6px;">
+        html += `<div style="display:flex;flex-wrap:wrap;gap:6px 12px;align-items:baseline;margin:${pos === 1 ? "4px" : "18px"} 0 8px;padding:6px 10px;border-left:3px solid ${(g === "7" || g === "8") ? "var(--amber)" : "var(--win)"};background:rgba(255,255,255,0.03);border-radius:6px;">
           <b style="font-size:14px;">${pos}. ${vipEsc(nombre)}</b><span class="vip-dim" style="font-size:12px;">${n} ${n === 1 ? "partido" : "partidos"}</span>
           ${rec ? `<span class="vip-dim" style="font-size:12px;">${rec}</span>` : ""}${g === "4" && v && v.n && v.roi < 0 ? '<span style="font-size:12px;color:var(--amber);">ojo: pocos picks en vivo y van perdiendo</span>' : ""}</div>`;
       }
