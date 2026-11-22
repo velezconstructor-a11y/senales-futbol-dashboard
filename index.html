@@ -361,7 +361,11 @@
     /* 19 nov 2026: en «En su rango» la columna de señales es ancha; en celular la del partido no se queda fija
        para que, al deslizar, cada señal (acierto atrás / justa / 30 días) se lea completa */
     .rango-tabla .cmp-table td:first-child, .rango-tabla .cmp-table th:first-child{position:static;}
+    /* 21 nov 2026: tabla «atrás vs prueba justa»: en celular se ve la comparacion sin deslizar y la formula se oculta */
+    .cc-movil{display:block !important;}
+    .cc-formula{display:none;}
   }
+  .cc-movil{display:none;font-size:12px;line-height:1.45;margin-top:4px;}
   .vip-scroll .cmp-table tr.vip-dest td{background:rgba(209,154,61,0.07);}
   .vip-scroll .cmp-table tr.vip-dest td:first-child{background:linear-gradient(rgba(209,154,61,0.07), rgba(209,154,61,0.07)), var(--pitch-950);}
   .vip-scroll .cmp-table tr.vip-tenue td{color:var(--chalk-dim);}
@@ -1855,24 +1859,71 @@ function ccChip(p, mercadoKey, jugar){
 }
 // 7 nov 2026: que cuota se usa en cada tabla (la misma con la que se disparo la señal)
 const CC_PRECIO_TXT = {"BTTS": "BTTS", "Over 2.5": "Over 2.5", "Over 1.5": "Over 1.5", "Combinada": "la combinada estimada (BTTS × Over 2.5)"};
+// 21 nov 2026 (pedido: "organiza ese apartado para ver el % hacia atras y tambien el justo que es en vivo"):
+// cada señal muestra lado a lado el acierto MIRANDO ATRAS (rango de hoy, elegido con esos mismos partidos) y la
+// PRUEBA JUSTA (cada dia con el rango que la señal tenia antes: lo que habria visto alguien apostando en vivo),
+// el acierto minimo para no perder y los ultimos 30 dias. Orden: primero las que aguantan la prueba justa.
+// La prueba justa viene de data.en_rango.justa (cuota_confianza.justa_por_senal).
 function ccTablaHtml(data){
   const C = data.cuota_confianza || {};
   const mks = ["BTTS", "Over 2.5", "Combinada", "Over 1.5"].filter(m => C[m]);
   if(!mks.length) return "";
   const on = REGLAS_ACTIVAS_REAL || {};
+  const E = data.en_rango || {};
+  const JU = (E.justa && !E.justa.error) ? E.justa : {};
+  const estado = (j) => {             // ✅ aguanta · ❌ no aguanta · ⏳ poca muestra (menos de 30 partidos) · sin datos
+    const d = j && j.dia;
+    if(!d || !d.n) return "sin";
+    if(d.n < 30) return "poca";
+    return d.roi > 0 ? "ok" : "no";
+  };
+  const ORD = {ok: 0, poca: 1, no: 2, sin: 3};
+  const ICO = {ok: "✅", poca: "⏳", no: "❌", sin: "—"};
+  const celda = (b, extra) => (b && b.n)
+    ? `<b>${vipFmt(b.acierto, 1, false)}%</b> · <b style="color:${vipCol(b.roi)};">${vipPct(b.roi)}</b><div class="vip-dim" style="font-size:11px;">${vipN(b.n)} partidos${extra || ""}</div>`
+    : '<span class="vip-dim">sin partidos</span>';
+  const minimo = (b) => (b && b.cuota) ? `${vipFmt(100 / b.cuota, 0, false)}%<div class="vip-dim" style="font-size:11px;">cuota ${Number(b.cuota).toFixed(2)}</div>` : "—";
   const bloques = mks.map(mk => {
-    const filas = Object.entries(C[mk]).filter(([s, r]) => r.rango).sort((a, b) => (b[1].uds || 0) - (a[1].uds || 0));
+    const J = JU[mk] || {};
+    const filas = Object.entries(C[mk]).filter(([s, r]) => r.rango).map(([s, r]) => ({s, r, j: J[s] || null, e: estado(J[s])}))
+      .sort((a, b) => (ORD[a.e] - ORD[b.e]) || (((b.j && b.j.dia && b.j.dia.roi) ?? -999) - ((a.j && a.j.dia && a.j.dia.roi) ?? -999)) || ((b.r.uds || 0) - (a.r.uds || 0)));
     const sin = Object.values(C[mk]).filter(r => !r.rango).length;
-    const ok = filas.filter(([s, r]) => r.se_mantuvo).length;
-    return `<details class="vip-det"${mk === "BTTS" ? " open" : ""}><summary>${mk} · medido con la cuota de ${CC_PRECIO_TXT[mk] || mk} · ${filas.length} señales con rango (${ok} se mantuvieron)${sin ? ` · ${sin} sin ningún rango que gane` : ""}</summary>
-      <div class="vip-scroll" style="margin-top:8px;"><table class="cmp-table"><thead><tr><th>Señal</th><th class="num">Rango de confianza</th><th class="num">Apuestas</th><th class="num">Acierto</th><th class="num">ROI</th><th class="num">Unidades</th><th class="num">Fuera del rango</th><th class="num">Señal completa</th><th class="num">1ª / 2ª mitad</th><th>¿Se mantuvo?</th></tr></thead><tbody>
-      ${filas.map(([s, r]) => `<tr><td style="min-width:260px;max-width:420px;white-space:normal;">${vipEsc(ccNombreCompleto(mk, s))}${on[s] === true ? ' <span class="vip-dim">· encendida</span>' : ""}</td><td class="num"><b>${Number(r.rango[0]).toFixed(2)}–${Number(r.rango[1]).toFixed(2)}</b></td><td class="num">${vipN(r.n)}</td><td class="num">${vipFmt(r.acierto, 1, false)}%</td><td class="num" style="color:${vipCol(r.roi)};">${vipPct(r.roi)}</td><td class="num" style="color:${vipCol(r.uds)};">${vipFmt(r.uds)}u</td><td class="num" style="color:${vipCol(r.roi_fuera)};">${r.n_fuera ? vipPct(r.roi_fuera) + ` (${vipN(r.n_fuera)})` : "—"}</td><td class="num" style="color:${vipCol(r.roi_total)};">${vipPct(r.roi_total)} (${vipN(r.n_total)})</td><td class="num">${vipPct(r.mitad1.roi)} / ${vipPct(r.mitad2.roi)}</td><td>${r.se_mantuvo ? "✓ sí · lleva etiqueta" : '<span class="vip-dim">✗ no · sin etiqueta</span>'}</td></tr>`).join("")}
-      </tbody></table></div></details>`;
+    const cnt = (e) => filas.filter(f => f.e === e).length;
+    const fila = (f) => {
+      const r = f.r, j = f.j || {};
+      const at = {n: r.n, acierto: r.acierto, roi: r.roi};
+      const mit = (r.mitad1 && r.mitad2) ? ` · mitades ${vipPct(r.mitad1.roi)} / ${vipPct(r.mitad2.roi)}` : "";
+      const caida = (j.dia && j.dia.n && r.acierto != null) ? Number(j.dia.acierto) - Number(r.acierto) : null;
+      const completo = ccNombreCompleto(mk, f.s), corto = ccNombre(mk, f.s);
+      const formula = completo.startsWith(corto) ? completo.slice(corto.length).replace(/^\s*·\s*/, "") : completo;
+      return `<tr>
+        <td style="min-width:185px;max-width:300px;white-space:normal;"><b>${vipEsc(corto)}</b>${on[f.s] === true ? ' <span style="color:var(--win);font-size:11px;">· encendida</span>' : ' <span class="vip-dim" style="font-size:11px;">· apagada</span>'}
+          <div style="font-size:12px;margin-top:2px;">rango <b>${Number(r.rango[0]).toFixed(2)}–${Number(r.rango[1]).toFixed(2)}</b></div>${formula ? `<div class="vip-dim cc-formula" style="font-size:11px;line-height:1.4;">${vipEsc(formula)}</div>` : ""}
+          <div class="cc-movil">atrás <b>${vipFmt(r.acierto, 0, false)}%</b> · <span style="color:${vipCol(r.roi)};">${vipPct(r.roi)}</span> (${vipN(r.n)})<br>${f.e === "sin" ? '<span class="vip-dim">justa: sin partidos</span>' : `${ICO[f.e]} justa <b>${vipFmt(j.dia.acierto, 0, false)}%</b> · <span style="color:${vipCol(j.dia.roi)};">${vipPct(j.dia.roi)}</span> (${vipN(j.dia.n)})`}<br><span class="vip-dim">para no perder ${(j.dia && j.dia.cuota) ? vipFmt(100 / j.dia.cuota, 0, false) + "%" : "—"}</span></div></td>
+        <td class="num">${celda(at, ` · ${vipFmt(r.uds)}u${mit}`)}</td>
+        <td class="num" style="background:rgba(255,255,255,0.03);">${f.e === "sin" ? '<span class="vip-dim">sin partidos</span>' : `<div style="font-size:15px;line-height:1.1;">${ICO[f.e]}</div>${celda(j.dia, caida != null ? ` · ${caida >= 0 ? "+" : ""}${vipFmt(caida, 0, false)} pts vs atrás` : "")}`}</td>
+        <td class="num">${minimo((j.dia && j.dia.n) ? j.dia : {cuota: j.atras && j.atras.cuota})}</td>
+        <td class="num">${(j.reciente && j.reciente.n) ? celda(j.reciente) : '<span class="vip-dim">—</span>'}</td>
+        <td class="num" style="color:${vipCol(r.roi_total)};">${vipPct(r.roi_total)} <span class="vip-dim">(${vipN(r.n_total)})</span></td>
+        <td style="font-size:12px;">${r.se_mantuvo ? "✓ sí · lleva etiqueta" : '<span class="vip-dim">✗ no</span>'}</td></tr>`;
+    };
+    return `<details class="vip-det"${mk === "BTTS" ? " open" : ""}><summary>${mk} · ${filas.length} señales con rango · prueba justa: ✅ ${cnt("ok")} aguantan · ⏳ ${cnt("poca")} con poca muestra · ❌ ${cnt("no")} no aguantan${sin ? ` · ${sin} sin ningún rango que gane` : ""}</summary>
+      <p class="vip-dim" style="font-size:12px;margin:8px 0 6px;">Medido con la cuota de ${CC_PRECIO_TXT[mk] || mk}. Primero las que aguantan la prueba justa.</p>
+      <div class="vip-scroll rango-tabla"><table class="cmp-table"><thead><tr>
+        <th>Señal · rango de hoy</th>
+        <th class="num">Mirando atrás<div class="vip-dim" style="font-size:10px;text-transform:none;white-space:normal;">rango elegido con estos mismos partidos: siempre se ve bien</div></th>
+        <th class="num">Prueba justa · como en vivo<div class="vip-dim" style="font-size:10px;text-transform:none;white-space:normal;">cada día con el rango que tenía antes</div></th>
+        <th class="num">Para no perder<div class="vip-dim" style="font-size:10px;text-transform:none;white-space:normal;">acierto mínimo</div></th>
+        <th class="num">Últimos 30 días</th><th class="num">Señal completa<div class="vip-dim" style="font-size:10px;text-transform:none;">todas las cuotas</div></th><th>¿Se mantuvo?</th>
+      </tr></thead><tbody>${filas.map(fila).join("")}</tbody></table></div></details>`;
   }).join("");
-  return `<section><p class="section-title">🎯 Cuota de mayor confianza por señal</p>
-    <p class="vip-dim" style="font-size:13px;line-height:1.55;margin:0 0 10px;">Para cada señal, el rango de cuota que <b>más unidades ganó</b> en todo su historial (mínimo 15 partidos y ROI positivo), medido con la <b>cuota con la que se disparó la señal</b> y ajustado a las cuotas que de verdad jugó, así que siempre queda dentro de la franja de cuota de su fórmula. Se recalcula cada hora. Los picks de hoy con JUGAR cuya cuota cae en el rango de <b>la señal que se lleva el partido</b> (la principal) llevan la etiqueta <b>🎯 CUOTA DE MAYOR CONFIANZA</b>, pero solo si el rango <b>se mantuvo</b>: ganó en la primera y en la segunda mitad de su historia.</p>
+  return `<section><p class="section-title">🎯 Cuota de mayor confianza por señal · atrás vs prueba justa</p>
+    <div class="vip-verdict" style="margin:0 0 12px;font-size:13px;">
+      <p><b>Cómo leerla.</b> <b>Mirando atrás</b> es el acierto con el rango de hoy, y ese rango se eligió buscando donde mejor le fue a la señal con esos mismos partidos: por eso casi todas se ven en 75–80%. <b>Prueba justa</b> es lo que habría pasado en vivo: cada día se usa el rango que la señal tenía con sus partidos anteriores, sin saber lo que venía. Esa es la cifra que cuenta.</p>
+      <p><b>✅</b> aguanta (30+ partidos y gana) · <b>⏳</b> menos de 30 partidos, todavía no se sabe · <b>❌</b> no aguanta. <b>Para no perder</b> es el acierto mínimo que pide esa cuota (a 1.40 hace falta 71%): un 75% puede ser poco.</p>
+    </div>
     ${bloques}
-    <p class="vip-dim" style="font-size:12px;line-height:1.55;margin:10px 0 0;">⚠️ Es lo que pasó, no una garantía: cuando el rango se elige con la primera mitad de la historia de cada señal y se mide en la segunda, mejora solo la mitad de las veces (42 de 82 señales, medido el 2 nov). Por eso la etiqueta exige que el rango haya ganado en las dos mitades, y aun así hay que mirarla como una pista, no como una regla segura.</p></section>`;
+    <p class="vip-dim" style="font-size:12px;line-height:1.55;margin:10px 0 0;">El rango de hoy es el que más unidades ganó en todo el historial de la señal (mínimo 15 partidos y ROI positivo), medido con la cuota con la que se disparó. Los picks con JUGAR cuya cuota cae en ese rango llevan la etiqueta <b>🎯 CUOTA DE MAYOR CONFIANZA</b> solo si el rango ganó en las dos mitades de su historia («¿Se mantuvo?»). Aun así es una pista, no una regla segura: quedarse cada semana con las ✅ tampoco ganó la semana siguiente (ver «En su rango»). No es garantía ni consejo financiero.</p></section>`;
 }
 
 function renderEstadisticas(data){
@@ -2195,7 +2246,7 @@ function vipMesNombre(ym){
 // 19 nov 2026: niveles del VIP (reglas_activas.nivel_vip_btts): 🟢 NIVEL_1 = 1 unidad, 🟡 NIVEL_2 = media unidad
 const VIP_NIVELES = {
   NIVEL_1: {emoji: "🟢", corto: "1 UNIDAD", largo: "Nivel 1 · 1 unidad", que: "Segunda línea y Respaldada con Corona"},
-  NIVEL_2: {emoji: "🟡", corto: "½ UNIDAD", largo: "Nivel 2 · ½ unidad", que: "Respaldada sin Corona y Estable GC+Fallo ＋ (en prueba)"},
+  NIVEL_2: {emoji: "🟡", corto: "½ UNIDAD", largo: "Nivel 2 · ½ unidad", que: "Respaldada sin Corona, y en prueba Estable GC+Fallo ＋ y Topacio 1.65–2.03"},
 };
 function vipNivel(p){ return (p && VIP_NIVELES[p.vip_nivel]) ? p.vip_nivel : null; }
 function vipOrden(a, b){
@@ -3188,7 +3239,8 @@ function renderVipGoles(data, picks){
   // ---- tarjetas ----
   const tarjeta25 = (p) => {
     const g = String(p.vip_o25_grupo), cu = Number(p.cuota_o25_vip), cmin = Number(p.cuota_min_o25);
-    const base = (g === "1" || g === "2" || g === "4") ? `Del VIP de Ambos Marcan${nombreBtts(p) ? ": " + vipEsc(nombreBtts(p)) : ""}` : "Señal propia de Over 2.5 (Favorito claro)";
+    const base = (g === "1" || g === "2" || g === "4") ? `Del VIP de Ambos Marcan${nombreBtts(p) ? ": " + vipEsc(nombreBtts(p)) : ""}`
+      : (g === "5" ? `Señal nueva de Over 2.5, en prueba: ${vipEsc((GO["5"] || {}).nota || "")}` : "Señal propia de Over 2.5 (Favorito claro)");
     return `<div class="conf-card">
       <div>
         <div class="conf-teams">${vipEsc(p.local)} vs ${vipEsc(p.visitante)}</div>
@@ -3233,7 +3285,7 @@ function renderVipGoles(data, picks){
   let lista25 = "", act = null, pos = 0;
   for(const p of sel25){
     const g = String(p.vip_o25_grupo);
-    if(g !== act){ act = g; pos += 1; lista25 += cabGrupo(pos, (GO[g] || {}).nombre || ("Grupo " + g), sel25.filter(q => String(q.vip_o25_grupo) === g).length, GO[g], g === "4"); }
+    if(g !== act){ act = g; pos += 1; lista25 += cabGrupo(pos, (GO[g] || {}).nombre || ("Grupo " + g), sel25.filter(q => String(q.vip_o25_grupo) === g).length, GO[g], g === "4" || g === "5"); }
     lista25 += tarjeta25(p);
   }
   const listaC = selC.length ? cabGrupo(1, (GC["1"] || {}).nombre || "Combinada en prueba", selC.length, GC["1"], true) + selC.map(tarjetaC).join("") : "";
@@ -3305,7 +3357,9 @@ function renderVip(data, picks){
   const enviadaVip = (p) => !!(p.alerta_btts && vipClase(p));
   // 31 oct 2026: la segunda linea pasa por SUS señales encendidas, no por que la primaria este "validada" (igual que main.py)
   const cumpleHoy = (p) => p.nivel_final === "JUGAR" && !!vipClase(p) && (vipClase(p) === "SEGUNDA_LINEA" || esValidadaReal(p.motivo_btts));
-  const selDia = Array.from(new Set([...picks.filter(enviadaVip), ...jugarDia.filter(cumpleHoy)])).sort(vipOrden);
+  // 21 nov 2026: Topacio 1.65–2.03 entra EN PRUEBA aunque diga EVITAR (reglas_activas.VIP_BTTS_EN_PRUEBA_RANGO, grupo 9)
+  const enPruebaSinJugar = (p) => p.nivel_final !== "JUGAR" && String(p.vip_grupo) === "9" && vipClase(p) === "SEGUNDA_LINEA";
+  const selDia = Array.from(new Set([...picks.filter(enviadaVip), ...jugarDia.filter(cumpleHoy), ...picks.filter(enPruebaSinJugar)])).sort(vipOrden);
   const idsSel = new Set(selDia);
   const fueraDia = jugarDia.filter(p => !idsSel.has(p));
   // 1 nov 2026 (pedido del usuario): los que quedaron fuera tambien muestran si ganaron o perdieron, con su resumen
@@ -3370,10 +3424,12 @@ function renderVip(data, picks){
     const enviado = sent
       ? `<span style="color:var(--chalk-dim);">📨 enviado al Telegram${hhmm(p.fecha_alerta) ? " · " + hhmm(p.fecha_alerta) : ""}</span>`
       : (res == null ? '<span style="color:var(--chalk-dim);">⏳ sale en la próxima corrida</span>' : "");
-    const aviso = (sent && res == null && !cumpleHoy(p))
+    const aviso = (sent && res == null && !(cumpleHoy(p) || enPruebaSinJugar(p)))
       ? `<div class="vip-dim" style="font-size:11px;line-height:1.5;margin-top:5px;">Hoy ya no cumple: ${motivoFuera(p)}. Como ya salió al Telegram, se queda aquí.</div>` : "";
     const segTxt = c === "SEGUNDA_LINEA"
-      ? `<div class="vip-dim" style="font-size:11px;line-height:1.5;margin-top:5px;">Por: <b>${vipEsc(vipSenalesSegunda(p).map(vipNombreRaw).join(" + ") || "señal de la segunda línea")}</b> · cuota desde ${(vipSenalesSegunda(p).length ? Math.min(...vipSenalesSegunda(p).map(vipPisoSeg)) : Number(pol.segunda_cuota_min || 1.5)).toFixed(2)}</div>` : "";
+      ? ((!vipSenalesSegunda(p).length && String(p.vip_grupo) === "9")
+        ? `<div class="vip-dim" style="font-size:11px;line-height:1.5;margin-top:5px;">Por: <b>${vipEsc(vipNombreRaw("topacio"))}</b> · en prueba · cuota 1.65–2.03${p.nivel_final !== "JUGAR" ? " (entra aunque el sistema diga EVITAR: su regla está apagada con todas las cuotas)" : ""}</div>`
+        : `<div class="vip-dim" style="font-size:11px;line-height:1.5;margin-top:5px;">Por: <b>${vipEsc(vipSenalesSegunda(p).map(vipNombreRaw).join(" + ") || "señal de la segunda línea")}</b> · cuota desde ${(vipSenalesSegunda(p).length ? Math.min(...vipSenalesSegunda(p).map(vipPisoSeg)) : Number(pol.segunda_cuota_min || 1.5)).toFixed(2)}</div>`) : "";
     // 2 nov 2026: cuota de mayor confianza de la señal principal, con la cuota con que SALIO (o la de ahora si aun no sale)
     const ccR = ((((DATA && DATA.cuota_confianza) || {}).BTTS) || {})[p.motivo_btts];
     const ccPrecio = Number(precio);
@@ -3420,7 +3476,7 @@ function renderVip(data, picks){
         const nombre = G ? G.nombre : "Otros";
         const rec = t && t.n ? `${vipFmt(t.acierto, 1, false)}% de acierto · ROI <b style="color:${vipCol(t.roi)};">${vipPct(t.roi)}</b> (${vipN(t.n)} picks)${v && v.n ? ` · en vivo ${vipFmt(v.acierto, 1, false)}% · <span style="color:${vipCol(v.roi)};">${vipPct(v.roi)}</span> (${vipN(v.n)})` : ""}` : "";
         const n = lista.filter(q => String(q.vip_grupo) === g).length;
-        html += `<div style="display:flex;flex-wrap:wrap;gap:6px 12px;align-items:baseline;margin:${pos === 1 ? "4px" : "18px"} 0 8px;padding:6px 10px;border-left:3px solid ${(g === "7" || g === "8") ? "var(--amber)" : "var(--win)"};background:rgba(255,255,255,0.03);border-radius:6px;">
+        html += `<div style="display:flex;flex-wrap:wrap;gap:6px 12px;align-items:baseline;margin:${pos === 1 ? "4px" : "18px"} 0 8px;padding:6px 10px;border-left:3px solid ${(g === "7" || g === "8" || g === "9") ? "var(--amber)" : "var(--win)"};background:rgba(255,255,255,0.03);border-radius:6px;">
           <b style="font-size:14px;">${pos}. ${vipEsc(nombre)}</b><span class="vip-dim" style="font-size:12px;">${n} ${n === 1 ? "partido" : "partidos"}</span>
           ${rec ? `<span class="vip-dim" style="font-size:12px;">${rec}</span>` : ""}${g === "4" && v && v.n && v.roi < 0 ? '<span style="font-size:12px;color:var(--amber);">ojo: pocos picks en vivo y van perdiendo</span>' : ""}</div>`;
       }
