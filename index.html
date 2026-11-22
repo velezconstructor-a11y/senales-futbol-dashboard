@@ -361,9 +361,8 @@
     /* 19 nov 2026: en «En su rango» la columna de señales es ancha; en celular la del partido no se queda fija
        para que, al deslizar, cada señal (acierto atrás / justa / 30 días) se lea completa */
     .rango-tabla .cmp-table td:first-child, .rango-tabla .cmp-table th:first-child{position:static;}
-    /* 21 nov 2026: tabla «atrás vs prueba justa»: en celular se ve la comparacion sin deslizar y la formula se oculta */
+    /* 21 nov 2026: tabla «atrás vs prueba justa»: en celular se ve la comparacion sin deslizar */
     .cc-movil{display:block !important;}
-    .cc-formula{display:none;}
   }
   .cc-movil{display:none;font-size:12px;line-height:1.45;margin-top:4px;}
   .vip-scroll .cmp-table tr.vip-dest td{background:rgba(209,154,61,0.07);}
@@ -1883,6 +1882,25 @@ function ccTablaHtml(data){
     ? `<b>${vipFmt(b.acierto, 1, false)}%</b> · <b style="color:${vipCol(b.roi)};">${vipPct(b.roi)}</b><div class="vip-dim" style="font-size:11px;">${vipN(b.n)} partidos${extra || ""}</div>`
     : '<span class="vip-dim">sin partidos</span>';
   const minimo = (b) => (b && b.cuota) ? `${vipFmt(100 / b.cuota, 0, false)}%<div class="vip-dim" style="font-size:11px;">cuota ${Number(b.cuota).toFixed(2)}</div>` : "—";
+  // 21 nov 2026 (pedido: "revisa cual de esas señales en su rango de cuota merece estar en el VIP"): veredicto con la
+  // prueba justa y con lo que la señal AGREGARIA (sus partidos de la prueba justa que no estan ya en el VIP).
+  const EN_PRUEBA = JU._en_prueba || {};
+  const MK_VIP = {"BTTS": "VIP de Ambos Marcan", "Over 2.5": "VIP Over 2.5", "Combinada": "VIP Combinada"};
+  const veredicto = (mk, s, j, e) => {
+    const d = j && j.dia, v = j && j.vip, mit = j && j.mitades;
+    if(!d || !d.n) return {k: "sin", t: '<span class="vip-dim">—</span>'};
+    const enVip = v && d.n ? v.en_vip / d.n : 0;
+    if(enVip >= 0.6) return (EN_PRUEBA[mk] || []).includes(s)
+      ? {k: "prueba", t: `<b style="color:var(--amber);">🧪 Ya está, en prueba</b><div class="vip-dim" style="font-size:11px;">en el ${MK_VIP[mk] || "VIP"} a ½ unidad</div>`}
+      : {k: "dentro", t: `<b style="color:var(--win);">💎 Ya está en el VIP</b><div class="vip-dim" style="font-size:11px;">${vipN(v.en_vip)} de ${vipN(d.n)} partidos</div>`};
+    if(e === "no") return {k: "no", t: '<b style="color:var(--loss);">❌ No</b><div class="vip-dim" style="font-size:11px;">la prueba justa pierde</div>'};
+    if(e === "poca") return {k: "poca", t: '<b style="color:var(--amber);">⏳ Todavía no</b><div class="vip-dim" style="font-size:11px;">menos de 30 partidos</div>'};
+    const fu = (v && v.fuera) || {};
+    if(!fu.n || fu.n < 20) return {k: "obs", t: `<b style="color:var(--amber);">⏳ En observación</b><div class="vip-dim" style="font-size:11px;">solo ${vipN(fu.n || 0)} partidos nuevos para el VIP</div>`};
+    if(fu.roi <= 0) return {k: "no", t: `<b style="color:var(--loss);">❌ No</b><div class="vip-dim" style="font-size:11px;">lo que sumaría al VIP pierde: ${vipFmt(fu.acierto, 0, false)}% · ${vipPct(fu.roi)} (${vipN(fu.n)})</div>`};
+    if(mit && mit.length === 2 && ((mit[0].roi || 0) <= 0 || (mit[1].roi || 0) <= 0)) return {k: "obs", t: `<b style="color:var(--amber);">⏳ En observación</b><div class="vip-dim" style="font-size:11px;">una mitad de la prueba justa en negativo (${vipPct(mit[0].roi)} / ${vipPct(mit[1].roi)})</div>`};
+    return {k: "si", t: `<b style="color:var(--win);">⭐ Candidata</b><div class="vip-dim" style="font-size:11px;">sumaría ${vipN(fu.n)} partidos: ${vipFmt(fu.acierto, 0, false)}% · ${vipPct(fu.roi)}</div>`};
+  };
   const bloques = mks.map(mk => {
     const J = JU[mk] || {};
     const filas = Object.entries(C[mk]).filter(([s, r]) => r.rango).map(([s, r]) => ({s, r, j: J[s] || null, e: estado(J[s])}))
@@ -1894,25 +1912,30 @@ function ccTablaHtml(data){
       const at = {n: r.n, acierto: r.acierto, roi: r.roi};
       const mit = (r.mitad1 && r.mitad2) ? ` · mitades ${vipPct(r.mitad1.roi)} / ${vipPct(r.mitad2.roi)}` : "";
       const caida = (j.dia && j.dia.n && r.acierto != null) ? Number(j.dia.acierto) - Number(r.acierto) : null;
-      const completo = ccNombreCompleto(mk, f.s), corto = ccNombre(mk, f.s);
-      const formula = completo.startsWith(corto) ? completo.slice(corto.length).replace(/^\s*·\s*/, "") : completo;
+      // 21 nov 2026 (pedido: "que aparezcan con el nombre literal de la etiqueta que aparece en el partido"):
+      // el texto COMPLETO de la etiqueta, igual al de las tarjetas de los partidos (ETIQUETAS_*), sin recortar
+      const completo = ccNombreCompleto(mk, f.s);
+      const ve = veredicto(mk, f.s, f.j, f.e);
       return `<tr>
-        <td style="min-width:185px;max-width:300px;white-space:normal;"><b>${vipEsc(corto)}</b>${on[f.s] === true ? ' <span style="color:var(--win);font-size:11px;">· encendida</span>' : ' <span class="vip-dim" style="font-size:11px;">· apagada</span>'}
-          <div style="font-size:12px;margin-top:2px;">rango <b>${Number(r.rango[0]).toFixed(2)}–${Number(r.rango[1]).toFixed(2)}</b></div>${formula ? `<div class="vip-dim cc-formula" style="font-size:11px;line-height:1.4;">${vipEsc(formula)}</div>` : ""}
-          <div class="cc-movil">atrás <b>${vipFmt(r.acierto, 0, false)}%</b> · <span style="color:${vipCol(r.roi)};">${vipPct(r.roi)}</span> (${vipN(r.n)})<br>${f.e === "sin" ? '<span class="vip-dim">justa: sin partidos</span>' : `${ICO[f.e]} justa <b>${vipFmt(j.dia.acierto, 0, false)}%</b> · <span style="color:${vipCol(j.dia.roi)};">${vipPct(j.dia.roi)}</span> (${vipN(j.dia.n)})`}<br><span class="vip-dim">para no perder ${(j.dia && j.dia.cuota) ? vipFmt(100 / j.dia.cuota, 0, false) + "%" : "—"}</span></div></td>
+        <td style="min-width:200px;max-width:340px;white-space:normal;"><span style="font-weight:600;">${vipEsc(completo)}</span>${on[f.s] === true ? ' <span style="color:var(--win);font-size:11px;">· encendida</span>' : ' <span class="vip-dim" style="font-size:11px;">· apagada</span>'}
+          <div style="font-size:12px;margin-top:2px;">rango <b>${Number(r.rango[0]).toFixed(2)}–${Number(r.rango[1]).toFixed(2)}</b></div>
+          <div class="cc-movil">atrás <b>${vipFmt(r.acierto, 0, false)}%</b> · <span style="color:${vipCol(r.roi)};">${vipPct(r.roi)}</span> (${vipN(r.n)})<br>${f.e === "sin" ? '<span class="vip-dim">justa: sin partidos</span>' : `${ICO[f.e]} justa <b>${vipFmt(j.dia.acierto, 0, false)}%</b> · <span style="color:${vipCol(j.dia.roi)};">${vipPct(j.dia.roi)}</span> (${vipN(j.dia.n)})`}<br><span class="vip-dim">para no perder ${(j.dia && j.dia.cuota) ? vipFmt(100 / j.dia.cuota, 0, false) + "%" : "—"}</span><div style="margin-top:3px;">${ve.t}</div></div></td>
         <td class="num">${celda(at, ` · ${vipFmt(r.uds)}u${mit}`)}</td>
         <td class="num" style="background:rgba(255,255,255,0.03);">${f.e === "sin" ? '<span class="vip-dim">sin partidos</span>' : `<div style="font-size:15px;line-height:1.1;">${ICO[f.e]}</div>${celda(j.dia, caida != null ? ` · ${caida >= 0 ? "+" : ""}${vipFmt(caida, 0, false)} pts vs atrás` : "")}`}</td>
+        <td style="min-width:150px;white-space:normal;font-size:12px;">${ve.t}</td>
         <td class="num">${minimo((j.dia && j.dia.n) ? j.dia : {cuota: j.atras && j.atras.cuota})}</td>
         <td class="num">${(j.reciente && j.reciente.n) ? celda(j.reciente) : '<span class="vip-dim">—</span>'}</td>
         <td class="num" style="color:${vipCol(r.roi_total)};">${vipPct(r.roi_total)} <span class="vip-dim">(${vipN(r.n_total)})</span></td>
         <td style="font-size:12px;">${r.se_mantuvo ? "✓ sí · lleva etiqueta" : '<span class="vip-dim">✗ no</span>'}</td></tr>`;
     };
-    return `<details class="vip-det"${mk === "BTTS" ? " open" : ""}><summary>${mk} · ${filas.length} señales con rango · prueba justa: ✅ ${cnt("ok")} aguantan · ⏳ ${cnt("poca")} con poca muestra · ❌ ${cnt("no")} no aguantan${sin ? ` · ${sin} sin ningún rango que gane` : ""}</summary>
+    const nCand = filas.filter(f => veredicto(mk, f.s, f.j, f.e).k === "si").length;
+    return `<details class="vip-det"${mk === "BTTS" ? " open" : ""}><summary>${mk} · ${filas.length} señales con rango · prueba justa: ✅ ${cnt("ok")} aguantan · ⏳ ${cnt("poca")} con poca muestra · ❌ ${cnt("no")} no aguantan · ⭐ ${nCand} candidata${nCand === 1 ? "" : "s"} al VIP${sin ? ` · ${sin} sin ningún rango que gane` : ""}</summary>
       <p class="vip-dim" style="font-size:12px;margin:8px 0 6px;">Medido con la cuota de ${CC_PRECIO_TXT[mk] || mk}. Primero las que aguantan la prueba justa.</p>
       <div class="vip-scroll rango-tabla"><table class="cmp-table"><thead><tr>
         <th>Señal · rango de hoy</th>
         <th class="num">Mirando atrás<div class="vip-dim" style="font-size:10px;text-transform:none;white-space:normal;">rango elegido con estos mismos partidos: siempre se ve bien</div></th>
         <th class="num">Prueba justa · como en vivo<div class="vip-dim" style="font-size:10px;text-transform:none;white-space:normal;">cada día con el rango que tenía antes</div></th>
+        <th>¿Merece el VIP?<div class="vip-dim" style="font-size:10px;text-transform:none;white-space:normal;">mira lo que agregaría: sus partidos que no están ya en el VIP</div></th>
         <th class="num">Para no perder<div class="vip-dim" style="font-size:10px;text-transform:none;white-space:normal;">acierto mínimo</div></th>
         <th class="num">Últimos 30 días</th><th class="num">Señal completa<div class="vip-dim" style="font-size:10px;text-transform:none;">todas las cuotas</div></th><th>¿Se mantuvo?</th>
       </tr></thead><tbody>${filas.map(fila).join("")}</tbody></table></div></details>`;
@@ -1921,6 +1944,7 @@ function ccTablaHtml(data){
     <div class="vip-verdict" style="margin:0 0 12px;font-size:13px;">
       <p><b>Cómo leerla.</b> <b>Mirando atrás</b> es el acierto con el rango de hoy, y ese rango se eligió buscando donde mejor le fue a la señal con esos mismos partidos: por eso casi todas se ven en 75–80%. <b>Prueba justa</b> es lo que habría pasado en vivo: cada día se usa el rango que la señal tenía con sus partidos anteriores, sin saber lo que venía. Esa es la cifra que cuenta.</p>
       <p><b>✅</b> aguanta (30+ partidos y gana) · <b>⏳</b> menos de 30 partidos, todavía no se sabe · <b>❌</b> no aguanta. <b>Para no perder</b> es el acierto mínimo que pide esa cuota (a 1.40 hace falta 71%): un 75% puede ser poco.</p>
+      <p><b>¿Merece el VIP?</b> Solo para las ✅: mira lo que la señal <b>agregaría</b>, sus partidos de la prueba justa que no están ya en el VIP. <b>⭐ Candidata</b> = 20+ partidos nuevos que ganan y las dos mitades de la prueba justa en positivo. <b>💎 / 🧪</b> = ya está en el VIP (🧪 en prueba a ½ unidad). <b>❌</b> = lo que sumaría pierde. <b>⏳</b> = falta muestra o una mitad va en negativo.</p>
     </div>
     ${bloques}
     <p class="vip-dim" style="font-size:12px;line-height:1.55;margin:10px 0 0;">El rango de hoy es el que más unidades ganó en todo el historial de la señal (mínimo 15 partidos y ROI positivo), medido con la cuota con la que se disparó. Los picks con JUGAR cuya cuota cae en ese rango llevan la etiqueta <b>🎯 CUOTA DE MAYOR CONFIANZA</b> solo si el rango ganó en las dos mitades de su historia («¿Se mantuvo?»). Aun así es una pista, no una regla segura: quedarse cada semana con las ✅ tampoco ganó la semana siguiente (ver «En su rango»). No es garantía ni consejo financiero.</p></section>`;
