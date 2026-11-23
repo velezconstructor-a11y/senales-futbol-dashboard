@@ -1,5 +1,5 @@
 {
-  "actualizado": "2026-11-23T05:35:22.425129-05:00",
+  "actualizado": "2026-11-23T08:08:37.954007-05:00",
   "hoy_referencia": "2026-11-23",
   "manana_referencia": "2026-11-24",
   "pasado_manana_referencia": "2026-11-25",
@@ -15932,27 +15932,27 @@
           "ok": true,
           "marcados": 0,
           "a_jugar": 0,
-          "entrenado_con": 13240,
-          "hora": "2026-11-23 05:33",
+          "entrenado_con": 13241,
+          "hora": "2026-11-23 08:07",
           "en_franja": 12,
           "ev_min": 0.15,
           "mejores": [
-            {
-              "partido": "Club Atlético de Madrid vs Viking FK",
-              "liga": "Europe UEFA Champions League",
-              "fecha": "2026-11-25",
-              "cuota": 2.09,
-              "prob": 0.5314,
-              "ev": 0.1106,
-              "marcado": false
-            },
             {
               "partido": "Hammarby IF vs IFK Göteborg",
               "liga": "Sweden Allsvenskan",
               "fecha": "2026-11-23",
               "cuota": 1.95,
-              "prob": 0.5564,
-              "ev": 0.085,
+              "prob": 0.5582,
+              "ev": 0.0885,
+              "marcado": false
+            },
+            {
+              "partido": "Club Atlético de Madrid vs Viking FK",
+              "liga": "Europe UEFA Champions League",
+              "fecha": "2026-11-25",
+              "cuota": 2.09,
+              "prob": 0.5141,
+              "ev": 0.0744,
               "marcado": false
             },
             {
@@ -15960,17 +15960,8 @@
               "liga": "France Ligue 2",
               "fecha": "2026-11-23",
               "cuota": 2.1,
-              "prob": 0.511,
-              "ev": 0.0731,
-              "marcado": false
-            },
-            {
-              "partido": "Rangers FC vs Aberdeen FC",
-              "liga": "Scotland Premiership",
-              "fecha": "2026-11-24",
-              "cuota": 1.87,
-              "prob": 0.5536,
-              "ev": 0.0352,
+              "prob": 0.4979,
+              "ev": 0.0456,
               "marcado": false
             },
             {
@@ -15978,8 +15969,17 @@
               "liga": "Colombia Categoria Primera A",
               "fecha": "2026-11-24",
               "cuota": 2.05,
-              "prob": 0.4939,
-              "ev": 0.0125,
+              "prob": 0.5044,
+              "ev": 0.034,
+              "marcado": false
+            },
+            {
+              "partido": "Rangers FC vs Aberdeen FC",
+              "liga": "Scotland Premiership",
+              "fecha": "2026-11-24",
+              "cuota": 1.87,
+              "prob": 0.5509,
+              "ev": 0.0302,
               "marcado": false
             }
           ]
@@ -43817,8 +43817,8 @@
       "vip_grupo": null,
       "cuota_confianza": null,
       "rango_obs": null,
-      "prob_valor": 0.5413,
-      "ev_valor": -0.0636,
+      "prob_valor": 0.5416,
+      "ev_valor": -0.063,
       "chk": null,
       "alerta_btts": null,
       "cuota_btts_alerta": null,
@@ -43916,8 +43916,8 @@
       "vip_grupo": null,
       "cuota_confianza": null,
       "rango_obs": null,
-      "prob_valor": 0.5619,
-      "ev_valor": -0.1009,
+      "prob_valor": 0.5576,
+      "ev_valor": -0.1078,
       "chk": null,
       "alerta_btts": null,
       "cuota_btts_alerta": null,
@@ -44015,8 +44015,8 @@
       "vip_grupo": null,
       "cuota_confianza": null,
       "rango_obs": null,
-      "prob_valor": 0.544,
-      "ev_valor": -0.0479,
+      "prob_valor": 0.5452,
+      "ev_valor": -0.0459,
       "chk": null,
       "alerta_btts": null,
       "cuota_btts_alerta": null,
@@ -44114,8 +44114,8 @@
       "vip_grupo": null,
       "cuota_confianza": null,
       "rango_obs": null,
-      "prob_valor": 0.5451,
-      "ev_valor": -0.0734,
+      "prob_valor": 0.5449,
+      "ev_valor": -0.0737,
       "chk": null,
       "alerta_btts": null,
       "cuota_btts_alerta": null,
@@ -44213,8 +44213,8 @@
       "vip_grupo": null,
       "cuota_confianza": null,
       "rango_obs": null,
-      "prob_valor": 0.5599,
-      "ev_valor": -0.1041,
+      "prob_valor": 0.5584,
+      "ev_valor": -0.1066,
       "chk": null,
       "alerta_btts": null,
       "cuota_btts_alerta": null,
@@ -44313,12 +44313,12 @@
       "cuota_confianza": {
         "BTTS": [
           {
-            "senal": "idx_btts_top20",
+            "senal": "idx_btts_top10",
             "rango": [
               1.8,
               2.05
             ],
-            "roi": 14.4
+            "roi": 39.8
           },
           {
             "senal": "idx_btts_top05",
@@ -44329,26 +44329,26 @@
             "roi": 43.8
           },
           {
+            "senal": "idx_btts_top20",
+            "rango": [
+              1.8,
+              2.05
+            ],
+            "roi": 14.4
+          },
+          {
             "senal": "topacio",
             "rango": [
               1.65,
               2.03
             ],
             "roi": 19.0
-          },
-          {
-            "senal": "idx_btts_top10",
-            "rango": [
-              1.8,
-              2.05
-            ],
-            "roi": 39.8
           }
         ]
       },
       "rango_obs": null,
-      "prob_valor": 0.5564,
-      "ev_valor": 0.085,
+      "prob_valor": 0.5582,
+      "ev_valor": 0.0885,
       "chk": {
         "via": null,
         "i": [
@@ -44515,8 +44515,8 @@
       "vip_grupo": null,
       "cuota_confianza": null,
       "rango_obs": null,
-      "prob_valor": 0.5752,
-      "ev_valor": -0.0682,
+      "prob_valor": 0.5736,
+      "ev_valor": -0.0708,
       "chk": null,
       "alerta_btts": null,
       "cuota_btts_alerta": null,
@@ -44615,38 +44615,6 @@
       "cuota_confianza": {
         "BTTS": [
           {
-            "senal": "stake9_fallo_gc",
-            "rango": [
-              1.45,
-              1.54
-            ],
-            "roi": 13.5
-          },
-          {
-            "senal": "stake9_mezcla",
-            "rango": [
-              1.5,
-              1.66
-            ],
-            "roi": 6.1
-          },
-          {
-            "senal": "corona",
-            "rango": [
-              1.45,
-              1.55
-            ],
-            "roi": 21.2
-          },
-          {
-            "senal": "VIP_reforzado",
-            "rango": [
-              1.45,
-              1.54
-            ],
-            "roi": 15.2
-          },
-          {
             "senal": "camino_normal_VIP+",
             "rango": [
               1.45,
@@ -44661,12 +44629,44 @@
               1.54
             ],
             "roi": 8.4
+          },
+          {
+            "senal": "corona",
+            "rango": [
+              1.45,
+              1.55
+            ],
+            "roi": 21.2
+          },
+          {
+            "senal": "stake9_fallo_gc",
+            "rango": [
+              1.45,
+              1.54
+            ],
+            "roi": 13.5
+          },
+          {
+            "senal": "VIP_reforzado",
+            "rango": [
+              1.45,
+              1.54
+            ],
+            "roi": 15.2
+          },
+          {
+            "senal": "stake9_mezcla",
+            "rango": [
+              1.5,
+              1.66
+            ],
+            "roi": 6.1
           }
         ]
       },
       "rango_obs": null,
-      "prob_valor": 0.5893,
-      "ev_valor": -0.1161,
+      "prob_valor": 0.5925,
+      "ev_valor": -0.1113,
       "chk": {
         "via": "VIP+",
         "i": [
@@ -44827,8 +44827,8 @@
       "vip_grupo": null,
       "cuota_confianza": null,
       "rango_obs": null,
-      "prob_valor": 0.6459,
-      "ev_valor": -0.0764,
+      "prob_valor": 0.638,
+      "ev_valor": -0.0877,
       "chk": null,
       "alerta_btts": null,
       "cuota_btts_alerta": null,
@@ -44926,8 +44926,8 @@
       "vip_grupo": null,
       "cuota_confianza": null,
       "rango_obs": null,
-      "prob_valor": 0.5779,
-      "ev_valor": -0.0175,
+      "prob_valor": 0.5767,
+      "ev_valor": -0.0196,
       "chk": null,
       "alerta_btts": null,
       "cuota_btts_alerta": null,
@@ -45036,8 +45036,8 @@
         ]
       },
       "rango_obs": null,
-      "prob_valor": 0.6426,
-      "ev_valor": -0.1003,
+      "prob_valor": 0.6488,
+      "ev_valor": -0.0917,
       "chk": null,
       "alerta_btts": null,
       "cuota_btts_alerta": null,
@@ -45135,8 +45135,8 @@
       "vip_grupo": null,
       "cuota_confianza": null,
       "rango_obs": null,
-      "prob_valor": 0.7049,
-      "ev_valor": -0.0907,
+      "prob_valor": 0.7034,
+      "ev_valor": -0.0927,
       "chk": null,
       "alerta_btts": null,
       "cuota_btts_alerta": null,
@@ -45234,8 +45234,8 @@
       "vip_grupo": null,
       "cuota_confianza": null,
       "rango_obs": null,
-      "prob_valor": 0.7042,
-      "ev_valor": -0.0845,
+      "prob_valor": 0.7076,
+      "ev_valor": -0.0801,
       "chk": null,
       "alerta_btts": null,
       "cuota_btts_alerta": null,
@@ -45333,8 +45333,8 @@
       "vip_grupo": null,
       "cuota_confianza": null,
       "rango_obs": null,
-      "prob_valor": 0.675,
-      "ev_valor": -0.082,
+      "prob_valor": 0.6847,
+      "ev_valor": -0.0689,
       "chk": null,
       "alerta_btts": null,
       "cuota_btts_alerta": null,
@@ -45432,8 +45432,8 @@
       "vip_grupo": null,
       "cuota_confianza": null,
       "rango_obs": null,
-      "prob_valor": 0.5563,
-      "ev_valor": -0.0987,
+      "prob_valor": 0.5562,
+      "ev_valor": -0.099,
       "chk": null,
       "alerta_btts": null,
       "cuota_btts_alerta": null,
@@ -45531,8 +45531,8 @@
       "vip_grupo": null,
       "cuota_confianza": null,
       "rango_obs": null,
-      "prob_valor": 0.511,
-      "ev_valor": 0.0731,
+      "prob_valor": 0.4979,
+      "ev_valor": 0.0456,
       "chk": null,
       "alerta_btts": null,
       "cuota_btts_alerta": null,
@@ -45630,8 +45630,8 @@
       "vip_grupo": null,
       "cuota_confianza": null,
       "rango_obs": null,
-      "prob_valor": 0.5985,
-      "ev_valor": -0.1023,
+      "prob_valor": 0.5988,
+      "ev_valor": -0.1018,
       "chk": null,
       "alerta_btts": null,
       "cuota_btts_alerta": null,
@@ -45729,8 +45729,8 @@
       "vip_grupo": null,
       "cuota_confianza": null,
       "rango_obs": null,
-      "prob_valor": 0.5036,
-      "ev_valor": -0.1288,
+      "prob_valor": 0.5051,
+      "ev_valor": -0.1261,
       "chk": null,
       "alerta_btts": null,
       "cuota_btts_alerta": null,
@@ -45828,8 +45828,8 @@
       "vip_grupo": null,
       "cuota_confianza": null,
       "rango_obs": null,
-      "prob_valor": 0.5387,
-      "ev_valor": -0.0789,
+      "prob_valor": 0.5342,
+      "ev_valor": -0.0865,
       "chk": null,
       "alerta_btts": null,
       "cuota_btts_alerta": null,
@@ -45927,8 +45927,8 @@
       "vip_grupo": null,
       "cuota_confianza": null,
       "rango_obs": null,
-      "prob_valor": 0.5931,
-      "ev_valor": -0.1104,
+      "prob_valor": 0.5923,
+      "ev_valor": -0.1115,
       "chk": null,
       "alerta_btts": null,
       "cuota_btts_alerta": null,
@@ -46026,8 +46026,8 @@
       "vip_grupo": null,
       "cuota_confianza": null,
       "rango_obs": null,
-      "prob_valor": 0.5473,
-      "ev_valor": -0.1572,
+      "prob_valor": 0.5469,
+      "ev_valor": -0.1577,
       "chk": null,
       "alerta_btts": null,
       "cuota_btts_alerta": null,
@@ -46125,8 +46125,8 @@
       "vip_grupo": null,
       "cuota_confianza": null,
       "rango_obs": null,
-      "prob_valor": 0.569,
-      "ev_valor": -0.1066,
+      "prob_valor": 0.5571,
+      "ev_valor": -0.1253,
       "chk": null,
       "alerta_btts": null,
       "cuota_btts_alerta": null,
@@ -46224,8 +46224,8 @@
       "vip_grupo": null,
       "cuota_confianza": null,
       "rango_obs": null,
-      "prob_valor": 0.4732,
-      "ev_valor": -0.0867,
+      "prob_valor": 0.468,
+      "ev_valor": -0.0967,
       "chk": null,
       "alerta_btts": null,
       "cuota_btts_alerta": null,
@@ -46323,8 +46323,8 @@
       "vip_grupo": null,
       "cuota_confianza": null,
       "rango_obs": null,
-      "prob_valor": 0.5082,
-      "ev_valor": -0.1716,
+      "prob_valor": 0.5007,
+      "ev_valor": -0.1839,
       "chk": null,
       "alerta_btts": null,
       "cuota_btts_alerta": null,
@@ -46433,8 +46433,8 @@
         ]
       },
       "rango_obs": null,
-      "prob_valor": 0.5536,
-      "ev_valor": 0.0352,
+      "prob_valor": 0.5509,
+      "ev_valor": 0.0302,
       "chk": null,
       "alerta_btts": null,
       "cuota_btts_alerta": null,
@@ -46532,8 +46532,8 @@
       "vip_grupo": null,
       "cuota_confianza": null,
       "rango_obs": null,
-      "prob_valor": 0.5875,
-      "ev_valor": -0.0601,
+      "prob_valor": 0.5854,
+      "ev_valor": -0.0634,
       "chk": null,
       "alerta_btts": null,
       "cuota_btts_alerta": null,
@@ -46631,8 +46631,8 @@
       "vip_grupo": null,
       "cuota_confianza": null,
       "rango_obs": null,
-      "prob_valor": 0.538,
-      "ev_valor": -0.0693,
+      "prob_valor": 0.5362,
+      "ev_valor": -0.0724,
       "chk": null,
       "alerta_btts": null,
       "cuota_btts_alerta": null,
@@ -46838,22 +46838,6 @@
             "roi": 7.8
           },
           {
-            "senal": "bastion",
-            "rango": [
-              1.45,
-              1.49
-            ],
-            "roi": 0.6
-          },
-          {
-            "senal": "estable_gc_fallo_plus",
-            "rango": [
-              1.45,
-              1.58
-            ],
-            "roi": 5.4
-          },
-          {
             "senal": "estable_btts_fallo",
             "rango": [
               1.45,
@@ -46868,6 +46852,22 @@
               1.83
             ],
             "roi": 10.6
+          },
+          {
+            "senal": "estable_gc_fallo_plus",
+            "rango": [
+              1.45,
+              1.58
+            ],
+            "roi": 5.4
+          },
+          {
+            "senal": "bastion",
+            "rango": [
+              1.45,
+              1.49
+            ],
+            "roi": 0.6
           }
         ],
         "Combinada": [
@@ -46906,8 +46906,8 @@
           }
         ]
       },
-      "prob_valor": 0.6169,
-      "ev_valor": -0.0932,
+      "prob_valor": 0.6219,
+      "ev_valor": -0.0858,
       "chk": {
         "via": null,
         "i": [
@@ -47071,8 +47071,8 @@
       "vip_grupo": null,
       "cuota_confianza": null,
       "rango_obs": null,
-      "prob_valor": 0.5784,
-      "ev_valor": -0.0919,
+      "prob_valor": 0.5775,
+      "ev_valor": -0.0933,
       "chk": null,
       "alerta_btts": null,
       "cuota_btts_alerta": null,
@@ -47170,8 +47170,8 @@
       "vip_grupo": null,
       "cuota_confianza": null,
       "rango_obs": null,
-      "prob_valor": 0.5459,
-      "ev_valor": -0.0883,
+      "prob_valor": 0.5385,
+      "ev_valor": -0.1007,
       "chk": null,
       "alerta_btts": null,
       "cuota_btts_alerta": null,
@@ -47269,8 +47269,8 @@
       "vip_grupo": null,
       "cuota_confianza": null,
       "rango_obs": null,
-      "prob_valor": 0.5452,
-      "ev_valor": -0.0786,
+      "prob_valor": 0.541,
+      "ev_valor": -0.0857,
       "chk": null,
       "alerta_btts": null,
       "cuota_btts_alerta": null,
@@ -47368,8 +47368,8 @@
       "vip_grupo": null,
       "cuota_confianza": null,
       "rango_obs": null,
-      "prob_valor": 0.5054,
-      "ev_valor": -0.0903,
+      "prob_valor": 0.5056,
+      "ev_valor": -0.09,
       "chk": null,
       "alerta_btts": null,
       "cuota_btts_alerta": null,
@@ -47467,8 +47467,8 @@
       "vip_grupo": null,
       "cuota_confianza": null,
       "rango_obs": null,
-      "prob_valor": 0.5268,
-      "ev_valor": -0.194,
+      "prob_valor": 0.5428,
+      "ev_valor": -0.1695,
       "chk": null,
       "alerta_btts": null,
       "cuota_btts_alerta": null,
@@ -47566,8 +47566,8 @@
       "vip_grupo": null,
       "cuota_confianza": null,
       "rango_obs": null,
-      "prob_valor": 0.5138,
-      "ev_valor": -0.1214,
+      "prob_valor": 0.5082,
+      "ev_valor": -0.131,
       "chk": null,
       "alerta_btts": null,
       "cuota_btts_alerta": null,
@@ -47665,8 +47665,8 @@
       "vip_grupo": null,
       "cuota_confianza": null,
       "rango_obs": null,
-      "prob_valor": 0.601,
-      "ev_valor": -0.0985,
+      "prob_valor": 0.6022,
+      "ev_valor": -0.0967,
       "chk": null,
       "alerta_btts": null,
       "cuota_btts_alerta": null,
@@ -47764,8 +47764,8 @@
       "vip_grupo": null,
       "cuota_confianza": null,
       "rango_obs": null,
-      "prob_valor": 0.5273,
-      "ev_valor": -0.1142,
+      "prob_valor": 0.5245,
+      "ev_valor": -0.1188,
       "chk": null,
       "alerta_btts": null,
       "cuota_btts_alerta": null,
@@ -47863,8 +47863,8 @@
       "vip_grupo": null,
       "cuota_confianza": null,
       "rango_obs": null,
-      "prob_valor": 0.5782,
-      "ev_valor": -0.0865,
+      "prob_valor": 0.5887,
+      "ev_valor": -0.0698,
       "chk": null,
       "alerta_btts": null,
       "cuota_btts_alerta": null,
@@ -47962,8 +47962,8 @@
       "vip_grupo": null,
       "cuota_confianza": null,
       "rango_obs": null,
-      "prob_valor": 0.5321,
-      "ev_valor": -0.0049,
+      "prob_valor": 0.5336,
+      "ev_valor": -0.0021,
       "chk": null,
       "alerta_btts": null,
       "cuota_btts_alerta": null,
@@ -48061,8 +48061,8 @@
       "vip_grupo": null,
       "cuota_confianza": null,
       "rango_obs": null,
-      "prob_valor": 0.6134,
-      "ev_valor": -0.0799,
+      "prob_valor": 0.6031,
+      "ev_valor": -0.0953,
       "chk": null,
       "alerta_btts": null,
       "cuota_btts_alerta": null,
@@ -48161,20 +48161,20 @@
       "cuota_confianza": {
         "BTTS": [
           {
-            "senal": "stake9",
-            "rango": [
-              1.6,
-              1.69
-            ],
-            "roi": 8.8
-          },
-          {
             "senal": "stake9_mezcla",
             "rango": [
               1.5,
               1.66
             ],
             "roi": 6.1
+          },
+          {
+            "senal": "stake9",
+            "rango": [
+              1.6,
+              1.69
+            ],
+            "roi": 8.8
           }
         ],
         "Over 2.5": [
@@ -48189,8 +48189,8 @@
         ]
       },
       "rango_obs": null,
-      "prob_valor": 0.5824,
-      "ev_valor": -0.0391,
+      "prob_valor": 0.5904,
+      "ev_valor": -0.0259,
       "chk": null,
       "alerta_btts": null,
       "cuota_btts_alerta": null,
@@ -48288,8 +48288,8 @@
       "vip_grupo": null,
       "cuota_confianza": null,
       "rango_obs": null,
-      "prob_valor": 0.604,
-      "ev_valor": -0.0518,
+      "prob_valor": 0.6082,
+      "ev_valor": -0.0452,
       "chk": null,
       "alerta_btts": null,
       "cuota_btts_alerta": null,
@@ -48387,8 +48387,8 @@
       "vip_grupo": null,
       "cuota_confianza": null,
       "rango_obs": null,
-      "prob_valor": 0.534,
-      "ev_valor": -0.0922,
+      "prob_valor": 0.5306,
+      "ev_valor": -0.098,
       "chk": null,
       "alerta_btts": null,
       "cuota_btts_alerta": null,
@@ -48486,8 +48486,8 @@
       "vip_grupo": null,
       "cuota_confianza": null,
       "rango_obs": null,
-      "prob_valor": 0.5558,
-      "ev_valor": -0.0718,
+      "prob_valor": 0.549,
+      "ev_valor": -0.0831,
       "chk": null,
       "alerta_btts": null,
       "cuota_btts_alerta": null,
@@ -48585,8 +48585,8 @@
       "vip_grupo": null,
       "cuota_confianza": null,
       "rango_obs": null,
-      "prob_valor": 0.5174,
-      "ev_valor": -0.017,
+      "prob_valor": 0.5249,
+      "ev_valor": -0.0026,
       "chk": null,
       "alerta_btts": null,
       "cuota_btts_alerta": null,
@@ -48684,8 +48684,8 @@
       "vip_grupo": null,
       "cuota_confianza": null,
       "rango_obs": null,
-      "prob_valor": 0.6017,
-      "ev_valor": -0.0794,
+      "prob_valor": 0.606,
+      "ev_valor": -0.0728,
       "chk": null,
       "alerta_btts": null,
       "cuota_btts_alerta": null,
@@ -48783,8 +48783,8 @@
       "vip_grupo": null,
       "cuota_confianza": null,
       "rango_obs": null,
-      "prob_valor": 0.5256,
-      "ev_valor": -0.1591,
+      "prob_valor": 0.5249,
+      "ev_valor": -0.1602,
       "chk": null,
       "alerta_btts": null,
       "cuota_btts_alerta": null,
@@ -48882,8 +48882,8 @@
       "vip_grupo": null,
       "cuota_confianza": null,
       "rango_obs": null,
-      "prob_valor": 0.5505,
-      "ev_valor": -0.1082,
+      "prob_valor": 0.5543,
+      "ev_valor": -0.1021,
       "chk": null,
       "alerta_btts": null,
       "cuota_btts_alerta": null,
@@ -48982,31 +48982,23 @@
       "cuota_confianza": {
         "BTTS": [
           {
-            "senal": "stake9",
-            "rango": [
-              1.6,
-              1.69
-            ],
-            "roi": 8.8
-          },
-          {
             "senal": "apuesta_top_btts_gcmin",
             "rango": [
               1.48,
               1.87
             ],
             "roi": 24.8
+          },
+          {
+            "senal": "stake9",
+            "rango": [
+              1.6,
+              1.69
+            ],
+            "roi": 8.8
           }
         ],
         "Over 2.5": [
-          {
-            "senal": "o25_gf_max_btts_xg_xgamax",
-            "rango": [
-              1.65,
-              1.89
-            ],
-            "roi": 11.6
-          },
           {
             "senal": "o25_gf_max_btts_xg",
             "rango": [
@@ -49014,12 +49006,20 @@
               1.74
             ],
             "roi": 9.7
+          },
+          {
+            "senal": "o25_gf_max_btts_xg_xgamax",
+            "rango": [
+              1.65,
+              1.89
+            ],
+            "roi": 11.6
           }
         ]
       },
       "rango_obs": null,
-      "prob_valor": 0.5961,
-      "ev_valor": -0.0462,
+      "prob_valor": 0.5856,
+      "ev_valor": -0.063,
       "chk": {
         "via": null,
         "i": [
@@ -49182,8 +49182,8 @@
       "vip_grupo": null,
       "cuota_confianza": null,
       "rango_obs": null,
-      "prob_valor": 0.5585,
-      "ev_valor": -0.0449,
+      "prob_valor": 0.5598,
+      "ev_valor": -0.0427,
       "chk": null,
       "alerta_btts": null,
       "cuota_btts_alerta": null,
@@ -49281,8 +49281,8 @@
       "vip_grupo": null,
       "cuota_confianza": null,
       "rango_obs": null,
-      "prob_valor": 0.5138,
-      "ev_valor": -0.1008,
+      "prob_valor": 0.5074,
+      "ev_valor": -0.112,
       "chk": null,
       "alerta_btts": null,
       "cuota_btts_alerta": null,
@@ -49380,8 +49380,8 @@
       "vip_grupo": null,
       "cuota_confianza": null,
       "rango_obs": null,
-      "prob_valor": 0.528,
-      "ev_valor": -0.0126,
+      "prob_valor": 0.5293,
+      "ev_valor": -0.0102,
       "chk": null,
       "alerta_btts": null,
       "cuota_btts_alerta": null,
@@ -49578,8 +49578,8 @@
       "vip_grupo": null,
       "cuota_confianza": null,
       "rango_obs": null,
-      "prob_valor": 0.5363,
-      "ev_valor": -0.0454,
+      "prob_valor": 0.5353,
+      "ev_valor": -0.0471,
       "chk": null,
       "alerta_btts": null,
       "cuota_btts_alerta": null,
@@ -49776,8 +49776,8 @@
       "vip_grupo": null,
       "cuota_confianza": null,
       "rango_obs": null,
-      "prob_valor": 0.5055,
-      "ev_valor": -0.0749,
+      "prob_valor": 0.5109,
+      "ev_valor": -0.065,
       "chk": null,
       "alerta_btts": null,
       "cuota_btts_alerta": null,
@@ -50271,8 +50271,8 @@
       "vip_grupo": null,
       "cuota_confianza": null,
       "rango_obs": null,
-      "prob_valor": 0.5467,
-      "ev_valor": -0.1144,
+      "prob_valor": 0.5492,
+      "ev_valor": -0.1103,
       "chk": null,
       "alerta_btts": null,
       "cuota_btts_alerta": null,
@@ -50381,8 +50381,8 @@
         ]
       },
       "rango_obs": null,
-      "prob_valor": 0.6011,
-      "ev_valor": -0.0984,
+      "prob_valor": 0.6045,
+      "ev_valor": -0.0932,
       "chk": null,
       "alerta_btts": null,
       "cuota_btts_alerta": null,
@@ -50480,8 +50480,8 @@
       "vip_grupo": null,
       "cuota_confianza": null,
       "rango_obs": null,
-      "prob_valor": 0.5859,
-      "ev_valor": -0.0919,
+      "prob_valor": 0.596,
+      "ev_valor": -0.0763,
       "chk": null,
       "alerta_btts": null,
       "cuota_btts_alerta": null,
@@ -50590,8 +50590,8 @@
         ]
       },
       "rango_obs": null,
-      "prob_valor": 0.615,
-      "ev_valor": -0.1144,
+      "prob_valor": 0.618,
+      "ev_valor": -0.1101,
       "chk": null,
       "alerta_btts": null,
       "cuota_btts_alerta": null,
@@ -50689,8 +50689,8 @@
       "vip_grupo": null,
       "cuota_confianza": null,
       "rango_obs": null,
-      "prob_valor": 0.5805,
-      "ev_valor": -0.0944,
+      "prob_valor": 0.572,
+      "ev_valor": -0.1077,
       "chk": null,
       "alerta_btts": null,
       "cuota_btts_alerta": null,
@@ -50788,8 +50788,8 @@
       "vip_grupo": null,
       "cuota_confianza": null,
       "rango_obs": null,
-      "prob_valor": 0.579,
-      "ev_valor": -0.0621,
+      "prob_valor": 0.5742,
+      "ev_valor": -0.0699,
       "chk": null,
       "alerta_btts": null,
       "cuota_btts_alerta": null,
@@ -50887,8 +50887,8 @@
       "vip_grupo": null,
       "cuota_confianza": null,
       "rango_obs": null,
-      "prob_valor": 0.5661,
-      "ev_valor": -0.0942,
+      "prob_valor": 0.5709,
+      "ev_valor": -0.0866,
       "chk": null,
       "alerta_btts": null,
       "cuota_btts_alerta": null,
@@ -50986,8 +50986,8 @@
       "vip_grupo": null,
       "cuota_confianza": null,
       "rango_obs": null,
-      "prob_valor": 0.5812,
-      "ev_valor": -0.0526,
+      "prob_valor": 0.5819,
+      "ev_valor": -0.0515,
       "chk": null,
       "alerta_btts": null,
       "cuota_btts_alerta": null,
@@ -51096,8 +51096,8 @@
         ]
       },
       "rango_obs": null,
-      "prob_valor": 0.5917,
-      "ev_valor": -0.0829,
+      "prob_valor": 0.5982,
+      "ev_valor": -0.0728,
       "chk": null,
       "alerta_btts": null,
       "cuota_btts_alerta": null,
@@ -51195,8 +51195,8 @@
       "vip_grupo": null,
       "cuota_confianza": null,
       "rango_obs": null,
-      "prob_valor": 0.617,
-      "ev_valor": -0.1053,
+      "prob_valor": 0.6246,
+      "ev_valor": -0.0943,
       "chk": null,
       "alerta_btts": null,
       "cuota_btts_alerta": null,
@@ -51294,8 +51294,8 @@
       "vip_grupo": null,
       "cuota_confianza": null,
       "rango_obs": null,
-      "prob_valor": 0.5722,
-      "ev_valor": -0.1016,
+      "prob_valor": 0.5613,
+      "ev_valor": -0.1187,
       "chk": null,
       "alerta_btts": null,
       "cuota_btts_alerta": null,
@@ -51393,8 +51393,8 @@
       "vip_grupo": null,
       "cuota_confianza": null,
       "rango_obs": null,
-      "prob_valor": 0.6047,
-      "ev_valor": -0.0929,
+      "prob_valor": 0.6126,
+      "ev_valor": -0.0811,
       "chk": null,
       "alerta_btts": null,
       "cuota_btts_alerta": null,
@@ -51493,6 +51493,14 @@
       "cuota_confianza": {
         "BTTS": [
           {
+            "senal": "camino_normal_VIP+",
+            "rango": [
+              1.45,
+              1.69
+            ],
+            "roi": 8.8
+          },
+          {
             "senal": "corona",
             "rango": [
               1.45,
@@ -51509,14 +51517,6 @@
             "roi": 15.2
           },
           {
-            "senal": "camino_normal_VIP+",
-            "rango": [
-              1.45,
-              1.69
-            ],
-            "roi": 8.8
-          },
-          {
             "senal": "estable_gc_fallo_plus",
             "rango": [
               1.45,
@@ -51527,8 +51527,8 @@
         ]
       },
       "rango_obs": null,
-      "prob_valor": 0.6146,
-      "ev_valor": -0.078,
+      "prob_valor": 0.6193,
+      "ev_valor": -0.0711,
       "chk": {
         "via": "VIP+",
         "i": [
@@ -51689,8 +51689,8 @@
       "vip_grupo": null,
       "cuota_confianza": null,
       "rango_obs": null,
-      "prob_valor": 0.5562,
-      "ev_valor": -0.149,
+      "prob_valor": 0.5583,
+      "ev_valor": -0.1458,
       "chk": null,
       "alerta_btts": null,
       "cuota_btts_alerta": null,
@@ -51788,8 +51788,8 @@
       "vip_grupo": null,
       "cuota_confianza": null,
       "rango_obs": null,
-      "prob_valor": 0.6096,
-      "ev_valor": -0.0734,
+      "prob_valor": 0.5965,
+      "ev_valor": -0.0934,
       "chk": null,
       "alerta_btts": null,
       "cuota_btts_alerta": null,
@@ -51888,26 +51888,26 @@
       "cuota_confianza": {
         "BTTS": [
           {
-            "senal": "avg2h_parejo_15",
-            "rango": [
-              1.35,
-              1.44
-            ],
-            "roi": 9.6
-          },
-          {
             "senal": "avg2h_parejo_14",
             "rango": [
               1.35,
               1.44
             ],
             "roi": 12.1
+          },
+          {
+            "senal": "avg2h_parejo_15",
+            "rango": [
+              1.35,
+              1.44
+            ],
+            "roi": 9.6
           }
         ]
       },
       "rango_obs": null,
-      "prob_valor": 0.6439,
-      "ev_valor": -0.0985,
+      "prob_valor": 0.655,
+      "ev_valor": -0.083,
       "chk": null,
       "alerta_btts": null,
       "cuota_btts_alerta": null,
@@ -52016,8 +52016,8 @@
         ]
       },
       "rango_obs": null,
-      "prob_valor": 0.5695,
-      "ev_valor": -0.0489,
+      "prob_valor": 0.5618,
+      "ev_valor": -0.0618,
       "chk": null,
       "alerta_btts": null,
       "cuota_btts_alerta": null,
@@ -52124,14 +52124,6 @@
             "roi": 13.5
           },
           {
-            "senal": "estable_btts_fallo",
-            "rango": [
-              1.45,
-              1.49
-            ],
-            "roi": 8.4
-          },
-          {
             "senal": "bastion",
             "rango": [
               1.45,
@@ -52140,20 +52132,28 @@
             "roi": 0.6
           },
           {
-            "senal": "estable_gc_fallo_plus",
-            "rango": [
-              1.45,
-              1.58
-            ],
-            "roi": 5.4
-          },
-          {
             "senal": "estable_gc_fallo",
             "rango": [
               1.45,
               1.49
             ],
             "roi": 7.8
+          },
+          {
+            "senal": "estable_btts_fallo",
+            "rango": [
+              1.45,
+              1.49
+            ],
+            "roi": 8.4
+          },
+          {
+            "senal": "estable_gc_fallo_plus",
+            "rango": [
+              1.45,
+              1.58
+            ],
+            "roi": 5.4
           }
         ],
         "Combinada": [
@@ -52185,8 +52185,8 @@
           }
         ]
       },
-      "prob_valor": 0.6138,
-      "ev_valor": -0.1101,
+      "prob_valor": 0.6097,
+      "ev_valor": -0.116,
       "chk": {
         "via": null,
         "i": [
@@ -52347,8 +52347,8 @@
       "vip_grupo": null,
       "cuota_confianza": null,
       "rango_obs": null,
-      "prob_valor": 0.5997,
-      "ev_valor": -0.1305,
+      "prob_valor": 0.6038,
+      "ev_valor": -0.1244,
       "chk": null,
       "alerta_btts": null,
       "cuota_btts_alerta": null,
@@ -52446,8 +52446,8 @@
       "vip_grupo": null,
       "cuota_confianza": null,
       "rango_obs": null,
-      "prob_valor": 0.6005,
-      "ev_valor": -0.1173,
+      "prob_valor": 0.5993,
+      "ev_valor": -0.119,
       "chk": null,
       "alerta_btts": null,
       "cuota_btts_alerta": null,
@@ -52556,8 +52556,8 @@
         ]
       },
       "rango_obs": null,
-      "prob_valor": 0.5569,
-      "ev_valor": -0.0365,
+      "prob_valor": 0.554,
+      "ev_valor": -0.0416,
       "chk": null,
       "alerta_btts": null,
       "cuota_btts_alerta": null,
@@ -52655,8 +52655,8 @@
       "vip_grupo": null,
       "cuota_confianza": null,
       "rango_obs": null,
-      "prob_valor": 0.5125,
-      "ev_valor": -0.1287,
+      "prob_valor": 0.5147,
+      "ev_valor": -0.125,
       "chk": null,
       "alerta_btts": null,
       "cuota_btts_alerta": null,
@@ -52754,8 +52754,8 @@
       "vip_grupo": null,
       "cuota_confianza": null,
       "rango_obs": null,
-      "prob_valor": 0.6332,
-      "ev_valor": -0.1578,
+      "prob_valor": 0.6408,
+      "ev_valor": -0.1478,
       "chk": null,
       "alerta_btts": null,
       "cuota_btts_alerta": null,
@@ -52853,8 +52853,8 @@
       "vip_grupo": null,
       "cuota_confianza": null,
       "rango_obs": null,
-      "prob_valor": 0.5975,
-      "ev_valor": -0.0917,
+      "prob_valor": 0.5946,
+      "ev_valor": -0.0961,
       "chk": null,
       "alerta_btts": null,
       "cuota_btts_alerta": null,
@@ -52952,8 +52952,8 @@
       "vip_grupo": null,
       "cuota_confianza": null,
       "rango_obs": null,
-      "prob_valor": 0.6363,
-      "ev_valor": -0.1347,
+      "prob_valor": 0.6446,
+      "ev_valor": -0.1234,
       "chk": null,
       "alerta_btts": null,
       "cuota_btts_alerta": null,
@@ -53051,8 +53051,8 @@
       "vip_grupo": null,
       "cuota_confianza": null,
       "rango_obs": null,
-      "prob_valor": 0.6125,
-      "ev_valor": -0.0996,
+      "prob_valor": 0.6147,
+      "ev_valor": -0.0964,
       "chk": null,
       "alerta_btts": null,
       "cuota_btts_alerta": null,
@@ -53150,8 +53150,8 @@
       "vip_grupo": null,
       "cuota_confianza": null,
       "rango_obs": null,
-      "prob_valor": 0.5904,
-      "ev_valor": -0.0966,
+      "prob_valor": 0.5918,
+      "ev_valor": -0.0946,
       "chk": null,
       "alerta_btts": null,
       "cuota_btts_alerta": null,
@@ -53249,8 +53249,8 @@
       "vip_grupo": null,
       "cuota_confianza": null,
       "rango_obs": null,
-      "prob_valor": 0.5955,
-      "ev_valor": -0.1246,
+      "prob_valor": 0.5999,
+      "ev_valor": -0.1182,
       "chk": null,
       "alerta_btts": null,
       "cuota_btts_alerta": null,
@@ -53348,8 +53348,8 @@
       "vip_grupo": null,
       "cuota_confianza": null,
       "rango_obs": null,
-      "prob_valor": 0.531,
-      "ev_valor": -0.0813,
+      "prob_valor": 0.526,
+      "ev_valor": -0.09,
       "chk": null,
       "alerta_btts": null,
       "cuota_btts_alerta": null,
@@ -53664,8 +53664,8 @@
         ]
       },
       "rango_obs": null,
-      "prob_valor": 0.609,
-      "ev_valor": -0.0865,
+      "prob_valor": 0.6088,
+      "ev_valor": -0.0869,
       "chk": {
         "via": null,
         "i": [
@@ -54026,8 +54026,8 @@
       "vip_grupo": null,
       "cuota_confianza": null,
       "rango_obs": null,
-      "prob_valor": 0.5936,
-      "ev_valor": -0.0799,
+      "prob_valor": 0.5973,
+      "ev_valor": -0.0742,
       "chk": null,
       "alerta_btts": null,
       "cuota_btts_alerta": null,
@@ -54324,20 +54324,20 @@
       "cuota_confianza": {
         "BTTS": [
           {
-            "senal": "stake9",
-            "rango": [
-              1.6,
-              1.69
-            ],
-            "roi": 8.8
-          },
-          {
             "senal": "stake9_mezcla",
             "rango": [
               1.5,
               1.66
             ],
             "roi": 6.1
+          },
+          {
+            "senal": "stake9",
+            "rango": [
+              1.6,
+              1.69
+            ],
+            "roi": 8.8
           }
         ],
         "Over 2.5": [
@@ -54352,8 +54352,8 @@
         ]
       },
       "rango_obs": null,
-      "prob_valor": 0.568,
-      "ev_valor": -0.0911,
+      "prob_valor": 0.5884,
+      "ev_valor": -0.0586,
       "chk": {
         "via": null,
         "i": [
@@ -54516,8 +54516,8 @@
       "vip_grupo": null,
       "cuota_confianza": null,
       "rango_obs": null,
-      "prob_valor": 0.5955,
-      "ev_valor": -0.1127,
+      "prob_valor": 0.597,
+      "ev_valor": -0.1105,
       "chk": null,
       "alerta_btts": null,
       "cuota_btts_alerta": null,
@@ -54615,8 +54615,8 @@
       "vip_grupo": null,
       "cuota_confianza": null,
       "rango_obs": null,
-      "prob_valor": 0.6081,
-      "ev_valor": -0.106,
+      "prob_valor": 0.6004,
+      "ev_valor": -0.1173,
       "chk": null,
       "alerta_btts": null,
       "cuota_btts_alerta": null,
@@ -54724,8 +54724,8 @@
           }
         ]
       },
-      "prob_valor": 0.6129,
-      "ev_valor": -0.0746,
+      "prob_valor": 0.6091,
+      "ev_valor": -0.0803,
       "chk": {
         "via": null,
         "i": [
@@ -54889,8 +54889,8 @@
       "vip_grupo": null,
       "cuota_confianza": null,
       "rango_obs": null,
-      "prob_valor": 0.6385,
-      "ev_valor": -0.0805,
+      "prob_valor": 0.6455,
+      "ev_valor": -0.0705,
       "chk": null,
       "alerta_btts": null,
       "cuota_btts_alerta": null,
@@ -54988,8 +54988,8 @@
       "vip_grupo": null,
       "cuota_confianza": null,
       "rango_obs": null,
-      "prob_valor": 0.5564,
-      "ev_valor": -0.0819,
+      "prob_valor": 0.5673,
+      "ev_valor": -0.0639,
       "chk": null,
       "alerta_btts": null,
       "cuota_btts_alerta": null,
@@ -55087,8 +55087,8 @@
       "vip_grupo": null,
       "cuota_confianza": null,
       "rango_obs": null,
-      "prob_valor": 0.5929,
-      "ev_valor": -0.1107,
+      "prob_valor": 0.5989,
+      "ev_valor": -0.1017,
       "chk": null,
       "alerta_btts": null,
       "cuota_btts_alerta": null,
@@ -55186,8 +55186,8 @@
       "vip_grupo": null,
       "cuota_confianza": null,
       "rango_obs": null,
-      "prob_valor": 0.6589,
-      "ev_valor": -0.1237,
+      "prob_valor": 0.6575,
+      "ev_valor": -0.1256,
       "chk": null,
       "alerta_btts": null,
       "cuota_btts_alerta": null,
@@ -55285,8 +55285,8 @@
       "vip_grupo": null,
       "cuota_confianza": null,
       "rango_obs": null,
-      "prob_valor": 0.556,
-      "ev_valor": -0.1215,
+      "prob_valor": 0.5686,
+      "ev_valor": -0.1016,
       "chk": null,
       "alerta_btts": null,
       "cuota_btts_alerta": null,
@@ -55384,8 +55384,8 @@
       "vip_grupo": null,
       "cuota_confianza": null,
       "rango_obs": null,
-      "prob_valor": 0.597,
-      "ev_valor": -0.0627,
+      "prob_valor": 0.6038,
+      "ev_valor": -0.052,
       "chk": null,
       "alerta_btts": null,
       "cuota_btts_alerta": null,
@@ -55483,8 +55483,8 @@
       "vip_grupo": null,
       "cuota_confianza": null,
       "rango_obs": null,
-      "prob_valor": 0.6009,
-      "ev_valor": -0.0987,
+      "prob_valor": 0.6018,
+      "ev_valor": -0.0973,
       "chk": null,
       "alerta_btts": null,
       "cuota_btts_alerta": null,
@@ -55582,8 +55582,8 @@
       "vip_grupo": null,
       "cuota_confianza": null,
       "rango_obs": null,
-      "prob_valor": 0.5314,
-      "ev_valor": -0.1392,
+      "prob_valor": 0.549,
+      "ev_valor": -0.1106,
       "chk": null,
       "alerta_btts": null,
       "cuota_btts_alerta": null,
@@ -55681,8 +55681,8 @@
       "vip_grupo": null,
       "cuota_confianza": null,
       "rango_obs": null,
-      "prob_valor": 0.5486,
-      "ev_valor": -0.1113,
+      "prob_valor": 0.5561,
+      "ev_valor": -0.0991,
       "chk": null,
       "alerta_btts": null,
       "cuota_btts_alerta": null,
@@ -55780,8 +55780,8 @@
       "vip_grupo": null,
       "cuota_confianza": null,
       "rango_obs": null,
-      "prob_valor": 0.626,
-      "ev_valor": -0.0985,
+      "prob_valor": 0.6174,
+      "ev_valor": -0.1109,
       "chk": null,
       "alerta_btts": null,
       "cuota_btts_alerta": null,
@@ -55879,8 +55879,8 @@
       "vip_grupo": null,
       "cuota_confianza": null,
       "rango_obs": null,
-      "prob_valor": 0.5803,
-      "ev_valor": -0.0889,
+      "prob_valor": 0.5756,
+      "ev_valor": -0.0963,
       "chk": null,
       "alerta_btts": null,
       "cuota_btts_alerta": null,
@@ -55978,8 +55978,8 @@
       "vip_grupo": null,
       "cuota_confianza": null,
       "rango_obs": null,
-      "prob_valor": 0.5394,
-      "ev_valor": 0.0087,
+      "prob_valor": 0.5438,
+      "ev_valor": 0.017,
       "chk": null,
       "alerta_btts": null,
       "cuota_btts_alerta": null,
@@ -56077,8 +56077,8 @@
       "vip_grupo": null,
       "cuota_confianza": null,
       "rango_obs": null,
-      "prob_valor": 0.5621,
-      "ev_valor": -0.0726,
+      "prob_valor": 0.5757,
+      "ev_valor": -0.0501,
       "chk": null,
       "alerta_btts": null,
       "cuota_btts_alerta": null,
@@ -56176,8 +56176,8 @@
       "vip_grupo": null,
       "cuota_confianza": null,
       "rango_obs": null,
-      "prob_valor": 0.5624,
-      "ev_valor": -0.0834,
+      "prob_valor": 0.5583,
+      "ev_valor": -0.0899,
       "chk": null,
       "alerta_btts": null,
       "cuota_btts_alerta": null,
@@ -56275,8 +56275,8 @@
       "vip_grupo": null,
       "cuota_confianza": null,
       "rango_obs": null,
-      "prob_valor": 0.5684,
-      "ev_valor": -0.0337,
+      "prob_valor": 0.5659,
+      "ev_valor": -0.038,
       "chk": null,
       "alerta_btts": null,
       "cuota_btts_alerta": null,
@@ -56374,8 +56374,8 @@
       "vip_grupo": null,
       "cuota_confianza": null,
       "rango_obs": null,
-      "prob_valor": 0.5279,
-      "ev_valor": -0.0445,
+      "prob_valor": 0.5168,
+      "ev_valor": -0.0645,
       "chk": null,
       "alerta_btts": null,
       "cuota_btts_alerta": null,
@@ -56473,8 +56473,8 @@
       "vip_grupo": null,
       "cuota_confianza": null,
       "rango_obs": null,
-      "prob_valor": 0.5257,
-      "ev_valor": -0.08,
+      "prob_valor": 0.5236,
+      "ev_valor": -0.0837,
       "chk": null,
       "alerta_btts": null,
       "cuota_btts_alerta": null,
@@ -56572,8 +56572,8 @@
       "vip_grupo": null,
       "cuota_confianza": null,
       "rango_obs": null,
-      "prob_valor": 0.5332,
-      "ev_valor": -0.0721,
+      "prob_valor": 0.5312,
+      "ev_valor": -0.0757,
       "chk": null,
       "alerta_btts": null,
       "cuota_btts_alerta": null,
@@ -56692,8 +56692,8 @@
         ]
       },
       "rango_obs": null,
-      "prob_valor": 0.5494,
-      "ev_valor": -0.0659,
+      "prob_valor": 0.5503,
+      "ev_valor": -0.0645,
       "chk": null,
       "alerta_btts": null,
       "cuota_btts_alerta": null,
@@ -56791,8 +56791,8 @@
       "vip_grupo": null,
       "cuota_confianza": null,
       "rango_obs": null,
-      "prob_valor": 0.5257,
-      "ev_valor": -0.0853,
+      "prob_valor": 0.5247,
+      "ev_valor": -0.0871,
       "chk": null,
       "alerta_btts": null,
       "cuota_btts_alerta": null,
@@ -56890,8 +56890,8 @@
       "vip_grupo": null,
       "cuota_confianza": null,
       "rango_obs": null,
-      "prob_valor": 0.5466,
-      "ev_valor": -0.1144,
+      "prob_valor": 0.5476,
+      "ev_valor": -0.113,
       "chk": null,
       "alerta_btts": null,
       "cuota_btts_alerta": null,
@@ -57089,20 +57089,20 @@
       "cuota_confianza": {
         "BTTS": [
           {
-            "senal": "stake9_fallo_gc",
+            "senal": "camino_normal_VIP+",
+            "rango": [
+              1.45,
+              1.69
+            ],
+            "roi": 8.8
+          },
+          {
+            "senal": "camino_normal_VIP+_refinada",
             "rango": [
               1.45,
               1.54
             ],
-            "roi": 13.5
-          },
-          {
-            "senal": "stake9_mezcla",
-            "rango": [
-              1.5,
-              1.66
-            ],
-            "roi": 6.1
+            "roi": 8.4
           },
           {
             "senal": "corona",
@@ -57113,6 +57113,14 @@
             "roi": 21.2
           },
           {
+            "senal": "stake9_fallo_gc",
+            "rango": [
+              1.45,
+              1.54
+            ],
+            "roi": 13.5
+          },
+          {
             "senal": "VIP_reforzado",
             "rango": [
               1.45,
@@ -57121,12 +57129,12 @@
             "roi": 15.2
           },
           {
-            "senal": "camino_normal_VIP+",
+            "senal": "stake9_mezcla",
             "rango": [
-              1.45,
-              1.69
+              1.5,
+              1.66
             ],
-            "roi": 8.8
+            "roi": 6.1
           },
           {
             "senal": "estable_gc_fallo_plus",
@@ -57135,20 +57143,12 @@
               1.58
             ],
             "roi": 5.4
-          },
-          {
-            "senal": "camino_normal_VIP+_refinada",
-            "rango": [
-              1.45,
-              1.54
-            ],
-            "roi": 8.4
           }
         ]
       },
       "rango_obs": null,
-      "prob_valor": 0.6074,
-      "ev_valor": -0.0829,
+      "prob_valor": 0.6019,
+      "ev_valor": -0.0911,
       "chk": {
         "via": "VIP+",
         "i": [
@@ -57507,8 +57507,8 @@
       "vip_grupo": null,
       "cuota_confianza": null,
       "rango_obs": null,
-      "prob_valor": 0.497,
-      "ev_valor": -0.0507,
+      "prob_valor": 0.4837,
+      "ev_valor": -0.0762,
       "chk": null,
       "alerta_btts": null,
       "cuota_btts_alerta": null,
@@ -58101,8 +58101,8 @@
       "vip_grupo": null,
       "cuota_confianza": null,
       "rango_obs": null,
-      "prob_valor": 0.5119,
-      "ev_valor": -0.0582,
+      "prob_valor": 0.5176,
+      "ev_valor": -0.0476,
       "chk": null,
       "alerta_btts": null,
       "cuota_btts_alerta": null,
@@ -58200,8 +58200,8 @@
       "vip_grupo": null,
       "cuota_confianza": null,
       "rango_obs": null,
-      "prob_valor": 0.5839,
-      "ev_valor": -0.0833,
+      "prob_valor": 0.5798,
+      "ev_valor": -0.0897,
       "chk": null,
       "alerta_btts": null,
       "cuota_btts_alerta": null,
@@ -58299,8 +58299,8 @@
       "vip_grupo": null,
       "cuota_confianza": null,
       "rango_obs": null,
-      "prob_valor": 0.5933,
-      "ev_valor": -0.122,
+      "prob_valor": 0.5907,
+      "ev_valor": -0.1257,
       "chk": null,
       "alerta_btts": null,
       "cuota_btts_alerta": null,
@@ -58398,8 +58398,8 @@
       "vip_grupo": null,
       "cuota_confianza": null,
       "rango_obs": null,
-      "prob_valor": 0.5967,
-      "ev_valor": -0.105,
+      "prob_valor": 0.5957,
+      "ev_valor": -0.1064,
       "chk": null,
       "alerta_btts": null,
       "cuota_btts_alerta": null,
@@ -58497,8 +58497,8 @@
       "vip_grupo": null,
       "cuota_confianza": null,
       "rango_obs": null,
-      "prob_valor": 0.6094,
-      "ev_valor": -0.1103,
+      "prob_valor": 0.6091,
+      "ev_valor": -0.1107,
       "chk": null,
       "alerta_btts": null,
       "cuota_btts_alerta": null,
@@ -58596,8 +58596,8 @@
       "vip_grupo": null,
       "cuota_confianza": null,
       "rango_obs": null,
-      "prob_valor": 0.6023,
-      "ev_valor": -0.1146,
+      "prob_valor": 0.5996,
+      "ev_valor": -0.1185,
       "chk": null,
       "alerta_btts": null,
       "cuota_btts_alerta": null,
@@ -58695,8 +58695,8 @@
       "vip_grupo": null,
       "cuota_confianza": null,
       "rango_obs": null,
-      "prob_valor": 0.5506,
-      "ev_valor": -0.0089,
+      "prob_valor": 0.5418,
+      "ev_valor": -0.0247,
       "chk": null,
       "alerta_btts": null,
       "cuota_btts_alerta": null,
@@ -58805,8 +58805,8 @@
         ]
       },
       "rango_obs": null,
-      "prob_valor": 0.5958,
-      "ev_valor": -0.0645,
+      "prob_valor": 0.5983,
+      "ev_valor": -0.0607,
       "chk": {
         "via": null,
         "i": [
@@ -58972,8 +58972,8 @@
       "vip_grupo": null,
       "cuota_confianza": null,
       "rango_obs": null,
-      "prob_valor": 0.6447,
-      "ev_valor": -0.1296,
+      "prob_valor": 0.6524,
+      "ev_valor": -0.1193,
       "chk": null,
       "alerta_btts": null,
       "cuota_btts_alerta": null,
@@ -59082,8 +59082,8 @@
         ]
       },
       "rango_obs": null,
-      "prob_valor": 0.6798,
-      "ev_valor": -0.055,
+      "prob_valor": 0.6993,
+      "ev_valor": -0.028,
       "chk": null,
       "alerta_btts": null,
       "cuota_btts_alerta": null,
@@ -59181,8 +59181,8 @@
       "vip_grupo": null,
       "cuota_confianza": null,
       "rango_obs": null,
-      "prob_valor": 0.6516,
-      "ev_valor": -0.1529,
+      "prob_valor": 0.6707,
+      "ev_valor": -0.1282,
       "chk": null,
       "alerta_btts": null,
       "cuota_btts_alerta": null,
@@ -59479,6 +59479,14 @@
       "cuota_confianza": {
         "BTTS": [
           {
+            "senal": "camino_normal_VIP+",
+            "rango": [
+              1.45,
+              1.69
+            ],
+            "roi": 8.8
+          },
+          {
             "senal": "corona",
             "rango": [
               1.45,
@@ -59493,14 +59501,6 @@
               1.54
             ],
             "roi": 15.2
-          },
-          {
-            "senal": "camino_normal_VIP+",
-            "rango": [
-              1.45,
-              1.69
-            ],
-            "roi": 8.8
           },
           {
             "senal": "estable_gc_fallo_plus",
@@ -59533,8 +59533,8 @@
         ]
       },
       "rango_obs": null,
-      "prob_valor": 0.6137,
-      "ev_valor": -0.0732,
+      "prob_valor": 0.612,
+      "ev_valor": -0.0758,
       "chk": {
         "via": "VIP+",
         "i": [
@@ -59695,8 +59695,8 @@
       "vip_grupo": null,
       "cuota_confianza": null,
       "rango_obs": null,
-      "prob_valor": 0.6873,
-      "ev_valor": -0.0858,
+      "prob_valor": 0.6757,
+      "ev_valor": -0.1013,
       "chk": {
         "via": null,
         "i": [
@@ -59860,8 +59860,8 @@
       "vip_grupo": null,
       "cuota_confianza": null,
       "rango_obs": null,
-      "prob_valor": 0.6652,
-      "ev_valor": -0.0222,
+      "prob_valor": 0.6655,
+      "ev_valor": -0.0218,
       "chk": null,
       "alerta_btts": null,
       "cuota_btts_alerta": null,
@@ -59970,8 +59970,8 @@
         ]
       },
       "rango_obs": null,
-      "prob_valor": 0.5869,
-      "ev_valor": -0.0903,
+      "prob_valor": 0.599,
+      "ev_valor": -0.0716,
       "chk": {
         "via": null,
         "i": [
@@ -60136,12 +60136,12 @@
       "cuota_confianza": {
         "BTTS": [
           {
-            "senal": "idx_btts_top20",
+            "senal": "idx_btts_top10",
             "rango": [
               1.8,
               2.05
             ],
-            "roi": 14.4
+            "roi": 39.8
           },
           {
             "senal": "idx_btts_top05",
@@ -60152,18 +60152,18 @@
             "roi": 43.8
           },
           {
-            "senal": "idx_btts_top10",
+            "senal": "idx_btts_top20",
             "rango": [
               1.8,
               2.05
             ],
-            "roi": 39.8
+            "roi": 14.4
           }
         ]
       },
       "rango_obs": null,
-      "prob_valor": 0.5299,
-      "ev_valor": -0.0303,
+      "prob_valor": 0.5317,
+      "ev_valor": -0.027,
       "chk": null,
       "alerta_btts": null,
       "cuota_btts_alerta": null,
@@ -60272,8 +60272,8 @@
         ]
       },
       "rango_obs": null,
-      "prob_valor": 0.6089,
-      "ev_valor": -0.0441,
+      "prob_valor": 0.6034,
+      "ev_valor": -0.0526,
       "chk": null,
       "alerta_btts": null,
       "cuota_btts_alerta": null,
@@ -60372,26 +60372,26 @@
       "cuota_confianza": {
         "BTTS": [
           {
-            "senal": "avg2h_parejo_15",
-            "rango": [
-              1.35,
-              1.44
-            ],
-            "roi": 9.6
-          },
-          {
             "senal": "avg2h_parejo_14",
             "rango": [
               1.35,
               1.44
             ],
             "roi": 12.1
+          },
+          {
+            "senal": "avg2h_parejo_15",
+            "rango": [
+              1.35,
+              1.44
+            ],
+            "roi": 9.6
           }
         ]
       },
       "rango_obs": null,
-      "prob_valor": 0.6159,
-      "ev_valor": -0.1132,
+      "prob_valor": 0.6204,
+      "ev_valor": -0.1066,
       "chk": null,
       "alerta_btts": null,
       "cuota_btts_alerta": null,
@@ -60490,14 +60490,6 @@
       "cuota_confianza": {
         "BTTS": [
           {
-            "senal": "stake9",
-            "rango": [
-              1.6,
-              1.69
-            ],
-            "roi": 8.8
-          },
-          {
             "senal": "camino_normal_VIP+",
             "rango": [
               1.45,
@@ -60512,6 +60504,14 @@
               1.93
             ],
             "roi": 18.0
+          },
+          {
+            "senal": "stake9",
+            "rango": [
+              1.6,
+              1.69
+            ],
+            "roi": 8.8
           }
         ],
         "Over 2.5": [
@@ -60536,8 +60536,8 @@
           }
         ]
       },
-      "prob_valor": 0.5785,
-      "ev_valor": -0.0455,
+      "prob_valor": 0.5895,
+      "ev_valor": -0.0274,
       "chk": {
         "via": "VIP+",
         "i": [
@@ -60700,8 +60700,8 @@
       "vip_grupo": null,
       "cuota_confianza": null,
       "rango_obs": null,
-      "prob_valor": 0.5314,
-      "ev_valor": 0.1106,
+      "prob_valor": 0.5141,
+      "ev_valor": 0.0744,
       "chk": null,
       "alerta_btts": null,
       "cuota_btts_alerta": null,
@@ -60799,8 +60799,8 @@
       "vip_grupo": null,
       "cuota_confianza": null,
       "rango_obs": null,
-      "prob_valor": 0.6635,
-      "ev_valor": -0.1043,
+      "prob_valor": 0.6676,
+      "ev_valor": -0.0988,
       "chk": null,
       "alerta_btts": null,
       "cuota_btts_alerta": null,
@@ -60898,8 +60898,8 @@
       "vip_grupo": null,
       "cuota_confianza": null,
       "rango_obs": null,
-      "prob_valor": 0.6943,
-      "ev_valor": -0.0974,
+      "prob_valor": 0.6842,
+      "ev_valor": -0.1106,
       "chk": null,
       "alerta_btts": null,
       "cuota_btts_alerta": null,
@@ -60997,8 +60997,8 @@
       "vip_grupo": null,
       "cuota_confianza": null,
       "rango_obs": null,
-      "prob_valor": 0.6657,
-      "ev_valor": -0.1013,
+      "prob_valor": 0.6732,
+      "ev_valor": -0.0912,
       "chk": null,
       "alerta_btts": null,
       "cuota_btts_alerta": null,
@@ -61107,8 +61107,8 @@
         ]
       },
       "rango_obs": null,
-      "prob_valor": 0.6595,
-      "ev_valor": -0.0503,
+      "prob_valor": 0.6752,
+      "ev_valor": -0.0277,
       "chk": null,
       "alerta_btts": null,
       "cuota_btts_alerta": null,
@@ -61206,8 +61206,8 @@
       "vip_grupo": null,
       "cuota_confianza": null,
       "rango_obs": null,
-      "prob_valor": 0.5905,
-      "ev_valor": -0.0847,
+      "prob_valor": 0.5975,
+      "ev_valor": -0.0739,
       "chk": null,
       "alerta_btts": null,
       "cuota_btts_alerta": null,
@@ -61305,8 +61305,8 @@
       "vip_grupo": null,
       "cuota_confianza": null,
       "rango_obs": null,
-      "prob_valor": 0.516,
-      "ev_valor": -0.1227,
+      "prob_valor": 0.5098,
+      "ev_valor": -0.1334,
       "chk": null,
       "alerta_btts": null,
       "cuota_btts_alerta": null,
@@ -61404,8 +61404,8 @@
       "vip_grupo": null,
       "cuota_confianza": null,
       "rango_obs": null,
-      "prob_valor": 0.6319,
-      "ev_valor": -0.0901,
+      "prob_valor": 0.6272,
+      "ev_valor": -0.0968,
       "chk": {
         "via": null,
         "i": [
@@ -61569,8 +61569,8 @@
       "vip_grupo": null,
       "cuota_confianza": null,
       "rango_obs": null,
-      "prob_valor": 0.6042,
-      "ev_valor": -0.1119,
+      "prob_valor": 0.6067,
+      "ev_valor": -0.1081,
       "chk": null,
       "alerta_btts": null,
       "cuota_btts_alerta": null,
@@ -61679,8 +61679,8 @@
         ]
       },
       "rango_obs": null,
-      "prob_valor": 0.5811,
-      "ev_valor": -0.0877,
+      "prob_valor": 0.5892,
+      "ev_valor": -0.075,
       "chk": {
         "via": null,
         "i": [
@@ -63626,8 +63626,8 @@
       "vip_grupo": null,
       "cuota_confianza": null,
       "rango_obs": null,
-      "prob_valor": 0.5591,
-      "ev_valor": -0.0662,
+      "prob_valor": 0.553,
+      "ev_valor": -0.0765,
       "chk": null,
       "alerta_btts": null,
       "cuota_btts_alerta": null,
@@ -63725,8 +63725,8 @@
       "vip_grupo": null,
       "cuota_confianza": null,
       "rango_obs": null,
-      "prob_valor": 0.5714,
-      "ev_valor": -0.0401,
+      "prob_valor": 0.5635,
+      "ev_valor": -0.0533,
       "chk": null,
       "alerta_btts": null,
       "cuota_btts_alerta": null,
@@ -63835,8 +63835,8 @@
         ]
       },
       "rango_obs": null,
-      "prob_valor": 0.5847,
-      "ev_valor": -0.0645,
+      "prob_valor": 0.5856,
+      "ev_valor": -0.0631,
       "chk": null,
       "alerta_btts": null,
       "cuota_btts_alerta": null,
@@ -63934,8 +63934,8 @@
       "vip_grupo": null,
       "cuota_confianza": null,
       "rango_obs": null,
-      "prob_valor": 0.6495,
-      "ev_valor": -0.1037,
+      "prob_valor": 0.6586,
+      "ev_valor": -0.0911,
       "chk": null,
       "alerta_btts": null,
       "cuota_btts_alerta": null,
@@ -66431,8 +66431,8 @@
         ]
       },
       "rango_obs": null,
-      "prob_valor": 0.59,
-      "ev_valor": -0.0855,
+      "prob_valor": 0.5885,
+      "ev_valor": -0.0879,
       "chk": null,
       "alerta_btts": null,
       "cuota_btts_alerta": null,
@@ -66530,8 +66530,8 @@
       "vip_grupo": null,
       "cuota_confianza": null,
       "rango_obs": null,
-      "prob_valor": 0.6117,
-      "ev_valor": -0.113,
+      "prob_valor": 0.6145,
+      "ev_valor": -0.109,
       "chk": null,
       "alerta_btts": null,
       "cuota_btts_alerta": null,
@@ -66728,8 +66728,8 @@
       "vip_grupo": null,
       "cuota_confianza": null,
       "rango_obs": null,
-      "prob_valor": 0.4939,
-      "ev_valor": 0.0125,
+      "prob_valor": 0.5044,
+      "ev_valor": 0.034,
       "chk": null,
       "alerta_btts": null,
       "cuota_btts_alerta": null,
@@ -66827,8 +66827,8 @@
       "vip_grupo": null,
       "cuota_confianza": null,
       "rango_obs": null,
-      "prob_valor": 0.4871,
-      "ev_valor": -0.0598,
+      "prob_valor": 0.4938,
+      "ev_valor": -0.047,
       "chk": null,
       "alerta_btts": null,
       "cuota_btts_alerta": null,
@@ -66926,8 +66926,8 @@
       "vip_grupo": null,
       "cuota_confianza": null,
       "rango_obs": null,
-      "prob_valor": 0.5597,
-      "ev_valor": -0.0317,
+      "prob_valor": 0.541,
+      "ev_valor": -0.0641,
       "chk": null,
       "alerta_btts": null,
       "cuota_btts_alerta": null,
@@ -67025,8 +67025,8 @@
       "vip_grupo": null,
       "cuota_confianza": null,
       "rango_obs": null,
-      "prob_valor": 0.541,
-      "ev_valor": -0.0641,
+      "prob_valor": 0.5421,
+      "ev_valor": -0.0622,
       "chk": null,
       "alerta_btts": null,
       "cuota_btts_alerta": null,
@@ -67135,8 +67135,8 @@
         ]
       },
       "rango_obs": null,
-      "prob_valor": 0.545,
-      "ev_valor": -0.1008,
+      "prob_valor": 0.5306,
+      "ev_valor": -0.1244,
       "chk": null,
       "alerta_btts": null,
       "cuota_btts_alerta": null,
@@ -67335,8 +67335,8 @@
       "vip_grupo": null,
       "cuota_confianza": null,
       "rango_obs": null,
-      "prob_valor": 0.5597,
-      "ev_valor": -0.0317,
+      "prob_valor": 0.541,
+      "ev_valor": -0.0641,
       "alerta_btts": null,
       "cuota_btts_alerta": null,
       "fecha_alerta": null,
@@ -68799,20 +68799,20 @@
       "cuota_confianza": {
         "BTTS": [
           {
-            "senal": "stake9_fallo_gc",
+            "senal": "camino_normal_VIP+",
+            "rango": [
+              1.45,
+              1.69
+            ],
+            "roi": 8.8
+          },
+          {
+            "senal": "camino_normal_VIP+_refinada",
             "rango": [
               1.45,
               1.54
             ],
-            "roi": 13.5
-          },
-          {
-            "senal": "stake9_mezcla",
-            "rango": [
-              1.5,
-              1.66
-            ],
-            "roi": 6.1
+            "roi": 8.4
           },
           {
             "senal": "corona",
@@ -68823,6 +68823,14 @@
             "roi": 21.2
           },
           {
+            "senal": "stake9_fallo_gc",
+            "rango": [
+              1.45,
+              1.54
+            ],
+            "roi": 13.5
+          },
+          {
             "senal": "VIP_reforzado",
             "rango": [
               1.45,
@@ -68831,12 +68839,12 @@
             "roi": 15.2
           },
           {
-            "senal": "camino_normal_VIP+",
+            "senal": "stake9_mezcla",
             "rango": [
-              1.45,
-              1.69
+              1.5,
+              1.66
             ],
-            "roi": 8.8
+            "roi": 6.1
           },
           {
             "senal": "estable_gc_fallo_plus",
@@ -68845,20 +68853,12 @@
               1.58
             ],
             "roi": 5.4
-          },
-          {
-            "senal": "camino_normal_VIP+_refinada",
-            "rango": [
-              1.45,
-              1.54
-            ],
-            "roi": 8.4
           }
         ]
       },
       "rango_obs": null,
-      "prob_valor": 0.6074,
-      "ev_valor": -0.0829,
+      "prob_valor": 0.6019,
+      "ev_valor": -0.0911,
       "alerta_btts": "RESPALDADA",
       "cuota_btts_alerta": 1.51,
       "fecha_alerta": "2026-11-23 05:33",
@@ -69319,8 +69319,8 @@
       "vip_grupo": null,
       "cuota_confianza": null,
       "rango_obs": null,
-      "prob_valor": 0.5985,
-      "ev_valor": -0.1023,
+      "prob_valor": 0.5988,
+      "ev_valor": -0.1018,
       "alerta_btts": null,
       "cuota_btts_alerta": null,
       "fecha_alerta": null,
@@ -69396,8 +69396,8 @@
       "vip_grupo": null,
       "cuota_confianza": null,
       "rango_obs": null,
-      "prob_valor": 0.4732,
-      "ev_valor": -0.0867,
+      "prob_valor": 0.468,
+      "ev_valor": -0.0967,
       "alerta_btts": null,
       "cuota_btts_alerta": null,
       "fecha_alerta": null,
@@ -69473,8 +69473,8 @@
       "vip_grupo": null,
       "cuota_confianza": null,
       "rango_obs": null,
-      "prob_valor": 0.569,
-      "ev_valor": -0.1066,
+      "prob_valor": 0.5571,
+      "ev_valor": -0.1253,
       "alerta_btts": null,
       "cuota_btts_alerta": null,
       "fecha_alerta": null,
@@ -69550,8 +69550,8 @@
       "vip_grupo": null,
       "cuota_confianza": null,
       "rango_obs": null,
-      "prob_valor": 0.5931,
-      "ev_valor": -0.1104,
+      "prob_valor": 0.5923,
+      "ev_valor": -0.1115,
       "alerta_btts": null,
       "cuota_btts_alerta": null,
       "fecha_alerta": null,
@@ -69627,8 +69627,8 @@
       "vip_grupo": null,
       "cuota_confianza": null,
       "rango_obs": null,
-      "prob_valor": 0.5387,
-      "ev_valor": -0.0789,
+      "prob_valor": 0.5342,
+      "ev_valor": -0.0865,
       "alerta_btts": null,
       "cuota_btts_alerta": null,
       "fecha_alerta": null,
@@ -69704,8 +69704,8 @@
       "vip_grupo": null,
       "cuota_confianza": null,
       "rango_obs": null,
-      "prob_valor": 0.5036,
-      "ev_valor": -0.1288,
+      "prob_valor": 0.5051,
+      "ev_valor": -0.1261,
       "alerta_btts": null,
       "cuota_btts_alerta": null,
       "fecha_alerta": null,
@@ -69858,8 +69858,8 @@
       "vip_grupo": null,
       "cuota_confianza": null,
       "rango_obs": null,
-      "prob_valor": 0.5473,
-      "ev_valor": -0.1572,
+      "prob_valor": 0.5469,
+      "ev_valor": -0.1577,
       "alerta_btts": null,
       "cuota_btts_alerta": null,
       "fecha_alerta": null,
@@ -69935,8 +69935,8 @@
       "vip_grupo": null,
       "cuota_confianza": null,
       "rango_obs": null,
-      "prob_valor": 0.5955,
-      "ev_valor": -0.1246,
+      "prob_valor": 0.5999,
+      "ev_valor": -0.1182,
       "alerta_btts": null,
       "cuota_btts_alerta": null,
       "fecha_alerta": null,
@@ -70012,8 +70012,8 @@
       "vip_grupo": null,
       "cuota_confianza": null,
       "rango_obs": null,
-      "prob_valor": 0.5138,
-      "ev_valor": -0.1214,
+      "prob_valor": 0.5082,
+      "ev_valor": -0.131,
       "alerta_btts": null,
       "cuota_btts_alerta": null,
       "fecha_alerta": null,
@@ -70166,8 +70166,8 @@
       "vip_grupo": null,
       "cuota_confianza": null,
       "rango_obs": null,
-      "prob_valor": 0.5591,
-      "ev_valor": -0.0662,
+      "prob_valor": 0.553,
+      "ev_valor": -0.0765,
       "alerta_btts": null,
       "cuota_btts_alerta": null,
       "fecha_alerta": null,
@@ -70320,8 +70320,8 @@
       "vip_grupo": null,
       "cuota_confianza": null,
       "rango_obs": null,
-      "prob_valor": 0.544,
-      "ev_valor": -0.0479,
+      "prob_valor": 0.5452,
+      "ev_valor": -0.0459,
       "alerta_btts": null,
       "cuota_btts_alerta": null,
       "fecha_alerta": null,
@@ -70551,8 +70551,8 @@
       "vip_grupo": null,
       "cuota_confianza": null,
       "rango_obs": null,
-      "prob_valor": 0.5905,
-      "ev_valor": -0.0847,
+      "prob_valor": 0.5975,
+      "ev_valor": -0.0739,
       "alerta_btts": null,
       "cuota_btts_alerta": null,
       "fecha_alerta": null,
@@ -70628,8 +70628,8 @@
       "vip_grupo": null,
       "cuota_confianza": null,
       "rango_obs": null,
-      "prob_valor": 0.6635,
-      "ev_valor": -0.1043,
+      "prob_valor": 0.6676,
+      "ev_valor": -0.0988,
       "alerta_btts": null,
       "cuota_btts_alerta": null,
       "fecha_alerta": null,
@@ -70705,8 +70705,8 @@
       "vip_grupo": null,
       "cuota_confianza": null,
       "rango_obs": null,
-      "prob_valor": 0.5314,
-      "ev_valor": 0.1106,
+      "prob_valor": 0.5141,
+      "ev_valor": 0.0744,
       "alerta_btts": null,
       "cuota_btts_alerta": null,
       "fecha_alerta": null,
@@ -70783,26 +70783,26 @@
       "cuota_confianza": {
         "BTTS": [
           {
-            "senal": "avg2h_parejo_15",
-            "rango": [
-              1.35,
-              1.44
-            ],
-            "roi": 9.6
-          },
-          {
             "senal": "avg2h_parejo_14",
             "rango": [
               1.35,
               1.44
             ],
             "roi": 12.1
+          },
+          {
+            "senal": "avg2h_parejo_15",
+            "rango": [
+              1.35,
+              1.44
+            ],
+            "roi": 9.6
           }
         ]
       },
       "rango_obs": null,
-      "prob_valor": 0.6159,
-      "ev_valor": -0.1132,
+      "prob_valor": 0.6204,
+      "ev_valor": -0.1066,
       "alerta_btts": null,
       "cuota_btts_alerta": null,
       "fecha_alerta": null,
@@ -70889,8 +70889,8 @@
         ]
       },
       "rango_obs": null,
-      "prob_valor": 0.5869,
-      "ev_valor": -0.0903,
+      "prob_valor": 0.599,
+      "ev_valor": -0.0716,
       "alerta_btts": "SEGUNDA_LINEA",
       "cuota_btts_alerta": 1.55,
       "fecha_alerta": "2026-11-23 05:33",
@@ -70966,8 +70966,8 @@
       "vip_grupo": null,
       "cuota_confianza": null,
       "rango_obs": null,
-      "prob_valor": 0.6873,
-      "ev_valor": -0.0858,
+      "prob_valor": 0.6757,
+      "ev_valor": -0.1013,
       "alerta_btts": null,
       "cuota_btts_alerta": null,
       "fecha_alerta": null,
@@ -71044,6 +71044,14 @@
       "cuota_confianza": {
         "BTTS": [
           {
+            "senal": "camino_normal_VIP+",
+            "rango": [
+              1.45,
+              1.69
+            ],
+            "roi": 8.8
+          },
+          {
             "senal": "corona",
             "rango": [
               1.45,
@@ -71058,14 +71066,6 @@
               1.54
             ],
             "roi": 15.2
-          },
-          {
-            "senal": "camino_normal_VIP+",
-            "rango": [
-              1.45,
-              1.69
-            ],
-            "roi": 8.8
           },
           {
             "senal": "estable_gc_fallo_plus",
@@ -71098,8 +71098,8 @@
         ]
       },
       "rango_obs": null,
-      "prob_valor": 0.6137,
-      "ev_valor": -0.0732,
+      "prob_valor": 0.612,
+      "ev_valor": -0.0758,
       "alerta_btts": "RESPALDADA",
       "cuota_btts_alerta": 1.51,
       "fecha_alerta": "2026-11-23 05:33",
@@ -71175,8 +71175,8 @@
       "vip_grupo": null,
       "cuota_confianza": null,
       "rango_obs": null,
-      "prob_valor": 0.541,
-      "ev_valor": -0.0641,
+      "prob_valor": 0.5421,
+      "ev_valor": -0.0622,
       "alerta_btts": null,
       "cuota_btts_alerta": null,
       "fecha_alerta": null,
@@ -71252,8 +71252,8 @@
       "vip_grupo": null,
       "cuota_confianza": null,
       "rango_obs": null,
-      "prob_valor": 0.5975,
-      "ev_valor": -0.0917,
+      "prob_valor": 0.5946,
+      "ev_valor": -0.0961,
       "alerta_btts": null,
       "cuota_btts_alerta": null,
       "fecha_alerta": null,
@@ -71350,8 +71350,8 @@
         ]
       },
       "rango_obs": null,
-      "prob_valor": 0.5494,
-      "ev_valor": -0.0659,
+      "prob_valor": 0.5503,
+      "ev_valor": -0.0645,
       "alerta_btts": null,
       "cuota_btts_alerta": null,
       "fecha_alerta": null,
@@ -71438,8 +71438,8 @@
         ]
       },
       "rango_obs": null,
-      "prob_valor": 0.6089,
-      "ev_valor": -0.0441,
+      "prob_valor": 0.6034,
+      "ev_valor": -0.0526,
       "alerta_btts": null,
       "cuota_btts_alerta": null,
       "fecha_alerta": null,
@@ -71603,8 +71603,8 @@
         ]
       },
       "rango_obs": null,
-      "prob_valor": 0.6595,
-      "ev_valor": -0.0503,
+      "prob_valor": 0.6752,
+      "ev_valor": -0.0277,
       "alerta_btts": null,
       "cuota_btts_alerta": null,
       "fecha_alerta": null,
@@ -71680,8 +71680,8 @@
       "vip_grupo": null,
       "cuota_confianza": null,
       "rango_obs": null,
-      "prob_valor": 0.5279,
-      "ev_valor": -0.0445,
+      "prob_valor": 0.5168,
+      "ev_valor": -0.0645,
       "alerta_btts": null,
       "cuota_btts_alerta": null,
       "fecha_alerta": null,
@@ -71757,8 +71757,8 @@
       "vip_grupo": null,
       "cuota_confianza": null,
       "rango_obs": null,
-      "prob_valor": 0.5332,
-      "ev_valor": -0.0721,
+      "prob_valor": 0.5312,
+      "ev_valor": -0.0757,
       "alerta_btts": null,
       "cuota_btts_alerta": null,
       "fecha_alerta": null,
@@ -71845,8 +71845,8 @@
         ]
       },
       "rango_obs": null,
-      "prob_valor": 0.5695,
-      "ev_valor": -0.0489,
+      "prob_valor": 0.5618,
+      "ev_valor": -0.0618,
       "alerta_btts": null,
       "cuota_btts_alerta": null,
       "fecha_alerta": null,
@@ -71922,8 +71922,8 @@
       "vip_grupo": null,
       "cuota_confianza": null,
       "rango_obs": null,
-      "prob_valor": 0.5257,
-      "ev_valor": -0.0853,
+      "prob_valor": 0.5247,
+      "ev_valor": -0.0871,
       "alerta_btts": null,
       "cuota_btts_alerta": null,
       "fecha_alerta": null,
@@ -72076,8 +72076,8 @@
       "vip_grupo": null,
       "cuota_confianza": null,
       "rango_obs": null,
-      "prob_valor": 0.601,
-      "ev_valor": -0.0985,
+      "prob_valor": 0.6022,
+      "ev_valor": -0.0967,
       "alerta_btts": null,
       "cuota_btts_alerta": null,
       "fecha_alerta": null,
@@ -72153,8 +72153,8 @@
       "vip_grupo": null,
       "cuota_confianza": null,
       "rango_obs": null,
-      "prob_valor": 0.5273,
-      "ev_valor": -0.1142,
+      "prob_valor": 0.5245,
+      "ev_valor": -0.1188,
       "alerta_btts": null,
       "cuota_btts_alerta": null,
       "fecha_alerta": null,
@@ -72230,8 +72230,8 @@
       "vip_grupo": null,
       "cuota_confianza": null,
       "rango_obs": null,
-      "prob_valor": 0.5782,
-      "ev_valor": -0.0865,
+      "prob_valor": 0.5887,
+      "ev_valor": -0.0698,
       "alerta_btts": null,
       "cuota_btts_alerta": null,
       "fecha_alerta": null,
@@ -72318,8 +72318,8 @@
         ]
       },
       "rango_obs": null,
-      "prob_valor": 0.5569,
-      "ev_valor": -0.0365,
+      "prob_valor": 0.554,
+      "ev_valor": -0.0416,
       "alerta_btts": null,
       "cuota_btts_alerta": null,
       "fecha_alerta": null,
@@ -72395,8 +72395,8 @@
       "vip_grupo": null,
       "cuota_confianza": null,
       "rango_obs": null,
-      "prob_valor": 0.5452,
-      "ev_valor": -0.0786,
+      "prob_valor": 0.541,
+      "ev_valor": -0.0857,
       "alerta_btts": null,
       "cuota_btts_alerta": null,
       "fecha_alerta": null,
@@ -72473,20 +72473,20 @@
       "cuota_confianza": {
         "BTTS": [
           {
-            "senal": "stake9",
-            "rango": [
-              1.6,
-              1.69
-            ],
-            "roi": 8.8
-          },
-          {
             "senal": "stake9_mezcla",
             "rango": [
               1.5,
               1.66
             ],
             "roi": 6.1
+          },
+          {
+            "senal": "stake9",
+            "rango": [
+              1.6,
+              1.69
+            ],
+            "roi": 8.8
           }
         ],
         "Over 2.5": [
@@ -72501,8 +72501,8 @@
         ]
       },
       "rango_obs": null,
-      "prob_valor": 0.5824,
-      "ev_valor": -0.0391,
+      "prob_valor": 0.5904,
+      "ev_valor": -0.0259,
       "alerta_btts": null,
       "cuota_btts_alerta": null,
       "fecha_alerta": null,
@@ -72578,8 +72578,8 @@
       "vip_grupo": null,
       "cuota_confianza": null,
       "rango_obs": null,
-      "prob_valor": 0.6134,
-      "ev_valor": -0.0799,
+      "prob_valor": 0.6031,
+      "ev_valor": -0.0953,
       "alerta_btts": null,
       "cuota_btts_alerta": null,
       "fecha_alerta": null,
@@ -72655,8 +72655,8 @@
       "vip_grupo": null,
       "cuota_confianza": null,
       "rango_obs": null,
-      "prob_valor": 0.5268,
-      "ev_valor": -0.194,
+      "prob_valor": 0.5428,
+      "ev_valor": -0.1695,
       "alerta_btts": null,
       "cuota_btts_alerta": null,
       "fecha_alerta": null,
@@ -72732,8 +72732,8 @@
       "vip_grupo": null,
       "cuota_confianza": null,
       "rango_obs": null,
-      "prob_valor": 0.5054,
-      "ev_valor": -0.0903,
+      "prob_valor": 0.5056,
+      "ev_valor": -0.09,
       "alerta_btts": null,
       "cuota_btts_alerta": null,
       "fecha_alerta": null,
@@ -72809,8 +72809,8 @@
       "vip_grupo": null,
       "cuota_confianza": null,
       "rango_obs": null,
-      "prob_valor": 0.6447,
-      "ev_valor": -0.1296,
+      "prob_valor": 0.6524,
+      "ev_valor": -0.1193,
       "alerta_btts": null,
       "cuota_btts_alerta": null,
       "fecha_alerta": null,
@@ -72886,8 +72886,8 @@
       "vip_grupo": null,
       "cuota_confianza": null,
       "rango_obs": null,
-      "prob_valor": 0.5459,
-      "ev_valor": -0.0883,
+      "prob_valor": 0.5385,
+      "ev_valor": -0.1007,
       "alerta_btts": null,
       "cuota_btts_alerta": null,
       "fecha_alerta": null,
@@ -72963,8 +72963,8 @@
       "vip_grupo": null,
       "cuota_confianza": null,
       "rango_obs": null,
-      "prob_valor": 0.5784,
-      "ev_valor": -0.0919,
+      "prob_valor": 0.5775,
+      "ev_valor": -0.0933,
       "alerta_btts": null,
       "cuota_btts_alerta": null,
       "fecha_alerta": null,
@@ -73049,22 +73049,6 @@
             "roi": 7.8
           },
           {
-            "senal": "bastion",
-            "rango": [
-              1.45,
-              1.49
-            ],
-            "roi": 0.6
-          },
-          {
-            "senal": "estable_gc_fallo_plus",
-            "rango": [
-              1.45,
-              1.58
-            ],
-            "roi": 5.4
-          },
-          {
             "senal": "estable_btts_fallo",
             "rango": [
               1.45,
@@ -73079,6 +73063,22 @@
               1.83
             ],
             "roi": 10.6
+          },
+          {
+            "senal": "estable_gc_fallo_plus",
+            "rango": [
+              1.45,
+              1.58
+            ],
+            "roi": 5.4
+          },
+          {
+            "senal": "bastion",
+            "rango": [
+              1.45,
+              1.49
+            ],
+            "roi": 0.6
           }
         ],
         "Combinada": [
@@ -73117,8 +73117,8 @@
           }
         ]
       },
-      "prob_valor": 0.6169,
-      "ev_valor": -0.0932,
+      "prob_valor": 0.6219,
+      "ev_valor": -0.0858,
       "alerta_btts": null,
       "cuota_btts_alerta": null,
       "fecha_alerta": null,
@@ -73194,8 +73194,8 @@
       "vip_grupo": null,
       "cuota_confianza": null,
       "rango_obs": null,
-      "prob_valor": 0.5875,
-      "ev_valor": -0.0601,
+      "prob_valor": 0.5854,
+      "ev_valor": -0.0634,
       "alerta_btts": null,
       "cuota_btts_alerta": null,
       "fecha_alerta": null,
@@ -73271,8 +73271,8 @@
       "vip_grupo": null,
       "cuota_confianza": null,
       "rango_obs": null,
-      "prob_valor": 0.6516,
-      "ev_valor": -0.1529,
+      "prob_valor": 0.6707,
+      "ev_valor": -0.1282,
       "alerta_btts": null,
       "cuota_btts_alerta": null,
       "fecha_alerta": null,
@@ -73359,8 +73359,8 @@
         ]
       },
       "rango_obs": null,
-      "prob_valor": 0.5958,
-      "ev_valor": -0.0645,
+      "prob_valor": 0.5983,
+      "ev_valor": -0.0607,
       "alerta_btts": "SEGUNDA_LINEA",
       "cuota_btts_alerta": 1.53,
       "fecha_alerta": "2026-11-22 02:05",
@@ -73436,8 +73436,8 @@
       "vip_grupo": null,
       "cuota_confianza": null,
       "rango_obs": null,
-      "prob_valor": 0.604,
-      "ev_valor": -0.0518,
+      "prob_valor": 0.6082,
+      "ev_valor": -0.0452,
       "alerta_btts": null,
       "cuota_btts_alerta": null,
       "fecha_alerta": null,
@@ -73513,8 +73513,8 @@
       "vip_grupo": null,
       "cuota_confianza": null,
       "rango_obs": null,
-      "prob_valor": 0.5467,
-      "ev_valor": -0.1144,
+      "prob_valor": 0.5492,
+      "ev_valor": -0.1103,
       "alerta_btts": null,
       "cuota_btts_alerta": null,
       "fecha_alerta": null,
@@ -73590,8 +73590,8 @@
       "vip_grupo": null,
       "cuota_confianza": null,
       "rango_obs": null,
-      "prob_valor": 0.534,
-      "ev_valor": -0.0922,
+      "prob_valor": 0.5306,
+      "ev_valor": -0.098,
       "alerta_btts": null,
       "cuota_btts_alerta": null,
       "fecha_alerta": null,
@@ -73667,8 +73667,8 @@
       "vip_grupo": null,
       "cuota_confianza": null,
       "rango_obs": null,
-      "prob_valor": 0.5558,
-      "ev_valor": -0.0718,
+      "prob_valor": 0.549,
+      "ev_valor": -0.0831,
       "alerta_btts": null,
       "cuota_btts_alerta": null,
       "fecha_alerta": null,
@@ -73744,8 +73744,8 @@
       "vip_grupo": null,
       "cuota_confianza": null,
       "rango_obs": null,
-      "prob_valor": 0.5174,
-      "ev_valor": -0.017,
+      "prob_valor": 0.5249,
+      "ev_valor": -0.0026,
       "alerta_btts": null,
       "cuota_btts_alerta": null,
       "fecha_alerta": null,
@@ -73821,8 +73821,8 @@
       "vip_grupo": null,
       "cuota_confianza": null,
       "rango_obs": null,
-      "prob_valor": 0.6017,
-      "ev_valor": -0.0794,
+      "prob_valor": 0.606,
+      "ev_valor": -0.0728,
       "alerta_btts": null,
       "cuota_btts_alerta": null,
       "fecha_alerta": null,
@@ -73898,8 +73898,8 @@
       "vip_grupo": null,
       "cuota_confianza": null,
       "rango_obs": null,
-      "prob_valor": 0.5138,
-      "ev_valor": -0.1008,
+      "prob_valor": 0.5074,
+      "ev_valor": -0.112,
       "alerta_btts": null,
       "cuota_btts_alerta": null,
       "fecha_alerta": null,
@@ -73986,8 +73986,8 @@
         ]
       },
       "rango_obs": null,
-      "prob_valor": 0.6011,
-      "ev_valor": -0.0984,
+      "prob_valor": 0.6045,
+      "ev_valor": -0.0932,
       "alerta_btts": null,
       "cuota_btts_alerta": null,
       "fecha_alerta": null,
@@ -74063,8 +74063,8 @@
       "vip_grupo": null,
       "cuota_confianza": null,
       "rango_obs": null,
-      "prob_valor": 0.5859,
-      "ev_valor": -0.0919,
+      "prob_valor": 0.596,
+      "ev_valor": -0.0763,
       "alerta_btts": null,
       "cuota_btts_alerta": null,
       "fecha_alerta": null,
@@ -74151,8 +74151,8 @@
         ]
       },
       "rango_obs": null,
-      "prob_valor": 0.615,
-      "ev_valor": -0.1144,
+      "prob_valor": 0.618,
+      "ev_valor": -0.1101,
       "alerta_btts": null,
       "cuota_btts_alerta": null,
       "fecha_alerta": null,
@@ -74228,8 +74228,8 @@
       "vip_grupo": null,
       "cuota_confianza": null,
       "rango_obs": null,
-      "prob_valor": 0.5805,
-      "ev_valor": -0.0944,
+      "prob_valor": 0.572,
+      "ev_valor": -0.1077,
       "alerta_btts": null,
       "cuota_btts_alerta": null,
       "fecha_alerta": null,
@@ -74305,8 +74305,8 @@
       "vip_grupo": null,
       "cuota_confianza": null,
       "rango_obs": null,
-      "prob_valor": 0.579,
-      "ev_valor": -0.0621,
+      "prob_valor": 0.5742,
+      "ev_valor": -0.0699,
       "alerta_btts": null,
       "cuota_btts_alerta": null,
       "fecha_alerta": null,
@@ -74382,8 +74382,8 @@
       "vip_grupo": null,
       "cuota_confianza": null,
       "rango_obs": null,
-      "prob_valor": 0.5661,
-      "ev_valor": -0.0942,
+      "prob_valor": 0.5709,
+      "ev_valor": -0.0866,
       "alerta_btts": null,
       "cuota_btts_alerta": null,
       "fecha_alerta": null,
@@ -74459,8 +74459,8 @@
       "vip_grupo": null,
       "cuota_confianza": null,
       "rango_obs": null,
-      "prob_valor": 0.5684,
-      "ev_valor": -0.0337,
+      "prob_valor": 0.5659,
+      "ev_valor": -0.038,
       "alerta_btts": null,
       "cuota_btts_alerta": null,
       "fecha_alerta": null,
@@ -74536,8 +74536,8 @@
       "vip_grupo": null,
       "cuota_confianza": null,
       "rango_obs": null,
-      "prob_valor": 0.5812,
-      "ev_valor": -0.0526,
+      "prob_valor": 0.5819,
+      "ev_valor": -0.0515,
       "alerta_btts": null,
       "cuota_btts_alerta": null,
       "fecha_alerta": null,
@@ -74613,8 +74613,8 @@
       "vip_grupo": null,
       "cuota_confianza": null,
       "rango_obs": null,
-      "prob_valor": 0.5257,
-      "ev_valor": -0.08,
+      "prob_valor": 0.5236,
+      "ev_valor": -0.0837,
       "alerta_btts": null,
       "cuota_btts_alerta": null,
       "fecha_alerta": null,
@@ -74767,8 +74767,8 @@
       "vip_grupo": null,
       "cuota_confianza": null,
       "rango_obs": null,
-      "prob_valor": 0.5624,
-      "ev_valor": -0.0834,
+      "prob_valor": 0.5583,
+      "ev_valor": -0.0899,
       "alerta_btts": null,
       "cuota_btts_alerta": null,
       "fecha_alerta": null,
@@ -74844,8 +74844,8 @@
       "vip_grupo": null,
       "cuota_confianza": null,
       "rango_obs": null,
-      "prob_valor": 0.5621,
-      "ev_valor": -0.0726,
+      "prob_valor": 0.5757,
+      "ev_valor": -0.0501,
       "alerta_btts": null,
       "cuota_btts_alerta": null,
       "fecha_alerta": null,
@@ -74921,8 +74921,8 @@
       "vip_grupo": null,
       "cuota_confianza": null,
       "rango_obs": null,
-      "prob_valor": 0.617,
-      "ev_valor": -0.1053,
+      "prob_valor": 0.6246,
+      "ev_valor": -0.0943,
       "alerta_btts": null,
       "cuota_btts_alerta": null,
       "fecha_alerta": null,
@@ -75768,8 +75768,8 @@
       "vip_grupo": null,
       "cuota_confianza": null,
       "rango_obs": null,
-      "prob_valor": 0.5714,
-      "ev_valor": -0.0401,
+      "prob_valor": 0.5635,
+      "ev_valor": -0.0533,
       "alerta_btts": null,
       "cuota_btts_alerta": null,
       "fecha_alerta": null,
@@ -76538,8 +76538,8 @@
       "vip_grupo": null,
       "cuota_confianza": null,
       "rango_obs": null,
-      "prob_valor": 0.6943,
-      "ev_valor": -0.0974,
+      "prob_valor": 0.6842,
+      "ev_valor": -0.1106,
       "alerta_btts": null,
       "cuota_btts_alerta": null,
       "fecha_alerta": null,
@@ -76615,8 +76615,8 @@
       "vip_grupo": null,
       "cuota_confianza": null,
       "rango_obs": null,
-      "prob_valor": 0.6657,
-      "ev_valor": -0.1013,
+      "prob_valor": 0.6732,
+      "ev_valor": -0.0912,
       "alerta_btts": null,
       "cuota_btts_alerta": null,
       "fecha_alerta": null,
@@ -76692,8 +76692,8 @@
       "vip_grupo": null,
       "cuota_confianza": null,
       "rango_obs": null,
-      "prob_valor": 0.5803,
-      "ev_valor": -0.0889,
+      "prob_valor": 0.5756,
+      "ev_valor": -0.0963,
       "alerta_btts": null,
       "cuota_btts_alerta": null,
       "fecha_alerta": null,
@@ -76769,8 +76769,8 @@
       "vip_grupo": null,
       "cuota_confianza": null,
       "rango_obs": null,
-      "prob_valor": 0.5394,
-      "ev_valor": 0.0087,
+      "prob_valor": 0.5438,
+      "ev_valor": 0.017,
       "alerta_btts": null,
       "cuota_btts_alerta": null,
       "fecha_alerta": null,
@@ -76857,8 +76857,8 @@
         ]
       },
       "rango_obs": null,
-      "prob_valor": 0.5917,
-      "ev_valor": -0.0829,
+      "prob_valor": 0.5982,
+      "ev_valor": -0.0728,
       "alerta_btts": null,
       "cuota_btts_alerta": null,
       "fecha_alerta": null,
@@ -76945,8 +76945,8 @@
         ]
       },
       "rango_obs": null,
-      "prob_valor": 0.6798,
-      "ev_valor": -0.055,
+      "prob_valor": 0.6993,
+      "ev_valor": -0.028,
       "alerta_btts": null,
       "cuota_btts_alerta": null,
       "fecha_alerta": null,
@@ -77022,8 +77022,8 @@
       "vip_grupo": null,
       "cuota_confianza": null,
       "rango_obs": null,
-      "prob_valor": 0.5722,
-      "ev_valor": -0.1016,
+      "prob_valor": 0.5613,
+      "ev_valor": -0.1187,
       "alerta_btts": null,
       "cuota_btts_alerta": null,
       "fecha_alerta": null,
@@ -77099,8 +77099,8 @@
       "vip_grupo": null,
       "cuota_confianza": null,
       "rango_obs": null,
-      "prob_valor": 0.6042,
-      "ev_valor": -0.1119,
+      "prob_valor": 0.6067,
+      "ev_valor": -0.1081,
       "alerta_btts": null,
       "cuota_btts_alerta": null,
       "fecha_alerta": null,
@@ -77638,8 +77638,8 @@
       "vip_grupo": null,
       "cuota_confianza": null,
       "rango_obs": null,
-      "prob_valor": 0.5321,
-      "ev_valor": -0.0049,
+      "prob_valor": 0.5336,
+      "ev_valor": -0.0021,
       "alerta_btts": null,
       "cuota_btts_alerta": null,
       "fecha_alerta": null,
@@ -77715,8 +77715,8 @@
       "vip_grupo": null,
       "cuota_confianza": null,
       "rango_obs": null,
-      "prob_valor": 0.6652,
-      "ev_valor": -0.0222,
+      "prob_valor": 0.6655,
+      "ev_valor": -0.0218,
       "alerta_btts": null,
       "cuota_btts_alerta": null,
       "fecha_alerta": null,
@@ -77793,12 +77793,12 @@
       "cuota_confianza": {
         "BTTS": [
           {
-            "senal": "idx_btts_top20",
+            "senal": "idx_btts_top10",
             "rango": [
               1.8,
               2.05
             ],
-            "roi": 14.4
+            "roi": 39.8
           },
           {
             "senal": "idx_btts_top05",
@@ -77809,18 +77809,18 @@
             "roi": 43.8
           },
           {
-            "senal": "idx_btts_top10",
+            "senal": "idx_btts_top20",
             "rango": [
               1.8,
               2.05
             ],
-            "roi": 39.8
+            "roi": 14.4
           }
         ]
       },
       "rango_obs": null,
-      "prob_valor": 0.5299,
-      "ev_valor": -0.0303,
+      "prob_valor": 0.5317,
+      "ev_valor": -0.027,
       "alerta_btts": null,
       "cuota_btts_alerta": null,
       "fecha_alerta": null,
@@ -77897,14 +77897,6 @@
       "cuota_confianza": {
         "BTTS": [
           {
-            "senal": "stake9",
-            "rango": [
-              1.6,
-              1.69
-            ],
-            "roi": 8.8
-          },
-          {
             "senal": "camino_normal_VIP+",
             "rango": [
               1.45,
@@ -77919,6 +77911,14 @@
               1.93
             ],
             "roi": 18.0
+          },
+          {
+            "senal": "stake9",
+            "rango": [
+              1.6,
+              1.69
+            ],
+            "roi": 8.8
           }
         ],
         "Over 2.5": [
@@ -77943,8 +77943,8 @@
           }
         ]
       },
-      "prob_valor": 0.5785,
-      "ev_valor": -0.0455,
+      "prob_valor": 0.5895,
+      "ev_valor": -0.0274,
       "alerta_btts": null,
       "cuota_btts_alerta": null,
       "fecha_alerta": null,
@@ -78020,8 +78020,8 @@
       "vip_grupo": null,
       "cuota_confianza": null,
       "rango_obs": null,
-      "prob_valor": 0.516,
-      "ev_valor": -0.1227,
+      "prob_valor": 0.5098,
+      "ev_valor": -0.1334,
       "alerta_btts": null,
       "cuota_btts_alerta": null,
       "fecha_alerta": null,
@@ -78097,8 +78097,8 @@
       "vip_grupo": null,
       "cuota_confianza": null,
       "rango_obs": null,
-      "prob_valor": 0.6319,
-      "ev_valor": -0.0901,
+      "prob_valor": 0.6272,
+      "ev_valor": -0.0968,
       "alerta_btts": null,
       "cuota_btts_alerta": null,
       "fecha_alerta": null,
@@ -78185,8 +78185,8 @@
         ]
       },
       "rango_obs": null,
-      "prob_valor": 0.5811,
-      "ev_valor": -0.0877,
+      "prob_valor": 0.5892,
+      "ev_valor": -0.075,
       "alerta_btts": "SEGUNDA_LINEA",
       "cuota_btts_alerta": 1.53,
       "fecha_alerta": "2026-11-22 02:05",
@@ -78339,8 +78339,8 @@
       "vip_grupo": null,
       "cuota_confianza": null,
       "rango_obs": null,
-      "prob_valor": 0.5599,
-      "ev_valor": -0.1041,
+      "prob_valor": 0.5584,
+      "ev_valor": -0.1066,
       "alerta_btts": null,
       "cuota_btts_alerta": null,
       "fecha_alerta": null,
@@ -78416,8 +78416,8 @@
       "vip_grupo": null,
       "cuota_confianza": null,
       "rango_obs": null,
-      "prob_valor": 0.4939,
-      "ev_valor": 0.0125,
+      "prob_valor": 0.5044,
+      "ev_valor": 0.034,
       "alerta_btts": null,
       "cuota_btts_alerta": null,
       "fecha_alerta": null,
@@ -78955,8 +78955,8 @@
       "vip_grupo": null,
       "cuota_confianza": null,
       "rango_obs": null,
-      "prob_valor": 0.4871,
-      "ev_valor": -0.0598,
+      "prob_valor": 0.4938,
+      "ev_valor": -0.047,
       "alerta_btts": null,
       "cuota_btts_alerta": null,
       "fecha_alerta": null,
@@ -79043,8 +79043,8 @@
         ]
       },
       "rango_obs": null,
-      "prob_valor": 0.59,
-      "ev_valor": -0.0855,
+      "prob_valor": 0.5885,
+      "ev_valor": -0.0879,
       "alerta_btts": null,
       "cuota_btts_alerta": null,
       "fecha_alerta": null,
@@ -79197,8 +79197,8 @@
       "vip_grupo": null,
       "cuota_confianza": null,
       "rango_obs": null,
-      "prob_valor": 0.6047,
-      "ev_valor": -0.0929,
+      "prob_valor": 0.6126,
+      "ev_valor": -0.0811,
       "alerta_btts": null,
       "cuota_btts_alerta": null,
       "fecha_alerta": null,
@@ -79362,8 +79362,8 @@
         ]
       },
       "rango_obs": null,
-      "prob_valor": 0.5536,
-      "ev_valor": 0.0352,
+      "prob_valor": 0.5509,
+      "ev_valor": 0.0302,
       "alerta_btts": null,
       "cuota_btts_alerta": null,
       "fecha_alerta": null,
@@ -79439,8 +79439,8 @@
       "vip_grupo": null,
       "cuota_confianza": null,
       "rango_obs": null,
-      "prob_valor": 0.6023,
-      "ev_valor": -0.1146,
+      "prob_valor": 0.5996,
+      "ev_valor": -0.1185,
       "alerta_btts": null,
       "cuota_btts_alerta": null,
       "fecha_alerta": null,
@@ -79516,8 +79516,8 @@
       "vip_grupo": null,
       "cuota_confianza": null,
       "rango_obs": null,
-      "prob_valor": 0.6385,
-      "ev_valor": -0.0805,
+      "prob_valor": 0.6455,
+      "ev_valor": -0.0705,
       "alerta_btts": null,
       "cuota_btts_alerta": null,
       "fecha_alerta": null,
@@ -79593,8 +79593,8 @@
       "vip_grupo": null,
       "cuota_confianza": null,
       "rango_obs": null,
-      "prob_valor": 0.6096,
-      "ev_valor": -0.0734,
+      "prob_valor": 0.5965,
+      "ev_valor": -0.0934,
       "alerta_btts": null,
       "cuota_btts_alerta": null,
       "fecha_alerta": null,
@@ -79671,26 +79671,26 @@
       "cuota_confianza": {
         "BTTS": [
           {
-            "senal": "avg2h_parejo_15",
-            "rango": [
-              1.35,
-              1.44
-            ],
-            "roi": 9.6
-          },
-          {
             "senal": "avg2h_parejo_14",
             "rango": [
               1.35,
               1.44
             ],
             "roi": 12.1
+          },
+          {
+            "senal": "avg2h_parejo_15",
+            "rango": [
+              1.35,
+              1.44
+            ],
+            "roi": 9.6
           }
         ]
       },
       "rango_obs": null,
-      "prob_valor": 0.6439,
-      "ev_valor": -0.0985,
+      "prob_valor": 0.655,
+      "ev_valor": -0.083,
       "alerta_btts": null,
       "cuota_btts_alerta": null,
       "fecha_alerta": null,
@@ -79775,14 +79775,6 @@
             "roi": 13.5
           },
           {
-            "senal": "estable_btts_fallo",
-            "rango": [
-              1.45,
-              1.49
-            ],
-            "roi": 8.4
-          },
-          {
             "senal": "bastion",
             "rango": [
               1.45,
@@ -79791,20 +79783,28 @@
             "roi": 0.6
           },
           {
-            "senal": "estable_gc_fallo_plus",
-            "rango": [
-              1.45,
-              1.58
-            ],
-            "roi": 5.4
-          },
-          {
             "senal": "estable_gc_fallo",
             "rango": [
               1.45,
               1.49
             ],
             "roi": 7.8
+          },
+          {
+            "senal": "estable_btts_fallo",
+            "rango": [
+              1.45,
+              1.49
+            ],
+            "roi": 8.4
+          },
+          {
+            "senal": "estable_gc_fallo_plus",
+            "rango": [
+              1.45,
+              1.58
+            ],
+            "roi": 5.4
           }
         ],
         "Combinada": [
@@ -79836,8 +79836,8 @@
           }
         ]
       },
-      "prob_valor": 0.6138,
-      "ev_valor": -0.1101,
+      "prob_valor": 0.6097,
+      "ev_valor": -0.116,
       "alerta_btts": null,
       "cuota_btts_alerta": null,
       "fecha_alerta": null,
@@ -79913,8 +79913,8 @@
       "vip_grupo": null,
       "cuota_confianza": null,
       "rango_obs": null,
-      "prob_valor": 0.5997,
-      "ev_valor": -0.1305,
+      "prob_valor": 0.6038,
+      "ev_valor": -0.1244,
       "alerta_btts": null,
       "cuota_btts_alerta": null,
       "fecha_alerta": null,
@@ -79990,8 +79990,8 @@
       "vip_grupo": null,
       "cuota_confianza": null,
       "rango_obs": null,
-      "prob_valor": 0.6005,
-      "ev_valor": -0.1173,
+      "prob_valor": 0.5993,
+      "ev_valor": -0.119,
       "alerta_btts": null,
       "cuota_btts_alerta": null,
       "fecha_alerta": null,
@@ -80067,8 +80067,8 @@
       "vip_grupo": null,
       "cuota_confianza": null,
       "rango_obs": null,
-      "prob_valor": 0.6094,
-      "ev_valor": -0.1103,
+      "prob_valor": 0.6091,
+      "ev_valor": -0.1107,
       "alerta_btts": null,
       "cuota_btts_alerta": null,
       "fecha_alerta": null,
@@ -80144,8 +80144,8 @@
       "vip_grupo": null,
       "cuota_confianza": null,
       "rango_obs": null,
-      "prob_valor": 0.6332,
-      "ev_valor": -0.1578,
+      "prob_valor": 0.6408,
+      "ev_valor": -0.1478,
       "alerta_btts": null,
       "cuota_btts_alerta": null,
       "fecha_alerta": null,
@@ -80221,8 +80221,8 @@
       "vip_grupo": null,
       "cuota_confianza": null,
       "rango_obs": null,
-      "prob_valor": 0.6363,
-      "ev_valor": -0.1347,
+      "prob_valor": 0.6446,
+      "ev_valor": -0.1234,
       "alerta_btts": null,
       "cuota_btts_alerta": null,
       "fecha_alerta": null,
@@ -80298,8 +80298,8 @@
       "vip_grupo": null,
       "cuota_confianza": null,
       "rango_obs": null,
-      "prob_valor": 0.6125,
-      "ev_valor": -0.0996,
+      "prob_valor": 0.6147,
+      "ev_valor": -0.0964,
       "alerta_btts": null,
       "cuota_btts_alerta": null,
       "fecha_alerta": null,
@@ -80376,20 +80376,20 @@
       "cuota_confianza": {
         "BTTS": [
           {
-            "senal": "stake9",
-            "rango": [
-              1.6,
-              1.69
-            ],
-            "roi": 8.8
-          },
-          {
             "senal": "stake9_mezcla",
             "rango": [
               1.5,
               1.66
             ],
             "roi": 6.1
+          },
+          {
+            "senal": "stake9",
+            "rango": [
+              1.6,
+              1.69
+            ],
+            "roi": 8.8
           }
         ],
         "Over 2.5": [
@@ -80404,8 +80404,8 @@
         ]
       },
       "rango_obs": null,
-      "prob_valor": 0.568,
-      "ev_valor": -0.0911,
+      "prob_valor": 0.5884,
+      "ev_valor": -0.0586,
       "alerta_btts": "SEGUNDA_LINEA",
       "cuota_btts_alerta": 1.55,
       "fecha_alerta": "2026-11-22 10:36",
@@ -80481,8 +80481,8 @@
       "vip_grupo": null,
       "cuota_confianza": null,
       "rango_obs": null,
-      "prob_valor": 0.5955,
-      "ev_valor": -0.1127,
+      "prob_valor": 0.597,
+      "ev_valor": -0.1105,
       "alerta_btts": null,
       "cuota_btts_alerta": null,
       "fecha_alerta": null,
@@ -80558,8 +80558,8 @@
       "vip_grupo": null,
       "cuota_confianza": null,
       "rango_obs": null,
-      "prob_valor": 0.6081,
-      "ev_valor": -0.106,
+      "prob_valor": 0.6004,
+      "ev_valor": -0.1173,
       "alerta_btts": null,
       "cuota_btts_alerta": null,
       "fecha_alerta": null,
@@ -80645,8 +80645,8 @@
           }
         ]
       },
-      "prob_valor": 0.6129,
-      "ev_valor": -0.0746,
+      "prob_valor": 0.6091,
+      "ev_valor": -0.0803,
       "alerta_btts": null,
       "cuota_btts_alerta": null,
       "fecha_alerta": null,
@@ -80722,8 +80722,8 @@
       "vip_grupo": null,
       "cuota_confianza": null,
       "rango_obs": null,
-      "prob_valor": 0.5125,
-      "ev_valor": -0.1287,
+      "prob_valor": 0.5147,
+      "ev_valor": -0.125,
       "alerta_btts": null,
       "cuota_btts_alerta": null,
       "fecha_alerta": null,
@@ -80799,8 +80799,8 @@
       "vip_grupo": null,
       "cuota_confianza": null,
       "rango_obs": null,
-      "prob_valor": 0.5564,
-      "ev_valor": -0.0819,
+      "prob_valor": 0.5673,
+      "ev_valor": -0.0639,
       "alerta_btts": null,
       "cuota_btts_alerta": null,
       "fecha_alerta": null,
@@ -80876,8 +80876,8 @@
       "vip_grupo": null,
       "cuota_confianza": null,
       "rango_obs": null,
-      "prob_valor": 0.5486,
-      "ev_valor": -0.1113,
+      "prob_valor": 0.5561,
+      "ev_valor": -0.0991,
       "alerta_btts": null,
       "cuota_btts_alerta": null,
       "fecha_alerta": null,
@@ -80953,8 +80953,8 @@
       "vip_grupo": null,
       "cuota_confianza": null,
       "rango_obs": null,
-      "prob_valor": 0.6589,
-      "ev_valor": -0.1237,
+      "prob_valor": 0.6575,
+      "ev_valor": -0.1256,
       "alerta_btts": null,
       "cuota_btts_alerta": null,
       "fecha_alerta": null,
@@ -81030,8 +81030,8 @@
       "vip_grupo": null,
       "cuota_confianza": null,
       "rango_obs": null,
-      "prob_valor": 0.5839,
-      "ev_valor": -0.0833,
+      "prob_valor": 0.5798,
+      "ev_valor": -0.0897,
       "alerta_btts": null,
       "cuota_btts_alerta": null,
       "fecha_alerta": null,
@@ -81107,8 +81107,8 @@
       "vip_grupo": null,
       "cuota_confianza": null,
       "rango_obs": null,
-      "prob_valor": 0.626,
-      "ev_valor": -0.0985,
+      "prob_valor": 0.6174,
+      "ev_valor": -0.1109,
       "alerta_btts": null,
       "cuota_btts_alerta": null,
       "fecha_alerta": null,
@@ -81184,8 +81184,8 @@
       "vip_grupo": null,
       "cuota_confianza": null,
       "rango_obs": null,
-      "prob_valor": 0.5933,
-      "ev_valor": -0.122,
+      "prob_valor": 0.5907,
+      "ev_valor": -0.1257,
       "alerta_btts": null,
       "cuota_btts_alerta": null,
       "fecha_alerta": null,
@@ -81261,8 +81261,8 @@
       "vip_grupo": null,
       "cuota_confianza": null,
       "rango_obs": null,
-      "prob_valor": 0.5314,
-      "ev_valor": -0.1392,
+      "prob_valor": 0.549,
+      "ev_valor": -0.1106,
       "alerta_btts": null,
       "cuota_btts_alerta": null,
       "fecha_alerta": null,
@@ -81338,8 +81338,8 @@
       "vip_grupo": null,
       "cuota_confianza": null,
       "rango_obs": null,
-      "prob_valor": 0.6009,
-      "ev_valor": -0.0987,
+      "prob_valor": 0.6018,
+      "ev_valor": -0.0973,
       "alerta_btts": null,
       "cuota_btts_alerta": null,
       "fecha_alerta": null,
@@ -81415,8 +81415,8 @@
       "vip_grupo": null,
       "cuota_confianza": null,
       "rango_obs": null,
-      "prob_valor": 0.597,
-      "ev_valor": -0.0627,
+      "prob_valor": 0.6038,
+      "ev_valor": -0.052,
       "alerta_btts": null,
       "cuota_btts_alerta": null,
       "fecha_alerta": null,
@@ -81492,8 +81492,8 @@
       "vip_grupo": null,
       "cuota_confianza": null,
       "rango_obs": null,
-      "prob_valor": 0.556,
-      "ev_valor": -0.1215,
+      "prob_valor": 0.5686,
+      "ev_valor": -0.1016,
       "alerta_btts": null,
       "cuota_btts_alerta": null,
       "fecha_alerta": null,
@@ -81569,8 +81569,8 @@
       "vip_grupo": null,
       "cuota_confianza": null,
       "rango_obs": null,
-      "prob_valor": 0.5967,
-      "ev_valor": -0.105,
+      "prob_valor": 0.5957,
+      "ev_valor": -0.1064,
       "alerta_btts": null,
       "cuota_btts_alerta": null,
       "fecha_alerta": null,
@@ -81646,8 +81646,8 @@
       "vip_grupo": null,
       "cuota_confianza": null,
       "rango_obs": null,
-      "prob_valor": 0.7049,
-      "ev_valor": -0.0907,
+      "prob_valor": 0.7034,
+      "ev_valor": -0.0927,
       "alerta_btts": null,
       "cuota_btts_alerta": null,
       "fecha_alerta": null,
@@ -81724,6 +81724,14 @@
       "cuota_confianza": {
         "BTTS": [
           {
+            "senal": "camino_normal_VIP+",
+            "rango": [
+              1.45,
+              1.69
+            ],
+            "roi": 8.8
+          },
+          {
             "senal": "corona",
             "rango": [
               1.45,
@@ -81740,14 +81748,6 @@
             "roi": 15.2
           },
           {
-            "senal": "camino_normal_VIP+",
-            "rango": [
-              1.45,
-              1.69
-            ],
-            "roi": 8.8
-          },
-          {
             "senal": "estable_gc_fallo_plus",
             "rango": [
               1.45,
@@ -81758,8 +81758,8 @@
         ]
       },
       "rango_obs": null,
-      "prob_valor": 0.6146,
-      "ev_valor": -0.078,
+      "prob_valor": 0.6193,
+      "ev_valor": -0.0711,
       "alerta_btts": "RESPALDADA",
       "cuota_btts_alerta": 1.5,
       "fecha_alerta": "2026-11-21 07:56",
@@ -81846,8 +81846,8 @@
         ]
       },
       "rango_obs": null,
-      "prob_valor": 0.6426,
-      "ev_valor": -0.1003,
+      "prob_valor": 0.6488,
+      "ev_valor": -0.0917,
       "alerta_btts": null,
       "cuota_btts_alerta": null,
       "fecha_alerta": null,
@@ -81923,8 +81923,8 @@
       "vip_grupo": null,
       "cuota_confianza": null,
       "rango_obs": null,
-      "prob_valor": 0.5585,
-      "ev_valor": -0.0449,
+      "prob_valor": 0.5598,
+      "ev_valor": -0.0427,
       "alerta_btts": null,
       "cuota_btts_alerta": null,
       "fecha_alerta": null,
@@ -82000,8 +82000,8 @@
       "vip_grupo": null,
       "cuota_confianza": null,
       "rango_obs": null,
-      "prob_valor": 0.528,
-      "ev_valor": -0.0126,
+      "prob_valor": 0.5293,
+      "ev_valor": -0.0102,
       "alerta_btts": null,
       "cuota_btts_alerta": null,
       "fecha_alerta": null,
@@ -82077,8 +82077,8 @@
       "vip_grupo": null,
       "cuota_confianza": null,
       "rango_obs": null,
-      "prob_valor": 0.675,
-      "ev_valor": -0.082,
+      "prob_valor": 0.6847,
+      "ev_valor": -0.0689,
       "alerta_btts": null,
       "cuota_btts_alerta": null,
       "fecha_alerta": null,
@@ -82154,8 +82154,8 @@
       "vip_grupo": null,
       "cuota_confianza": null,
       "rango_obs": null,
-      "prob_valor": 0.6459,
-      "ev_valor": -0.0764,
+      "prob_valor": 0.638,
+      "ev_valor": -0.0877,
       "alerta_btts": null,
       "cuota_btts_alerta": null,
       "fecha_alerta": null,
@@ -82231,8 +82231,8 @@
       "vip_grupo": null,
       "cuota_confianza": null,
       "rango_obs": null,
-      "prob_valor": 0.5752,
-      "ev_valor": -0.0682,
+      "prob_valor": 0.5736,
+      "ev_valor": -0.0708,
       "alerta_btts": null,
       "cuota_btts_alerta": null,
       "fecha_alerta": null,
@@ -82309,12 +82309,12 @@
       "cuota_confianza": {
         "BTTS": [
           {
-            "senal": "idx_btts_top20",
+            "senal": "idx_btts_top10",
             "rango": [
               1.8,
               2.05
             ],
-            "roi": 14.4
+            "roi": 39.8
           },
           {
             "senal": "idx_btts_top05",
@@ -82325,26 +82325,26 @@
             "roi": 43.8
           },
           {
+            "senal": "idx_btts_top20",
+            "rango": [
+              1.8,
+              2.05
+            ],
+            "roi": 14.4
+          },
+          {
             "senal": "topacio",
             "rango": [
               1.65,
               2.03
             ],
             "roi": 19.0
-          },
-          {
-            "senal": "idx_btts_top10",
-            "rango": [
-              1.8,
-              2.05
-            ],
-            "roi": 39.8
           }
         ]
       },
       "rango_obs": null,
-      "prob_valor": 0.5564,
-      "ev_valor": 0.085,
+      "prob_valor": 0.5582,
+      "ev_valor": 0.0885,
       "alerta_btts": "SEGUNDA_LINEA",
       "cuota_btts_alerta": 1.9,
       "fecha_alerta": "2026-11-21 07:56",
@@ -82420,8 +82420,8 @@
       "vip_grupo": null,
       "cuota_confianza": null,
       "rango_obs": null,
-      "prob_valor": 0.531,
-      "ev_valor": -0.0813,
+      "prob_valor": 0.526,
+      "ev_valor": -0.09,
       "alerta_btts": null,
       "cuota_btts_alerta": null,
       "fecha_alerta": null,
@@ -82497,8 +82497,8 @@
       "vip_grupo": null,
       "cuota_confianza": null,
       "rango_obs": null,
-      "prob_valor": 0.538,
-      "ev_valor": -0.0693,
+      "prob_valor": 0.5362,
+      "ev_valor": -0.0724,
       "alerta_btts": null,
       "cuota_btts_alerta": null,
       "fecha_alerta": null,
@@ -82574,8 +82574,8 @@
       "vip_grupo": null,
       "cuota_confianza": null,
       "rango_obs": null,
-      "prob_valor": 0.5256,
-      "ev_valor": -0.1591,
+      "prob_valor": 0.5249,
+      "ev_valor": -0.1602,
       "alerta_btts": null,
       "cuota_btts_alerta": null,
       "fecha_alerta": null,
@@ -82651,8 +82651,8 @@
       "vip_grupo": null,
       "cuota_confianza": null,
       "rango_obs": null,
-      "prob_valor": 0.497,
-      "ev_valor": -0.0507,
+      "prob_valor": 0.4837,
+      "ev_valor": -0.0762,
       "alerta_btts": null,
       "cuota_btts_alerta": null,
       "fecha_alerta": null,
@@ -82747,8 +82747,8 @@
         ]
       },
       "rango_obs": null,
-      "prob_valor": 0.609,
-      "ev_valor": -0.0865,
+      "prob_valor": 0.6088,
+      "ev_valor": -0.0869,
       "alerta_btts": "SEGUNDA_LINEA",
       "cuota_btts_alerta": 1.5,
       "fecha_alerta": "2026-11-22 21:20",
@@ -82824,8 +82824,8 @@
       "vip_grupo": null,
       "cuota_confianza": null,
       "rango_obs": null,
-      "prob_valor": 0.5119,
-      "ev_valor": -0.0582,
+      "prob_valor": 0.5176,
+      "ev_valor": -0.0476,
       "alerta_btts": null,
       "cuota_btts_alerta": null,
       "fecha_alerta": null,
@@ -82901,8 +82901,8 @@
       "vip_grupo": null,
       "cuota_confianza": null,
       "rango_obs": null,
-      "prob_valor": 0.5505,
-      "ev_valor": -0.1082,
+      "prob_valor": 0.5543,
+      "ev_valor": -0.1021,
       "alerta_btts": null,
       "cuota_btts_alerta": null,
       "fecha_alerta": null,
@@ -83143,8 +83143,8 @@
       "vip_grupo": null,
       "cuota_confianza": null,
       "rango_obs": null,
-      "prob_valor": 0.6495,
-      "ev_valor": -0.1037,
+      "prob_valor": 0.6586,
+      "ev_valor": -0.0911,
       "alerta_btts": null,
       "cuota_btts_alerta": null,
       "fecha_alerta": null,
@@ -83220,8 +83220,8 @@
       "vip_grupo": null,
       "cuota_confianza": null,
       "rango_obs": null,
-      "prob_valor": 0.7042,
-      "ev_valor": -0.0845,
+      "prob_valor": 0.7076,
+      "ev_valor": -0.0801,
       "alerta_btts": null,
       "cuota_btts_alerta": null,
       "fecha_alerta": null,
@@ -83297,8 +83297,8 @@
       "vip_grupo": null,
       "cuota_confianza": null,
       "rango_obs": null,
-      "prob_valor": 0.5904,
-      "ev_valor": -0.0966,
+      "prob_valor": 0.5918,
+      "ev_valor": -0.0946,
       "alerta_btts": null,
       "cuota_btts_alerta": null,
       "fecha_alerta": null,
@@ -83374,8 +83374,8 @@
       "vip_grupo": null,
       "cuota_confianza": null,
       "rango_obs": null,
-      "prob_valor": 0.5562,
-      "ev_valor": -0.149,
+      "prob_valor": 0.5583,
+      "ev_valor": -0.1458,
       "alerta_btts": null,
       "cuota_btts_alerta": null,
       "fecha_alerta": null,
