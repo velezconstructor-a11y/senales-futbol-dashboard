@@ -766,16 +766,21 @@ function ccEnVip(p, mk){
   return false;
 }
 function ccJusta(mk, t){ const J = ((DATA && DATA.en_rango) || {}).justa || {}; return (J[mk] || {})[t] || null; }
-// {txt, ok, pocos}: lo que dice la prueba justa de la señal t para el partido p
+// {txt, ok, pocos, fueraVip}: lo que dice la prueba justa de la señal t para el partido p
+// 23 nov 2026 (2a revision, por Diamante y Plata en verde con +2.5% en 24 y +0.4% en 26 en Feyenoord-Porto): FUERA
+// del VIP ninguna regla basada en la prueba justa gano en la prueba de segundo orden (1 sep - 22 nov, cada semana
+// eligiendo solo con lo anterior: entre -4% y -12%, aun la mas estricta), y con ~25 partidos el ROI se mueve ±14
+// puntos por azar. Asi que un partido que NO es VIP en ese mercado nunca sale en verde.
 function ccJustaVeredicto(mk, t, p){
   const j = ccJusta(mk, t), jd = j && j.dia, fu = j && j.vip && j.vip.fuera;
-  if(!(jd && jd.n)) return {txt: "sin prueba justa todavía", ok: false, pocos: true};
+  const fueraVip = !!p && !ccEnVip(p, mk);
+  if(!(jd && jd.n)) return {txt: "sin prueba justa todavía", ok: false, pocos: true, fueraVip};
   let txt = `prueba justa ${vipPct(jd.roi)} en ${vipN(jd.n)}`, ok = jd.n >= 20 && jd.roi > 0, pocos = jd.n < 20;
-  if(p && !ccEnVip(p, mk) && fu && fu.n >= 10){
-    txt += ` · fuera del VIP ${vipPct(fu.roi)} en ${vipN(fu.n)}`;
-    ok = ok && fu.roi > 0;
+  if(fueraVip){
+    if(fu && fu.n >= 10) txt += ` · fuera del VIP ${vipPct(fu.roi)} en ${vipN(fu.n)}`;
+    ok = false;
   }
-  return {txt, ok, pocos};
+  return {txt, ok, pocos, fueraVip};
 }
 function ccRangoTxt(mk, t, cuota, p){
   const C = (DATA && DATA.cuota_confianza) || {};
@@ -784,10 +789,12 @@ function ccRangoTxt(mk, t, cuota, p){
   if(!r.rango) return ` <span class="vip-dim" style="font-size:0.95em;">· 🎯 sin rango de cuota que gane</span>`;
   const dentro = cuota != null && cuota >= r.rango[0] - 1e-9 && cuota <= r.rango[1] + 1e-9;   // 7 nov 2026: extremos incluidos
   const v = ccJustaVeredicto(mk, t, p);
-  const globo = `Mirando hacia atrás (rango elegido con esos mismos partidos, por eso siempre sale bien): ROI ${vipPct(r.roi)} · ${vipFmt(r.uds)}u en ${vipN(r.n)} partidos; mitades ${vipPct(r.mitad1.roi)} / ${vipPct(r.mitad2.roi)}. Lo que cuenta es la prueba justa.`;
+  const globo = `Mirando hacia atrás (rango elegido con esos mismos partidos, por eso siempre sale bien): ROI ${vipPct(r.roi)} · ${vipFmt(r.uds)}u en ${vipN(r.n)} partidos; mitades ${vipPct(r.mitad1.roi)} / ${vipPct(r.mitad2.roi)}. Lo que cuenta es la prueba justa.`
+    + (v.fueraVip ? " Fuera del VIP, quedarse cada semana con las señales que iban bien en la prueba justa perdió entre −4% y −12% (1 sep–22 nov), aun con la regla más estricta." : "");
   const marca = !dentro ? "" : (v.ok ? ' <b style="color:var(--win);">✓ cuota de hoy en el rango</b>'
+    : (v.fueraVip ? ' <b style="color:var(--amber);">✓ en el rango, pero fuera del VIP esto no ha ganado</b>'
     : (v.pocos ? ' <b style="color:var(--amber);">✓ en el rango · prueba justa con pocos partidos</b>'
-               : ' <b style="color:var(--amber);">✓ en el rango, pero la prueba justa no lo respalda</b>'));
+               : ' <b style="color:var(--amber);">✓ en el rango, pero la prueba justa no lo respalda</b>')));
   return ` <span style="font-size:0.95em;color:var(--chalk-dim);" title="${vipEsc(globo)}">· 🎯 ${Number(r.rango[0]).toFixed(2)}–${Number(r.rango[1]).toFixed(2)} (${v.txt})${marca}</span>`;
 }
 function resumenSenales(lista, motivoPrincipal, dic, prefijoIdx, mk, cuota, p){
@@ -1977,7 +1984,7 @@ function ccTablaHtml(data){
       <p><b>¿Merece el VIP?</b> Solo para las ✅: mira lo que la señal <b>agregaría</b>, sus partidos de la prueba justa que no están ya en el VIP. <b>⭐ Candidata</b> = 20+ partidos nuevos que ganan y las dos mitades de la prueba justa en positivo. <b>💎 / 🧪</b> = ya está en el VIP (🧪 en prueba a ½ unidad). <b>❌</b> = lo que sumaría pierde. <b>⏳</b> = falta muestra o una mitad va en negativo.</p>
     </div>
     ${bloques}
-    <p class="vip-dim" style="font-size:12px;line-height:1.55;margin:10px 0 0;">El rango de hoy es el que más unidades ganó en todo el historial de la señal (mínimo 15 partidos y ROI positivo), medido con la cuota con la que se disparó. Los picks con JUGAR cuya cuota cae en ese rango llevan la etiqueta <b>🎯 CUOTA DE MAYOR CONFIANZA</b> solo si el rango ganó en las dos mitades de su historia («¿Se mantuvo?») y, desde el 23 nov, solo si su <b>prueba justa</b> gana (con 20+ partidos) y, si el partido no es VIP, también <b>fuera del VIP</b>. En cada tarjeta, junto a cada señal, sale ahora la prueba justa (no el ROI mirando hacia atrás, que queda en el globo). Aun así es una pista, no una regla segura: quedarse cada semana con las ✅ tampoco ganó la semana siguiente (ver «En su rango»). No es garantía ni consejo financiero.</p></section>`;
+    <p class="vip-dim" style="font-size:12px;line-height:1.55;margin:10px 0 0;">El rango de hoy es el que más unidades ganó en todo el historial de la señal (mínimo 15 partidos y ROI positivo), medido con la cuota con la que se disparó. Los picks con JUGAR cuya cuota cae en ese rango llevan la etiqueta <b>🎯 CUOTA DE MAYOR CONFIANZA</b> solo si el rango ganó en las dos mitades de su historia («¿Se mantuvo?») y, desde el 23 nov, solo si el partido <b>es VIP</b> en ese mercado y su <b>prueba justa</b> gana (con 20+ partidos). Fuera del VIP no sale nunca: quedarse cada semana con las señales que iban bien en la prueba justa perdió entre −4% y −12% (1 sep–22 nov), aun con la regla más estricta. En cada tarjeta, junto a cada señal, sale ahora la prueba justa (no el ROI mirando hacia atrás, que queda en el globo). Aun así es una pista, no una regla segura: quedarse cada semana con las ✅ tampoco ganó la semana siguiente (ver «En su rango»). No es garantía ni consejo financiero.</p></section>`;
 }
 
 function renderEstadisticas(data){
