@@ -754,15 +754,43 @@ function ccCuotaMercado(p, mk){
   const cb = n(p.cuota_btts), c25 = n(p.cuota_o25), d = Number((DATA && DATA.descuento_combo_supuesto) || 0);
   return (cb && c25) ? 1 + (cb * c25 - 1) * (1 - d) : null;
 }
-function ccRangoTxt(mk, t, cuota){
+// 23 nov 2026 (pedido: "Y estos partidos como los ves?"): las tarjetas mostraban el ROI MIRANDO HACIA ATRAS (el rango
+// se elige con esos mismos partidos: siempre sale positivo). Ahora muestran la PRUEBA JUSTA (cada dia con el rango
+// que la señal tenia antes; data.en_rango.justa) y, si el partido NO es VIP en ese mercado, lo que la señal hace
+// FUERA del VIP. El «✓» queda en verde solo si eso gana; si no, en ambar. Lo de mirando hacia atras va en el globo.
+function ccEnVip(p, mk){
+  if(!p) return false;
+  if(mk === "BTTS") return p.vip_btts === "RESPALDADA" || p.vip_btts === "SEGUNDA_LINEA";
+  if(mk === "Over 2.5") return p.vip_o25_grupo != null;
+  if(mk === "Combinada") return p.vip_combo_grupo != null;
+  return false;
+}
+function ccJusta(mk, t){ const J = ((DATA && DATA.en_rango) || {}).justa || {}; return (J[mk] || {})[t] || null; }
+// {txt, ok, pocos}: lo que dice la prueba justa de la señal t para el partido p
+function ccJustaVeredicto(mk, t, p){
+  const j = ccJusta(mk, t), jd = j && j.dia, fu = j && j.vip && j.vip.fuera;
+  if(!(jd && jd.n)) return {txt: "sin prueba justa todavía", ok: false, pocos: true};
+  let txt = `prueba justa ${vipPct(jd.roi)} en ${vipN(jd.n)}`, ok = jd.n >= 20 && jd.roi > 0, pocos = jd.n < 20;
+  if(p && !ccEnVip(p, mk) && fu && fu.n >= 10){
+    txt += ` · fuera del VIP ${vipPct(fu.roi)} en ${vipN(fu.n)}`;
+    ok = ok && fu.roi > 0;
+  }
+  return {txt, ok, pocos};
+}
+function ccRangoTxt(mk, t, cuota, p){
   const C = (DATA && DATA.cuota_confianza) || {};
   const r = (C[mk] || {})[t];
   if(!r) return C[mk] ? ` <span class="vip-dim" style="font-size:0.95em;">· 🎯 menos de 30 partidos, sin rango todavía</span>` : "";
   if(!r.rango) return ` <span class="vip-dim" style="font-size:0.95em;">· 🎯 sin rango de cuota que gane</span>`;
   const dentro = cuota != null && cuota >= r.rango[0] - 1e-9 && cuota <= r.rango[1] + 1e-9;   // 7 nov 2026: extremos incluidos
-  return ` <span style="font-size:0.95em;color:var(--chalk-dim);" title="Rango de cuota donde esta señal más unidades ganó (${vipN(r.n)} partidos; en las dos mitades de su historia: ${vipPct(r.mitad1.roi)} / ${vipPct(r.mitad2.roi)})">· 🎯 ${Number(r.rango[0]).toFixed(2)}–${Number(r.rango[1]).toFixed(2)} (ROI ${vipPct(r.roi)} · ${vipFmt(r.uds)}u${r.se_mantuvo ? "" : " · no se mantuvo"})${dentro ? ' <b style="color:var(--win);">✓ cuota de hoy en el rango</b>' : ""}</span>`;
+  const v = ccJustaVeredicto(mk, t, p);
+  const globo = `Mirando hacia atrás (rango elegido con esos mismos partidos, por eso siempre sale bien): ROI ${vipPct(r.roi)} · ${vipFmt(r.uds)}u en ${vipN(r.n)} partidos; mitades ${vipPct(r.mitad1.roi)} / ${vipPct(r.mitad2.roi)}. Lo que cuenta es la prueba justa.`;
+  const marca = !dentro ? "" : (v.ok ? ' <b style="color:var(--win);">✓ cuota de hoy en el rango</b>'
+    : (v.pocos ? ' <b style="color:var(--amber);">✓ en el rango · prueba justa con pocos partidos</b>'
+               : ' <b style="color:var(--amber);">✓ en el rango, pero la prueba justa no lo respalda</b>'));
+  return ` <span style="font-size:0.95em;color:var(--chalk-dim);" title="${vipEsc(globo)}">· 🎯 ${Number(r.rango[0]).toFixed(2)}–${Number(r.rango[1]).toFixed(2)} (${v.txt})${marca}</span>`;
 }
-function resumenSenales(lista, motivoPrincipal, dic, prefijoIdx, mk, cuota){
+function resumenSenales(lista, motivoPrincipal, dic, prefijoIdx, mk, cuota, p){
   // 2 nov 2026 (ajuste): debajo del enunciado principal, primero las ENCENDIDAS que tambien aplican y luego
   // las APAGADAS (en prueba o apagadas por el motor), una por linea, con su formula. La principal no se repite.
   const tags = Array.from(new Set(String(lista || "").split("|").map(t => t.trim())))
@@ -773,7 +801,7 @@ function resumenSenales(lista, motivoPrincipal, dic, prefijoIdx, mk, cuota){
   const activas = tags.filter(t => valida(t) && on[t] === true && !SENALES_EN_PRUEBA.has(t));
   const apagadas = tags.filter(t => valida(t) && !activas.includes(t));
   if(!activas.length && !apagadas.length) return "";
-  const rg = t => mk ? ccRangoTxt(mk, t, cuota) : "";
+  const rg = t => mk ? ccRangoTxt(mk, t, cuota, p) : "";
   const linea = (t, enc) => enc
     ? `<span title="Señal encendida: también aplica a este partido" style="color:var(--win);">✅ ${vipEsc(dic[t] || t)}</span>${rg(t)}`
     : `<span title="Señal apagada: aplica a este partido pero no decide el JUGAR" style="color:var(--amber);opacity:0.9;">${vipEsc(dic[t] || t)}${/apagada|EN PRUEBA|SEGUIMIENTO/i.test(dic[t] || "") ? "" : " · apagada"}</span>${rg(t)}`;
@@ -806,7 +834,7 @@ function notaRescateBtts(p){
   const motivo = p.motivo_btts;
   if(!motivo || motivo === "ninguno_evitar_final" || motivo === "candado_sin_cuota"){
     // sin señal principal, pero puede tener una etiqueta en prueba (p. ej. el Índice BTTS)
-    return notaValorDetectado(p) + resumenSenales(p.motivos_btts_todos, motivo, ETIQUETAS_BTTS, "idx_btts_", "BTTS", ccCuotaMercado(p, "BTTS"));
+    return notaValorDetectado(p) + resumenSenales(p.motivos_btts_todos, motivo, ETIQUETAS_BTTS, "idx_btts_", "BTTS", ccCuotaMercado(p, "BTTS"), p);
   }
   const esRescate = motivo.startsWith("rescate_");
   const texto = ETIQUETAS_BTTS[motivo] || motivo;
@@ -815,9 +843,9 @@ function notaRescateBtts(p){
   // AGREGADO 18 oct 2026: señales APAGADAS en prueba (versiones "+", Cumbre y
   // Stake 9 mejoradas) que tambien aplican a este partido: se muestran como
   // etiqueta extra para poder ver como les va, aunque no decidan el JUGAR.
-  const extra = resumenSenales(p.motivos_btts_todos, motivo, ETIQUETAS_BTTS, "idx_btts_", "BTTS", ccCuotaMercado(p, "BTTS"));
+  const extra = resumenSenales(p.motivos_btts_todos, motivo, ETIQUETAS_BTTS, "idx_btts_", "BTTS", ccCuotaMercado(p, "BTTS"), p);
   // 2 nov 2026: el rango de cuota de confianza de la señal PRINCIPAL tambien va en el enunciado
-  return ` · <span title="Por que se activo esta señal de BTTS" style="color:${color};opacity:${opacidad};">${texto}</span>${ccRangoTxt("BTTS", motivo, ccCuotaMercado(p, "BTTS"))}${notaValorDetectado(p)}${extra}`;
+  return ` · <span title="Por que se activo esta señal de BTTS" style="color:${color};opacity:${opacidad};">${texto}</span>${ccRangoTxt("BTTS", motivo, ccCuotaMercado(p, "BTTS"), p)}${notaValorDetectado(p)}${extra}`;
 }
 
 // AGREGADO 24 ago 2026: equivalente de notaRescateBtts, pero para Over
@@ -895,7 +923,7 @@ function notaRescateO25(p){
   // partidos con el motivo, hayan llegado a JUGAR o no.
   const motivo = p.motivo_o25;
   // 30 oct 2026: tambien se muestran las etiquetas en prueba (Índice Over 2.5) que aplican al partido
-  const extra = resumenSenales(p.motivos_o25_todos, motivo, ETIQUETAS_O25, "idx_o25_", "Over 2.5", ccCuotaMercado(p, "Over 2.5"));
+  const extra = resumenSenales(p.motivos_o25_todos, motivo, ETIQUETAS_O25, "idx_o25_", "Over 2.5", ccCuotaMercado(p, "Over 2.5"), p);
   if(!motivo || motivo === "ninguno_evitar_o25" || motivo === "candado_sin_cuota"){
     return extra;
   }
@@ -903,7 +931,7 @@ function notaRescateO25(p){
   const texto = ETIQUETAS_O25[motivo] || motivo;
   const color = esRescate ? "var(--amber)" : "var(--chalk-dim)";
   const opacidad = p.sug_o25 === "JUGAR" ? "1" : "0.6";
-  return ` · <span title="Por que se activo esta señal de Over 2.5" style="color:${color};opacity:${opacidad};">${texto}</span>${ccRangoTxt("Over 2.5", motivo, ccCuotaMercado(p, "Over 2.5"))}${extra}`;
+  return ` · <span title="Por que se activo esta señal de Over 2.5" style="color:${color};opacity:${opacidad};">${texto}</span>${ccRangoTxt("Over 2.5", motivo, ccCuotaMercado(p, "Over 2.5"), p)}${extra}`;
 }
 
 function notaBttsMinAlto(p){
@@ -1387,9 +1415,9 @@ function renderCombo(picks){
     else if(resultado === false){ badgeClass = "perdida"; badgeTxt = "✕ Perdida"; }
     else { badgeClass = p.senal_btts_o25 === 'VIP' ? 'si' : 'no'; badgeTxt = p.senal_btts_o25 === 'VIP' ? 'VIP' : (p.senal_btts_o25 || 'Sin datos'); }
     // 30 oct 2026: tambien las etiquetas en prueba (Índice Combinada) que aplican al partido
-    const extraCombo = resumenSenales(p.motivos_combo_todos, p.motivo_combo, ETIQUETAS_COMBO, "idx_combo_", "Combinada", ccCuotaMercado(p, "Combinada"));
+    const extraCombo = resumenSenales(p.motivos_combo_todos, p.motivo_combo, ETIQUETAS_COMBO, "idx_combo_", "Combinada", ccCuotaMercado(p, "Combinada"), p);
     const motivoPpal = ETIQUETAS_COMBO[p.motivo_combo] ? `<span style="color:var(--amber);">${ETIQUETAS_COMBO[p.motivo_combo]}</span>` : (p.motivo_combo && p.motivo_combo !== "ninguno_evitar_combo" ? `<span style="color:var(--amber);">${p.motivo_combo}</span>` : "");
-    const motivo = (motivoPpal || extraCombo) ? (motivoPpal ? " · " + motivoPpal + ccRangoTxt("Combinada", p.motivo_combo, ccCuotaMercado(p, "Combinada")) : "") + extraCombo : "";
+    const motivo = (motivoPpal || extraCombo) ? (motivoPpal ? " · " + motivoPpal + ccRangoTxt("Combinada", p.motivo_combo, ccCuotaMercado(p, "Combinada"), p) : "") + extraCombo : "";
     const probCombo = probDe(p);
     const probTxt = probCombo != null ? ` · ${(probCombo*100).toFixed(0)}%` : "";
     return `
@@ -1852,9 +1880,11 @@ function ccChip(p, mercadoKey, jugar){
   const principal = {BTTS: p && p.motivo_btts, "Over 2.5": p && p.motivo_o25, "Over 1.5": p && p.motivo_o15, Combinada: p && p.motivo_combo}[mk];
   const lst = ((mk && jugar && p && p.cuota_confianza && p.cuota_confianza[mk]) || []).filter(x => x.senal === principal);
   if(!lst.length) return "";
+  // 23 nov 2026: el chip solo sale si la PRUEBA JUSTA de la señal lo respalda (y, fuera del VIP, lo que hace fuera)
+  if(!ccJustaVeredicto(mk, principal, p).ok) return "";
   const txt = x => `${ccNombre(mk, x.senal)} ${Number(x.rango[0]).toFixed(2)}–${Number(x.rango[1]).toFixed(2)} (ROI ${x.roi > 0 ? "+" : ""}${x.roi}%)`;
-  const det = lst.map(txt).join(" · ");
-  return ` · <span class="vip-chip" title="${vipEsc("La cuota está en el rango donde su señal más ganó: " + det)}">🎯 CUOTA DE MAYOR CONFIANZA</span>`;   // el rango y su ROI ya salen junto a la señal principal (ccRangoTxt)
+  const det = lst.map(txt).join(" · ") + " · " + ccJustaVeredicto(mk, principal, p).txt;
+  return ` · <span class="vip-chip" title="${vipEsc("La cuota está en el rango donde su señal más ganó, y la prueba justa lo respalda: " + det)}">🎯 CUOTA DE MAYOR CONFIANZA</span>`;   // el rango y su ROI ya salen junto a la señal principal (ccRangoTxt)
 }
 // 7 nov 2026: que cuota se usa en cada tabla (la misma con la que se disparo la señal)
 const CC_PRECIO_TXT = {"BTTS": "BTTS", "Over 2.5": "Over 2.5", "Over 1.5": "Over 1.5", "Combinada": "la combinada estimada (BTTS × Over 2.5)"};
@@ -1947,7 +1977,7 @@ function ccTablaHtml(data){
       <p><b>¿Merece el VIP?</b> Solo para las ✅: mira lo que la señal <b>agregaría</b>, sus partidos de la prueba justa que no están ya en el VIP. <b>⭐ Candidata</b> = 20+ partidos nuevos que ganan y las dos mitades de la prueba justa en positivo. <b>💎 / 🧪</b> = ya está en el VIP (🧪 en prueba a ½ unidad). <b>❌</b> = lo que sumaría pierde. <b>⏳</b> = falta muestra o una mitad va en negativo.</p>
     </div>
     ${bloques}
-    <p class="vip-dim" style="font-size:12px;line-height:1.55;margin:10px 0 0;">El rango de hoy es el que más unidades ganó en todo el historial de la señal (mínimo 15 partidos y ROI positivo), medido con la cuota con la que se disparó. Los picks con JUGAR cuya cuota cae en ese rango llevan la etiqueta <b>🎯 CUOTA DE MAYOR CONFIANZA</b> solo si el rango ganó en las dos mitades de su historia («¿Se mantuvo?»). Aun así es una pista, no una regla segura: quedarse cada semana con las ✅ tampoco ganó la semana siguiente (ver «En su rango»). No es garantía ni consejo financiero.</p></section>`;
+    <p class="vip-dim" style="font-size:12px;line-height:1.55;margin:10px 0 0;">El rango de hoy es el que más unidades ganó en todo el historial de la señal (mínimo 15 partidos y ROI positivo), medido con la cuota con la que se disparó. Los picks con JUGAR cuya cuota cae en ese rango llevan la etiqueta <b>🎯 CUOTA DE MAYOR CONFIANZA</b> solo si el rango ganó en las dos mitades de su historia («¿Se mantuvo?») y, desde el 23 nov, solo si su <b>prueba justa</b> gana (con 20+ partidos) y, si el partido no es VIP, también <b>fuera del VIP</b>. En cada tarjeta, junto a cada señal, sale ahora la prueba justa (no el ROI mirando hacia atrás, que queda en el globo). Aun así es una pista, no una regla segura: quedarse cada semana con las ✅ tampoco ganó la semana siguiente (ver «En su rango»). No es garantía ni consejo financiero.</p></section>`;
 }
 
 function renderEstadisticas(data){
