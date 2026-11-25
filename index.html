@@ -994,7 +994,7 @@ function mejorCasaBadge(p, mercado){
 }
 
 // 25 nov 2026: comparador de casas REPARADO (main._agregar_mejores_cuotas): linea de la tarjeta VIP y estado
-function vipCasaTxt(p, mercado, ref){
+function vipCasaTxt(p, mercado, ref, cmin){
   const casa = p["mejor_casa_" + mercado], cu = Number(p["mejor_cuota_" + mercado]);
   if(!casa || !(cu > 1)) return "";
   const nombres = {"betplay":"BetPlay", "betsson":"Betsson", "betano":"Betano", "bet365":"bet365", "bwin":"bwin", "stake":"Stake", "codere.es":"Codere", "wplay":"Wplay", "rushbet":"Rushbet"};
@@ -1003,7 +1003,11 @@ function vipCasaTxt(p, mercado, ref){
   const fc = String(p.mejor_cuota_fecha || "");
   const cuando = fc ? ` <span class="vip-dim">· buscada el ${vipEsc(vipFechaCorta(fc.slice(0, 10)))}${fc.length >= 16 ? " " + vipEsc(fc.slice(11, 16)) : ""}</span>` : "";
   const txt = (dif != null && dif >= 0.5) ? `💰 <b>Mejor casa: ${vipEsc(nom)} a ${cu.toFixed(2)}</b> <span style="color:var(--win);">(+${dif.toFixed(1)}% sobre la cuota de la página)</span>`
-    : (dif != null && dif <= -0.5) ? `💰 Mejor casa colombiana: <b>${vipEsc(nom)} a ${cu.toFixed(2)}</b> <span style="color:var(--loss);">(paga ${Math.abs(dif).toFixed(1)}% menos que la página: revisa la cuota mínima)</span>`
+    : (dif != null && dif <= -0.5) ? (Number(cmin) > 1
+        ? (cu >= Number(cmin)
+          ? `💰 Mejor casa colombiana: <b>${vipEsc(nom)} a ${cu.toFixed(2)}</b> <span style="color:var(--amber);">(paga ${Math.abs(dif).toFixed(1)}% menos que la página, pero está por encima de la mínima ${Number(cmin).toFixed(2)}: sí se puede apostar)</span>`
+          : `💰 Mejor casa colombiana: <b>${vipEsc(nom)} a ${cu.toFixed(2)}</b> <span style="color:var(--loss);">(por debajo de la mínima ${Number(cmin).toFixed(2)}: no apostar ahí)</span>`)
+        : `💰 Mejor casa colombiana: <b>${vipEsc(nom)} a ${cu.toFixed(2)}</b> <span style="color:var(--loss);">(paga ${Math.abs(dif).toFixed(1)}% menos que la página: revisa la cuota mínima)</span>`)
     : `💰 <b>Mejor casa: ${vipEsc(nom)} a ${cu.toFixed(2)}</b> (igual que la página)`;
   return `<div style="font-size:11px;line-height:1.5;margin-top:5px;">${txt}${cuando}</div>`;
 }
@@ -3398,7 +3402,7 @@ function renderVipGoles(data, picks){
         <div class="conf-liga">${vipEsc(p.liga || "")} · ${diaBadge(p)}${notaLigaConfianza(p)}</div>
         <div style="margin-top:6px;display:flex;gap:8px;flex-wrap:wrap;align-items:center;font-size:11px;">${chipNivel(p.vip_o25_nivel)}${p.vip_o25_media_tope && p.vip_o25_nivel === "NIVEL_2" ? '<span class="vip-dim">ya va en Ambos Marcan: ½ unidad para no cargar el partido dos veces</span>' : ""}${enviadoTxt(p, "alerta_o25")}</div>
         <div class="vip-dim" style="font-size:11px;line-height:1.5;margin-top:5px;">${base} · cuota mínima ${isFinite(cmin) && cmin > 0 ? cmin.toFixed(2) : "—"}</div>
-        ${vipCasaTxt(p, "o25", cu)}
+        ${vipCasaTxt(p, "o25", cu, cmin)}
       </div>
       <div class="conf-tier">
         <div class="conf-tier-val">Más de 2.5 goles</div>
@@ -3613,7 +3617,7 @@ function renderVip(data, picks){
         <div class="conf-liga">${vipEsc(p.liga || "")} · ${diaBadge(p)}${confirmacionCuotaBadge(p, "btts")}${notaLigaConfianza(p)}</div>
         <div style="margin-top:6px;display:flex;gap:8px;flex-wrap:wrap;align-items:center;font-size:11px;">${nivelChip(p)}<span class="vip-chip ${info.fuerte ? "fuerte" : ""}">${info.chip}</span>${esCA ? '<span class="vip-chip">📈 CUOTA ALTA</span>' : ""}${ccDentro ? '<span class="vip-chip">🎯 CUOTA DE MAYOR CONFIANZA</span>' : ""}${enviado}</div>
         ${segTxt}
-        ${vipCasaTxt(p, "btts", precio)}
+        ${vipCasaTxt(p, "btts", precio, c === "SEGUNDA_LINEA" ? (EPg ? Number((EPg.rango || [])[0]) : (vipSenalesSegunda(p).length ? Math.min(...vipSenalesSegunda(p).map(vipPisoSeg)) : Number(pol.segunda_cuota_min || 1.5))) : null)}
         ${notaValorDetectado(p) ? `<div style="font-size:11px;line-height:1.5;margin-top:3px;">${notaValorDetectado(p).replace(/^<br>/, "")}</div>` : ""}
         ${ccTxt}
         ${movTxt}
