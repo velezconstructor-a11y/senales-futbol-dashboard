@@ -447,6 +447,7 @@ const TABS = [
   {id:"btts",  label:"Ambos Marcan"},
   {id:"vip",   label:"💎 Selección VIP"},
   {id:"vipgol", label:"💎 VIP Over 2.5 + Combinada"},   // 20 nov 2026
+  {id:"comodin", label:"🃏 Comodín (fuera del VIP)"},   // 25 nov 2026: dias sin pick VIP
   {id:"rango", label:"🎯 En su rango"},
   {id:"o15",   label:"Over 1.5"},
   {id:"o25",   label:"Over 2.5"},
@@ -2069,6 +2070,47 @@ function renderEstadisticas(data){
     <section><p class="section-title">Historial de picks (resueltos)</p>${renderPicksResueltos(data.picks_recientes)}</section>
     <footer class="note">🟢 gana unidades · 🔴 pierde unidades<br/>Con pocos partidos, un solo resultado mueve el % mucho — cautela por debajo de ~15-20 casos.</footer>
   `;
+}
+
+// ============================================================================
+// PESTAÑA «🃏 COMODÍN» (25 nov 2026): para los dias SIN pick VIP de Ambos Marcan, el JUGAR fuera del VIP que mas se
+// parece al VIP (regla fija en backtest._comodin_datos). Honesto: fuera del VIP nada ha ganado en la prueba justa.
+// ============================================================================
+function renderComodin(data, fecha){
+  const C = data.comodin;
+  const titulo = '<p class="section-title">🃏 Comodín · días sin pick VIP</p>';
+  if(!C || C.error) return `<section>${titulo}<div class="empty">Todavía no hay datos del comodín${C && C.error ? " (" + vipEsc(C.error) + ")" : ""}.</div></section>`;
+  const A = C.atras || {}, V = C.en_vivo || {};
+  const rec = (r) => r && r.n ? `${vipN(r.n)} picks · ${vipFmt(r.acierto, 1, false)}% de acierto · <span style="color:${vipCol(r.roi)};">ROI ${vipPct(r.roi)}</span>` : "sin datos";
+  const diaTxt = DIA_SELECCIONADO === "hoy" ? "hoy" : (DIA_SELECCIONADO === "manana" ? "mañana" : "pasado mañana");
+  const D = (C.dias || {})[fecha] || {hay_vip: false, candidatos: []};
+  const tarjeta = (c, i) => `
+    <div class="conf-card" style="${i === 0 ? "border-color:var(--amber);" : "opacity:.75;"}">
+      <div class="conf-main">
+        <div style="font-weight:700;font-size:16px;">${i === 0 ? "🃏 " : ""}${vipEsc(c.local)} vs ${vipEsc(c.visitante)}</div>
+        <div class="vip-dim" style="font-size:12px;">${vipEsc(String(c.liga || "").toUpperCase())}${c.fecha && String(c.fecha).length > 10 ? " · " + vipEsc(String(c.fecha).slice(11, 16)) : ""}</div>
+        <div style="font-size:12px;line-height:1.6;margin-top:6px;">
+          ${i === 0 ? '<span class="chip" style="border:1px solid var(--amber);color:var(--amber);border-radius:12px;padding:2px 8px;font-size:11px;">🟠 ¼ UNIDAD · FUERA DEL VIP</span> ' : ""}
+          Tier <b>${vipEsc(c.tier || "—")}</b>${(c.etiquetas_vip || []).length ? ` · etiquetas de grupos VIP: <b>${(c.etiquetas_vip || []).map(t => vipEsc(vipNombreRaw(t))).join(" + ")}</b> (pero su cuota o su fórmula no alcanzan el VIP)` : ""}${c.prob ? ` · modelo ${vipFmt(Number(c.prob) * 100, 0, false)}%` : ""}
+        </div>
+      </div>
+      <div class="conf-tier"><div class="conf-tier-val">Ambos Marcan</div><div class="vip-dim">cuota ${Number(c.cuota).toFixed(2)}</div></div>
+    </div>`;
+  const lista = (D.candidatos || []).length ? D.candidatos.map(tarjeta).join("")
+    : `<div class="empty">No hay ningún JUGAR fuera del VIP con cuota 1.40–1.70 para ${diaTxt}.</div>`;
+  const avisoDia = D.hay_vip
+    ? `<div style="font-size:13px;margin:0 0 12px;padding:8px 10px;border-left:3px solid var(--win);background:rgba(255,255,255,0.03);border-radius:6px;">✅ <b>${diaTxt[0].toUpperCase() + diaTxt.slice(1)} sí hay pick VIP</b>: no hace falta comodín. Estos son solo de referencia.</div>`
+    : `<div style="font-size:13px;margin:0 0 12px;padding:8px 10px;border-left:3px solid var(--amber);background:rgba(255,255,255,0.03);border-radius:6px;">🃏 <b>${diaTxt[0].toUpperCase() + diaTxt.slice(1)} no hay pick VIP.</b> Si quieres enviar algo, el comodín es el primero (borde amarillo), a ${vipEsc(C.stake || "¼ de unidad")} y diciendo que va fuera del VIP.</div>`;
+  const vivos = (V.picks || []).map(v => `<li>${vipEsc(v.fecha)} · ${vipEsc(v.local)} vs ${vipEsc(v.visitante)} · ${Number(v.cuota).toFixed(2)} · ${v.res === true ? '<b style="color:var(--win);">ganado</b>' : (v.res === false ? '<b style="color:var(--loss);">perdido</b>' : "por jugar")}</li>`).join("");
+  return `<section>${titulo}
+    <div style="font-size:12px;line-height:1.6;margin:0 0 12px;padding:10px 12px;border:1px solid var(--amber);border-radius:8px;">
+      ⚠️ <b>Esto NO es VIP.</b> Fuera del VIP ninguna señal ha ganado en la prueba justa: los JUGAR fuera del VIP aciertan lo mismo que dice la cuota de la casa y pierden el margen (≈ −8.5%). El comodín es solo <b>lo que más se parece al VIP</b>: ${vipEsc(C.regla || "")}.
+      <div style="margin-top:6px;">Esta misma regla hacia atrás: días sin VIP ${rec(A.dias_sin_vip)} · todos los días ${rec(A.todos_los_dias)} · <b>últimos 30 días ${rec(A.ultimos_30)}</b>.</div>
+      <div style="margin-top:4px;">En vivo (el comodín de cada día sin VIP, fijado la primera vez que aparece): ${V.n ? rec(V) : "empieza a contar desde hoy"}.</div>
+    </div>
+    ${avisoDia}${lista}
+    ${vivos ? `<p class="vip-dim" style="font-size:12px;margin-top:14px;">Comodines registrados:</p><ul style="font-size:12px;line-height:1.6;">${vivos}</ul>` : ""}
+  </section>`;
 }
 
 function switchTab(id){
@@ -4006,6 +4048,7 @@ function render(data){
   const panels = {
     vip: renderVip(data, picks),
     vipgol: renderVipGoles(data, picks),
+    comodin: renderComodin(data, diaElegido.fecha),
     rango: renderEnRango(data),
     btts: renderMercado(picks, "prob_btts_calibrada", "nivel_final", "senal_btts_optimizada", "cuota_btts", "¿Ambos equipos marcan?", "resultado_btts", "btts", "motivo_btts") + historialBtts,
     o15: renderMercado(picks, "prob_o15_calibrada", "sug_o15", "senal_o15_tier", "cuota_o15", "¿Más de 1.5 goles?", "resultado_o15", "o15", "motivo_o15") + historialO15,
