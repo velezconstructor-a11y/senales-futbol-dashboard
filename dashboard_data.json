@@ -1,5 +1,5 @@
 {
-  "actualizado": "2026-11-25T15:29:00.875869-05:00",
+  "actualizado": "2026-11-25T15:35:08.864402-05:00",
   "hoy_referencia": "2026-11-25",
   "manana_referencia": "2026-11-26",
   "pasado_manana_referencia": "2026-11-27",
@@ -17212,7 +17212,7 @@
           "marcados": 0,
           "a_jugar": 0,
           "entrenado_con": 13408,
-          "hora": "2026-11-25 15:27",
+          "hora": "2026-11-25 15:33",
           "en_franja": 15,
           "ev_min": 0.15,
           "mejores": [
@@ -18784,7 +18784,7 @@
     }
   },
   "comparador_cuotas": {
-    "actualizado": "2026-11-25 15:27",
+    "actualizado": "2026-11-25 15:33",
     "dia": "2026-11-25",
     "consultas_hoy": 0,
     "ultima_consulta": null,
@@ -46837,19 +46837,19 @@
       "cuota_confianza": null,
       "rango_obs": null,
       "prob_valor": 0.5334,
-      "ev_valor": -0.0666,
+      "ev_valor": -0.0399,
       "chk": null,
       "alerta_btts": null,
       "cuota_btts_alerta": null,
       "fecha_alerta": null,
       "aviso_cuota_btts": null,
-      "alza_previa_pct": 0.0,
+      "alza_previa_pct": 2.857142857142869,
       "frenado_alza": false,
-      "prob_btts": 0.5944757875290103,
+      "prob_btts": 0.5878091208623437,
       "prob_btts_calibrada": 0.5629262334343094,
       "btts_min_alto": null,
-      "cuota_btts": 1.75,
-      "cuota_btts_actual": 1.75,
+      "cuota_btts": 1.8,
+      "cuota_btts_actual": 1.8,
       "cuota_btts_inicial": 1.75,
       "movimiento_btts_pp": null,
       "alza_btts_pct": null,
@@ -46917,7 +46917,7 @@
       "cuota_o25_vip": 1.93,
       "cuota_min_o25": null,
       "vip_combo_grupo": null,
-      "cuota_combo_est": 2.24,
+      "cuota_combo_est": 2.29,
       "alerta_o25": null,
       "alerta_combo": null,
       "vip_btts_grupo_base": null,
@@ -46940,8 +46940,8 @@
       "vip_grupo": null,
       "cuota_confianza": null,
       "rango_obs": null,
-      "prob_valor": 0.5693,
-      "ev_valor": -0.1176,
+      "prob_valor": 0.5751,
+      "ev_valor": -0.1087,
       "chk": null,
       "alerta_btts": null,
       "cuota_btts_alerta": null,
@@ -47063,8 +47063,8 @@
         ]
       },
       "rango_obs": null,
-      "prob_valor": 0.5689,
-      "ev_valor": -0.0784,
+      "prob_valor": 0.5885,
+      "ev_valor": -0.0467,
       "chk": null,
       "alerta_btts": null,
       "cuota_btts_alerta": null,
@@ -47168,7 +47168,7 @@
       "cuota_confianza": null,
       "rango_obs": null,
       "prob_valor": 0.5571,
-      "ev_valor": -0.0974,
+      "ev_valor": -0.0975,
       "chk": null,
       "alerta_btts": null,
       "cuota_btts_alerta": null,
@@ -52330,20 +52330,20 @@
       "cuota_confianza": {
         "BTTS": [
           {
-            "senal": "estable_gc_fallo",
-            "rango": [
-              1.45,
-              1.49
-            ],
-            "roi": 8.4
-          },
-          {
             "senal": "estable_btts_fallo",
             "rango": [
               1.45,
               1.49
             ],
             "roi": 8.5
+          },
+          {
+            "senal": "estable_gc_fallo",
+            "rango": [
+              1.45,
+              1.49
+            ],
+            "roi": 8.4
           }
         ]
       },
@@ -53060,20 +53060,20 @@
       "cuota_confianza": {
         "BTTS": [
           {
-            "senal": "s2_rescate_valor",
-            "rango": [
-              1.65,
-              1.87
-            ],
-            "roi": 23.4
-          },
-          {
             "senal": "rescate_ataque_balanceado_alta_gf_btts",
             "rango": [
               1.45,
               1.83
             ],
             "roi": 10.8
+          },
+          {
+            "senal": "s2_rescate_valor",
+            "rango": [
+              1.65,
+              1.87
+            ],
+            "roi": 23.4
           }
         ]
       },
@@ -55280,9 +55280,9 @@
       "motivo_o25": "rescate_v2_over25",
       "motivos_o25_todos": "rescate_v2_over25",
       "prob_o25": 0.6718226650478992,
-      "cuota_o25": 0.0,
-      "cuota_o25_actual": 0.0,
-      "cuota_o25_inicial": 0.0,
+      "cuota_o25": 1.44,
+      "cuota_o25_actual": 1.44,
+      "cuota_o25_inicial": 1.44,
       "movimiento_o25_pp": null,
       "alza_o25_pct": null,
       "resultado_o25": null,
@@ -55325,7 +55325,7 @@
       "resultado_ht05": null,
       "vip_o25_grupo": null,
       "vip_o25_nivel": null,
-      "cuota_o25_vip": null,
+      "cuota_o25_vip": 1.44,
       "cuota_min_o25": null,
       "vip_combo_grupo": null,
       "cuota_combo_est": null,
@@ -56030,14 +56030,6 @@
             "roi": 3.4
           },
           {
-            "senal": "corona",
-            "rango": [
-              1.45,
-              1.55
-            ],
-            "roi": 22.7
-          },
-          {
             "senal": "VIP_reforzado",
             "rango": [
               1.45,
@@ -56046,20 +56038,28 @@
             "roi": 16.7
           },
           {
-            "senal": "cumbre_xga137_fallo20",
-            "rango": [
-              1.45,
-              1.53
-            ],
-            "roi": 11.8
-          },
-          {
             "senal": "camino_normal_VIP+_refinada",
             "rango": [
               1.45,
               1.54
             ],
             "roi": 10.0
+          },
+          {
+            "senal": "corona",
+            "rango": [
+              1.45,
+              1.55
+            ],
+            "roi": 22.7
+          },
+          {
+            "senal": "cumbre_xga137_fallo20",
+            "rango": [
+              1.45,
+              1.53
+            ],
+            "roi": 11.8
           },
           {
             "senal": "camino_normal_VIP+",
@@ -56249,20 +56249,20 @@
       "cuota_confianza": {
         "BTTS": [
           {
-            "senal": "estable_btts_fallo_plus",
-            "rango": [
-              1.45,
-              1.49
-            ],
-            "roi": 8.8
-          },
-          {
             "senal": "estable_btts_fallo",
             "rango": [
               1.45,
               1.49
             ],
             "roi": 8.5
+          },
+          {
+            "senal": "estable_btts_fallo_plus",
+            "rango": [
+              1.45,
+              1.49
+            ],
+            "roi": 8.8
           }
         ]
       },
@@ -62955,20 +62955,20 @@
       "cuota_confianza": {
         "BTTS": [
           {
-            "senal": "idx_btts_top10",
-            "rango": [
-              1.75,
-              2.1
-            ],
-            "roi": 29.4
-          },
-          {
             "senal": "idx_btts_top20",
             "rango": [
               1.8,
               2.27
             ],
             "roi": 14.6
+          },
+          {
+            "senal": "idx_btts_top10",
+            "rango": [
+              1.75,
+              2.1
+            ],
+            "roi": 29.4
           }
         ]
       },
@@ -65335,31 +65335,23 @@
       "cuota_confianza": {
         "BTTS": [
           {
-            "senal": "estable_btts_fallo_plus",
-            "rango": [
-              1.45,
-              1.49
-            ],
-            "roi": 8.8
-          },
-          {
             "senal": "estable_btts_fallo",
             "rango": [
               1.45,
               1.49
             ],
             "roi": 8.5
+          },
+          {
+            "senal": "estable_btts_fallo_plus",
+            "rango": [
+              1.45,
+              1.49
+            ],
+            "roi": 8.8
           }
         ],
         "Over 2.5": [
-          {
-            "senal": "idx_o25_top10",
-            "rango": [
-              1.45,
-              1.64
-            ],
-            "roi": 4.6
-          },
           {
             "senal": "o25_vip_reforzado",
             "rango": [
@@ -65367,6 +65359,14 @@
               1.66
             ],
             "roi": 20.2
+          },
+          {
+            "senal": "idx_o25_top10",
+            "rango": [
+              1.45,
+              1.64
+            ],
+            "roi": 4.6
           }
         ]
       },
@@ -66168,20 +66168,20 @@
       "cuota_confianza": {
         "BTTS": [
           {
-            "senal": "america_amplia",
-            "rango": [
-              1.35,
-              1.59
-            ],
-            "roi": 8.8
-          },
-          {
             "senal": "plata_cuota_1.45-1.50",
             "rango": [
               1.45,
               1.49
             ],
             "roi": 8.7
+          },
+          {
+            "senal": "america_amplia",
+            "rango": [
+              1.35,
+              1.59
+            ],
+            "roi": 8.8
           },
           {
             "senal": "estable_gc_fallo",
@@ -72678,8 +72678,8 @@
       "vip_grupo": null,
       "cuota_confianza": null,
       "rango_obs": null,
-      "prob_valor": 0.5693,
-      "ev_valor": -0.1176,
+      "prob_valor": 0.5751,
+      "ev_valor": -0.1087,
       "alerta_btts": null,
       "cuota_btts_alerta": null,
       "fecha_alerta": null,
@@ -72779,8 +72779,8 @@
         ]
       },
       "rango_obs": null,
-      "prob_valor": 0.5689,
-      "ev_valor": -0.0784,
+      "prob_valor": 0.5885,
+      "ev_valor": -0.0467,
       "alerta_btts": null,
       "cuota_btts_alerta": null,
       "fecha_alerta": null,
@@ -73047,20 +73047,20 @@
       "cuota_confianza": {
         "BTTS": [
           {
-            "senal": "s2_rescate_valor",
-            "rango": [
-              1.65,
-              1.87
-            ],
-            "roi": 23.4
-          },
-          {
             "senal": "rescate_ataque_balanceado_alta_gf_btts",
             "rango": [
               1.45,
               1.83
             ],
             "roi": 10.8
+          },
+          {
+            "senal": "s2_rescate_valor",
+            "rango": [
+              1.65,
+              1.87
+            ],
+            "roi": 23.4
           }
         ]
       },
@@ -73502,14 +73502,6 @@
             "roi": 3.4
           },
           {
-            "senal": "corona",
-            "rango": [
-              1.45,
-              1.55
-            ],
-            "roi": 22.7
-          },
-          {
             "senal": "VIP_reforzado",
             "rango": [
               1.45,
@@ -73518,20 +73510,28 @@
             "roi": 16.7
           },
           {
-            "senal": "cumbre_xga137_fallo20",
-            "rango": [
-              1.45,
-              1.53
-            ],
-            "roi": 11.8
-          },
-          {
             "senal": "camino_normal_VIP+_refinada",
             "rango": [
               1.45,
               1.54
             ],
             "roi": 10.0
+          },
+          {
+            "senal": "corona",
+            "rango": [
+              1.45,
+              1.55
+            ],
+            "roi": 22.7
+          },
+          {
+            "senal": "cumbre_xga137_fallo20",
+            "rango": [
+              1.45,
+              1.53
+            ],
+            "roi": 11.8
           },
           {
             "senal": "camino_normal_VIP+",
@@ -75105,7 +75105,7 @@
       "sug_o25": "EVITAR",
       "motivo_o25": "rescate_v2_over25",
       "motivos_o25_todos": "rescate_v2_over25",
-      "cuota_o25": 0.0,
+      "cuota_o25": 1.44,
       "resultado_o25": null,
       "movimiento_o25_pp": null,
       "alza_o25_pct": null,
@@ -75136,7 +75136,7 @@
       "mejor_cuota_fecha": null,
       "vip_o25_grupo": null,
       "vip_o25_nivel": null,
-      "cuota_o25_vip": null,
+      "cuota_o25_vip": 1.44,
       "cuota_min_o25": null,
       "vip_combo_grupo": null,
       "cuota_combo_est": null,
@@ -76601,7 +76601,7 @@
       "cuota_confianza": null,
       "rango_obs": null,
       "prob_valor": 0.5571,
-      "ev_valor": -0.0974,
+      "ev_valor": -0.0975,
       "alerta_btts": null,
       "cuota_btts_alerta": null,
       "fecha_alerta": null,
@@ -77093,16 +77093,16 @@
       "cuota_confianza": null,
       "rango_obs": null,
       "prob_valor": 0.5334,
-      "ev_valor": -0.0666,
+      "ev_valor": -0.0399,
       "alerta_btts": null,
       "cuota_btts_alerta": null,
       "fecha_alerta": null,
       "aviso_cuota_btts": null,
-      "alza_previa_pct": 0.0,
+      "alza_previa_pct": 2.857142857142869,
       "frenado_alza": false,
-      "prob_btts": 0.5944757875290103,
+      "prob_btts": 0.5878091208623437,
       "prob_btts_calibrada": 0.5629262334343094,
-      "cuota_btts": 1.75,
+      "cuota_btts": 1.8,
       "resultado_btts": null,
       "movimiento_btts_pp": null,
       "alza_btts_pct": null,
@@ -77125,7 +77125,7 @@
       "motivo_combo": "ninguno_evitar_combo",
       "motivos_combo_todos": null,
       "btts_min_alto": null,
-      "cuota_combo": 2.2363,
+      "cuota_combo": 2.28648,
       "resultado_combo": null,
       "senal_ht05_tier": "Evitar",
       "sug_ht05": "EVITAR",
@@ -77151,7 +77151,7 @@
       "cuota_o25_vip": 1.93,
       "cuota_min_o25": null,
       "vip_combo_grupo": null,
-      "cuota_combo_est": 2.24,
+      "cuota_combo_est": 2.29,
       "alerta_o25": null,
       "alerta_combo": null,
       "vip_btts_grupo_base": null,
@@ -77339,20 +77339,20 @@
       "cuota_confianza": {
         "BTTS": [
           {
-            "senal": "estable_gc_fallo",
-            "rango": [
-              1.45,
-              1.49
-            ],
-            "roi": 8.4
-          },
-          {
             "senal": "estable_btts_fallo",
             "rango": [
               1.45,
               1.49
             ],
             "roi": 8.5
+          },
+          {
+            "senal": "estable_gc_fallo",
+            "rango": [
+              1.45,
+              1.49
+            ],
+            "roi": 8.4
           }
         ]
       },
@@ -79832,20 +79832,20 @@
       "cuota_confianza": {
         "BTTS": [
           {
-            "senal": "idx_btts_top10",
-            "rango": [
-              1.75,
-              2.1
-            ],
-            "roi": 29.4
-          },
-          {
             "senal": "idx_btts_top20",
             "rango": [
               1.8,
               2.27
             ],
             "roi": 14.6
+          },
+          {
+            "senal": "idx_btts_top10",
+            "rango": [
+              1.75,
+              2.1
+            ],
+            "roi": 29.4
           }
         ]
       },
@@ -81194,31 +81194,23 @@
       "cuota_confianza": {
         "BTTS": [
           {
-            "senal": "estable_btts_fallo_plus",
-            "rango": [
-              1.45,
-              1.49
-            ],
-            "roi": 8.8
-          },
-          {
             "senal": "estable_btts_fallo",
             "rango": [
               1.45,
               1.49
             ],
             "roi": 8.5
+          },
+          {
+            "senal": "estable_btts_fallo_plus",
+            "rango": [
+              1.45,
+              1.49
+            ],
+            "roi": 8.8
           }
         ],
         "Over 2.5": [
-          {
-            "senal": "idx_o25_top10",
-            "rango": [
-              1.45,
-              1.64
-            ],
-            "roi": 4.6
-          },
           {
             "senal": "o25_vip_reforzado",
             "rango": [
@@ -81226,6 +81218,14 @@
               1.66
             ],
             "roi": 20.2
+          },
+          {
+            "senal": "idx_o25_top10",
+            "rango": [
+              1.45,
+              1.64
+            ],
+            "roi": 4.6
           }
         ]
       },
@@ -81311,20 +81311,20 @@
       "cuota_confianza": {
         "BTTS": [
           {
-            "senal": "estable_btts_fallo_plus",
-            "rango": [
-              1.45,
-              1.49
-            ],
-            "roi": 8.8
-          },
-          {
             "senal": "estable_btts_fallo",
             "rango": [
               1.45,
               1.49
             ],
             "roi": 8.5
+          },
+          {
+            "senal": "estable_btts_fallo_plus",
+            "rango": [
+              1.45,
+              1.49
+            ],
+            "roi": 8.8
           }
         ]
       },
@@ -83212,20 +83212,20 @@
       "cuota_confianza": {
         "BTTS": [
           {
-            "senal": "america_amplia",
-            "rango": [
-              1.35,
-              1.59
-            ],
-            "roi": 8.8
-          },
-          {
             "senal": "plata_cuota_1.45-1.50",
             "rango": [
               1.45,
               1.49
             ],
             "roi": 8.7
+          },
+          {
+            "senal": "america_amplia",
+            "rango": [
+              1.35,
+              1.59
+            ],
+            "roi": 8.8
           },
           {
             "senal": "estable_gc_fallo",
@@ -84400,6 +84400,14 @@
       "cuota_confianza": {
         "BTTS": [
           {
+            "senal": "rescate_ataque_balanceado_alta_gf_btts",
+            "rango": [
+              1.45,
+              1.83
+            ],
+            "roi": 10.8
+          },
+          {
             "senal": "estable_btts_fallo_plus",
             "rango": [
               1.45,
@@ -84408,12 +84416,12 @@
             "roi": 8.8
           },
           {
-            "senal": "estable_gc_fallo_plus",
+            "senal": "estable_btts_fallo",
             "rango": [
               1.45,
-              1.58
+              1.49
             ],
-            "roi": 6.9
+            "roi": 8.5
           },
           {
             "senal": "estable_gc_fallo",
@@ -84424,20 +84432,12 @@
             "roi": 8.4
           },
           {
-            "senal": "rescate_ataque_balanceado_alta_gf_btts",
+            "senal": "estable_gc_fallo_plus",
             "rango": [
               1.45,
-              1.83
+              1.58
             ],
-            "roi": 10.8
-          },
-          {
-            "senal": "estable_btts_fallo",
-            "rango": [
-              1.45,
-              1.49
-            ],
-            "roi": 8.5
+            "roi": 6.9
           }
         ]
       },
