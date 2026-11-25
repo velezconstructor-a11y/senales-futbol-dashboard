@@ -3192,6 +3192,26 @@ function vipApagadosHtml(V){
     </div>
     <div class="vip-scroll rango-tabla"><table class="cmp-table"><thead><tr><th>Grupo apagado</th><th class="num">Últimos ${vipN(R.dias || 30)} días<div class="vip-dim" style="font-size:10px;text-transform:none;">como si estuviera</div></th><th class="num">Desde que se apagó</th><th class="num">Lo que se envió<div class="vip-dim" style="font-size:10px;text-transform:none;">alertas reales</div></th><th class="num">Histórico</th><th>Estado</th></tr></thead><tbody>${filas}</tbody></table></div>`;
 }
+// 25 nov 2026: que hizo la cuota de lo ENVIADO (data.vip_btts.niveles.mov_cuota) y la regla que sale de ahi
+function vipMovCuotaHtml(V){
+  const M = V.niveles && V.niveles.mov_cuota;
+  if(!M || M.error || !M.antes) return "";
+  const fila = (nom, r, nota, color) => `<tr><td style="white-space:normal;min-width:190px;">${nom}${nota ? `<div class="vip-dim" style="font-size:11px;">${nota}</div>` : ""}</td>
+      <td class="num">${r && r.n ? vipN(r.n) : "—"}</td><td class="num">${r && r.n ? vipFmt(r.acierto, 0, false) + "%" : "—"}</td>
+      <td class="num" style="font-weight:600;color:${r && r.n ? vipCol(r.roi) : "inherit"};">${r && r.n ? vipPct(r.roi) : "—"}</td></tr>`;
+  const uf = M.umbral_freno, ua = M.umbral_aviso;
+  return `<div class="vip-verdict" style="margin:0 0 12px;">
+      <p><b>Regla desde el 25 nov.</b> Si la cuota de ambos marcan <b>sube ${vipN(uf)}% o más antes de enviar</b> (desde que apareció el partido), el pick <b>no sale</b>: queda «✋ frenado» y sale si la cuota vuelve${M.freno_activo === false ? " <b>(hoy apagada: VIP_FRENO_ALZA=false)</b>" : ""}. Si <b>sube ${vipN(ua)}% o más después de enviar</b>, llega un aviso al Telegram («si no entraste, no entres»). Si <b>baja</b>, el pick <b>conserva su grupo y su nivel</b> y, con ${vipN(ua)}% o más, llega un aviso de que el mercado lo confirma; el stake no se sube, porque a la cuota nueva queda poco valor.</p>
+      <p>Lo enviado no cambia de grupo ni sale del récord: si después se quitaran las que subieron, el récord se vería mejor de lo que fue. Son pocos casos en cada punta (se mide desde el ${vipFechaCorta(M.desde)}): la regla solo quita riesgo.</p>
+    </div>
+    <div class="vip-scroll"><table class="cmp-table"><thead><tr><th>Alertas VIP enviadas · ROI a la cuota de envío</th><th class="num">Picks</th><th class="num">Acierto</th><th class="num">ROI</th></tr></thead><tbody>
+      ${fila(`Antes de enviar, la cuota ya había <b>subido ${vipN(uf)}%+</b>`, M.antes.subio, "con la regla nueva no salen")}
+      ${fila("Antes de enviar, el resto", M.antes.resto, "")}
+      ${fila(`Después de enviar, <b>bajó ${vipN(ua)}%+</b>`, M.despues.bajo, "el mercado lo confirmó")}
+      ${fila(`Después de enviar, se movió menos de ${vipN(ua)}%`, M.despues.medio, "")}
+      ${fila(`Después de enviar, <b>subió ${vipN(ua)}%+</b>`, M.despues.subio, "aviso al Telegram desde el 25 nov")}
+    </tbody></table></div>`;
+}
 function vipBancaHtml(V){
   const B = V.banca;
   if(!B || B.error || !B.historial || !B.historial.n) return "";
@@ -3510,9 +3530,21 @@ function renderVip(data, picks){
     const precioEnvio = (sent && Number(p.cuota_btts_alerta) > 1) ? Number(p.cuota_btts_alerta) : null;
     const precio = precioEnvio || p.cuota_btts;
     const precioAhora = (precioEnvio && p.cuota_btts && Math.abs(p.cuota_btts - precioEnvio) >= 0.005) ? p.cuota_btts : null;
+    // 25 nov 2026: MOVIMIENTO DE CUOTA (reglas_activas.VIP_FRENO_ALZA_PREVIA_PCT / VIP_AVISO_MOV_PCT)
+    const MC = (V.niveles && V.niveles.mov_cuota && !V.niveles.mov_cuota.error) ? V.niveles.mov_cuota : null;
+    const uFreno = MC ? MC.umbral_freno : 2, uAviso = MC ? MC.umbral_aviso : 5;
+    const frenado = !sent && res == null && p.frenado_alza === true;
     const enviado = sent
       ? `<span style="color:var(--chalk-dim);">📨 enviado al Telegram${hhmm(p.fecha_alerta) ? " · " + hhmm(p.fecha_alerta) : ""}</span>`
-      : (res == null ? '<span style="color:var(--chalk-dim);">⏳ sale en la próxima corrida</span>' : "");
+      : (res == null ? (frenado ? `<span class="vip-chip" style="border-color:var(--loss);color:var(--loss);">✋ NO SE ENVÍA · CUOTA SUBIENDO</span>` : '<span style="color:var(--chalk-dim);">⏳ sale en la próxima corrida</span>') : "");
+    const mEnv = Number(p.mov_envio_pct), avisoTg = p.aviso_cuota_btts ? " Se avisó al Telegram." : "";
+    const movTxt = frenado
+      ? `<div style="font-size:11px;line-height:1.5;margin-top:5px;color:var(--loss);">✋ La cuota subió <b>${vipFmt(p.alza_previa_pct, 1)}%</b> desde que apareció el partido${p.cuota_btts_inicial ? ` (${Number(p.cuota_btts_inicial).toFixed(2)} → ${Number(p.cuota_btts).toFixed(2)})` : ""}: el mercado se aleja. Con la cuota ya subiendo ${vipN(uFreno)}% o más antes de enviar, las alertas acertaron ${MC && MC.antes.subio.n ? `${vipFmt(MC.antes.subio.acierto, 0, false)}% (${vipN(MC.antes.subio.n)}, ${vipPct(MC.antes.subio.roi)})` : "menos"}. No sale; si la cuota vuelve, sale.</div>`
+      : (sent && isFinite(mEnv) && p.mov_envio_pct != null && Math.abs(mEnv) >= uAviso
+        ? (mEnv > 0
+          ? `<div style="font-size:11px;line-height:1.5;margin-top:5px;color:var(--loss);">⚠️ <b>El mercado va en contra:</b> salió a ${Number(p.cuota_btts_alerta).toFixed(2)} y ${res == null ? "ahora está" : "cerró"} en ${Number(p.cuota_btts).toFixed(2)} (${vipFmt(mEnv, 1)}%).${res == null ? " Si no entraste, mejor no entres." : ""}${avisoTg} Sigue contando en su grupo: lo enviado no se quita del récord.</div>`
+          : `<div style="font-size:11px;line-height:1.5;margin-top:5px;color:var(--win);">📉 <b>El mercado lo confirma:</b> salió a ${Number(p.cuota_btts_alerta).toFixed(2)} y ${res == null ? "ahora está" : "cerró"} en ${Number(p.cuota_btts).toFixed(2)} (${vipFmt(mEnv, 1)}%). Conserva su grupo y su nivel; no se sube el stake.${avisoTg}</div>`)
+        : "");
     const aviso = (sent && res == null && !(cumpleHoy(p) || enPruebaSinJugar(p)))
       ? `<div class="vip-dim" style="font-size:11px;line-height:1.5;margin-top:5px;">Hoy ya no cumple: ${motivoFuera(p)}. Como ya salió al Telegram, se queda aquí.</div>` : "";
     const segTxt = c === "SEGUNDA_LINEA"
@@ -3537,6 +3569,7 @@ function renderVip(data, picks){
         ${segTxt}
         ${notaValorDetectado(p) ? `<div style="font-size:11px;line-height:1.5;margin-top:3px;">${notaValorDetectado(p).replace(/^<br>/, "")}</div>` : ""}
         ${ccTxt}
+        ${movTxt}
         ${aviso}
         ${vipChkHtml(p)}
       </div>
@@ -3719,6 +3752,7 @@ function renderVip(data, picks){
   return `
     <section>${titulo}${hoyHtml}</section>
     ${vipApagadosHtml(V) ? `<section><p class="section-title">⛔ Apagados por tendencia perdedora · no se envían</p>${vipApagadosHtml(V)}</section>` : ""}
+    ${vipMovCuotaHtml(V) ? `<section><p class="section-title">📈 Qué hace la cuota: si sube se frena, si baja se mantiene</p>${vipMovCuotaHtml(V)}</section>` : ""}
     ${vipNivelesHtml(V) ? `<section><p class="section-title">🟢🟡 Niveles del VIP · cuánto apostar en cada pick</p>${vipNivelesHtml(V)}</section>` : ""}
     ${vipFormulaHtml(V) ? `<section><p class="section-title">🧮 La fórmula, variable por variable</p>${vipFormulaHtml(V)}</section>` : ""}
     <section><p class="section-title">¿Funciona? En palabras simples</p><div class="vip-verdict">${veredicto}</div></section>
