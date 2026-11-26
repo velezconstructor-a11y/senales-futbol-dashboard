@@ -3956,6 +3956,17 @@ function renderTarjetaPick(top){
     </div>`;
 }
 
+// 26 nov 2026: si la corrida automatica se detiene (error, GitHub atrasado, archivo subido roto), los datos
+// quedan viejos sin que se note. Con mas de 150 min (5 corridas seguidas sin actualizar) se muestra un aviso rojo.
+function avisoDatosViejos(iso, ahoraMs) {
+  const t = new Date(iso).getTime();
+  if (!isFinite(t)) return "";
+  const min = Math.round(((ahoraMs == null ? Date.now() : ahoraMs) - t) / 60000);
+  if (min < 150) return "";
+  const txt = min >= 2880 ? `${Math.floor(min / 1440)} días` : min >= 120 ? `${Math.floor(min / 60)} h` : `${min} min`;
+  return ` · <b style="color:#ff6b6b;">⚠️ Sin actualizar hace ${txt}: la corrida automática puede estar fallando (revisa Actions en GitHub)</b>`;
+}
+
 function renderHeroPick(picks){
   const el = document.getElementById("heroPick");
   if(!el) return;
@@ -4032,7 +4043,7 @@ function render(data){
     : picksTodas;
 
   document.getElementById("updatedTxt").innerHTML =
-    `<span class="dot"></span>Actualizado ${new Date(data.actualizado).toLocaleString("es-CO", {dateStyle:"medium", timeStyle:"short"})} · ${totalHist} partidos evaluados en total`;
+    `<span class="dot"></span>Actualizado ${new Date(data.actualizado).toLocaleString("es-CO", {dateStyle:"medium", timeStyle:"short"})} · ${totalHist} partidos evaluados en total${avisoDatosViejos(data.actualizado)}`;
 
   renderHeroPick(picks);
 
