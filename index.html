@@ -3462,6 +3462,7 @@ function renderVipGoles(data, picks){
         <div class="conf-liga">${vipEsc(p.liga || "")} · ${diaBadge(p)}${notaLigaConfianza(p)}</div>
         <div style="margin-top:6px;display:flex;gap:8px;flex-wrap:wrap;align-items:center;font-size:11px;"><span class="vip-chip" style="border-color:var(--amber);color:var(--amber);">${(comboEnvia || p.alerta_combo != null) ? "🧪 EN PRUEBA · ½ UNIDAD" : "🧪 EN PRUEBA · NO SE ENVÍA"}</span>${p.alerta_combo != null || comboEnvia ? enviadoTxt(p, "alerta_combo") : ""}</div>
         <div class="vip-dim" style="font-size:11px;line-height:1.5;margin-top:5px;">Del VIP de Ambos Marcan${nombreBtts(p) ? ": " + vipEsc(nombreBtts(p)) : ""} · apuesta solo si tu casa paga <b>${cmin.toFixed(2)} o más</b>${bajo ? ' · <span style="color:var(--amber);">la cuota estimada está por debajo: revisa la real</span>' : ""}</div>
+        ${Number(p.cuota_combo_casa) > 1 ? `<div style="font-size:11px;line-height:1.5;margin-top:5px;">🏦 Según el marcador exacto de tus casas, la combinada tiene <b>${vipFmt(p.combo_prob_casa, 0, false)}%</b> → cuota justa <b>${Number(p.cuota_combo_casa).toFixed(2)}</b> (sin el margen de la casa; la que pagan es algo menor). ${Number(p.cuota_combo_casa) < cmin ? `<span style="color:var(--loss);">Ni la cuota justa llega a ${cmin.toFixed(2)}: no apostar.</span>` : `<span style="color:var(--win);">Puede pasar: mira si tu casa paga ${cmin.toFixed(2)} o más.</span>`}</div>` : ""}
       </div>
       <div class="conf-tier">
         <div class="conf-tier-val">Ambos marcan + más de 2.5</div>
