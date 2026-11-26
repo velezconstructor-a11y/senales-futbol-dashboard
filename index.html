@@ -608,6 +608,7 @@ const ETIQUETAS_BTTS = {
     // (sin " · ": las tablas cortan el nombre en ese separador y la formula no se veria)
     "rescate_elite": "🔄 rescate ÉLITE: tier Fuerte + BTTS% mín≥65% + GC máx≥1.4",
     "rescate_oro_fuerte": "🔄 rescate ORO_FUERTE: tier Fuerte + BTTS% mín≥65%",
+    "uefa_idx_btts_top10": "🏆 Copas UEFA: índice BTTS top 10% (en prueba, cuota 1.45–1.60, casa ≥1.55)",
     "rescate_ataque_balanceado_alta": "🔄 rescate: ataque balanceado (alta)",
     "rescate_ataque_balanceado_alta_gf_btts": "🔄 rescate: ataque balanceado (alta) + GF≥3.0 + BTTS≥45%",
     "rescate_ataque_balanceado_alta_failed_bajo": "🔄 rescate: ataque balanceado (alta) + fallo≤18%",
@@ -3642,7 +3643,7 @@ function renderVip(data, picks){
     const EPg = vipEnPruebaDeGrupo(p.vip_grupo);      // 25 nov 2026: grupos en prueba (9 y 10)
     const segTxt = c === "SEGUNDA_LINEA"
       ? (EPg
-        ? `<div class="vip-dim" style="font-size:11px;line-height:1.5;margin-top:5px;">Por: <b>${vipEsc(vipNombreRaw(EPg.lab))}</b> · 🧪 en prueba · cuota ${Number((EPg.rango || [])[0]).toFixed(2)}–${Number((EPg.rango || [])[1]).toFixed(2)} · ½ unidad${p.nivel_final !== "JUGAR" ? (EPg.lab === "topacio" ? " (entra aunque el sistema diga EVITAR: su regla está apagada con todas las cuotas)" : " (entra aunque el sistema diga EVITAR)") : ""}${vipEnPruebaAutoTxt(EPg)}</div>`
+        ? `<div class="vip-dim" style="font-size:11px;line-height:1.5;margin-top:5px;">Por: <b>${vipEsc(vipNombreRaw(EPg.lab))}</b> · 🧪 en prueba · cuota ${Number((EPg.rango || [])[0]).toFixed(2)}–${Number((EPg.rango || [])[1]).toFixed(2)} · ½ unidad${EPg.cuota_min ? ` · <b>apuesta solo si tu casa paga ${Number(EPg.cuota_min).toFixed(2)} o más</b>` : ""}${p.nivel_final !== "JUGAR" ? (EPg.lab === "topacio" ? " (entra aunque el sistema diga EVITAR: su regla está apagada con todas las cuotas)" : " (entra aunque el sistema diga EVITAR)") : ""}${vipEnPruebaAutoTxt(EPg)}</div>`
         : `<div class="vip-dim" style="font-size:11px;line-height:1.5;margin-top:5px;">Por: <b>${vipEsc(vipSenalesSegunda(p).map(vipNombreRaw).join(" + ") || "señal de la segunda línea")}</b> · cuota desde ${(vipSenalesSegunda(p).length ? Math.min(...vipSenalesSegunda(p).map(vipPisoSeg)) : Number(pol.segunda_cuota_min || 1.5)).toFixed(2)}</div>`) : "";
     // 2 nov 2026: cuota de mayor confianza de la señal principal, con la cuota con que SALIO (o la de ahora si aun no sale)
     const ccR = ((((DATA && DATA.cuota_confianza) || {}).BTTS) || {})[p.motivo_btts];
@@ -3660,7 +3661,7 @@ function renderVip(data, picks){
         <div class="conf-liga">${vipEsc(p.liga || "")} · ${diaBadge(p)}${confirmacionCuotaBadge(p, "btts")}${notaLigaConfianza(p)}</div>
         <div style="margin-top:6px;display:flex;gap:8px;flex-wrap:wrap;align-items:center;font-size:11px;">${nivelChip(p)}<span class="vip-chip ${info.fuerte ? "fuerte" : ""}">${info.chip}</span>${esCA ? '<span class="vip-chip">📈 CUOTA ALTA</span>' : ""}${ccDentro ? '<span class="vip-chip">🎯 CUOTA DE MAYOR CONFIANZA</span>' : ""}${enviado}</div>
         ${segTxt}
-        ${vipCasaTxt(p, "btts", precio, c === "SEGUNDA_LINEA" ? (EPg ? Number((EPg.rango || [])[0]) : (vipSenalesSegunda(p).length ? Math.min(...vipSenalesSegunda(p).map(vipPisoSeg)) : Number(pol.segunda_cuota_min || 1.5))) : null)}
+        ${vipCasaTxt(p, "btts", precio, c === "SEGUNDA_LINEA" ? (EPg ? Number(EPg.cuota_min || (EPg.rango || [])[0]) : (vipSenalesSegunda(p).length ? Math.min(...vipSenalesSegunda(p).map(vipPisoSeg)) : Number(pol.segunda_cuota_min || 1.5))) : null)}
         ${notaValorDetectado(p) ? `<div style="font-size:11px;line-height:1.5;margin-top:3px;">${notaValorDetectado(p).replace(/^<br>/, "")}</div>` : ""}
         ${ccTxt}
         ${movTxt}
