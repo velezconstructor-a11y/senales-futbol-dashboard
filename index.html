@@ -3159,7 +3159,7 @@ function vipMapaHtml(V){
                             : (nv.roi < 3 ? "ya tiene la muestra, pero no llega a +3%" : "ya tiene la muestra, pero una mitad salió negativa");
       return `🧪 En prueba<div class="vip-dim" style="font-size:11px;">${det}</div>`;
     }
-    return `<b style="color:var(--loss);">⛔ Apagada</b><div class="vip-dim" style="font-size:11px;">vuelve sola si sus últimos ${rec.dias || 30} días dan ${vipPct(rec.roi_min || 3)} o más con ${rec.min_casos || 15}+ casos (hoy ${vipPct(r.roi30)})</div>`;
+    return `<b style="color:var(--loss);">⛔ Apagada</b><div class="vip-dim" style="font-size:11px;">vuelve sola si sus últimos ${rec.dias || 60} días dan ${vipPct(rec.roi_min || 3)} o más con ${rec.min_casos || 30}+ casos (hoy ${r.n_rec != null ? `${vipPct(r.roi_rec)} con ${vipN(r.n_rec)}` : vipPct(r.roi30)})</div>`;
   };
   const filas = S.map(r => `<tr>
       <td style="min-width:180px;white-space:normal;">${vipEsc(vipNombreRaw(r.senal))}${(() => { const full = String((ETIQUETAS_BTTS && ETIQUETAS_BTTS[r.senal]) || ""); const resto = full.split(" · ").slice(1).join(" · "); return resto ? `<div class="vip-dim" style="font-size:11px;line-height:1.4;">${vipEsc(resto)}</div>` : ""; })()}</td>
@@ -3261,7 +3261,7 @@ function vipNivelesHtml(V){
     <p class="vip-dim" style="font-size:12px;line-height:1.55;margin:8px 0 0;">Desde el inicio: todo a 1 unidad ${vipPct((Ft.todo_1u || {}).roi)}, 🟡 a ½ unidad ${vipPct((Ft.amarillo_media || {}).roi)}, sin los 🟡 ${vipPct((Ft.sin_amarillo || {}).roi)}. Ojo: la separación por nivel se ve con los mismos datos (Corona existe desde el 9 oct), así que hacia adelante se espera menos; la prueba que cuenta es la columna «En vivo». No es garantía ni consejo financiero.</p>`;
 }
 // 23 nov 2026: grupos APAGADOS por tendencia perdedora (data.vip_btts.niveles.apagados, reglas_activas.VIP_BTTS_GRUPOS_APAGADOS).
-// Se siguen midiendo como si estuvieran; la fila dice cuando se recuperan (ultimos 30 dias +3% o mas con 15+ picks).
+// Se siguen midiendo como si estuvieran; la fila dice cuando se recuperan (ultimos 60 dias +3% o mas con 30+ picks; 26 nov 2026).
 function vipApagadosHtml(V){
   const N = V.niveles || {}, A = N.apagados || {}, R = N.recuperacion || {};
   const ks = Object.keys(A).sort((a, b) => Number(a) - Number(b));
@@ -3274,7 +3274,7 @@ function vipApagadosHtml(V){
       : '<b style="color:var(--loss);">⛔ Sigue apagado</b><div class="vip-dim" style="font-size:11px;">no se envía ni cuenta en el VIP</div>';
     const corto = (r) => r && r.n ? `${vipFmt(r.acierto, 0, false)}% · <span style="color:${vipCol(r.roi)};">${vipPct(r.roi)}</span> (${vipN(r.n)})` : "sin picks";
     return `<tr><td style="min-width:170px;max-width:300px;white-space:normal;"><b>${vipEsc(String(a.nombre || ("Grupo " + k)).replace(/\s*\(en prueba en el VIP\)/, ""))}</b><div class="vip-dim" style="font-size:11px;">apagado el ${vipFechaCorta(a.desde)}</div>${meses(a) ? `<div class="vip-dim" style="font-size:11px;margin-top:3px;">${meses(a)}</div>` : ""}
-      <div class="cc-movil">últimos ${vipN(R.dias || 30)} días ${corto(a.ult30)}<br>enviado ${corto(a.enviados)}<div style="margin-top:3px;">${est}</div></div></td>
+      <div class="cc-movil">últimos ${vipN(R.dias || 60)} días ${corto(a.ult30)}<br>enviado ${corto(a.enviados)}<div style="margin-top:3px;">${est}</div></div></td>
       <td class="num" style="white-space:normal;min-width:110px;">${celda(a.ult30)}</td>
       <td class="num" style="white-space:normal;min-width:110px;">${celda(a.desde_apagado)}</td>
       <td class="num" style="white-space:normal;min-width:110px;">${celda(a.enviados)}</td>
@@ -3282,9 +3282,9 @@ function vipApagadosHtml(V){
       <td style="min-width:140px;white-space:normal;">${est}</td></tr>`; }).join("");
   return `<div class="vip-verdict" style="margin:0 0 12px;border-left-color:var(--loss);">
       <p>Política: una señal con tendencia perdedora se <b>apaga hasta que se recupere</b>. Revisión del fin de semana 21–22 nov: estos dos grupos llevaban semanas perdiendo y su prueba justa no gana. Desde el 23 nov <b>ya no son VIP</b>: no salen en la lista, no se envían al Telegram y salen del Over 2.5 («Resto»). Una Respaldada sin Corona que además tiene una señal de la segunda línea con su cuota mínima sigue entrando, como Segunda línea.</p>
-      <p>Se siguen midiendo <b>como si estuvieran</b> (1 unidad, cuota de envío). Vuelven cuando sus últimos ${vipN(R.dias || 30)} días den <b>${vipPct(R.roi_min != null ? R.roi_min : 3)} o más</b> con <b>${vipN(R.min_casos || 15)}+ picks</b>: la columna «Estado» lo avisa.</p>
+      <p>Se siguen midiendo <b>como si estuvieran</b> (1 unidad, cuota de envío). Vuelven cuando sus últimos ${vipN(R.dias || 60)} días den <b>${vipPct(R.roi_min != null ? R.roi_min : 3)} o más</b> con <b>${vipN(R.min_casos || 30)}+ picks</b>: la columna «Estado» lo avisa.</p>
     </div>
-    <div class="vip-scroll rango-tabla"><table class="cmp-table"><thead><tr><th>Grupo apagado</th><th class="num">Últimos ${vipN(R.dias || 30)} días<div class="vip-dim" style="font-size:10px;text-transform:none;">como si estuviera</div></th><th class="num">Desde que se apagó</th><th class="num">Lo que se envió<div class="vip-dim" style="font-size:10px;text-transform:none;">alertas reales</div></th><th class="num">Histórico</th><th>Estado</th></tr></thead><tbody>${filas}</tbody></table></div>`;
+    <div class="vip-scroll rango-tabla"><table class="cmp-table"><thead><tr><th>Grupo apagado</th><th class="num">Últimos ${vipN(R.dias || 60)} días<div class="vip-dim" style="font-size:10px;text-transform:none;">como si estuviera</div></th><th class="num">Desde que se apagó</th><th class="num">Lo que se envió<div class="vip-dim" style="font-size:10px;text-transform:none;">alertas reales</div></th><th class="num">Histórico</th><th>Estado</th></tr></thead><tbody>${filas}</tbody></table></div>`;
 }
 // 25 nov 2026: que hizo la cuota de lo ENVIADO (data.vip_btts.niveles.mov_cuota) y la regla que sale de ahi
 function vipMovCuotaHtml(V){
@@ -3411,6 +3411,46 @@ function vipSegundaHtml(V){
 // 20 nov 2026: pestaña «💎 VIP Over 2.5 + Combinada» (data.vip_goles y los campos vip_o25_* / vip_combo_* de
 // cada pick; ver reglas_activas.py, bloque VIP OVER 2.5 Y COMBINADA). Mismo calculo que las alertas.
 // ============================================================================
+// 26 nov 2026: grupos del VIP Over 2.5 APAGADOS (data.vip_goles.o25.apagados): uno fijo (🟡 Resto del VIP de Ambos Marcan)
+// y uno automatico (🔄 Rescate «GF + BTTS»). Se siguen midiendo como si estuvieran; la fila dice cuando se recuperan.
+function vipApagadosO25Html(G){
+  const O = (G && G.o25) || {}, A = O.apagados || {}, R = O.recuperacion || {};
+  const ks = Object.keys(A).sort((a, b) => Number(a) - Number(b));
+  if(!ks.length) return "";
+  const celda = (r) => r && r.n ? `<b>${vipFmt(r.acierto, 0, false)}%</b> · <b style="color:${vipCol(r.roi)};">${vipPct(r.roi)}</b><div class="vip-dim" style="font-size:11px;">${vipN(r.n)} picks · ${vipFmt(r.uds)}u</div>` : '<span class="vip-dim">sin picks</span>';
+  const corto = (r) => r && r.n ? `${vipFmt(r.acierto, 0, false)}% · <span style="color:${vipCol(r.roi)};">${vipPct(r.roi)}</span> (${vipN(r.n)})` : "sin picks";
+  const meses = (a) => (a.por_mes || []).slice(-4).map(m => `${vipMesNombre(m.mes)} <span style="color:${vipCol(m.roi)};">${vipPct(m.roi)}</span> (${vipN(m.n)})`).join(" · ");
+  const vuelve = `${vipN(R.min_casos || 30)}+ picks ya apagado (máximo ${vipN(R.dias || 60)} días) a ${vipPct(R.roi_min != null ? R.roi_min : 3)} o más`;
+  const filas = ks.map(k => { const a = A[k], au = a.auto || {};
+    let est, sub;
+    if(a.tipo === "auto"){
+      if(a.apagado){
+        est = '<b style="color:var(--loss);">⛔ Apagado solo</b>';
+        sub = `apagado el ${vipFechaCorta(au.apagado_desde)} por perder (${vipN(au.n)} picks, ${vipPct(au.roi)}). Vuelve solo con ${vuelve} (desde que se apagó: ${vipN(au.n_rec || 0)} picks${au.n_rec ? `, ${vipPct(au.roi_rec)}` : ""})`;
+      } else {
+        est = '<b style="color:var(--win);">🟢 Encendido, vigilado</b>';
+        sub = `lleva ${vipN(au.n || 0)} de ${vipN(au.min_picks || 30)} picks desde el ${vipFechaCorta(au.desde)}${au.n ? ` (${vipPct(au.roi)})` : ""}. Si al llegar a ${vipN(au.min_picks || 30)} queda en negativo, se apaga solo`;
+      }
+    } else {
+      est = a.recuperado
+        ? '<b style="color:var(--win);">✅ Se recuperó</b>'
+        : '<b style="color:var(--loss);">⛔ Sigue apagado</b>';
+      sub = a.recuperado ? "puede volver: pídelo y se enciende" : "no se envía ni cuenta en el VIP";
+    }
+    const razon = a.tipo === "fijo" ? `apagado el ${vipFechaCorta(a.desde)}` : "apagado automático";
+    return `<tr><td style="min-width:170px;max-width:300px;white-space:normal;"><b>${vipEsc(a.nombre || ("Grupo " + k))}</b><div class="vip-dim" style="font-size:11px;">${razon}</div>${meses(a) ? `<div class="vip-dim" style="font-size:11px;margin-top:3px;">${meses(a)}</div>` : ""}
+      <div class="cc-movil">últimos ${vipN(R.dias || 60)} días ${corto(a.ult_rec)}<br>enviado ${corto(a.enviados)}<div style="margin-top:3px;">${est}<div class="vip-dim" style="font-size:11px;">${sub}</div></div></div></td>
+      <td class="num" style="white-space:normal;min-width:110px;">${celda(a.ult_rec)}</td>
+      <td class="num" style="white-space:normal;min-width:110px;">${celda(a.enviados)}</td>
+      <td class="num" style="white-space:normal;min-width:110px;">${celda(a.total)}</td>
+      <td style="min-width:160px;white-space:normal;">${est}<div class="vip-dim" style="font-size:11px;">${sub}</div></td></tr>`; }).join("");
+  return `<div class="vip-verdict" style="margin:0 0 12px;border-left-color:var(--loss);">
+      <p>Política: una señal con tendencia perdedora se <b>apaga hasta que se recupere</b>. En Over 2.5: <b>🟡 Resto del VIP de Ambos Marcan</b> se apagó el 26 nov (oct −3.0%, nov −14.1%, en vivo 5 de 13) y ya no se envía. <b>🔄 Rescate «GF + BTTS»</b> sigue encendido pero con <b>apagado automático</b>: se apaga solo si, con 30 picks, su ROI queda en negativo.</p>
+      <p>Se siguen midiendo <b>como si estuvieran</b> (1 unidad, cuota de envío). Vuelven cuando sus últimos ${vipN(R.dias || 60)} días (el automático, solo los picks desde que se apagó) den <b>${vipPct(R.roi_min != null ? R.roi_min : 3)} o más</b> con <b>${vipN(R.min_casos || 30)}+ picks</b>: lo avisa la columna «Estado». Lo ya enviado conserva su grupo.</p>
+    </div>
+    <div class="vip-scroll rango-tabla"><table class="cmp-table"><thead><tr><th>Grupo</th><th class="num">Últimos ${vipN(R.dias || 60)} días<div class="vip-dim" style="font-size:10px;text-transform:none;">como si estuviera</div></th><th class="num">Lo que se envió<div class="vip-dim" style="font-size:10px;text-transform:none;">alertas reales</div></th><th class="num">Histórico<div class="vip-dim" style="font-size:10px;text-transform:none;">como si estuviera</div></th><th>Estado</th></tr></thead><tbody>${filas}</tbody></table></div>`;
+}
+
 function renderVipGoles(data, picks){
   const G = data.vip_goles;
   const titulo = '<p class="section-title">💎 VIP Over 2.5 + Combinada</p>';
@@ -3508,7 +3548,8 @@ function renderVipGoles(data, picks){
     <td class="num">${rec(B && B.total)}</td><td class="num">${rec(B && B.ult30)}</td><td class="num">${rec(B && B.en_vivo)}</td>
     <td class="num">${(B && B.total && B.total.mitades) ? `<span style="color:${vipCol(B.total.mitades[0])};">${vipPct(B.total.mitades[0])}</span> / <span style="color:${vipCol(B.total.mitades[1])};">${vipPct(B.total.mitades[1])}</span>` : "—"}</td></tr>`;
   const cab = `<thead><tr><th>Grupo</th><th class="num">Apuesta</th><th class="num">Histórico</th><th class="num">Últimos 30 días</th><th class="num">En vivo<div class="vip-dim" style="font-size:10px;text-transform:none;">desde ${desdeTxt}</div></th><th class="num">1ª / 2ª mitad</th></tr></thead>`;
-  const filas25 = Object.keys(GO).sort((a, b) => Number(a) - Number(b)).map(g => filaRec(GO[g].nombre, GO[g].nota, GO[g], GO[g].nivel)).join("")
+  const apO = O.apagados || {};
+  const filas25 = Object.keys(GO).sort((a, b) => Number(a) - Number(b)).map(g => filaRec(GO[g].nombre + (apO[g] && apO[g].apagado ? " · ⛔ apagado" : ""), GO[g].nota, GO[g], GO[g].nivel)).join("")
     + filaRec("Todo el VIP Over 2.5", "1 unidad en todos", O.todo, "", "vip-dest")
     + filaRec("Todo el VIP Over 2.5 con niveles", "🟢 1 unidad · 🟡 ½ unidad", O.con_niveles, "", "vip-dest")
     + filaRec("Referencia: todo el VIP de Ambos Marcan → Over 2.5", `sin elegir grupos, cuota ${Number(pol.o25_cuota_min).toFixed(2)}–${Number(pol.o25_cuota_max).toFixed(2)}: lo más justo para saber qué esperar`, O.ref_vip_btts, "", "vip-tenue")
@@ -3538,6 +3579,7 @@ function renderVipGoles(data, picks){
       ${selC.length ? listaC : '<div class="vip-pick-vacio">Ningún partido entra a la combinada en prueba para este día.</div>'}
     </section>
     <section><p class="section-title">📊 Cómo le ha ido a cada grupo · Over 2.5</p><div class="vip-scroll rango-tabla"><table class="cmp-table">${cab}<tbody>${filas25}</tbody></table></div></section>
+    ${vipApagadosO25Html(G) ? `<section><p class="section-title">⛔ Over 2.5 · apagados por tendencia perdedora</p>${vipApagadosO25Html(G)}</section>` : ""}
     <section><p class="section-title">📊 Combinada en prueba</p><div class="vip-scroll rango-tabla"><table class="cmp-table">${cab}<tbody>${filasC}</tbody></table></div></section>
     <section><p class="section-title">¿Por qué estos partidos? En palabras simples</p>${explica}</section>`;
 }
