@@ -460,6 +460,7 @@ const TABS = [
 
 let DATA = null;
 let HOY_STR = "";
+let MANANA_STR = "", PASADO_STR = "";   // 26 nov 2026: para la etiqueta de dia de cada tarjeta
 let REGLAS_ACTIVAS_REAL = {};
 // AGREGADO 23 ago 2026: dia seleccionado para navegar Hoy/Mañana/Pasado
 // mañana. Persiste entre refrescos automaticos, igual que la pestaña de
@@ -1024,7 +1025,7 @@ function comparadorHtml(){
     clave_invalida: "la clave de OddsPapi no funciona", apagado: "apagado", error: "con error", nunca: "todavía no ha corrido"}[C.estado] || C.estado;
   const cupo = (C.limite_mes != null && C.usadas_mes != null) ? ` · consultas del mes ${vipN(C.usadas_mes)} de ${vipN(C.limite_mes)}` : "";
   const uc = String(C.ultima_consulta || "");
-  const ult = uc ? ` · última búsqueda el ${vipEsc(vipFechaCorta(uc.slice(0, 10)))}${uc.length >= 16 ? " " + vipEsc(uc.slice(11, 16)) : ""}${C.buscados_ultima != null ? ` (${vipN(C.encontrados_ultima || 0)} de ${vipN(C.buscados_ultima)} picks encontrados)` : ""}` : "";
+  const ult = uc ? ` · última búsqueda el ${vipEsc(vipFechaCorta(uc.slice(0, 10)))}${uc.length >= 16 ? " " + vipEsc(uc.slice(11, 16)) : ""}${C.buscados_ultima != null ? ` (${vipN(C.encontrados_ultima || 0)} de ${vipN(C.buscados_ultima)} picks encontrados)` : ""}${C.para_despues ? ` · ${vipN(C.para_despues)} quedan para la próxima búsqueda (cupo de hoy)` : ""}` : "";
   const sinLiga = (C.ligas_sin_cotizar || []).length ? `<div class="vip-dim" style="font-size:11px;margin-top:3px;">Sin cuota en casas colombianas: ${vipEsc(C.ligas_sin_cotizar.slice(0, 6).join(" · "))}${C.ligas_sin_cotizar.length > 6 ? " …" : ""}</div>` : "";
   return `<div style="font-size:12px;line-height:1.55;margin:0 0 12px;padding:8px 10px;border-left:3px solid ${ok ? "var(--win)" : "var(--amber)"};background:rgba(255,255,255,0.03);border-radius:6px;">${ico} <b>Comparador de casas colombianas:</b> ${vipEsc(txtEstado)}${cupo}${ult}${C.mensaje && !ok ? `<div class="vip-dim" style="font-size:11px;margin-top:3px;">${vipEsc(C.mensaje)}</div>` : ""}${sinLiga}</div>`;
 }
@@ -1042,6 +1043,9 @@ function diaBadge(p){
   const fechaSolo = (p.fecha_partido || p.fecha || "").split(" ")[0];
   if(!fechaSolo) return "";
   if(fechaSolo === HOY_STR) return '<span style="color:var(--win);">HOY</span>';
+  // 26 nov 2026: los partidos de pasado mañana decian «MAÑANA» (la tarjeta no distinguia los dos dias)
+  if(PASADO_STR && fechaSolo === PASADO_STR) return '<span style="color:var(--amber);">PASADO MAÑANA</span>';
+  if(MANANA_STR && fechaSolo !== MANANA_STR) return `<span style="color:var(--amber);">${fechaSolo.slice(8,10)}/${fechaSolo.slice(5,7)}</span>`;
   return '<span style="color:var(--amber);">MAÑANA</span>';
 }
 
@@ -3969,6 +3973,8 @@ function renderHeroPick(picks){
 function render(data){
   DATA = data;
   HOY_STR = data.hoy_referencia || "";
+  MANANA_STR = data.manana_referencia || "";
+  PASADO_STR = data.pasado_manana_referencia || "";
   // AGREGADO 23 ago 2026: estado REAL y dinamico de cada regla (activa
   // o no para apostar de verdad AHORA MISMO), calculado por el mismo
   // motor que main.py - reemplaza depender solo de MOTIVOS_VALIDADOS
