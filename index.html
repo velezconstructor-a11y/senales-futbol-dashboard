@@ -3950,6 +3950,7 @@ function renderVip(data, picks){
   return `
     <section>${titulo}${hoyHtml}</section>
     ${renderCandidatasVip(data)}
+    ${renderNoBtts(data)}
     ${vipApagadosHtml(V) ? `<section><p class="section-title">⛔ Apagados por tendencia perdedora · no se envían</p>${vipApagadosHtml(V)}</section>` : ""}
     ${vipMovCuotaHtml(V) ? `<section><p class="section-title">📈 Qué hace la cuota: si sube se frena, si baja se mantiene</p>${vipMovCuotaHtml(V)}</section>` : ""}
     ${vipNivelesHtml(V) ? `<section><p class="section-title">🟢🟡 Niveles del VIP · cuánto apostar en cada pick</p>${vipNivelesHtml(V)}</section>` : ""}
@@ -4159,6 +4160,34 @@ function renderCandidatasVip(data){
     <div class="cand-grid">${tarjetas}</div></section>`;
 }
 
+// 26 nov 2026 · 🚫 AMBOS MARCAN NO en observación (data.no_btts). Reglas fijas a mano, no se envían.
+function renderNoBtts(data){
+  const N = (data && data.no_btts) || {}, L = N.reglas || [];
+  if(!L.length) return N.error ? `<section><p class="section-title">🚫 Ambos marcan NO · en observación, no se envía</p><div class="empty">No se pudo medir (${vipEsc(N.error)}).</div></section>` : "";
+  const meta = N.meta || 30, rmin = N.roi_min != null ? N.roi_min : 3, cu = N.cuota || [1.6, 3.5], mk = N.mercado || {};
+  const linea = (r) => r && r.n ? `${vipN(r.n)} picks · ganó ${vipN(r.ganados)} (${vipFmt(r.acierto, 0, false)}%) · ROI <b style="color:${vipCol(r.roi)};">${vipPct(r.roi)}</b> · <span style="color:${vipCol(r.uds)};">${vipFmt(r.uds, 1)} u</span>` : `<span class="vip-dim">todavía sin picks jugados</span>`;
+  const corto = (r) => r && r.n ? `<b style="color:${vipCol(r.roi)};">${vipPct(r.roi)}</b> (${vipN(r.n)})` : "—";
+  const tarj = L.map(c => {
+    const n = (c.prueba && c.prueba.n) || 0;
+    const est = c.estado === "lista" ? `<span class="tb-sem" style="background:var(--win);color:#0b1f14;">✅ Pasó la prueba · pídela y se evalúa para el VIP</span>`
+      : c.estado === "descartada" ? `<span class="tb-sem" style="background:var(--loss);color:#fff;">⛔ Descartada · llegó a ${vipN(meta)} en negativo</span>`
+      : `<span class="tb-sem" style="background:var(--amber);color:#1b1405;">⏳ En prueba · ${vipN(n)} de ${vipN(meta)} picks</span>`;
+    const prox = (c.proximos || []).slice(0, 6).map(x => `<li>${vipFechaCorta(x.fecha)} · <b>${vipEsc(x.partido)}</b> · NO a ${vipFmt(x.cuota, 2, false)}<div class="vip-dim">${vipEsc(x.liga || "")}</div></li>`).join("");
+    return `<div class="cand-card"><h4>${vipEsc(c.nombre)}</h4><div>${est}</div>
+      <div class="cand-bar"><span style="width:${Math.min(100, Math.round(n / meta * 100))}%;"></span></div>
+      <div class="vip-dim" style="font-size:12px;">${vipEsc(c.txt)} · cuota del NO ${vipFmt(cu[0], 2, false)}–${vipFmt(cu[1], 2, false)}</div>
+      <p style="margin:8px 0 2px;"><b>Desde el ${vipFechaCorta(N.desde)}:</b><br>${linea(c.prueba)}${c.pendientes ? `<br><span class="vip-dim">${vipN(c.pendientes)} por jugar</span>` : ""}</p>
+      <p class="vip-dim" style="margin:4px 0;font-size:12px;">Antes de fijarla (solo referencia, poco más de un mes con cuota del NO): ${corto(c.antes)}</p>
+      ${prox ? `<div style="margin-top:6px;font-size:12px;"><b>Próximos partidos que la cumplen</b> (no se envían):</div><ul class="cand-prox">${prox}</ul>` : `<p class="vip-dim" style="margin:6px 0 0;font-size:12px;">Sin partidos que la cumplan en los próximos días.</p>`}
+    </div>`;
+  }).join("");
+  return `<section><p class="section-title">🚫 Ambos marcan NO · en observación, no se envía</p>
+    <div class="vip-verdict" style="margin:0 0 12px;">
+      <p>Tres reglas para el NO, <b>fijas desde el ${vipFechaCorta(N.desde)}</b> por lógica de fútbol (al revés del SÍ), sin buscar cortes en los datos. <b>No se envían al Telegram.</b> Se miden a 1 unidad y a la última cuota del NO antes del partido.</p>
+      <p>Vara de partida: apostar el NO en <b>todos</b> los partidos con esa cuota da ${corto(mk.antes)} antes del ${vipFechaCorta(N.desde)}${mk.prueba && mk.prueba.n >= 30 ? ` y ${corto(mk.prueba)} desde entonces` : ""}. Una regla sirve si le gana a eso y llega a <b>${vipN(meta)} picks con ${vipPct(rmin)} o más</b>.</p>
+    </div><div class="cand-grid">${tarj}</div></section>`;
+}
+
 // ============================================================================
 // 26 nov 2026 · MAPA DE MERCADOS (data.mapa_mercados) · "¿hay otro mercado más rentable para iniciar?"
 // Apostar TODOS los partidos de cada mercado a la cuota de la página: es la vara que una señal tiene que superar.
@@ -4197,7 +4226,7 @@ function renderMapaMercados(data){
 // recuerda en este navegador (la página se vuelve a dibujar cada 5 minutos).
 // ============================================================================
 const PLG_ABIERTAS_DEF = {
-  vip: [/tablero del vip/i, /^💎 selección vip · ambos marcan/i, /candidatas al vip/i, /en vivo \(la prueba que cuenta\)/i, /elegimos bien/i],
+  vip: [/tablero del vip/i, /^💎 selección vip · ambos marcan/i, /candidatas al vip/i, /ambos marcan no · en observación/i, /en vivo \(la prueba que cuenta\)/i, /elegimos bien/i],
   stats: [/mapa de mercados/i, /señales activas y estables de btts/i],
 };
 let PLG_ESTADO = null;
