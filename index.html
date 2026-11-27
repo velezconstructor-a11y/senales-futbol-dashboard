@@ -3787,7 +3787,7 @@ function renderVip(data, picks){
     <p class="vip-dim" style="font-size:12px;line-height:1.55;margin:0 0 12px;">Esta lista se recalcula cada hora con la cuota y las reglas de ese momento: un partido puede entrar o salir <b>hasta que se envíe</b>. Lo que ya salió al Telegram se queda aquí, con su cuota de envío.</p>
     ${comparadorHtml()}
     ${notaSeguimiento}
-    ${selDia.length ? listaPorGrupo(selDia) :`<div class="vip-pick-vacio">${jugarDia.length
+    ${selDia.length ? listaPorGrupo(selDia) + candidatasEnLista(picks, selDia.length + 1) : `${candidatasEnLista(picks, 1)}<div class="vip-pick-vacio">${jugarDia.length
         ? "Ningún JUGAR de BTTS pasa el filtro de precio y reglas activas para este día. <b>No enviar nada es una decisión válida:</b> los JUGAR que quedan fuera rinden " + vipPct(resto.roi) + " en el histórico."
         : "Todavía no hay JUGAR de BTTS para este día."}</div>`}
     ${fueraDia.length ? `<details class="vip-det"><summary>Ver los ${fueraDia.length} JUGAR de BTTS que NO entran a la selección (no se envían)${resFuera.n ? ` · jugados ${resFuera.n}: ${resFuera.g} ganados, ROI ${vipPct(resFuera.roi)}` : ""}</summary>
@@ -4128,6 +4128,50 @@ function renderTableroVip(data){
 // 26 nov 2026 · 🧪 CANDIDATAS AL VIP (data.candidatas_vip) · pedido del usuario: "créalas en un apartado nuevo del
 // VIP". Tres señales cerca del VIP, fijas desde el 26 nov con la variable del VIP que aguantó la prueba. No se envían.
 // ============================================================================
+// 26 nov 2026 (pedido del usuario: "se deberían ver como Topacio"): los partidos del día que cumplen una candidata van
+// en la lista de picks del VIP, en su propio grupo, como tarjeta, marcados EN OBSERVACIÓN · NO SE ENVÍA.
+function candidatasEnLista(picks, pos0){
+  const C = (DATA && DATA.candidatas_vip) || {}, L = C.candidatas || [];
+  if(!L.length || !picks || !picks.length) return "";
+  let html = "", pos = pos0 || 1;
+  for(const c of L){
+    const lista = picks.filter(p => (p.candidatas_vip || []).includes(c.clave)).sort((a, b) => String(a.fecha).localeCompare(String(b.fecha)));
+    if(!lista.length) continue;
+    const pr = c.prueba || {};
+    html += `<div style="display:flex;flex-wrap:wrap;gap:6px 12px;align-items:baseline;margin:18px 0 8px;padding:6px 10px;border-left:3px solid var(--amber);background:var(--pitch-900);border-radius:6px;">
+      <b style="font-size:14px;">${pos}. 🧪 ${vipEsc(c.nombre)} (candidata, en observación)</b><span class="vip-dim" style="font-size:12px;">${lista.length} ${lista.length === 1 ? "partido" : "partidos"}</span>
+      <span class="vip-dim" style="font-size:12px;">desde el ${vipFechaCorta(C.desde)}: ${pr.n ? `${vipN(pr.n)} picks · ROI <b style="color:${vipCol(pr.roi)};">${vipPct(pr.roi)}</b>` : "todavía sin picks jugados"} · ${vipN((c.nuevos || {}).n || 0)} de ${vipN(C.meta || 30)} nuevos</span>
+      <span style="font-size:12px;color:var(--amber);">🔭 no se envía al Telegram</span></div>`;
+    pos += 1;
+    html += lista.map(p => {
+      const prob = p.prob_btts_calibrada != null ? p.prob_btts_calibrada : p.prob_btts;
+      const res = p.resultado_btts;
+      const resHtml = res === true ? '<div class="conf-prob" style="color:var(--win);font-size:15px;">✓ Ganada</div>'
+        : res === false ? '<div class="conf-prob" style="color:var(--loss);font-size:15px;">✕ Perdida</div>'
+        : `<div class="conf-prob">${prob != null ? (prob * 100).toFixed(0) + "%" : "—"}</div>`;
+      const cu = Number(p.cuota_btts);
+      const yaVip = !!p.alerta_btts;
+      return `<div class="conf-card" style="border-style:dashed;">
+        <div>
+          <div class="conf-teams">${vipEsc(p.local)} vs ${vipEsc(p.visitante)}</div>
+          <div class="conf-liga">${vipEsc(p.liga || "")} · ${diaBadge(p)}</div>
+          <div style="margin-top:6px;display:flex;gap:8px;flex-wrap:wrap;align-items:center;font-size:11px;">
+            <span class="vip-chip" style="border-color:var(--amber);color:var(--amber);">🔭 EN OBSERVACIÓN · NO SE ENVÍA</span>
+            ${yaVip ? '<span class="vip-chip fuerte">📨 ESTE PARTIDO YA SALIÓ EN EL VIP</span>' : ""}
+          </div>
+          <div class="vip-dim" style="font-size:11px;line-height:1.5;margin-top:5px;">Por: <b>${vipEsc(c.base)}</b> + <b>${vipEsc(c.variable)}</b>${(() => { const r = c.rango || []; if(!(isFinite(cu) && cu > 1) || r.length < 2) return ""; const en = (r[0] > 1.40 ? cu > r[0] : cu >= r[0]) && cu <= r[1] + 1e-9; return en ? ` · <span style="color:var(--win);">✓ en su mejor rango (${vipEsc(c.rango_txt)})</span>` : ` · fuera de su mejor rango (${vipEsc(c.rango_txt)})`; })()}</div>
+        </div>
+        <div class="conf-tier">
+          <div class="conf-tier-val">Candidata</div>
+          <div class="conf-cuota">cuota ${isFinite(cu) && cu > 1 ? cu.toFixed(2) : "—"}</div>
+        </div>
+        ${resHtml}
+      </div>`;
+    }).join("");
+  }
+  return html;
+}
+
 function renderCandidatasVip(data){
   const C = (data && data.candidatas_vip) || {}, L = C.candidatas || [];
   if(!L.length) return C.error ? `<section><p class="section-title">🧪 Candidatas al VIP · en observación, no se envían</p><div class="empty">No se pudieron medir (${vipEsc(C.error)}).</div></section>` : "";
