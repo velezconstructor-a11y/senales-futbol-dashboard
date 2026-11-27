@@ -477,6 +477,7 @@ const TABS = [
   {id:"vipgol", label:"💎 VIP Over 2.5 + Combinada"},   // 20 nov 2026
   {id:"comodin", label:"🃏 Comodín (fuera del VIP)"},   // 25 nov 2026: dias sin pick VIP
   {id:"rango", label:"🎯 En su rango"},
+  {id:"btts_no", label:"🚫 Ambos NO marcan"},   // 26 nov 2026: en observacion, no se envia
   {id:"o15",   label:"Over 1.5"},
   {id:"o25",   label:"Over 2.5"},
   {id:"combo", label:"BTTS+O2.5"},
@@ -3950,7 +3951,6 @@ function renderVip(data, picks){
   return `
     <section>${titulo}${hoyHtml}</section>
     ${renderCandidatasVip(data)}
-    ${renderNoBtts(data)}
     ${vipApagadosHtml(V) ? `<section><p class="section-title">⛔ Apagados por tendencia perdedora · no se envían</p>${vipApagadosHtml(V)}</section>` : ""}
     ${vipMovCuotaHtml(V) ? `<section><p class="section-title">📈 Qué hace la cuota: si sube se frena, si baja se mantiene</p>${vipMovCuotaHtml(V)}</section>` : ""}
     ${vipNivelesHtml(V) ? `<section><p class="section-title">🟢🟡 Niveles del VIP · cuánto apostar en cada pick</p>${vipNivelesHtml(V)}</section>` : ""}
@@ -4130,6 +4130,39 @@ function renderTableroVip(data){
 // ============================================================================
 // 26 nov 2026 (pedido del usuario: "se deberían ver como Topacio"): los partidos del día que cumplen una candidata van
 // en la lista de picks del VIP, en su propio grupo, como tarjeta, marcados EN OBSERVACIÓN · NO SE ENVÍA.
+// Tarjeta de un partido de una candidata (mismo formato que las del VIP, borde punteado). x = pick del día o un
+// partido de data.candidatas_vip (proximos / jugados) normalizado con candNorm.
+function candNorm(x){
+  const [loc, vis] = String(x.partido || "").split(" vs ");
+  return {local: loc || x.partido || "", visitante: vis || "", liga: x.liga, fecha_partido: x.fecha, fecha: x.fecha,
+          cuota_btts: x.cuota, resultado_btts: x.gano === true ? true : (x.gano === false ? false : null), alerta_btts: x.enviado ? "SI" : null};
+}
+function candTarjeta(p, c){
+  const prob = p.prob_btts_calibrada != null ? p.prob_btts_calibrada : p.prob_btts;
+  const res = p.resultado_btts;
+  const resHtml = res === true ? '<div class="conf-prob" style="color:var(--win);font-size:15px;">✓ Ganada</div>'
+    : res === false ? '<div class="conf-prob" style="color:var(--loss);font-size:15px;">✕ Perdida</div>'
+    : `<div class="conf-prob">${prob != null ? (prob * 100).toFixed(0) + "%" : "⏳"}</div>`;
+  const cu = Number(p.cuota_btts), r = c.rango || [];
+  const enR = (isFinite(cu) && cu > 1 && r.length >= 2) ? ((r[0] > 1.40 ? cu > r[0] : cu >= r[0]) && cu <= r[1] + 1e-9) : null;
+  return `<div class="conf-card" style="border-style:dashed;">
+    <div>
+      <div class="conf-teams">${vipEsc(p.local)}${p.visitante ? " vs " + vipEsc(p.visitante) : ""}</div>
+      <div class="conf-liga">${vipEsc(p.liga || "")} · ${diaBadge(p)}</div>
+      <div style="margin-top:6px;display:flex;gap:8px;flex-wrap:wrap;align-items:center;font-size:11px;">
+        <span class="vip-chip" style="border-color:var(--amber);color:var(--amber);">🔭 EN OBSERVACIÓN · NO SE ENVÍA</span>
+        ${p.alerta_btts ? '<span class="vip-chip fuerte">📨 ESTE PARTIDO YA SALIÓ EN EL VIP</span>' : ""}
+      </div>
+      <div class="vip-dim" style="font-size:11px;line-height:1.5;margin-top:5px;">Por: <b>${vipEsc(c.base)}</b> + <b>${vipEsc(c.variable)}</b>${enR === null ? "" : enR ? ` · <span style="color:var(--win);">✓ en su mejor rango (${vipEsc(c.rango_txt)})</span>` : ` · fuera de su mejor rango (${vipEsc(c.rango_txt)})`}</div>
+    </div>
+    <div class="conf-tier">
+      <div class="conf-tier-val">Candidata</div>
+      <div class="conf-cuota">cuota ${isFinite(cu) && cu > 1 ? cu.toFixed(2) : "—"}</div>
+    </div>
+    ${resHtml}
+  </div>`;
+}
+
 function candidatasEnLista(picks, pos0){
   const C = (DATA && DATA.candidatas_vip) || {}, L = C.candidatas || [];
   if(!L.length || !picks || !picks.length) return "";
@@ -4143,31 +4176,7 @@ function candidatasEnLista(picks, pos0){
       <span class="vip-dim" style="font-size:12px;">desde el ${vipFechaCorta(C.desde)}: ${pr.n ? `${vipN(pr.n)} picks · ROI <b style="color:${vipCol(pr.roi)};">${vipPct(pr.roi)}</b>` : "todavía sin picks jugados"} · ${vipN((c.nuevos || {}).n || 0)} de ${vipN(C.meta || 30)} nuevos</span>
       <span style="font-size:12px;color:var(--amber);">🔭 no se envía al Telegram</span></div>`;
     pos += 1;
-    html += lista.map(p => {
-      const prob = p.prob_btts_calibrada != null ? p.prob_btts_calibrada : p.prob_btts;
-      const res = p.resultado_btts;
-      const resHtml = res === true ? '<div class="conf-prob" style="color:var(--win);font-size:15px;">✓ Ganada</div>'
-        : res === false ? '<div class="conf-prob" style="color:var(--loss);font-size:15px;">✕ Perdida</div>'
-        : `<div class="conf-prob">${prob != null ? (prob * 100).toFixed(0) + "%" : "—"}</div>`;
-      const cu = Number(p.cuota_btts);
-      const yaVip = !!p.alerta_btts;
-      return `<div class="conf-card" style="border-style:dashed;">
-        <div>
-          <div class="conf-teams">${vipEsc(p.local)} vs ${vipEsc(p.visitante)}</div>
-          <div class="conf-liga">${vipEsc(p.liga || "")} · ${diaBadge(p)}</div>
-          <div style="margin-top:6px;display:flex;gap:8px;flex-wrap:wrap;align-items:center;font-size:11px;">
-            <span class="vip-chip" style="border-color:var(--amber);color:var(--amber);">🔭 EN OBSERVACIÓN · NO SE ENVÍA</span>
-            ${yaVip ? '<span class="vip-chip fuerte">📨 ESTE PARTIDO YA SALIÓ EN EL VIP</span>' : ""}
-          </div>
-          <div class="vip-dim" style="font-size:11px;line-height:1.5;margin-top:5px;">Por: <b>${vipEsc(c.base)}</b> + <b>${vipEsc(c.variable)}</b>${(() => { const r = c.rango || []; if(!(isFinite(cu) && cu > 1) || r.length < 2) return ""; const en = (r[0] > 1.40 ? cu > r[0] : cu >= r[0]) && cu <= r[1] + 1e-9; return en ? ` · <span style="color:var(--win);">✓ en su mejor rango (${vipEsc(c.rango_txt)})</span>` : ` · fuera de su mejor rango (${vipEsc(c.rango_txt)})`; })()}</div>
-        </div>
-        <div class="conf-tier">
-          <div class="conf-tier-val">Candidata</div>
-          <div class="conf-cuota">cuota ${isFinite(cu) && cu > 1 ? cu.toFixed(2) : "—"}</div>
-        </div>
-        ${resHtml}
-      </div>`;
-    }).join("");
+    html += lista.map(p => candTarjeta(p, c)).join("");
   }
   return html;
 }
@@ -4184,7 +4193,6 @@ function renderCandidatasVip(data){
     const est = c.estado === "lista" ? `<span class="tb-sem" style="background:var(--win);color:#0b1f14;">✅ Lista para el VIP · pídela y se agrega</span>`
       : c.estado === "descartada" ? `<span class="tb-sem" style="background:var(--loss);color:#fff;">⛔ Descartada · llegó a ${vipN(meta)} en negativo</span>`
       : `<span class="tb-sem" style="background:var(--amber);color:#1b1405;">⏳ En prueba · ${vipN(nn)} de ${vipN(meta)} picks nuevos</span>`;
-    const prox = (c.proximos || []).map(x => `<li>${vipFechaCorta(x.fecha)} · <b>${vipEsc(x.partido)}</b> · cuota ${vipFmt(x.cuota, 2, false)}${x.en_rango ? ` · <span style="color:var(--win);">✓ en su mejor rango</span>` : ""}${x.enviado ? ` · <span class="vip-dim">ya salió en el VIP</span>` : ""}<div class="vip-dim">${vipEsc(x.liga || "")}</div></li>`).join("");
     return `<div class="cand-card">
       <h4>${vipEsc(c.nombre)}</h4>
       <div>${est}</div>
@@ -4193,15 +4201,38 @@ function renderCandidatasVip(data){
       <p style="margin:8px 0 2px;"><b>Desde el ${vipFechaCorta(C.desde)} (la prueba que cuenta):</b><br>${linea(c.prueba)}${c.pendientes ? `<br><span class="vip-dim">${vipN(c.pendientes)} por jugar</span>` : ""}</p>
       <p style="margin:4px 0;">Nuevos (el VIP no los envió): ${corto(c.nuevos)} · en su mejor rango (${vipEsc(c.rango_txt)}): ${corto(c.en_rango)}</p>
       <p class="vip-dim" style="margin:4px 0;font-size:12px;">Referencia, con estos datos se eligió: antes del 30 oct ${corto(c.antes_30oct)} · del 30 oct al ${vipFechaCorta(vispera)} ${corto(c.vivo_previo)}</p>
-      ${prox ? `<div style="margin-top:6px;font-size:12px;"><b>Próximos partidos que la cumplen</b> (en observación, no se envían):</div><ul class="cand-prox">${prox}</ul>` : `<p class="vip-dim" style="margin:6px 0 0;font-size:12px;">Sin partidos que la cumplan en los próximos días.</p>`}
+      <p style="margin:8px 0 0;font-size:12px;"><b>${vipN(candProx(c).length)}</b> por jugar · <b>${vipN((c.jugados || []).length)}</b> jugados desde el ${vipFechaCorta(C.desde)} · los partidos van abajo ↓</p>
     </div>`;
+  }).join("");
+  // 26 nov 2026 (pedido del usuario): los partidos de cada candidata como tarjetas, igual que Topacio en el VIP
+  const partidos = L.map((c, i) => {
+    const prox = candProx(c), jug = (c.jugados || []).map(candNorm);
+    const pr = c.prueba || {};
+    return `<div style="display:flex;flex-wrap:wrap;gap:6px 12px;align-items:baseline;margin:${i ? "18px" : "14px"} 0 8px;padding:6px 10px;border-left:3px solid var(--amber);background:var(--pitch-900);border-radius:6px;">
+        <b style="font-size:14px;">🧪 ${vipEsc(c.nombre)}</b><span class="vip-dim" style="font-size:12px;">${prox.length} por jugar · ${jug.length} jugados</span>
+        <span class="vip-dim" style="font-size:12px;">desde el ${vipFechaCorta(C.desde)}: ${pr.n ? `${vipN(pr.n)} picks · ROI <b style="color:${vipCol(pr.roi)};">${vipPct(pr.roi)}</b>` : "todavía sin picks jugados"}</span></div>
+      ${prox.length ? prox.map(p => candTarjeta(p, c)).join("") : '<p class="vip-dim" style="font-size:12px;margin:0 0 6px;">Sin partidos por jugar que la cumplan en los próximos días.</p>'}
+      ${jug.length ? `<details class="vip-det"><summary>Ver los ${jug.length} ya jugados desde el ${vipFechaCorta(C.desde)}</summary><div style="margin-top:8px;font-family:var(--sans);font-size:13px;color:var(--chalk);">${jug.map(p => candTarjeta(p, c)).join("")}</div></details>` : ""}`;
   }).join("");
   return `<section><p class="section-title">🧪 Candidatas al VIP · en observación, no se envían</p>
     <div class="vip-verdict" style="margin:0 0 12px;">
       <p>Tres señales que estaban cerca del VIP, <b>fijas desde el ${vipFechaCorta(C.desde)}</b> con la variable de los grupos del VIP que mejor aguantó la prueba (con su mismo corte). <b>No se envían al Telegram.</b> Cuenta solo lo que pase desde esa fecha, a 1 unidad y a la última cuota antes del partido.</p>
       <p>Entran al VIP si juntan <b>${vipN(meta)} picks nuevos</b> (partidos que el VIP no envió) con <b>${vipPct(rmin)} o más</b>; si llegan a ${vipN(meta)} en negativo, se descartan. El mejor rango de cuota de la prueba se mide aparte: si rinde claramente mejor, se puede sumar al entrar. Lo anterior al ${vipFechaCorta(C.desde)} es solo referencia: con esos datos se eligieron.</p>
     </div>
-    <div class="cand-grid">${tarjetas}</div></section>`;
+    <div class="cand-grid">${tarjetas}</div>
+    <p class="section-title" style="margin-top:18px;">🧪 Partidos de las candidatas · no se envían</p>
+    ${partidos}</section>`;
+}
+// Partidos por jugar de una candidata: los picks del día que la cumplen (data nueva); si el JSON es de una versión
+// anterior sin ese dato, la lista "proximos" de data.candidatas_vip.
+function candProx(c){
+  const P = (DATA && DATA.picks_hoy) || [];
+  const conCampo = P.some(p => Object.prototype.hasOwnProperty.call(p, "candidatas_vip"));
+  if(conCampo){
+    return P.filter(p => (p.candidatas_vip || []).includes(c.clave) && p.resultado_btts !== true && p.resultado_btts !== false)
+      .sort((a, b) => String(a.fecha_partido || a.fecha).localeCompare(String(b.fecha_partido || b.fecha)) || String(a.local).localeCompare(String(b.local)));
+  }
+  return (c.proximos || []).map(candNorm);
 }
 
 // 26 nov 2026 · 🚫 AMBOS MARCAN NO en observación (data.no_btts). Reglas fijas a mano, no se envían.
@@ -4216,13 +4247,12 @@ function renderNoBtts(data){
     const est = c.estado === "lista" ? `<span class="tb-sem" style="background:var(--win);color:#0b1f14;">✅ Pasó la prueba · pídela y se evalúa para el VIP</span>`
       : c.estado === "descartada" ? `<span class="tb-sem" style="background:var(--loss);color:#fff;">⛔ Descartada · llegó a ${vipN(meta)} en negativo</span>`
       : `<span class="tb-sem" style="background:var(--amber);color:#1b1405;">⏳ En prueba · ${vipN(n)} de ${vipN(meta)} picks</span>`;
-    const prox = (c.proximos || []).slice(0, 6).map(x => `<li>${vipFechaCorta(x.fecha)} · <b>${vipEsc(x.partido)}</b> · NO a ${vipFmt(x.cuota, 2, false)}<div class="vip-dim">${vipEsc(x.liga || "")}</div></li>`).join("");
     return `<div class="cand-card"><h4>${vipEsc(c.nombre)}</h4><div>${est}</div>
       <div class="cand-bar"><span style="width:${Math.min(100, Math.round(n / meta * 100))}%;"></span></div>
       <div class="vip-dim" style="font-size:12px;">${vipEsc(c.txt)} · cuota del NO ${vipFmt(cu[0], 2, false)}–${vipFmt(cu[1], 2, false)}</div>
       <p style="margin:8px 0 2px;"><b>Desde el ${vipFechaCorta(N.desde)}:</b><br>${linea(c.prueba)}${c.pendientes ? `<br><span class="vip-dim">${vipN(c.pendientes)} por jugar</span>` : ""}</p>
       <p class="vip-dim" style="margin:4px 0;font-size:12px;">Antes de fijarla (solo referencia, poco más de un mes con cuota del NO): ${corto(c.antes)}</p>
-      ${prox ? `<div style="margin-top:6px;font-size:12px;"><b>Próximos partidos que la cumplen</b> (no se envían):</div><ul class="cand-prox">${prox}</ul>` : `<p class="vip-dim" style="margin:6px 0 0;font-size:12px;">Sin partidos que la cumplan en los próximos días.</p>`}
+      <p style="margin:8px 0 0;font-size:12px;">${(c.jugados || []).length ? `<b>${vipN((c.jugados || []).length)}</b> jugados recientes · ` : ""}los partidos del día van abajo ↓</p>
     </div>`;
   }).join("");
   return `<section><p class="section-title">🚫 Ambos marcan NO · en observación, no se envía</p>
@@ -4230,6 +4260,66 @@ function renderNoBtts(data){
       <p>Tres reglas para el NO, <b>fijas desde el ${vipFechaCorta(N.desde)}</b> por lógica de fútbol (al revés del SÍ), sin buscar cortes en los datos. <b>No se envían al Telegram.</b> Se miden a 1 unidad y a la última cuota del NO antes del partido.</p>
       <p>Vara de partida: apostar el NO en <b>todos</b> los partidos con esa cuota da ${corto(mk.antes)} antes del ${vipFechaCorta(N.desde)}${mk.prueba && mk.prueba.n >= 30 ? ` y ${corto(mk.prueba)} desde entonces` : ""}. Una regla sirve si le gana a eso y llega a <b>${vipN(meta)} picks con ${vipPct(rmin)} o más</b>.</p>
     </div><div class="cand-grid">${tarj}</div></section>`;
+}
+
+// 26 nov 2026 (pedido del usuario: "debería aparecer en una pestaña aparte como el mercado de Over 2.5"):
+// pestaña «🚫 Ambos NO marcan». Arriba las 3 reglas con su récord; abajo los partidos del día elegido que cumplen
+// alguna, como tarjetas (una por partido, con las reglas que cumple). Nada se envía al Telegram.
+function noTarjeta(p, reglas){
+  const pb = p.prob_btts_calibrada != null ? p.prob_btts_calibrada : p.prob_btts;
+  const pno = pb != null ? 1 - pb : null;
+  const res = p.resultado_btts;
+  const resHtml = res === false ? '<div class="conf-prob" style="color:var(--win);font-size:15px;">✓ Ganada</div>'
+    : res === true ? '<div class="conf-prob" style="color:var(--loss);font-size:15px;">✕ Perdida</div>'
+    : `<div class="conf-prob">${pno != null ? (pno * 100).toFixed(0) + "%" : "⏳"}</div>`;
+  const cu = Number(p.cuota_btts_no);
+  return `<div class="conf-card" style="border-style:dashed;">
+    <div>
+      <div class="conf-teams">${vipEsc(p.local)}${p.visitante ? " vs " + vipEsc(p.visitante) : ""}</div>
+      <div class="conf-liga">${vipEsc(p.liga || "")} · ${diaBadge(p)}</div>
+      <div style="margin-top:6px;display:flex;gap:8px;flex-wrap:wrap;align-items:center;font-size:11px;">
+        <span class="vip-chip" style="border-color:var(--amber);color:var(--amber);">🔭 EN OBSERVACIÓN · NO SE ENVÍA</span>
+        ${reglas.map(r => `<span class="vip-chip">${vipEsc(r.nombre)}</span>`).join("")}
+      </div>
+      <div class="vip-dim" style="font-size:11px;line-height:1.5;margin-top:5px;">${reglas.map(r => `<b>${vipEsc(r.nombre)}</b>: ${vipEsc(r.txt)}`).join("<br>")}</div>
+    </div>
+    <div class="conf-tier">
+      <div class="conf-tier-val">Ambos NO</div>
+      <div class="conf-cuota">cuota del NO ${isFinite(cu) && cu > 1 ? cu.toFixed(2) : "—"}</div>
+    </div>
+    ${resHtml}
+  </div>`;
+}
+function renderNoBttsTab(data, picks){
+  const N = (data && data.no_btts) || {}, L = N.reglas || [];
+  const resumen = renderNoBtts(data);
+  if(!L.length) return resumen || '<div class="empty">Todavía no hay datos de Ambos NO marcan. Sube los archivos nuevos y espera la próxima corrida.</div>';
+  const porClave = Object.fromEntries(L.map(r => [r.clave, r]));
+  const P = picks || [];
+  const conCampo = ((data && data.picks_hoy) || []).some(p => Object.prototype.hasOwnProperty.call(p, "no_btts"));
+  let lista;
+  if(conCampo){
+    lista = P.filter(p => (p.no_btts || []).length).map(p => ({p, reglas: p.no_btts.map(k => porClave[k]).filter(Boolean)}));
+  } else {      // JSON de una version anterior: los "proximos" de cada regla (sin filtrar por dia)
+    const m = {};
+    L.forEach(r => (r.proximos || []).forEach(x => { const k = x.fecha + "|" + x.partido; if(!m[k]){ const [lo, vi] = String(x.partido).split(" vs "); m[k] = {p: {local: lo, visitante: vi || "", liga: x.liga, fecha: x.fecha, fecha_partido: x.fecha, cuota_btts_no: x.cuota, resultado_btts: null}, reglas: []}; } m[k].reglas.push(r); }));
+    lista = Object.values(m);
+  }
+  lista.sort((a, b) => b.reglas.length - a.reglas.length || String(a.p.fecha_partido || a.p.fecha).localeCompare(String(b.p.fecha_partido || b.p.fecha)) || String(a.p.local).localeCompare(String(b.p.local)));
+  const grupos = [3, 2, 1].map(k => {
+    const g = lista.filter(x => x.reglas.length === k);
+    if(!g.length) return "";
+    const tit = k === 3 ? "Cumple las 3 reglas" : (k === 2 ? "Cumple 2 reglas" : "Cumple 1 regla");
+    return `<div style="display:flex;flex-wrap:wrap;gap:6px 12px;align-items:baseline;margin:16px 0 8px;padding:6px 10px;border-left:3px solid var(--amber);background:var(--pitch-900);border-radius:6px;">
+        <b style="font-size:14px;">${tit}</b><span class="vip-dim" style="font-size:12px;">${g.length} ${g.length === 1 ? "partido" : "partidos"}</span></div>
+      ${g.map(x => noTarjeta(x.p, x.reglas)).join("")}`;
+  }).join("");
+  const jug = L.map(r => (r.jugados || []).length ? `<details class="vip-det"><summary>${vipEsc(r.nombre)} · ver los ${vipN(r.jugados.length)} jugados más recientes</summary><div style="margin-top:8px;font-family:var(--sans);font-size:13px;color:var(--chalk);">${r.jugados.map(x => { const [lo, vi] = String(x.partido).split(" vs "); return noTarjeta({local: lo, visitante: vi || "", liga: x.liga, fecha: x.fecha, fecha_partido: x.fecha, cuota_btts_no: x.cuota, resultado_btts: x.gano ? false : true}, [r]); }).join("")}</div></details>` : "").join("");
+  return `${resumen}
+    <section><p class="section-title">🚫 Partidos del día · Ambos NO marcan · no se envían</p>
+      ${lista.length ? `<div class="market-hero"><p class="big">${lista.length}</p><div class="sub">${lista.length === 1 ? "partido cumple" : "partidos cumplen"} al menos una regla${conCampo ? "" : " (próximos días)"} · ninguno se envía al Telegram</div></div>${grupos}` : '<div class="empty">Ningún partido de este día cumple una regla del NO.</div>'}
+      ${jug ? `<div style="margin-top:14px;">${jug}</div>` : ""}
+    </section>`;
 }
 
 // ============================================================================
@@ -4270,7 +4360,7 @@ function renderMapaMercados(data){
 // recuerda en este navegador (la página se vuelve a dibujar cada 5 minutos).
 // ============================================================================
 const PLG_ABIERTAS_DEF = {
-  vip: [/tablero del vip/i, /^💎 selección vip · ambos marcan/i, /candidatas al vip/i, /ambos marcan no · en observación/i, /en vivo \(la prueba que cuenta\)/i, /elegimos bien/i],
+  vip: [/tablero del vip/i, /^💎 selección vip · ambos marcan/i, /candidatas al vip/i, /en vivo \(la prueba que cuenta\)/i, /elegimos bien/i],
   stats: [/mapa de mercados/i, /señales activas y estables de btts/i],
 };
 let PLG_ESTADO = null;
@@ -4404,6 +4494,7 @@ function render(data){
     vipgol: renderVipGoles(data, picks),
     comodin: renderComodin(data, diaElegido.fecha),
     rango: renderEnRango(data),
+    btts_no: renderNoBttsTab(data, picks),      // 26 nov 2026
     btts: renderMercado(picks, "prob_btts_calibrada", "nivel_final", "senal_btts_optimizada", "cuota_btts", "¿Ambos equipos marcan?", "resultado_btts", "btts", "motivo_btts") + historialBtts,
     o15: renderMercado(picks, "prob_o15_calibrada", "sug_o15", "senal_o15_tier", "cuota_o15", "¿Más de 1.5 goles?", "resultado_o15", "o15", "motivo_o15") + historialO15,
     o25: renderMercado(picks, "prob_o25_calibrada", "sug_o25", "senal_o25", "cuota_o25", "¿Más de 2.5 goles?", "resultado_o25", "o25", "motivo_o25") + historialO25,
