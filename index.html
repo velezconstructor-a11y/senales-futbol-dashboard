@@ -4322,6 +4322,61 @@ function renderNoBttsTab(data, picks){
     </section>`;
 }
 
+// 26 nov 2026 (pedido del usuario): «💡 valor» en observación, en la pestaña de su mercado (Over 1.5 y 1er tiempo
+// O0.5). Se cuenta solo cuando la probabilidad del sistema supera a la de la casa. No se envía al Telegram.
+const VALOR_CAMPOS = {o15: {prob: "prob_o15_calibrada", cuota: "cuota_o15", res: "resultado_o15"},
+                      ht05: {prob: "prob_over05_ht_calibrada", cuota: "cuota_ht_over05", res: "resultado_ht05"}};
+function valorTarjeta(x, R){
+  const res = x.res;
+  const resHtml = res === true ? '<div class="conf-prob" style="color:var(--win);font-size:15px;">✓ Ganada</div>'
+    : res === false ? '<div class="conf-prob" style="color:var(--loss);font-size:15px;">✕ Perdida</div>'
+    : `<div class="conf-prob">${x.prob != null ? Math.round(x.prob) + "%" : "⏳"}</div>`;
+  return `<div class="conf-card" style="border-style:dashed;">
+    <div>
+      <div class="conf-teams">${vipEsc(x.local)}${x.visitante ? " vs " + vipEsc(x.visitante) : ""}</div>
+      <div class="conf-liga">${vipEsc(x.liga || "")} · ${diaBadge(x)}</div>
+      <div style="margin-top:6px;display:flex;gap:8px;flex-wrap:wrap;align-items:center;font-size:11px;">
+        <span class="vip-chip" style="border-color:var(--amber);color:var(--amber);">🔭 EN OBSERVACIÓN · NO SE ENVÍA</span>
+        <span class="vip-chip">${vipEsc(R.nombre)}</span></div>
+      <div class="vip-dim" style="font-size:11px;line-height:1.5;margin-top:5px;">El sistema dice <b>${x.prob != null ? Math.round(x.prob) + "%" : "—"}</b> · la casa paga como ${x.cuota > 1 ? Math.round(100 / x.cuota) + "%" : "—"} · valor <b style="color:var(--win);">${x.valor != null ? "+" + vipFmt(x.valor, 1, false) + "%" : "—"}</b></div>
+    </div>
+    <div class="conf-tier"><div class="conf-tier-val">Valor</div><div class="conf-cuota">cuota ${x.cuota > 1 ? Number(x.cuota).toFixed(2) : "—"}</div></div>
+    ${resHtml}
+  </div>`;
+}
+function renderValorObs(data, picks, clave){
+  const VO = (data && data.valor_obs) || {}, R = (VO.reglas || {})[clave], F = VALOR_CAMPOS[clave];
+  if(!R || !F) return "";
+  const meta = VO.meta || 100, rmin = VO.roi_min != null ? VO.roi_min : 3, pr = R.prueba || {};
+  const n = pr.n || 0;
+  const est = R.estado === "lista" ? `<span class="tb-sem" style="background:var(--win);color:#0b1f14;">✅ Pasó la prueba · pídela y se evalúa para enviarse</span>`
+    : R.estado === "descartada" ? `<span class="tb-sem" style="background:var(--loss);color:#fff;">⛔ Descartada · llegó a ${vipN(meta)} en negativo</span>`
+    : `<span class="tb-sem" style="background:var(--amber);color:#1b1405;">⏳ En prueba · ${vipN(n)} de ${vipN(meta)} picks</span>`;
+  const dia = (picks || []).map(p => {
+    const pb = Number(p[F.prob]), c = Number(p[F.cuota]);
+    if(!(pb > 0.01 && pb < 0.999 && c > 1.01)) return null;
+    const v = pb * c - 1;
+    if(v < R.valor_min - 1e-9) return null;
+    return {local: p.local, visitante: p.visitante, liga: p.liga, fecha: p.fecha, fecha_partido: p.fecha_partido, cuota: c, prob: pb * 100, valor: v * 100,
+            res: p[F.res] === true ? true : (p[F.res] === false ? false : null)};
+  }).filter(Boolean).sort((a, b) => b.valor - a.valor);
+  const jug = (R.jugados || []).map(x => { const [lo, vi] = String(x.partido).split(" vs "); return {local: lo, visitante: vi || "", liga: x.liga, fecha: x.fecha, fecha_partido: x.fecha, cuota: x.cuota, prob: x.prob, valor: x.valor, res: !!x.gano}; });
+  const linea = (r) => r && r.n ? `${vipN(r.n)} picks · ganó ${vipN(r.ganados)} (${vipFmt(r.acierto, 0, false)}%) · ROI <b style="color:${vipCol(r.roi)};">${vipPct(r.roi)}</b> · <span style="color:${vipCol(r.uds)};">${vipFmt(r.uds, 1)} u</span>` : `<span class="vip-dim">todavía sin picks jugados</span>`;
+  return `<section><p class="section-title">${vipEsc(R.nombre)} · en observación, no se envía</p>
+    <div class="vip-verdict" style="margin:0 0 12px;">
+      <p>Señal nueva por <b>valor</b>: solo los partidos donde la probabilidad del sistema supera a la de la casa por ${Math.round(R.valor_min * 100)}% o más (valor = probabilidad × cuota − 1). <b>No se envía al Telegram.</b> Cuenta desde el ${vipFechaCorta(VO.desde)}, a 1 unidad y a la última cuota antes del partido.</p>
+      <p>Se fijó con el historial: ${vipEsc(R.prueba_elegida)}. Con tan pocos partidos puede ser suerte. Pasa la prueba con <b>${vipN(meta)} picks a ${vipPct(rmin)} o más</b>.</p>
+    </div>
+    <div class="cand-card" style="margin-bottom:12px;">${est}
+      <div class="cand-bar"><span style="width:${Math.min(100, Math.round(n / meta * 100))}%;"></span></div>
+      <p style="margin:6px 0 2px;"><b>Desde el ${vipFechaCorta(VO.desde)}:</b> ${linea(pr)}${R.pendientes ? ` · <span class="vip-dim">${vipN(R.pendientes)} por jugar</span>` : ""}</p>
+      <p class="vip-dim" style="margin:4px 0 0;font-size:12px;">Antes de fijarla (solo referencia): ${linea(R.antes)}</p>
+    </div>
+    ${dia.length ? dia.map(x => valorTarjeta(x, R)).join("") : '<div class="empty">Ningún partido de este día tiene ese valor.</div>'}
+    ${jug.length ? `<details class="vip-det"><summary>Ver los ${jug.length} jugados más recientes desde el ${vipFechaCorta(VO.desde)}</summary><div style="margin-top:8px;font-family:var(--sans);font-size:13px;color:var(--chalk);">${jug.map(x => valorTarjeta(x, R)).join("")}</div></details>` : ""}
+  </section>`;
+}
+
 // ============================================================================
 // 26 nov 2026 · MAPA DE MERCADOS (data.mapa_mercados) · "¿hay otro mercado más rentable para iniciar?"
 // Apostar TODOS los partidos de cada mercado a la cuota de la página: es la vara que una señal tiene que superar.
@@ -4496,10 +4551,10 @@ function render(data){
     rango: renderEnRango(data),
     btts_no: renderNoBttsTab(data, picks),      // 26 nov 2026
     btts: renderMercado(picks, "prob_btts_calibrada", "nivel_final", "senal_btts_optimizada", "cuota_btts", "¿Ambos equipos marcan?", "resultado_btts", "btts", "motivo_btts") + historialBtts,
-    o15: renderMercado(picks, "prob_o15_calibrada", "sug_o15", "senal_o15_tier", "cuota_o15", "¿Más de 1.5 goles?", "resultado_o15", "o15", "motivo_o15") + historialO15,
+    o15: renderValorObs(data, picks, "o15") + renderMercado(picks, "prob_o15_calibrada", "sug_o15", "senal_o15_tier", "cuota_o15", "¿Más de 1.5 goles?", "resultado_o15", "o15", "motivo_o15") + historialO15,
     o25: renderMercado(picks, "prob_o25_calibrada", "sug_o25", "senal_o25", "cuota_o25", "¿Más de 2.5 goles?", "resultado_o25", "o25", "motivo_o25") + historialO25,
     combo: `<section><p class="section-title">BTTS + Over 2.5</p>${renderCombo(picks)}</section>` + historialCombo,
-    ht05: notaHt05 + renderMercado(picks, "prob_over05_ht_calibrada", "sug_ht05", "senal_ht05_tier", "cuota_ht_over05", "¿Gol antes del descanso?", "resultado_ht05", "ht05", "motivo_ht05") + historialHt05,
+    ht05: notaHt05 + renderValorObs(data, picks, "ht05") + renderMercado(picks, "prob_over05_ht_calibrada", "sug_ht05", "senal_ht05_tier", "cuota_ht_over05", "¿Gol antes del descanso?", "resultado_ht05", "ht05", "motivo_ht05") + historialHt05,
     ht15: renderHt15Nota(picks),
     score: renderMarcadorExacto(picks, data.comparativo.historico.marcador_exacto),
     stats: renderMapaMercados(data) + renderEstadisticas(data),      // 26 nov 2026: mapa de mercados arriba
