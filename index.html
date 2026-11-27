@@ -4361,17 +4361,17 @@ function renderMapaMercados(data){
 // ============================================================================
 const PLG_ABIERTAS_DEF = {
   vip: [/tablero del vip/i, /^💎 selección vip · ambos marcan/i, /candidatas al vip/i, /en vivo \(la prueba que cuenta\)/i, /elegimos bien/i],
-  stats: [/mapa de mercados/i, /señales activas y estables de btts/i],
+  stats: [/mapa de mercados/i, /señales activas y estables de btts/i, /por mercado/i, /hoy · 7 días · histórico/i],
 };
 let PLG_ESTADO = null;
 function plgClave(t){ return String(t || "").toLowerCase().replace(/[0-9]+/g, "#").replace(/\s+/g, " ").trim().slice(0, 80); }
 function plgCargar(){
   if(PLG_ESTADO) return PLG_ESTADO;
   PLG_ESTADO = {};
-  try { PLG_ESTADO = JSON.parse(localStorage.getItem("plg_estado_v1") || "{}") || {}; } catch(e) { PLG_ESTADO = {}; }
+  try { PLG_ESTADO = JSON.parse(localStorage.getItem("plg_estado_v2") || "{}") || {}; } catch(e) { PLG_ESTADO = {}; }
   return PLG_ESTADO;
 }
-function plgGuardar(){ try { localStorage.setItem("plg_estado_v1", JSON.stringify(PLG_ESTADO || {})); } catch(e) {} }
+function plgGuardar(){ try { localStorage.setItem("plg_estado_v2", JSON.stringify(PLG_ESTADO || {})); } catch(e) {} }
 function plgToggle(el){
   const sec = el.closest("section"); if(!sec) return;
   const cerrada = sec.classList.toggle("plg-cerrada");
