@@ -3847,6 +3847,29 @@ function renderVip(data, picks){
 
   // ---------------- 8. CLV ----------------
   const cv = (V.clv || {}).vip || {}, cvj = (V.clv || {}).jugar || {};
+  // 26 nov 2026: margen de la casa y ROI sin margen (data.vip_btts.margen): separa "¿elegimos bien?" de "¿a qué precio?"
+  const MG = V.margen || {};
+  const mgHtml = (() => {
+    const e = MG.enviadas || {}, mk = MG.mercado || {};
+    if(MG.error || !(e.n || mk.n)) return "";
+    const fila = (nom, nota, r) => `<tr><td style="white-space:normal;min-width:170px;"><b>${nom}</b>${nota ? `<div class="vip-dim" style="font-size:11px;">${nota}</div>` : ""}</td>
+      <td class="num">${r && r.n ? vipN(r.n) : "—"}</td><td class="num">${r && r.n ? vipFmt(r.margen_pct, 1, false) + "%" : "—"}</td>
+      <td class="num" style="color:${r && r.n ? vipCol(r.roi) : "inherit"};">${r && r.n ? vipPct(r.roi) : "—"}</td>
+      <td class="num" style="font-weight:700;color:${r && r.n ? vipCol(r.roi_sin_margen) : "inherit"};">${r && r.n ? vipPct(r.roi_sin_margen) : "—"}${r && r.se ? `<div class="vip-dim" style="font-size:10px;font-weight:400;">±${vipFmt(1.96 * r.se, 1, false)}</div>` : ""}</td></tr>`;
+    const meses = (MG.enviadas_por_mes || []).filter(m => m.n).map(m => `${vipMesNombre(m.mes)}: ${vipPct(m.roi)} a la cuota · <b style="color:${vipCol(m.roi_sin_margen)};">${vipPct(m.roi_sin_margen)}</b> sin margen (${vipN(m.n)})`).join(" · ");
+    return `<div class="vip-verdict" style="margin:0 0 12px;">
+        <p>La casa cobra un <b>margen</b> en cada apuesta: en ambos marcan, la suma de las probabilidades del SÍ y del NO da más de 100%. Con las cuotas que usa el sistema ese margen es de <b>${vipFmt(mk.margen_pct, 1, false)}%</b> en promedio. Quitándolo se ve si <b>elegimos bien</b>, aparte del precio.</p>
+        <p>Lo enviado: <b style="color:${vipCol(e.roi)};">${vipPct(e.roi)}</b> a la cuota, <b style="color:${vipCol(e.roi_sin_margen)};">${vipPct(e.roi_sin_margen)}</b> sin margen. El mercado entero: ${vipPct(mk.roi)} y ${vipPct(mk.roi_sin_margen)}. ${(e.roi_sin_margen != null && mk.roi_sin_margen != null && e.roi_sin_margen > mk.roi_sin_margen) ? "<b>La selección le gana al mercado; lo que se come la ganancia es el margen.</b> Por eso cada punto de mejor cuota vale un punto de ROI." : "Hoy la selección no le gana al mercado ni sin margen."} Si el «sin margen» de lo enviado baja de +3% de forma sostenida, la selección perdió su ventaja aunque el ROI todavía no lo muestre.</p>
+        ${meses ? `<p class="vip-dim" style="font-size:12px;">${meses}</p>` : ""}
+      </div>
+      <div class="vip-scroll rango-tabla"><table class="cmp-table"><thead><tr><th>Grupo</th><th class="num">Picks</th><th class="num">Margen de la casa</th><th class="num">ROI a la cuota</th><th class="num">ROI sin margen<div class="vip-dim" style="font-size:10px;text-transform:none;">±: rango del 95%</div></th></tr></thead><tbody>
+        ${fila("Lo enviado al Telegram", "alertas VIP, cuota de envío", e)}
+        ${fila("Selección VIP", "con las reglas de hoy", MG.vip)}
+        ${fila("Todas las JUGAR", "", MG.jugar)}
+        ${fila("Mercado entero", "todos los partidos", mk)}
+      </tbody></table></div>
+      <p class="vip-dim" style="font-size:12px;line-height:1.55;margin:8px 0 0;">Solo partidos con la cuota del SÍ y del NO guardadas (desde el ${vipFechaCorta(mk.desde)}). El margen se reparte en proporción a cada cuota. No es garantía ni consejo financiero.</p>`;
+  })();
   const clvHtml = (cv.n || 0) < 1 && (cvj.n || 0) < 1
     ? `<div class="vip-aviso">Todavía no hay datos. El sistema guarda desde el 29 de octubre la <b>primera cuota</b> con que se ve cada partido (y desde el 30, la de la alerta); se compara contra la última cuota antes del partido. Si en promedio la cuota del aviso es <b>mejor</b> que la de cierre, hay ventaja real aunque el ROI tarde años en mostrarla. Con ≈${vipN(M.apuestas_para_confirmar_clv_1pct)} apuestas se puede leer.</div>`
     : `<div class="vip-tiles">
@@ -3910,6 +3933,7 @@ function renderVip(data, picks){
     <section><p class="section-title">Comparación por grupo</p>${grupos}</section>
     <section><p class="section-title">Mes a mes (estabilidad)</p>${porMes}</section>
     <section><p class="section-title">Cuánto se queda la casa según la cuota</p>${bandas}</section>
+    ${mgHtml ? `<section><p class="section-title">¿Elegimos bien? Margen de la casa y ROI sin margen</p>${mgHtml}</section>` : ""}
     <section><p class="section-title">¿Conseguimos mejor precio que el cierre? (CLV)</p>${clvHtml}</section>
     <section><p class="section-title">Lo que paga TU casa</p>${casaHtml}</section>
     <section><p class="section-title">Lo enviado contra lo contado</p>${integHtml}</section>
