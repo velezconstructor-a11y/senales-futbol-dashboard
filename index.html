@@ -3788,7 +3788,7 @@ function renderVip(data, picks){
     <p class="vip-dim" style="font-size:12px;line-height:1.55;margin:0 0 12px;">Esta lista se recalcula cada hora con la cuota y las reglas de ese momento: un partido puede entrar o salir <b>hasta que se envíe</b>. Lo que ya salió al Telegram se queda aquí, con su cuota de envío.</p>
     ${comparadorHtml()}
     ${notaSeguimiento}
-    ${selDia.length ? listaPorGrupo(selDia) + candidatasEnLista(picks, selDia.length + 1) : `${candidatasEnLista(picks, 1)}<div class="vip-pick-vacio">${jugarDia.length
+    ${selDia.length ? listaPorGrupo(selDia) + candidatasEnLista(picks, selDia.length + 1) + casiVipEnLista(picks) : `${candidatasEnLista(picks, 1)}${casiVipEnLista(picks)}<div class="vip-pick-vacio">${jugarDia.length
         ? "Ningún JUGAR de BTTS pasa el filtro de precio y reglas activas para este día. <b>No enviar nada es una decisión válida:</b> los JUGAR que quedan fuera rinden " + vipPct(resto.roi) + " en el histórico."
         : "Todavía no hay JUGAR de BTTS para este día."}</div>`}
     ${fueraDia.length ? `<details class="vip-det"><summary>Ver los ${fueraDia.length} JUGAR de BTTS que NO entran a la selección (no se envían)${resFuera.n ? ` · jugados ${resFuera.n}: ${resFuera.g} ganados, ROI ${vipPct(resFuera.roi)}` : ""}</summary>
@@ -4161,6 +4161,37 @@ function candTarjeta(p, c){
     </div>
     ${resHtml}
   </div>`;
+}
+
+// 27 nov 2026 (pedido del usuario): «🔎 Casi VIP». Partidos que cumplen la señal de un grupo del VIP pero la cuota de
+// FootyStats quedó entre 1.30 y el piso (1.50). El comparador busca su precio en tus casas; aquí se ve si alguna
+// paga el piso. Solo informa: no entra al VIP ni se envía.
+function casiVipEnLista(picks){
+  const L = (picks || []).filter(p => p.casi_vip).sort((a, b) => Number(b.cuota_btts) - Number(a.cuota_btts));
+  if(!L.length) return "";
+  const PISO = 1.50;
+  const tarj = L.map(p => {
+    const cu = Number(p.cuota_btts), mc = Number(p.mejor_cuota_btts), casa = p.mejor_casa_btts;
+    const alcanza = isFinite(mc) && mc >= PISO;
+    const precio = isFinite(mc) && mc > 1
+      ? (alcanza ? `<span style="color:var(--win);">✅ ${vipEsc(casa || "una casa")} paga <b>${mc.toFixed(2)}</b>: alcanza el piso de ${PISO.toFixed(2)}</span>`
+                 : `mejor casa encontrada: ${vipEsc(casa || "—")} a ${mc.toFixed(2)} · no alcanza el piso`)
+      : `<span class="vip-dim">el comparador todavía no encontró su precio en tus casas (busca primero los del VIP)</span>`;
+    return `<div class="conf-card" style="border-style:dashed;">
+      <div>
+        <div class="conf-teams">${vipEsc(p.local)} vs ${vipEsc(p.visitante)}</div>
+        <div class="conf-liga">${vipEsc(p.liga || "")} · ${diaBadge(p)}</div>
+        <div style="margin-top:6px;display:flex;gap:8px;flex-wrap:wrap;align-items:center;font-size:11px;">
+          <span class="vip-chip" style="border-color:var(--amber);color:var(--amber);">🔎 CASI VIP · NO SE ENVÍA</span></div>
+        <div class="vip-dim" style="font-size:11px;line-height:1.5;margin-top:5px;">Cumple la señal del VIP, pero FootyStats lo da a ${isFinite(cu) ? cu.toFixed(2) : "—"} (piso ${PISO.toFixed(2)}).<br>${precio}</div>
+      </div>
+      <div class="conf-tier"><div class="conf-tier-val">Casi VIP</div><div class="conf-cuota">cuota ${isFinite(cu) ? cu.toFixed(2) : "—"}</div></div>
+      <div class="conf-prob">${p.prob_btts_calibrada != null ? Math.round(p.prob_btts_calibrada * 100) + "%" : "—"}</div>
+    </div>`;
+  }).join("");
+  return `<div style="display:flex;flex-wrap:wrap;gap:6px 12px;align-items:baseline;margin:18px 0 8px;padding:6px 10px;border-left:3px solid var(--amber);background:var(--pitch-900);border-radius:6px;">
+      <b style="font-size:14px;">🔎 Casi VIP · la cuota quedó bajo el piso</b><span class="vip-dim" style="font-size:12px;">${L.length} ${L.length === 1 ? "partido" : "partidos"}</span>
+      <span style="font-size:12px;color:var(--amber);">🔭 no se envía al Telegram</span></div>${tarj}`;
 }
 
 function candidatasEnLista(picks, pos0){
