@@ -1353,10 +1353,13 @@ function renderMercado(picks, probKey, senalKey, tierKey, cuotaKey, resultadoDes
   let validadasHtml;
   if(separaVip){
     // 31 oct 2026: la segunda linea incluye picks rescatados (nivel "Evitar") y de señal no validada: se toman de todos los JUGAR
-    const enSel = Array.from(new Set([...validadas.filter(p => vipClase(p)), ...picks.filter(p => p[senalKey] === "JUGAR" && vipClase(p) === "SEGUNDA_LINEA")])).sort(vipOrden);
-    const idsEnSel = new Set(enSel);
+    const enSelTodo = Array.from(new Set([...validadas.filter(p => vipClase(p)), ...picks.filter(p => p[senalKey] === "JUGAR" && vipClase(p) === "SEGUNDA_LINEA")])).sort(vipOrden);
+    // 28 nov 2026: los del VIP cuyo grupo está en observación van aparte (no se envían)
+    const enSel = enSelTodo.filter(p => !vipObservacion(p)), enObs = enSelTodo.filter(vipObservacion);
+    const idsEnSel = new Set(enSelTodo);
     const fuera = validadas.filter(p => !idsEnSel.has(p) && !vipClase(p));
     validadasHtml = renderCardsConfianza(enSel, "Hoy no hay picks de BTTS en la Selección VIP. No enviar nada es una decisión válida.")
+      + (enObs.length ? `<details class="vip-det"><summary>🔬 ${enObs.length} del VIP en observación (su grupo no se envía al Telegram)</summary><div style="margin-top:8px;">${renderCardsConfianza(enObs, "")}</div></details>` : "")
       + (fuera.length ? `<details class="vip-det"><summary>Otros ${fuera.length} JUGAR de BTTS que no entran a la Selección VIP (no se envían al Telegram)</summary><div style="margin-top:8px;">${renderCardsConfianza(fuera, "")}</div></details>` : "");
   } else {
     validadasHtml = renderCardsConfianza(validadas, "Sin señales validadas hoy todavía.");
@@ -1661,7 +1664,7 @@ function renderTicketsBttsExtra(data){
   // 27 nov 2026 (auditoria): el numero grande es el REAL (lo enviado / la prueba justa); el de las reglas de hoy hacia
   // atras, que sale optimista, queda abajo y dice que es optimista
   return tk("BTTS · Selección VIP · lo enviado", T.vip_vivo,
-            `desde el ${vipFechaCorta(T.vip_desde_vivo)}, a la cuota del mensaje y 1 u por pick<br>con las reglas de hoy hacia atrás (optimista): ${corto(T.vip)}`,
+            `desde el ${vipFechaCorta(T.vip_desde_vivo)}, a la cuota del mensaje y 1 u por pick<br>con las reglas de hoy hacia atrás${vipGruposTelegram() !== null ? " (solo el núcleo que hoy se envía" + ", optimista)" : " (optimista)"}: ${corto(T.vip)}`,
             "Lo que de verdad salió al Telegram de Ambos Marcan, a la cuota del mensaje. La línea de abajo aplica las reglas de hoy a todo el historial: sale mejor que la realidad porque las reglas se eligieron mirando esos partidos.")
        + (T.rango_todas && nOf(T.rango_todas.partidos_semana) ? tk("BTTS · todas las señales en su rango", T.rango_todas.partidos_semana,
             `con el rango que tenía cada semana (prueba justa)<br>con el rango de hoy, mirando atrás (optimista): ${corto(T.rango_todas.partidos)}<br>cada señal por separado (atrás): ${corto(T.rango_todas.senales)}`,
@@ -2380,6 +2383,34 @@ function vipClase(p){
   const c = vipClaseRegla(p);
   return (c && (vipEnvio().includes(c) || (p.alerta_btts && VIP_CLASES[p.alerta_btts]))) ? c : null;
 }
+// 28 nov 2026 (aprobado por el usuario): al Telegram solo va el NÚCLEO de Ambos Marcan (politica.grupos_telegram:
+// 1 👑 Corona, 2 🔄 Rescate «fallo bajo», 3 🏆 Apuesta TOP + GC bajo, 5 🔄 Rescate «GF + BTTS»). Los demás grupos del
+// VIP y el VIP de Over 2.5 quedan EN OBSERVACIÓN: se miden y no se envían; vuelven con 30 picks y ROI ≥ +3%, si se
+// aprueba. Con un json viejo (sin grupos_telegram) todo cuenta como antes.
+function vipGruposTelegram(){ const g = vipPol().grupos_telegram; return Array.isArray(g) ? g.map(String) : null; }
+function vipGrupoAlTelegram(g){ const G = vipGruposTelegram(); return !G || G.includes(String(g)); }
+function vipObservacion(p){ return !!p && !p.alerta_btts && !!vipClase(p) && vipGruposTelegram() !== null && !vipGrupoAlTelegram(p.vip_grupo); }
+// grupo de Ambos Marcan en observación (los de data.observacion_vip: hoy 4, 6, 9, 10 y 11)
+function vipGrupoEnObservacion(g){
+  if(g == null || vipGruposTelegram() === null) return false;
+  return ((((DATA || {}).observacion_vip) || {}).grupos || []).some(x => x.mercado === "btts" && String(x.grupo) === String(g));
+}
+function vipObsDesde(){ return vipPol().observacion_desde || "2026-11-28"; }
+function vipObsMeta(){ return Number(vipPol().observacion_meta || 30); }
+function vipObsRoiMin(){ const r = vipPol().observacion_roi_min; return r != null ? Number(r) : 3; }
+// nombres de los grupos que van al Telegram ("👑 Corona, 🔄 Rescate «fallo bajo», … y …")
+function vipNombresNucleo(){
+  const O = (DATA && DATA.observacion_vip) || {}, GR = ((((DATA || {}).vip_btts || {}).niveles || {}).grupos) || {};
+  const L = (O.btts_telegram_nombres && O.btts_telegram_nombres.length) ? O.btts_telegram_nombres
+    : (vipGruposTelegram() || []).map(g => (GR[g] || {}).nombre || ("grupo " + g));
+  return L.length > 1 ? L.slice(0, -1).join(", ") + " y " + L[L.length - 1] : (L[0] || "");
+}
+// lo enviado del núcleo (data.enviado_total.grupos.btts de los grupos que se envían)
+function vipEnviadoNucleo(){
+  const L = ((((DATA || {}).enviado_total || {}).grupos || {}).btts || []).filter(x => x.grupo != null && vipGrupoAlTelegram(x.grupo) && vipGruposTelegram() !== null);
+  const n = L.reduce((a, x) => a + (x.n || 0), 0), g = L.reduce((a, x) => a + (x.ganados || 0), 0), u = L.reduce((a, x) => a + (x.uds_1u || 0), 0);
+  return n ? {n, ganados: g, acierto: g / n * 100, uds: u, roi: u / n * 100} : null;
+}
 // 31 oct 2026: si el json es viejo (publicado antes de que existiera la segunda linea) no trae politica.segunda_senales:
 // en ese caso la pagina no menciona la segunda linea hasta la siguiente corrida del workflow.
 function vipSegConocida(){ return Array.isArray(vipPol().segunda_senales); }
@@ -2419,6 +2450,16 @@ function vipFmt(x, nd, signo){
   return (signo !== false && x > 0 && !esCero ? "+" : "") + s;
 }
 function vipPct(x){ return x == null ? "—" : vipFmt(x, 1) + "%"; }
+// 27 nov 2026 (auditoria pedida por el usuario: "¿en la pestaña VIP estan las señales que realmente funcionan con su ROI
+// real?"): veredicto de un grupo SOLO con lo que salio al Telegram (a la cuota del mensaje, 1 unidad).
+function vipVeredictoEnviado(v){
+  const n = (v && v.n) || 0, r = v ? v.roi : null;
+  const ic = v && Array.isArray(v.ic95) ? ` Rango real aproximado: ${vipPct(v.ic95[0])} a ${vipPct(v.ic95[1])}.` : "";
+  if(n < 10) return {t: "⏳ muy pocos enviados para juzgar", c: "var(--chalk-dim)", ayuda: `Lleva ${n} enviados jugados; se juzga con 10 o más.`};
+  if(r < 0) return {t: "❌ pierde en lo enviado", c: "var(--loss)", ayuda: `${n} enviados jugados, ROI ${vipPct(r)}.${ic}`};
+  if(n < 20) return {t: "⏳ gana, pero con pocos enviados", c: "var(--amber)", ayuda: `${n} enviados jugados, ROI ${vipPct(r)}. Con menos de 20 todavía puede ser suerte.${ic}`};
+  return {t: "✅ gana en lo enviado", c: "var(--win)", ayuda: `${n} enviados jugados, ROI ${vipPct(r)}. Gana, pero todavía no está probado.${ic}`};
+}
 function vipCol(x){ return (x == null || x === 0) ? "var(--chalk)" : (x > 0 ? "var(--win)" : "var(--loss)"); }
 function vipN(x){
   if(x == null || isNaN(x)) return "—";
@@ -2458,6 +2499,10 @@ function vipNotaBtts(p){
   if(!vipActiva() || p.nivel_final !== "JUGAR") return "";
   const V = DATA.vip_btts, pol = vipPol();
   const c = vipClase(p);
+  if(c && vipObservacion(p)){      // 28 nov 2026: su grupo del VIP está en observación (no se envía)
+    const t3 = `Es del VIP, pero su grupo está en observación desde el ${vipFechaCorta(vipObsDesde())}: se anota lo que habría salido y no se envía al Telegram. Ver pestaña Selección VIP.`;
+    return ` · <span class="vip-chip gris" title="${vipEsc(t3)}">🔬 VIP en observación · no se envía</span>`;
+  }
   if(c){
     const info = VIP_CLASES[c];
     const titulo = c === "RESPALDADA"
@@ -3174,8 +3219,10 @@ function vipMapaHtml(V){
       const nv = r.nuevos || {};
       return nv.n ? `nuevos: ${pc(nv.roi)} <span class="vip-dim">· ${nv.n >= meta ? `${vipN(nv.n)} ✓` : `${vipN(nv.n)} de ${meta}`}</span>` : '<span class="vip-dim">sin nuevos</span>';
     }
-    if(r.rol === "segunda") return "🥈 Segunda línea";
-    if(r.rol === "respaldada") return "⭐ Respaldada";
+    if(r.rol === "segunda") return "🥈 Segunda línea · 📨 se envía";
+    if(r.rol === "respaldada") return "⭐ Respaldada · 📨 se envía";
+    if(r.rol === "observacion") return '<span style="color:var(--amber);">🔬 En observación · no se envía</span>';      // 28 nov 2026
+    if(r.rol === "apagado_vip") return '<span style="color:var(--loss);">⛔ Su grupo está apagado · no se envía</span>';
     return `<span class="vip-dim">fuera del VIP${r.vip_pct != null ? ` · ${vipFmt(r.vip_pct, 0, false)}% de sus JUGAR son VIP` : ""}</span>`;
   };
   const rango = (r) => {
@@ -3185,6 +3232,8 @@ function vipMapaHtml(V){
     return t + a;
   };
   const ver = (r) => {
+    if(r.veredicto === "observacion") return `<b style="color:var(--amber);">🔬 En observación</b><div class="vip-dim" style="font-size:11px;">su grupo no se envía desde el ${vipFechaCorta(vipObsDesde())}; vuelve con ${vipN(vipObsMeta())} picks y ${vipPct(vipObsRoiMin())} o más en observación, si lo apruebas</div>`;
+    if(r.veredicto === "apagado_vip") return '<b style="color:var(--loss);">⛔ Grupo apagado</b><div class="vip-dim" style="font-size:11px;">por tendencia perdedora (ver «⛔ Apagados»)</div>';
     if(r.veredicto === "nucleo") return `<b style="color:var(--win);">✅ Núcleo del VIP</b>${r.floja ? `<div style="font-size:11px;color:var(--amber);">⚠️ viene floja: 2ª mitad ${vipPct(r.mitad2)}, 30 días ${vipPct(r.roi30)}</div>` : ""}`;
     if(r.veredicto === "estable") return '<b style="color:var(--win);">✅ Estable</b><div class="vip-dim" style="font-size:11px;">da JUGAR, pero casi no entra al VIP</div>';
     if(r.veredicto === "vigilar") return `<b style="color:var(--amber);">⚠️ Vigilar</b><div class="vip-dim" style="font-size:11px;">2ª mitad ${vipPct(r.mitad2)} · 30 días ${vipPct(r.roi30)}</div>`;
@@ -3214,11 +3263,11 @@ function vipMapaHtml(V){
     <p class="vip-dim" style="font-size:13px;line-height:1.55;margin:0 0 10px;">Todas las señales de BTTS que hoy importan: las <b>encendidas</b>, las que están <b>en prueba</b> y las que se <b>apagaron por tendencia</b>. Se miden con todas sus apariciones y la cuota de la señal, igual que el motor, con partidos resueltos hasta el ${vipFechaCorta(M.hasta)}. Se recalcula cada hora.</p>
     <div class="vip-verdict" style="margin-bottom:12px;">
       <p><b>La ventaja está en el filtro del VIP:</b> desde el ${vipFechaCorta(M.jugar_desde)}, los JUGAR que entran al VIP dieron ${pc(JV.roi)} <span class="vip-dim">(${vipN(JV.n)})</span> y los JUGAR que quedan fuera ${pc(JN.roi)} <span class="vip-dim">(${vipN(JN.n)})</span>. Por eso solo se envía el VIP.</p>
-      <p><b>Hoy:</b> ${enc} encendidas (${cnt("nucleo")} forman el VIP, ${cnt("estable")} estables fuera del VIP, ${cnt("vigilar")} a vigilar) · ${cnt("apagada_tendencia")} apagadas por tendencia (vuelven solas si se recuperan) · ${cnt("en_prueba") + cnt("candidata")} en prueba${cnt("candidata") ? ` (<b>${cnt("candidata")} lista${cnt("candidata") > 1 ? "s" : ""} para subir</b>)` : ""}. Una en prueba sube a la Segunda línea con ${meta} apuestas nuevas (que no sean ya VIP), ROI de +3% o más y las dos mitades positivas.</p>
+      <p><b>Hoy:</b> ${enc} encendidas (${cnt("nucleo")} forman el núcleo que se envía${cnt("observacion") ? `, ${cnt("observacion")} en observación` : ""}${cnt("apagado_vip") ? `, ${cnt("apagado_vip")} de un grupo apagado` : ""}, ${cnt("estable")} estables fuera del VIP, ${cnt("vigilar")} a vigilar) · ${cnt("apagada_tendencia")} apagadas por tendencia (vuelven solas si se recuperan) · ${cnt("en_prueba") + cnt("candidata")} en prueba${cnt("candidata") ? ` (<b>${cnt("candidata")} lista${cnt("candidata") > 1 ? "s" : ""} para subir</b>)` : ""}. Una en prueba sube a la Segunda línea con ${meta} apuestas nuevas (que no sean ya VIP), ROI de +3% o más y las dos mitades positivas.</p>
       <p><b>¿Una señal top nueva?</b> En la revisión del 12 nov se probaron 16.880 reglas con las estadísticas de los equipos, elegidas con julio-septiembre: en octubre-noviembre las 40 mejores dieron una mediana de −4.2% y solo 10 siguieron ganando. Tampoco funcionó el desajuste entre mercados ni el modelo de valor, salvo lo que ya hace Valor detectado. Ninguna pasa la prueba; las candidatas se siguen midiendo en vivo aquí abajo.</p>
     </div>
     <div class="vip-scroll"><table class="cmp-table"><thead><tr><th>Señal</th><th>Estado</th><th>Papel en el VIP</th><th class="num">Apuestas</th><th class="num">Acierto</th><th class="num">Cuota media</th><th class="num">ROI</th><th class="num">Estabilidad</th><th class="num">Tendencia<div class="vip-dim" style="font-size:10px;text-transform:none;">1ª → 2ª mitad</div></th><th class="num">Rango de cuota</th><th>Veredicto</th></tr></thead><tbody>${filas}</tbody></table></div>
-    <p class="vip-dim" style="font-size:12px;line-height:1.55;margin:10px 0 0;">«Estabilidad» = % del tiempo en que su ROI acumulado estuvo por encima de 0 (la regla del motor pide 60%) y semanas positivas. «Tendencia» = ROI de la primera y la segunda mitad de su historia y de los últimos 30 días. «Rango de cuota» = el de mayor confianza; «✅ real» si se distingue del azar, «🎲 azar» si no (ver la sección de la frase «✓ cuota de hoy en el rango»). «Núcleo del VIP» = es parte de la Respaldada o de la Segunda línea. Para las en prueba, «nuevos» = sus partidos con cuota 1.40–2.20 que el VIP de hoy no enviaría. Desde el 27 nov, un partido que salió por un grupo que hoy está apagado cuenta como nuevo: si la señal entrara, volvería a salir por ella.</p>`;
+    <p class="vip-dim" style="font-size:12px;line-height:1.55;margin:10px 0 0;">«Estabilidad» = % del tiempo en que su ROI acumulado estuvo por encima de 0 (la regla del motor pide 60%) y semanas positivas. «Tendencia» = ROI de la primera y la segunda mitad de su historia y de los últimos 30 días. «Rango de cuota» = el de mayor confianza; «✅ real» si se distingue del azar, «🎲 azar» si no (ver la sección de la frase «✓ cuota de hoy en el rango»). «Núcleo del VIP» = su grupo se envía al Telegram (desde el ${vipFechaCorta(vipObsDesde())} solo ${vipEsc(vipNombresNucleo())}); «En observación» = su grupo se mide pero no se envía. Para las en prueba, «nuevos» = sus partidos con cuota 1.40–2.20 que el VIP de hoy no enviaría (desde el 28 nov, lo que está en observación cuenta como nuevo). Desde el 27 nov, un partido que salió por un grupo que hoy está apagado cuenta como nuevo: si la señal entrara, volvería a salir por ella.</p>`;
 }
 
 // 12 nov 2026 (pedido: "cuales señales de BTTS, encendidas y apagadas, son muy muy estables en el tiempo dentro de
@@ -3287,7 +3336,8 @@ function vipNivelesHtml(V){
   return `
     <div class="vip-verdict" style="margin:0 0 12px;">
       <p>🟢 <b>1 unidad:</b> Segunda línea y Respaldada con Corona. 🟡 <b>½ unidad:</b> Topacio 1.65–2.03 y, desde el 25 nov, Rescate «GF + BTTS» con cuota 1.45–1.49 (los dos en prueba; el segundo se apaga solo si a las 30 alertas jugadas va en negativo). <b>Respaldada sin Corona</b> y <b>Estable GC+Fallo ＋</b> eran 🟡 hasta el 22 nov: desde el 23 nov están <b>apagados</b> por tendencia perdedora (ver «⛔ Apagados» arriba); lo que ya se envió sigue contando aquí.</p>
-      <p>Al Telegram los 🟡 ${envia ? "llegan marcados «NIVEL 2 · apostar ½ unidad»" : "<b>ya no se envían</b> (NOTIFY_BTTS_NIVEL_2=false)"}. Cada alerta dice su nivel y su cuota mínima. <b>«Enviado»</b> (desde el 27 nov) es solo lo que de verdad salió al Telegram con ese nivel en el mensaje, a la cuota del mensaje. <b>«Total» y los meses</b> son las reglas de hoy aplicadas hacia atrás: sirven para comparar niveles, pero salen más bonitos de lo que fue en la realidad.</p>
+      ${N.nivel_2_en_observacion ? `<p><b>Desde el ${vipFechaCorta(vipObsDesde())} al Telegram solo va el núcleo</b> (${vipEsc(vipNombresNucleo())}), todo a 🟢 1 unidad. Los grupos 🟡 y Bronce / Valor detectado quedan <b>en observación</b> (ver «🔬 En observación» arriba); esta tabla los sigue mostrando para comparar.</p>` : ""}
+      <p>Al Telegram los 🟡 ${envia ? "llegan marcados «NIVEL 2 · apostar ½ unidad»" : (N.nivel_2_en_observacion ? "<b>ya no se envían</b> (sus grupos están en observación)" : "<b>ya no se envían</b> (NOTIFY_BTTS_NIVEL_2=false)")}. Cada alerta dice su nivel y su cuota mínima. <b>«Enviado»</b> (desde el 27 nov) es solo lo que de verdad salió al Telegram con ese nivel en el mensaje, a la cuota del mensaje. <b>«Total» y los meses</b> son las reglas de hoy aplicadas hacia atrás: sirven para comparar niveles, pero salen más bonitos de lo que fue en la realidad.</p>
     </div>
     <div class="vip-scroll vip-corta"><table class="cmp-table"><thead><tr><th>Nivel</th><th class="num">Total</th>${meses.map(m => `<th class="num">${MESES_ES[parseInt(m.slice(5, 7), 10) - 1]}</th>`).join("")}<th class="num" style="white-space:normal;">Enviado<div class="vip-dim" style="font-size:10px;text-transform:none;">con ese nivel en el mensaje</div></th></tr></thead><tbody>${fila("NIVEL_1")}${fila("NIVEL_2")}${N.sin_nivel_en_vivo && N.sin_nivel_en_vivo.n ? `<tr><td style="white-space:normal;min-width:150px;"><span class="vip-dim"><b>Enviados antes del 19 nov</b></span><div class="vip-dim" style="font-size:11px;">todavía no existían los niveles: todo salió a 1 unidad</div></td><td class="num"><span class="vip-dim">—</span></td>${meses.map(() => '<td class="num"><span class="vip-dim">—</span></td>').join("")}<td class="num" style="white-space:normal;">${celda(N.sin_nivel_en_vivo)}</td></tr>` : ""}${N.regla_quitada && N.regla_quitada.total && N.regla_quitada.total.n ? `<tr><td style="white-space:normal;min-width:150px;"><span class="vip-dim"><b>Reglas que ya se quitaron</b></span><div class="vip-dim" style="font-size:11px;">p. ej. Diamante y Granate (fuera desde el 7 nov), Respaldada sin Corona y Estable GC+Fallo ＋ (fuera desde el 23 nov); con las reglas de hoy no serían VIP. Lo que salió por ellas ya está contado arriba, en la fila del nivel con que salió.</div></td><td class="num" style="white-space:normal;min-width:118px;">${celda(N.regla_quitada.total)}</td>${meses.map(() => '<td class="num"><span class="vip-dim">—</span></td>').join("")}<td class="num"><span class="vip-dim">—</span></td></tr>` : ""}</tbody></table></div>
     ${F.todo_1u && F.todo_1u.n ? `<p class="vip-dim" style="font-size:12px;margin:12px 0 6px;">Qué habría dado cada forma de apostar en los últimos 45 días (desde el ${vipFechaCorta(N.desde_ult45)}):</p>
@@ -3424,7 +3474,7 @@ function vipSegundaHtml(V){
   const bp = V.segunda_linea_bajo_piso || {}, sem = V.segunda_linea_semanas || {}, vol = V.segunda_linea_volumen || {};
   const tarjetas = lista.map(s => {
     const b = s.bajo_piso || {};
-    return `<div class="vf-item"><div class="vf-top"><span class="vf-nom">${vipEsc(vipNombreRaw(s.motivo))}${s.apagada_vip ? ' <span style="color:var(--loss);font-size:12px;">· ⛔ apagada en el VIP desde el 23 nov (tendencia perdedora): no cuenta</span>' : (s.encendida ? "" : ' <span class="vip-dim">· apagada hoy: no cuenta</span>')}</span><span class="vf-rango" style="color:${s.n ? vipCol(s.roi) : "var(--chalk-dim)"};">${s.n ? vipPct(s.roi) + " · " + vipN(s.n) + " apuestas" : "sin apuestas"}</span></div>
+    return `<div class="vf-item"><div class="vf-top"><span class="vf-nom">${vipEsc(vipNombreRaw(s.motivo))}${s.apagada_vip ? ' <span style="color:var(--loss);font-size:12px;">· ⛔ apagada en el VIP desde el 23 nov (tendencia perdedora): no cuenta</span>' : (s.encendida ? (s.al_telegram === false ? ' <span style="color:var(--amber);font-size:12px;">· 🔬 en observación: se mide, no se envía</span>' : "") : ' <span class="vip-dim">· apagada hoy: no cuenta</span>')}</span><span class="vf-rango" style="color:${s.n ? vipCol(s.roi) : "var(--chalk-dim)"};">${s.n ? vipPct(s.roi) + " · " + vipN(s.n) + " apuestas" : "sin apuestas"}</span></div>
       ${s.n ? `<div class="vf-a">Ventaja <b>${vipFmt(s.alfa)}</b> pts · <b>${vipFmt(s.uds)}u</b> · acierto <b>${vipFmt(s.acierto, 1, false)}%</b>${s.n < 30 ? " · muestra chica" : ""}</div>` : ""}
       ${s.motivo === "valor_detectado" ? vipValorUltima(pol) : ""}
       ${s.historico_semana_a_semana ? `<div class="vf-q">Incluye ${vipN(s.historico_semana_a_semana)} apuestas medidas semana a semana sin ver el futuro (desde el ${vipFechaCorta(s.historico_desde)}): el modelo se entrenó solo con partidos anteriores a cada semana.</div>` : ""}
@@ -3436,7 +3486,11 @@ function vipSegundaHtml(V){
   const volumen = vol.dias
     ? `<p><b>Volumen:</b> ≈${vipFmt(vol.media, 1, false)} por día en promedio; ${vol.dias_9_o_mas} de ${vol.dias} días tuvieron 9 o más y el máximo fue ${vol.max}. La página solo ve las etiquetas que quedaron guardadas, así que en vivo el volumen puede ser algo mayor.</p>` : "";
   return `
-    <p class="vip-dim" style="font-size:13px;line-height:1.55;margin:0 0 10px;">Además de la <b>Respaldada</b>, ${envia ? "llegan al Telegram" : "se miden (no se envían)"} los JUGAR de BTTS con cuota de <b>${cmin}</b> a <b>${cmax}</b> (<b>Bronce + JUGAR</b> desde <b>${vipPisoSeg("bronce_jugar").toFixed(2)}</b>${(pol.segunda_senales || []).includes("valor_detectado") ? `; <b>Valor detectado</b> desde <b>${vipPisoSeg("valor_detectado").toFixed(2)}</b>` : ""}) que tengan al menos una de estas ${lista.length} señales <b>encendidas hoy</b>: los dos <b>rescates de ataque balanceado</b> y <b>Apuesta TOP BTTS+GC bajo</b> (las que pasaron las pruebas hacia atrás), <b>Bronce + JUGAR</b> (el nivel de confianza BRONCE que existe desde el inicio, solo cuando el partido ya da JUGAR; con Evitar pierde) y <b>Valor detectado</b> (un modelo que busca errores de cuota en cuota alta y puede convertir un Evitar en JUGAR). El <b>7 nov</b> salieron <b>Granate</b> y <b>Diamante amplio</b>: dentro de esta línea ya no ganaban (98 apuestas, +1.1%; segunda mitad −8.4%; en vivo −22% en 16). Siguen encendidas como señales, pero ya no entran al VIP. Las cifras de abajo usan solo las etiquetas que la página tiene guardadas. Una señal sale sola de la lista si el motor la apaga.</p>
+    ${(() => { if(vipGruposTelegram() === null) return "";
+      const y = (L) => L.length > 1 ? L.slice(0, -1).join(", ") + " y " + L[L.length - 1] : (L[0] || "");
+      const tg = lista.filter(x => x.al_telegram === true && !x.apagada_vip).map(x => "<b>" + vipEsc(vipNombreRaw(x.motivo)) + "</b>");
+      const ob = lista.filter(x => x.al_telegram === false && !x.apagada_vip).map(x => "<b>" + vipEsc(vipNombreRaw(x.motivo)) + "</b>");
+      return tg.length ? `<p class="vip-dim" style="font-size:13px;line-height:1.55;margin:0 0 10px;"><b>Desde el ${vipFechaCorta(vipObsDesde())}</b>, de la segunda línea solo van al Telegram ${y(tg)}${ob.length ? `; ${y(ob)} ${ob.length > 1 ? "quedan" : "queda"} en observación (se miden, no se envían)` : ""}.</p>` : ""; })()}<p class="vip-dim" style="font-size:13px;line-height:1.55;margin:0 0 10px;">Además de la <b>Respaldada</b>, ${envia ? (vipGruposTelegram() !== null ? "forman la segunda línea" : "llegan al Telegram") : "se miden (no se envían)"} los JUGAR de BTTS con cuota de <b>${cmin}</b> a <b>${cmax}</b> (<b>Bronce + JUGAR</b> desde <b>${vipPisoSeg("bronce_jugar").toFixed(2)}</b>${(pol.segunda_senales || []).includes("valor_detectado") ? `; <b>Valor detectado</b> desde <b>${vipPisoSeg("valor_detectado").toFixed(2)}</b>` : ""}) que tengan al menos una de estas ${lista.length} señales <b>encendidas hoy</b>: los dos <b>rescates de ataque balanceado</b> y <b>Apuesta TOP BTTS+GC bajo</b> (las que pasaron las pruebas hacia atrás), <b>Bronce + JUGAR</b> (el nivel de confianza BRONCE que existe desde el inicio, solo cuando el partido ya da JUGAR; con Evitar pierde) y <b>Valor detectado</b> (un modelo que busca errores de cuota en cuota alta y puede convertir un Evitar en JUGAR). El <b>7 nov</b> salieron <b>Granate</b> y <b>Diamante amplio</b>: dentro de esta línea ya no ganaban (98 apuestas, +1.1%; segunda mitad −8.4%; en vivo −22% en 16). Siguen encendidas como señales, pero ya no entran al VIP. Las cifras de abajo usan solo las etiquetas que la página tiene guardadas. Una señal sale sola de la lista si el motor la apaga.</p>
     ${pol.valor_modelo && pol.valor_modelo.disponible === false ? `<p class="vip-dim" style="font-size:12px;line-height:1.55;margin:0 0 10px;color:var(--loss);">⚠️ El detector <b>Valor detectado</b> no está corriendo: falta instalar <b>scikit-learn</b> en el workflow. Mientras tanto no marca partidos.</p>` : ""}
     <div class="vf-lista">${tarjetas}</div>
     <div class="vip-verdict" style="margin-top:14px;">${resultado}${piso}${volumen}</div>
@@ -3498,6 +3552,7 @@ function renderVipGoles(data, picks){
   const diaTxt = DIA_SELECCIONADO === "hoy" ? "hoy" : (DIA_SELECCIONADO === "manana" ? "mañana" : "pasado mañana");
   const desdeTxt = vipFechaCorta(pol.desde);
   const comboEnvia = (pol.envio || []).includes("COMBO");      // 23 nov 2026: por defecto la combinada ya no se envia
+  const o25Obs = pol.o25_telegram === false;      // 28 nov 2026 (aprobado por el usuario): Over 2.5 en observación, no se envía
   const rec = (s, corto) => (s && s.n) ? `${vipFmt(s.acierto, 1, false)}% · <b style="color:${vipCol(s.roi)};">${vipPct(s.roi)}</b>${corto ? "" : ` <span class="vip-dim">(${vipN(s.n)})</span>`}` : '<span class="vip-dim">—</span>';
   const recTxt = (s) => (s && s.n) ? `${vipFmt(s.acierto, 1, false)}% de acierto · ROI <b style="color:${vipCol(s.roi)};">${vipPct(s.roi)}</b> (${vipN(s.n)} picks)` : "";
   const chipNivel = (nv) => nv === "NIVEL_1"
@@ -3508,7 +3563,8 @@ function renderVipGoles(data, picks){
   const hhmm = (f) => { const m = String(f || "").match(/(\d{2}:\d{2})\s*$/); return m ? m[1] : ""; };
   const enviadoTxt = (p, campo) => (p[campo] != null)
     ? `<span style="color:var(--chalk-dim);">📨 enviado al Telegram${hhmm(p.fecha_alerta_goles) ? " · " + hhmm(p.fecha_alerta_goles) : ""}</span>`
-    : ((p.resultado_o25 == null && p.resultado_combo == null) ? '<span style="color:var(--chalk-dim);">⏳ sale en la próxima corrida</span>' : "");
+    : ((campo === "alerta_o25" && o25Obs) ? ""      // 28 nov 2026: el chip ya dice EN OBSERVACIÓN · NO SE ENVÍA
+      : ((p.resultado_o25 == null && p.resultado_combo == null) ? '<span style="color:var(--chalk-dim);">⏳ sale en la próxima corrida</span>' : ""));
   const nombreBtts = (p) => {
     const g = p.vip_btts_grupo_base != null ? p.vip_btts_grupo_base : p.vip_grupo;
     const GB = (((data.vip_btts || {}).niveles || {}).grupos || {})[String(g)];
@@ -3519,11 +3575,11 @@ function renderVipGoles(data, picks){
     const g = String(p.vip_o25_grupo), cu = Number(p.cuota_o25_vip), cmin = Number(p.cuota_min_o25);
     const base = (g === "1" || g === "2" || g === "4") ? `Del VIP de Ambos Marcan${nombreBtts(p) ? ": " + vipEsc(nombreBtts(p)) : ""}`
       : (g === "5" ? `Señal nueva de Over 2.5, en prueba: ${vipEsc((GO["5"] || {}).nota || "")}` : "Señal propia de Over 2.5 (Favorito claro)");
-    return `<div class="conf-card">
+    return `<div class="conf-card"${(o25Obs && p.alerta_o25 == null) ? ' style="border-style:dashed;"' : ""}>
       <div>
         <div class="conf-teams">${vipEsc(p.local)} vs ${vipEsc(p.visitante)}</div>
         <div class="conf-liga">${vipEsc(p.liga || "")} · ${diaBadge(p)}${notaLigaConfianza(p)}</div>
-        <div style="margin-top:6px;display:flex;gap:8px;flex-wrap:wrap;align-items:center;font-size:11px;">${chipNivel(p.vip_o25_nivel)}${p.vip_o25_media_tope && p.vip_o25_nivel === "NIVEL_2" ? '<span class="vip-dim">ya va en Ambos Marcan: ½ unidad para no cargar el partido dos veces</span>' : ""}${enviadoTxt(p, "alerta_o25")}</div>
+        <div style="margin-top:6px;display:flex;gap:8px;flex-wrap:wrap;align-items:center;font-size:11px;">${(o25Obs && p.alerta_o25 == null) ? '<span class="vip-chip" style="border-color:var(--amber);color:var(--amber);">🔬 EN OBSERVACIÓN · NO SE ENVÍA</span>' : `${chipNivel(p.vip_o25_nivel)}${p.vip_o25_media_tope && p.vip_o25_nivel === "NIVEL_2" ? '<span class="vip-dim">ya va en Ambos Marcan: ½ unidad para no cargar el partido dos veces</span>' : ""}`}${enviadoTxt(p, "alerta_o25")}</div>
         <div class="vip-dim" style="font-size:11px;line-height:1.5;margin-top:5px;">${base} · cuota mínima ${isFinite(cmin) && cmin > 0 ? cmin.toFixed(2) : "—"}</div>
         ${vipCasaTxt(p, "o25", cu, cmin)}
       </div>
@@ -3573,13 +3629,19 @@ function renderVipGoles(data, picks){
   const envia = (pol.envio || []);
   const partes = [n1 ? `🟢 ${n1} a 1 unidad` : "", n2 ? `🟡 ${n2} a ½ unidad` : ""].filter(Boolean).join(", ");
   const hero = `<div class="market-hero"><p class="big">${sel25.length + selC.length}</p>
-    <div class="sub">picks · ${diaTxt} · Over 2.5: ${sel25.length}${partes ? ` (${partes})` : ""} · Combinada: ${selC.length}</div></div>`;
-  const notaEnvio = `<p class="vip-dim" style="font-size:12px;line-height:1.55;margin:0 0 12px;">${envia.length
+    <div class="sub">picks · ${diaTxt} · Over 2.5: ${sel25.length}${o25Obs ? (() => { const e = sel25.filter(p => p.alerta_o25 != null).length; return e ? ` (${e} ya enviados antes del ${vipFechaCorta(pol.o25_observacion_desde)}; ${sel25.length - e} en observación, no se envían)` : " (en observación, no se envían)"; })() : (partes ? ` (${partes})` : "")} · Combinada: ${selC.length}</div></div>`;
+  const ENV25 = ((O.todo || {}).en_vivo) || {}, OB25 = ((((data || {}).observacion_vip) || {}).total || {}).o25 || {};
+  const notaObs25 = o25Obs ? `<div class="vip-verdict" style="margin:0 0 12px;border-left-color:var(--amber);">
+      <p>🔬 <b>Desde el ${vipFechaCorta(pol.o25_observacion_desde)} el VIP de Over 2.5 está en observación: no se envía al Telegram.</b>${ENV25.n ? ` Lo que se envió dio ${vipN(ENV25.n)} picks jugados, ${vipFmt(ENV25.acierto, 1, false)}% de acierto, ROI <b style="color:${vipCol(ENV25.roi)};">${vipPct(ENV25.roi)}</b> a 1 unidad.` : ""} Cada partido de esta lista se anota como «habría salido», con su cuota de ese momento${OB25.n ? ` (van ${vipN(OB25.n)} jugados, ROI ${vipPct(OB25.roi)})` : ""}.</p>
+      <p>Vuelve al Telegram solo si junta <b>${vipN(pol.observacion_meta || 30)} picks jugados</b> en observación con ROI de <b>${vipPct(pol.observacion_roi_min != null ? pol.observacion_roi_min : 3)} o más</b>, y si tú lo apruebas (el avance por grupo está en la pestaña Selección VIP, «🔬 En observación»).</p>
+    </div>` : "";
+  const notaEnvio = o25Obs ? `${notaObs25}<p class="vip-dim" style="font-size:12px;line-height:1.55;margin:0 0 12px;">${pol.solo_vip ? "Las alertas viejas de Over 2.5 y de combinada por señal tampoco llegan." : ""} La lista se recalcula cada hora.</p>` : `<p class="vip-dim" style="font-size:12px;line-height:1.55;margin:0 0 12px;">${envia.length
     ? `Al Telegram llega cada partido de esta lista en su propio mensaje «💎 VIP ${envia.map(e => e === "O25" ? "OVER 2.5" : "COMBINADA").join(" / ")}», una vez por mercado${pol.nivel_2_envia === false ? " (los 🟡 no se envían)" : ""}.${pol.tope_partido ? " <b>Tope por partido (desde el 23 nov):</b> si el partido ya va en el VIP de Ambos Marcan, el Over 2.5 va a ½ unidad; máximo 1.5 u por partido." : ""}${comboEnvia ? "" : " <b>La combinada ya no se envía (cambio del 23 nov; lo que ya salió sigue aquí)</b>: es el mismo partido que Ambos Marcan y pierde siempre que pierde el BTTS; sigue aquí en prueba, midiéndose."}`
     : "Ahora mismo estos picks NO se envían al Telegram (NOTIFY_VIP_GOLES está vacío)."}${pol.solo_vip ? " Las alertas viejas de Over 2.5 y de combinada por señal ya no llegan: estos mercados solo salen por aquí." : ""} La lista se recalcula cada hora hasta que se envía.</p>`;
 
   // ---- record por grupo ----
-  const filaRec = (nombre, nota, B, nv, clase) => `<tr class="${clase || ""}"><td class="vip-nom"><b>${vipEsc(nombre)}</b>${nota ? `<div class="vip-dim" style="font-size:11px;">${vipEsc(nota)}</div>` : ""}</td>
+  // 27 nov 2026 (auditoria): cada grupo que se envia lleva su veredicto segun lo ENVIADO (✅ / ⏳ / ❌)
+  const filaRec = (nombre, nota, B, nv, clase) => `<tr class="${clase || ""}"><td class="vip-nom"><b>${vipEsc(nombre)}</b>${clase === "vip-tenue" ? "" : (() => { const vg = vipVeredictoEnviado(B && B.en_vivo); return `<div style="font-size:11px;font-weight:700;color:${vg.c};" title="${vipEsc(vg.ayuda)}">${vg.t}</div>`; })()}${nota ? `<div class="vip-dim" style="font-size:11px;">${vipEsc(nota)}</div>` : ""}</td>
     <td class="num">${nv === "NIVEL_1" ? "🟢 1u" : (nv === "NIVEL_2" ? "🟡 ½u" : (nv || "—"))}</td>
     <td class="num">${rec(B && B.total)}</td><td class="num">${rec(B && B.ult30)}</td><td class="num">${clase === "vip-tenue" ? '<span class="vip-dim">referencia, no se envía</span>' : rec(B && B.en_vivo)}</td>
     <td class="num">${(B && B.total && B.total.mitades) ? `<span style="color:${vipCol(B.total.mitades[0])};">${vipPct(B.total.mitades[0])}</span> / <span style="color:${vipCol(B.total.mitades[1])};">${vipPct(B.total.mitades[1])}</span>` : "—"}</td></tr>`;
@@ -3611,7 +3673,7 @@ function renderVipGoles(data, picks){
   </div>`;
   return `
     <section>${titulo}${hero}${notaEnvio}
-      <p class="section-title" style="margin-top:6px;">⚽ Over 2.5 · ${diaTxt}</p>
+      <p class="section-title" style="margin-top:6px;">⚽ Over 2.5 · ${diaTxt}${o25Obs ? " · en observación, no se envía" : ""}</p>
       ${sel25.length ? lista25 : '<div class="vip-pick-vacio">Ningún partido entra al VIP Over 2.5 para este día. <b>No enviar nada es una decisión válida.</b></div>'}
       <p class="section-title" style="margin-top:22px;">🎁 Combinada (ambos marcan + más de 2.5) · ${diaTxt}${comboEnvia ? "" : " · en prueba, no se envía"}</p>
       ${selC.length ? listaC : '<div class="vip-pick-vacio">Ningún partido entra a la combinada en prueba para este día.</div>'}
@@ -3646,6 +3708,10 @@ function renderVip(data, picks){
   // 25 nov 2026: tambien el grupo 10 (Rescate «GF + BTTS» 1.45–1.49), que puede llegar sin JUGAR
   const enPruebaSinJugar = (p) => p.nivel_final !== "JUGAR" && !!vipEnPruebaDeGrupo(p.vip_grupo) && vipClase(p) === "SEGUNDA_LINEA";
   const selDia = Array.from(new Set([...picks.filter(enviadaVip), ...jugarDia.filter(cumpleHoy), ...picks.filter(enPruebaSinJugar)])).sort(vipOrden);
+  // 28 nov 2026: arriba los grupos que se envían (y lo ya enviado de grupos apagados); abajo, aparte, los grupos en
+  // observación (lo que ya había salido de ellos antes del cambio queda ahí, marcado 📨 enviado)
+  const selTg = selDia.filter(p => !vipGrupoEnObservacion(p.vip_grupo)), selObs = selDia.filter(p => vipGrupoEnObservacion(p.vip_grupo));
+  const obsSinEnviar = selObs.filter(vipObservacion).length, obsEnviados = selObs.length - obsSinEnviar;
   const idsSel = new Set(selDia);
   const fueraDia = jugarDia.filter(p => !idsSel.has(p));
   // 1 nov 2026 (pedido del usuario): los que quedaron fuera tambien muestran si ganaron o perdieron, con su resumen
@@ -3691,9 +3757,12 @@ function renderVip(data, picks){
   // 19 nov 2026: chip del nivel (🟢 1 unidad / 🟡 ½ unidad), con lo que dice el Telegram
   const NV = V.niveles && !V.niveles.error ? V.niveles : null;
   const nivelChip = (p) => {
+    if(vipObservacion(p)) return `<span class="vip-chip" style="border-color:var(--amber);color:var(--amber);" title="Su grupo está en observación desde el ${vipEsc(vipFechaCorta(vipObsDesde()))}: se anota lo que habría salido y no se envía al Telegram">🔬 EN OBSERVACIÓN · NO SE ENVÍA</span>`;
     const k = vipNivel(p); if(!k) return "";
-    const t = NV && NV[k] && NV[k].total && NV[k].total.n ? `${VIP_NIVELES[k].que}: ${vipN(NV[k].total.n)} picks, ROI ${vipPct(NV[k].total.roi)}` : VIP_NIVELES[k].que;
-    const noVa = k === "NIVEL_2" && NV && NV.nivel_2_envia === false;
+    // 27 nov 2026 (auditoria): el globo dice lo ENVIADO con ese nivel (antes: el historico con las reglas de hoy)
+    const ev = NV && NV[k] && NV[k].en_vivo;
+    const t = ev && ev.n ? `${VIP_NIVELES[k].que} · enviado con este nivel (desde el 19 nov): ${vipN(ev.n)} picks, ROI ${vipPct(ev.roi)}` : `${VIP_NIVELES[k].que} · todavía sin enviados jugados con este nivel`;
+    const noVa = k === "NIVEL_2" && NV && NV.nivel_2_envia === false && !p.alerta_btts;      // 28 nov: lo ya enviado, enviado está
     return `<span class="vip-chip" style="border-color:${k === "NIVEL_1" ? "var(--win)" : "var(--amber)"};color:${k === "NIVEL_1" ? "var(--win)" : "var(--amber)"};" title="${vipEsc(t)}">${VIP_NIVELES[k].emoji} ${VIP_NIVELES[k].corto}${noVa ? " · NO SE ENVÍA" : ""}</span>`;
   };
   const tarjetaVip = (p) => {
@@ -3711,12 +3780,13 @@ function renderVip(data, picks){
     const MC = (V.niveles && V.niveles.mov_cuota && !V.niveles.mov_cuota.error) ? V.niveles.mov_cuota : null;
     const uFreno = MC ? MC.umbral_freno : 2, uAviso = MC ? MC.umbral_aviso : 5;
     const frenado = !sent && res == null && p.frenado_alza === true;
+    const obs = vipObservacion(p);      // 28 nov 2026: grupo en observación (el chip ya lo dice: no se envía)
     const enviado = sent
       ? `<span style="color:var(--chalk-dim);">📨 enviado al Telegram${hhmm(p.fecha_alerta) ? " · " + hhmm(p.fecha_alerta) : ""}</span>`
-      : (res == null ? (frenado ? `<span class="vip-chip" style="border-color:var(--loss);color:var(--loss);">✋ NO SE ENVÍA · CUOTA SUBIENDO</span>` : '<span style="color:var(--chalk-dim);">⏳ sale en la próxima corrida</span>') : "");
+      : (obs ? "" : (res == null ? (frenado ? `<span class="vip-chip" style="border-color:var(--loss);color:var(--loss);">✋ NO SE ENVÍA · CUOTA SUBIENDO</span>` : '<span style="color:var(--chalk-dim);">⏳ sale en la próxima corrida</span>') : ""));
     const mEnv = Number(p.mov_envio_pct), avisoTg = p.aviso_cuota_btts ? " Se avisó al Telegram." : "";
     const movTxt = frenado
-      ? `<div style="font-size:11px;line-height:1.5;margin-top:5px;color:var(--loss);">✋ La cuota subió <b>${vipFmt(p.alza_previa_pct, 1)}%</b> desde que apareció el partido${p.cuota_btts_inicial ? ` (${Number(p.cuota_btts_inicial).toFixed(2)} → ${Number(p.cuota_btts).toFixed(2)})` : ""}: el mercado se aleja. Con la cuota ya subiendo ${vipN(uFreno)}% o más antes de enviar, las alertas acertaron ${MC && MC.antes.subio.n ? `${vipFmt(MC.antes.subio.acierto, 0, false)}% (${vipN(MC.antes.subio.n)}, ${vipPct(MC.antes.subio.roi)})` : "menos"}. No sale; si la cuota vuelve, sale.</div>`
+      ? `<div style="font-size:11px;line-height:1.5;margin-top:5px;color:var(--loss);">✋ La cuota subió <b>${vipFmt(p.alza_previa_pct, 1)}%</b> desde que apareció el partido${p.cuota_btts_inicial ? ` (${Number(p.cuota_btts_inicial).toFixed(2)} → ${Number(p.cuota_btts).toFixed(2)})` : ""}: el mercado se aleja. Con la cuota ya subiendo ${vipN(uFreno)}% o más antes de enviar, las alertas acertaron ${MC && MC.antes.subio.n ? `${vipFmt(MC.antes.subio.acierto, 0, false)}% (${vipN(MC.antes.subio.n)}, ${vipPct(MC.antes.subio.roi)})` : "menos"}. ${obs ? "Tampoco se anota en observación; si la cuota vuelve, se anota." : "No sale; si la cuota vuelve, sale."}</div>`
       : (sent && isFinite(mEnv) && p.mov_envio_pct != null && Math.abs(mEnv) >= uAviso
         ? (mEnv > 0
           ? `<div style="font-size:11px;line-height:1.5;margin-top:5px;color:var(--loss);">⚠️ <b>El mercado va en contra:</b> salió a ${Number(p.cuota_btts_alerta).toFixed(2)} y ${res == null ? "ahora está" : "cerró"} en ${Number(p.cuota_btts).toFixed(2)} (${vipFmt(mEnv, 1)}%).${res == null ? " Si no entraste, mejor no entres." : ""}${avisoTg} Sigue contando en su grupo: lo enviado no se quita del récord.</div>`
@@ -3726,20 +3796,24 @@ function renderVip(data, picks){
       ? `<div class="vip-dim" style="font-size:11px;line-height:1.5;margin-top:5px;">Hoy ya no cumple: ${motivoFuera(p)}. Como ya salió al Telegram, se queda aquí.</div>` : "";
     const EPg = vipEnPruebaDeGrupo(p.vip_grupo);      // 25 nov 2026: grupos en prueba (9 y 10)
     const segTxt = c === "SEGUNDA_LINEA"
-      ? (EPg
+      ? (EPg && obs
+        ? `<div class="vip-dim" style="font-size:11px;line-height:1.5;margin-top:5px;">Por: <b>${vipEsc(vipNombreRaw(EPg.lab))}</b> · cuota ${Number((EPg.rango || [])[0]).toFixed(2)}–${Number((EPg.rango || [])[1]).toFixed(2)} · 🔬 en observación: se anota, no se envía${p.nivel_final !== "JUGAR" ? " (entra aunque el sistema diga EVITAR)" : ""}</div>`
+        : EPg
         ? `<div class="vip-dim" style="font-size:11px;line-height:1.5;margin-top:5px;">Por: <b>${vipEsc(vipNombreRaw(EPg.lab))}</b> · 🧪 en prueba · cuota ${Number((EPg.rango || [])[0]).toFixed(2)}–${Number((EPg.rango || [])[1]).toFixed(2)} · ½ unidad${EPg.cuota_min ? ` · <b>apuesta solo si tu casa paga ${Number(EPg.cuota_min).toFixed(2)} o más</b>` : ""}${p.nivel_final !== "JUGAR" ? (EPg.lab === "topacio" ? " (entra aunque el sistema diga EVITAR: su regla está apagada con todas las cuotas)" : " (entra aunque el sistema diga EVITAR)") : ""}${vipEnPruebaAutoTxt(EPg)}</div>`
         : `<div class="vip-dim" style="font-size:11px;line-height:1.5;margin-top:5px;">Por: <b>${vipEsc(vipSenalesSegunda(p).map(vipNombreRaw).join(" + ") || "señal de la segunda línea")}</b> · cuota desde ${(vipSenalesSegunda(p).length ? Math.min(...vipSenalesSegunda(p).map(vipPisoSeg)) : Number(pol.segunda_cuota_min || 1.5)).toFixed(2)}</div>`) : "";
     // 2 nov 2026: cuota de mayor confianza de la señal principal, con la cuota con que SALIO (o la de ahora si aun no sale)
     const ccR = ((((DATA && DATA.cuota_confianza) || {}).BTTS) || {})[p.motivo_btts];
+    // 27 nov 2026 (auditoria): la prueba justa del rango (cada dia con el rango que tenia la señal antes de ese dia)
+    const ccJ = ((((((DATA && DATA.en_rango) || {}).justa) || {}).BTTS || {})[p.motivo_btts] || {}).dia || null;
     const ccPrecio = Number(precio);
     const ccDentro = !!(ccR && ccR.rango && ccR.se_mantuvo && ccPrecio >= ccR.rango[0] - 1e-9 && ccPrecio < ccR.rango[1] - 1e-9);
     const ccNom = vipEsc(ccNombre("BTTS", p.motivo_btts || ""));
     const ccTxt = !p.motivo_btts ? "" : `<div class="vip-dim" style="font-size:11px;line-height:1.5;margin-top:5px;">🎯 Cuota de confianza de <b>${ccNom}</b> (la señal principal): ${
       !ccR ? "todavía no tiene rango (menos de 30 partidos)"
       : !ccR.rango ? "no tiene ningún rango de cuota que gane"
-      : `${Number(ccR.rango[0]).toFixed(2)}–${Number(ccR.rango[1]).toFixed(2)} (ROI ${vipPct(ccR.roi)} · ${vipFmt(ccR.uds)}u${ccR.se_mantuvo ? "" : " · no se mantuvo"}) · ${ccDentro ? `<b style="color:var(--win);">✓ la cuota ${ccPrecio.toFixed(2)} está en el rango</b>` : `la cuota ${isFinite(ccPrecio) ? ccPrecio.toFixed(2) : "—"} ${ccR.se_mantuvo ? "está fuera" : (ccPrecio >= ccR.rango[0] - 1e-9 && ccPrecio < ccR.rango[1] - 1e-9 ? "está en el rango, pero el rango no se mantuvo" : "está fuera")}`}`}</div>`;
+      : `${Number(ccR.rango[0]).toFixed(2)}–${Number(ccR.rango[1]).toFixed(2)} (${ccJ && ccJ.n ? `prueba justa ROI <b style="color:${vipCol(ccJ.roi)};">${vipPct(ccJ.roi)}</b> en ${vipN(ccJ.n)}` : "sin prueba justa todavía"} · mirando atrás ${vipPct(ccR.roi)}, sale optimista${ccR.se_mantuvo ? "" : " · no se mantuvo"}) · ${ccDentro ? `<b style="color:var(--win);">✓ la cuota ${ccPrecio.toFixed(2)} está en el rango</b>` : `la cuota ${isFinite(ccPrecio) ? ccPrecio.toFixed(2) : "—"} ${ccR.se_mantuvo ? "está fuera" : (ccPrecio >= ccR.rango[0] - 1e-9 && ccPrecio < ccR.rango[1] - 1e-9 ? "está en el rango, pero el rango no se mantuvo" : "está fuera")}`}`}</div>`;
     const caR = V.cuota_alta_rango || [1.7, 2.2], esCA = c === "SEGUNDA_LINEA" && Number(precio) >= caR[0] && Number(precio) <= caR[1] + 1e-9;
-    return `<div class="conf-card">
+    return `<div class="conf-card"${obs ? ' style="border-style:dashed;"' : ""}>
       <div>
         <div class="conf-teams">${vipEsc(p.local)} vs ${vipEsc(p.visitante)}</div>
         <div class="conf-liga">${vipEsc(p.liga || "")} · ${diaBadge(p)}${confirmacionCuotaBadge(p, "btts")}${notaLigaConfianza(p)}</div>
@@ -3761,14 +3835,23 @@ function renderVip(data, picks){
   };
   // Clases que existen pero NO se envian ("en seguimiento"): se miden, se muestran, no llegan al Telegram.
   const enSeguimiento = Object.keys(VIP_CLASES).filter(c => (c !== "SEGUNDA_LINEA" || vipSegConocida()) && !vipEnvio().includes(c));
-  const notaSeguimiento = enSeguimiento.length ? `<p class="vip-dim" style="font-size:12px;line-height:1.55;margin:0 0 12px;">Al Telegram solo llega: <b>${vipNombresEnvio()}</b>${vipEnvio().includes("SEGUNDA_LINEA") ? " (la Segunda línea por sus propias señales encendidas; el resto con señal activa y estable)" : " con señal activa y estable"}. ${enSeguimiento.map(c => {
+  const notaSeguimiento = enSeguimiento.length ? `<p class="vip-dim" style="font-size:12px;line-height:1.55;margin:0 0 12px;">${vipGruposTelegram() !== null ? "Clases del VIP" : "Al Telegram solo llega"}: <b>${vipNombresEnvio()}</b>${vipEnvio().includes("SEGUNDA_LINEA") ? " (la Segunda línea por sus propias señales encendidas; el resto con señal activa y estable)" : " con señal activa y estable"}${vipGruposTelegram() !== null ? "; de ellas, al Telegram solo van los grupos del núcleo" : ""}. ${enSeguimiento.map(c => {
       const s = vipResumenClase(V, c);
       const clara = s.alfa != null && s.alfa_se && s.alfa / s.alfa_se >= 1.96;
       return `La <b>${VIP_CLASES[c].nombre}</b> queda en seguimiento y no se envía: ${vipN(s.n)} apuestas en el histórico, ROI ${vipPct(s.roi)}, ${clara ? "con ventaja clara frente al mercado (se puede activar con NOTIFY_BTTS_CLASES_VIP)" : "sin ventaja demostrada frente al mercado"}.`; }).join(" ")}</p>` : "";
   // 20 nov 2026: la lista va por grupos de confianza, cada uno con su record (data.vip_btts.niveles.grupos)
   const GRP = (V.niveles && V.niveles.grupos) || {};
-  const listaPorGrupo = (lista) => {
-    let html = "", act = null, pos = 0;
+  // 28 nov 2026: progreso de cada grupo en observación (data.observacion_vip)
+  const OBSG = {};
+  ((((data || {}).observacion_vip) || {}).grupos || []).filter(x => x.mercado === "btts").forEach(x => { OBSG[String(x.grupo)] = x; });
+  const obsChip = (g) => {
+    if(vipGruposTelegram() === null || g === "x") return "";
+    if(vipGrupoAlTelegram(g)) return '<span style="font-size:12px;color:var(--win);">📨 se envía al Telegram</span>';
+    const o = OBSG[g], pr = (o && o.prueba) || {};
+    return `<span style="font-size:12px;color:var(--amber);">🔬 en observación desde el ${vipFechaCorta(vipObsDesde())} · no se envía · ${vipN(pr.n || 0)} de ${vipN(vipObsMeta())} jugados${pr.n ? ` (ROI ${vipPct(pr.roi)})` : ""}</span>`;
+  };
+  const listaPorGrupo = (lista, pos0) => {
+    let html = "", act = null, pos = pos0 || 0;
     for(const p of lista){
       const g = p.vip_grupo != null ? String(p.vip_grupo) : "x";
       if(g !== act){
@@ -3779,23 +3862,40 @@ function renderVip(data, picks){
         // 27 nov 2026 (auditoria): primero lo ENVIADO (lo real); el historico con las reglas de hoy va despues y dice que es
         const rec = t && t.n ? `<b>enviado:</b> ${v && v.n ? `${vipFmt(v.acierto, 1, false)}% · ROI <b style="color:${vipCol(v.roi)};">${vipPct(v.roi)}</b> (${vipN(v.n)} picks, ${vipFmt(v.uds)} u)` : "todavía nada jugado"} · <span title="Las reglas de hoy aplicadas hacia atrás: sale más bonito de lo que fue en la realidad">histórico con las reglas de hoy ${vipFmt(t.acierto, 1, false)}% · ROI ${vipPct(t.roi)} (${vipN(t.n)})</span>` : "";
         const n = lista.filter(q => String(q.vip_grupo) === g).length;
-        html += `<div style="display:flex;flex-wrap:wrap;gap:6px 12px;align-items:baseline;margin:${pos === 1 ? "4px" : "18px"} 0 8px;padding:6px 10px;border-left:3px solid ${(g === "7" || g === "8" || vipEnPruebaDeGrupo(g)) ? "var(--amber)" : "var(--win)"};background:rgba(255,255,255,0.03);border-radius:6px;">
-          <b style="font-size:14px;">${pos}. ${vipEsc(nombre)}</b><span class="vip-dim" style="font-size:12px;">${n} ${n === 1 ? "partido" : "partidos"}</span>
-          ${rec ? `<span class="vip-dim" style="font-size:12px;">${rec}</span>` : ""}${g === "4" && v && v.n && v.roi < 0 ? '<span style="font-size:12px;color:var(--amber);">ojo: pocos enviados y van perdiendo</span>' : ""}${(vipEnPruebaDeGrupo(g) || {}).auto ? `<span style="font-size:12px;color:var(--amber);">🧪${vipEnPruebaAutoTxt(vipEnPruebaDeGrupo(g)).replace(/^ · /, " ")}</span>` : ""}</div>`;
+        const vg = vipVeredictoEnviado(v);      // 27 nov 2026 (auditoria): ✅ / ⏳ / ❌ segun lo enviado
+        const obsG = vipGruposTelegram() !== null && g !== "x" && !vipGrupoAlTelegram(g);
+        html += `<div style="display:flex;flex-wrap:wrap;gap:6px 12px;align-items:baseline;margin:${pos === 1 ? "4px" : "18px"} 0 8px;padding:6px 10px;border-left:3px solid ${(obsG || g === "7" || g === "8" || vipEnPruebaDeGrupo(g)) ? "var(--amber)" : "var(--win)"};background:rgba(255,255,255,0.03);border-radius:6px;">
+          <b style="font-size:14px;">${pos}. ${vipEsc(nombre)}</b><span style="font-size:12px;font-weight:700;color:${vg.c};" title="${vipEsc(vg.ayuda)}">${vg.t}</span><span class="vip-dim" style="font-size:12px;">${n} ${n === 1 ? "partido" : "partidos"}</span>
+          ${obsChip(g)}${rec ? `<span class="vip-dim" style="font-size:12px;">${rec}</span>` : ""}${g === "4" && v && v.n && v.roi < 0 && !obsG ? '<span style="font-size:12px;color:var(--amber);">ojo: pocos enviados y van perdiendo</span>' : ""}${(vipEnPruebaDeGrupo(g) || {}).auto && !obsG ? `<span style="font-size:12px;color:var(--amber);">🧪${vipEnPruebaAutoTxt(vipEnPruebaDeGrupo(g)).replace(/^ · /, " ")}</span>` : ""}</div>`;
       }
       html += tarjetaVip(p);
     }
     return html;
   };
+  // 28 nov 2026 (aprobado por el usuario): al Telegram solo el núcleo; lo demás del VIP queda en observación
+  const EN = vipEnviadoNucleo(), ETo = (((data || {}).enviado_total) || {}).todo || {};
+  const OTROS = (EN && ETo.n) ? {n: ETo.n - EN.n, uds: (ETo.uds_1u || 0) - EN.uds} : null;
+  const notaNucleo = vipGruposTelegram() !== null ? `<div class="vip-verdict" style="margin:0 0 12px;border-left-color:var(--win);">
+      <p>📨 <b>Desde el ${vipFechaCorta(vipObsDesde())} al Telegram solo llega el núcleo de Ambos Marcan:</b> ${vipEsc(vipNombresNucleo())}, a 1 unidad.${EN ? ` Lo que se envió de estos grupos desde el ${vipFechaCorta(((data || {}).enviado_total || {}).desde)}: <b>${vipN(EN.n)}</b> picks jugados, ${vipFmt(EN.acierto, 1, false)}% de acierto, ROI <b style="color:${vipCol(EN.roi)};">${vipPct(EN.roi)}</b> (${vipFmt(EN.uds, 1)} u a 1 unidad).` : ""}${OTROS && OTROS.n ? ` Todo lo demás que se envió (otros grupos, Over 2.5 y combinada: ${vipN(OTROS.n)} picks) dio <b style="color:${vipCol(OTROS.uds)};">${vipFmt(OTROS.uds, 1)} u</b>.` : ""}</p>
+      <p>🔬 Los demás grupos del VIP y el VIP de Over 2.5 siguen aquí <b>en observación</b>: no se envían, pero se anota lo que habría salido, con su cuota de ese momento. Un grupo vuelve al Telegram solo si junta <b>${vipN(vipObsMeta())} picks jugados</b> en observación con ROI de <b>${vipPct(vipObsRoiMin())} o más</b>, y si tú lo apruebas.</p>
+    </div>` : "";
+  const nGr = (l) => new Set(l.map(p => String(p.vip_grupo))).size;
+  const vacioTxt = selObs.length
+    ? (obsEnviados ? "Ningún pick de los grupos que se envían para este día (abajo, lo que ya había salido de los grupos en observación)." : "Ningún pick del núcleo para este día: no sale nada al Telegram. <b>No enviar nada es una decisión válida.</b>")
+    : (jugarDia.length
+      ? "Ningún JUGAR de BTTS pasa el filtro de precio y reglas activas para este día. <b>No enviar nada es una decisión válida:</b> los JUGAR que quedan fuera rinden " + vipPct(resto.roi) + " en el histórico."
+      : "Todavía no hay JUGAR de BTTS para este día.");
+  const listaHtml = (selTg.length ? listaPorGrupo(selTg) : `<div class="vip-pick-vacio">${vacioTxt}</div>`)
+    + (selObs.length ? `<p class="section-title" style="margin-top:22px;">🔬 En observación · ${diaTxt} · ya no se envían</p>${obsEnviados ? `<p class="vip-dim" style="font-size:12px;line-height:1.55;margin:0 0 8px;">Los marcados «📨 enviado» salieron al Telegram antes del ${vipFechaCorta(vipObsDesde())} y siguen contando en lo enviado.</p>` : ""}${listaPorGrupo(selObs, nGr(selTg))}` : "")
+    + candidatasEnLista(picks, nGr(selDia) + 1) + casiVipEnLista(picks);
   const hoyHtml = `
-    <div class="market-hero"><p class="big">${selDia.length}</p>
-      <div class="sub">${selDia.length === 1 ? "pick" : "picks"} en la Selección VIP · ${diaTxt}${baseJugar ? ` (de ${baseJugar} JUGAR de BTTS)` : ""}${(() => { const n1 = selDia.filter(p => p.vip_nivel === "NIVEL_1").length, n2 = selDia.filter(p => p.vip_nivel === "NIVEL_2").length; return [n1 ? `🟢 ${n1} a 1 unidad` : "", n2 ? `🟡 ${n2} a ½ unidad` : ""].filter(Boolean).map(t => " · " + t).join(""); })()}</div></div>
+    <div class="market-hero"><p class="big">${selTg.length + obsEnviados}</p>
+      <div class="sub">${(selTg.length + obsEnviados) === 1 ? "pick" : "picks"} en la Selección VIP · ${diaTxt}${baseJugar ? ` (de ${baseJugar} JUGAR de BTTS)` : ""}${(() => { const L = selTg.concat(selObs.filter(p => !vipObservacion(p))); const n1 = L.filter(p => p.vip_nivel === "NIVEL_1").length, n2 = L.filter(p => p.vip_nivel === "NIVEL_2").length; return [n1 ? `🟢 ${n1} a 1 unidad` : "", n2 ? `🟡 ${n2} a ½ unidad` : ""].filter(Boolean).map(t => " · " + t).join(""); })()}${obsSinEnviar ? ` · 🔬 ${obsSinEnviar} más en observación (no se envían)` : ""}</div></div>
     <p class="vip-dim" style="font-size:12px;line-height:1.55;margin:0 0 12px;">Esta lista se recalcula cada hora con la cuota y las reglas de ese momento: un partido puede entrar o salir <b>hasta que se envíe</b>. Lo que ya salió al Telegram se queda aquí, con su cuota de envío.</p>
+    ${notaNucleo}
     ${comparadorHtml()}
     ${notaSeguimiento}
-    ${selDia.length ? listaPorGrupo(selDia) + candidatasEnLista(picks, selDia.length + 1) + casiVipEnLista(picks) : `${candidatasEnLista(picks, 1)}${casiVipEnLista(picks)}<div class="vip-pick-vacio">${jugarDia.length
-        ? "Ningún JUGAR de BTTS pasa el filtro de precio y reglas activas para este día. <b>No enviar nada es una decisión válida:</b> los JUGAR que quedan fuera rinden " + vipPct(resto.roi) + " en el histórico."
-        : "Todavía no hay JUGAR de BTTS para este día."}</div>`}
+    ${listaHtml}
     ${fueraDia.length ? `<details class="vip-det"><summary>Ver los ${fueraDia.length} JUGAR de BTTS que NO entran a la selección (no se envían)${resFuera.n ? ` · jugados ${resFuera.n}: ${resFuera.g} ganados, ROI ${vipPct(resFuera.roi)}` : ""}</summary>
       <div class="match-list vip-fuera" style="margin-top:8px;">${fueraDia.map(p => `<div class="match-row"><div><div class="match-teams">${vipEsc(p.local)} vs ${vipEsc(p.visitante)}</div><div class="match-liga">${vipEsc(p.liga || "")} · ${motivoFuera(p)}</div></div><span class="match-pct">cuota ${p.cuota_btts ? p.cuota_btts.toFixed(2) : "—"}</span>${p.resultado_btts === true ? '<span class="match-badge si">✓ Ganada</span>' : (p.resultado_btts === false ? '<span class="match-badge no">✕ Perdida</span>' : '<span class="match-badge no">fuera</span>')}</div>`).join("")}</div></details>` : ""}`;
 
@@ -3804,7 +3904,7 @@ function renderVip(data, picks){
   const ult = (V.por_mes || []).slice(-1)[0];
   const errMes = (ult && ult.n && hist.sd_apuesta) ? 196 * hist.sd_apuesta / Math.sqrt(ult.n) : null;
   const veredicto = `
-    <p>Desde el ${vipFechaCorta(hist.desde)}, la Selección VIP suma <b>${vipN(hist.n)}</b> apuestas (≈${vipFmt(hist.picks_por_dia, 1, false)} por día) con ROI <b style="color:${vipCol(hist.roi)};">${vipPct(hist.roi)}</b>.
+    <p>Desde el ${vipFechaCorta(hist.desde)}, la Selección VIP${vipGruposTelegram() !== null ? " (el núcleo que hoy se envía, con las reglas de hoy aplicadas hacia atrás)" : ""} suma <b>${vipN(hist.n)}</b> apuestas (≈${vipFmt(hist.picks_por_dia, 1, false)} por día) con ROI <b style="color:${vipCol(hist.roi)};">${vipPct(hist.roi)}</b>.
       Con 95% de confianza el ROI real está entre <b>${hist.ic95 ? vipFmt(hist.ic95[0]) : "—"}%</b> y <b>${hist.ic95 ? vipFmt(hist.ic95[1]) : "—"}%</b>: ${!hist.ic95 ? "sin datos suficientes." : (hist.ic95[0] > 0 ? "todo el rango está por encima de cero, la ganancia ya es estadísticamente clara (aunque sigue siendo en datos con los que se diseñó la regla)." : (hist.ic95[1] < 0 ? "todo el rango está por debajo de cero: esta selección pierde dinero." : "el rango incluye el cero, así que todavía no está <i>demostrado</i> que gane dinero."))}</p>
     <p>Enviar <b>todas</b> las JUGAR habría dado <b style="color:${vipCol(todas.roi)};">${vipPct(todas.roi)}</b>, y lo que la selección deja fuera da <b style="color:${vipCol(resto.roi)};">${vipPct(resto.roi)}</b> (${vipN(resto.n)} apuestas, ${vipN(resto.picks_por_dia ? Math.round(resto.picks_por_dia) : 0)} por día). La mejora viene de <b>no regalar</b> esas apuestas, no de acertar más.</p>
     <p>Frente al mercado completo en su misma banda de cuota y mes, la selección gana <b style="color:${vipCol(hist.alfa)};">${vipFmt(hist.alfa)}</b> puntos de ROI (±${hist.alfa_se ? (1.96 * hist.alfa_se).toFixed(1) : "—"}).
@@ -3839,7 +3939,7 @@ function renderVip(data, picks){
   const semanal = curva.filter((_, i) => i % 7 === 0 || i === curva.length - 1);
   const curvaHtml = `
     <div class="vip-leyenda">
-      <span><span class="k" style="border-top-color:${VIP_COLOR_VIP};"></span>Selección VIP con las reglas de hoy (hacia atrás, no es lo enviado)</span>
+      <span><span class="k" style="border-top-color:${VIP_COLOR_VIP};"></span>Selección VIP${vipGruposTelegram() !== null ? " (el núcleo)" : ""} con las reglas de hoy (hacia atrás, no es lo enviado)</span>
       <span><span class="k" style="border-top-color:${VIP_COLOR_TODAS};"></span>Todas las JUGAR (lo que se enviaba antes)</span>
       <span>unidades acumuladas, 1u por apuesta${curva.length ? " · " + vipFechaCorta(curva[0].fecha) + " a " + vipFechaCorta(curva[curva.length - 1].fecha) : ""}</span>
     </div>
@@ -3854,11 +3954,11 @@ function renderVip(data, picks){
   const grupos = `<div class="vip-scroll"><table class="cmp-table">
     <thead><tr><th>Grupo</th><th class="num">Apuestas</th><th class="num">ROI</th><th class="num">Ventaja</th><th class="num">Acierto / necesario</th><th class="num">Rango 95%</th><th class="num">Cuota</th><th class="num">Unidades</th><th class="num">Peor caída</th></tr></thead>
     <tbody>
-      ${vipFilaGrupo("💎 Selección VIP", V.vip, `${vipNombresEnvio()} · reglas de hoy aplicadas hacia atrás (lo enviado está en el Tablero)`, true)}
-      ${vipEnvio().includes("RESPALDADA") ? vipFilaGrupo("↳ Respaldada", V.respaldada, "VIP+ 1.40–1.60 o Pilares") : ""}
-      ${vipEnvio().includes("SEGUNDA_LINEA") ? vipFilaGrupo("↳ Segunda línea", V.segunda_linea, `${(pol.segunda_senales || []).length || 5} señales encendidas · cuota ${Number(pol.segunda_cuota_min || 1.5).toFixed(2)}–${Number(pol.cuota_max).toFixed(2)}`) : ""}
-      ${vipEnvio().includes("ZONA_VALOR") ? vipFilaGrupo("↳ Zona de valor", V.zona_valor, `JUGAR con cuota ${Number(pol.cuota_min).toFixed(2)}–${Number(pol.cuota_max).toFixed(2)}`) : ""}
+      ${vipFilaGrupo("💎 Selección VIP", V.vip, `${vipGruposTelegram() !== null ? "el núcleo que se envía: " + vipEsc(vipNombresNucleo()) : vipNombresEnvio()} · reglas de hoy aplicadas hacia atrás (lo enviado está en el Tablero)`, true)}
       ${V.vip_activa ? vipFilaGrupo("↳ con regla activa hoy", V.vip_activa, "lo que pasa al Telegram (*)") : ""}
+      ${vipEnvio().includes("RESPALDADA") ? vipFilaGrupo(vipGruposTelegram() !== null ? "Clase Respaldada" : "↳ Respaldada", V.respaldada, "VIP+ 1.40–1.60 o Pilares" + (vipGruposTelegram() !== null ? " · todos sus grupos" : "")) : ""}
+      ${vipEnvio().includes("SEGUNDA_LINEA") ? vipFilaGrupo(vipGruposTelegram() !== null ? "Clase Segunda línea" : "↳ Segunda línea", V.segunda_linea, `${(pol.segunda_senales || []).length || 5} señales encendidas · cuota ${Number(pol.segunda_cuota_min || 1.5).toFixed(2)}–${Number(pol.cuota_max).toFixed(2)}${vipGruposTelegram() !== null ? " · todos sus grupos, también los en observación" : ""}`) : ""}
+      ${vipEnvio().includes("ZONA_VALOR") ? vipFilaGrupo("↳ Zona de valor", V.zona_valor, `JUGAR con cuota ${Number(pol.cuota_min).toFixed(2)}–${Number(pol.cuota_max).toFixed(2)}`) : ""}
       ${!vipEnvio().includes("RESPALDADA") ? vipFilaGrupo("En seguimiento · Respaldada", V.respaldada, "VIP+ 1.40–1.60 o Pilares · no se envía") : ""}
       ${!vipEnvio().includes("SEGUNDA_LINEA") && V.segunda_linea ? vipFilaGrupo("En seguimiento · Segunda línea", V.segunda_linea, `${(pol.segunda_senales || []).length || 5} señales encendidas · cuota ${Number(pol.segunda_cuota_min || 1.5).toFixed(2)}–${Number(pol.cuota_max).toFixed(2)} · no se envía`) : ""}
       ${!vipEnvio().includes("ZONA_VALOR") ? vipFilaGrupo("En seguimiento · Zona de valor", V.zona_valor, `JUGAR con cuota ${Number(pol.cuota_min).toFixed(2)}–${Number(pol.cuota_max).toFixed(2)} · no se envía`) : ""}
@@ -3948,6 +4048,7 @@ function renderVip(data, picks){
     : "";
   const reglasHtml = `
     <div class="vip-verdict" style="border-left-color:var(--line);">
+      ${vipGruposTelegram() !== null ? `<p><b>Qué se envía (desde el ${vipFechaCorta(vipObsDesde())}):</b> solo los grupos del núcleo, ${vipEsc(vipNombresNucleo())}, a 1 unidad. Los demás grupos del VIP (y el VIP de Over 2.5) se calculan igual, pero quedan <b>en observación</b>: no se envían hasta juntar ${vipN(vipObsMeta())} picks con ${vipPct(vipObsRoiMin())} o más y tu aprobación.</p>` : ""}
       <p><b>Quién entra:</b> un partido con señal JUGAR de BTTS y además:</p>
       <p>· <b>Respaldada</b> (con regla activa y estable hoy): tier VIP+ con cuota entre 1.40 y 1.60, o la señal Pilares (cuota 1.40–1.55)${vipEnvio().includes("RESPALDADA") ? "" : " — <i>en seguimiento: se mide, no se envía</i>"}.${vipSegConocida() ? `<br/>· <b>Segunda línea</b>: cuota entre ${Number(pol.segunda_cuota_min || 1.5).toFixed(2)} (Bronce + JUGAR desde ${vipPisoSeg("bronce_jugar").toFixed(2)}${(pol.segunda_senales || []).includes("valor_detectado") ? `, Valor detectado desde ${vipPisoSeg("valor_detectado").toFixed(2)}` : ""}) y ${Number(pol.cuota_max).toFixed(2)} y al menos una de ${(V.segunda_linea_senales || []).filter(x => !x.apagada_vip).length || (pol.segunda_senales || []).length || 5} señales encendidas hoy (ver «Segunda línea» arriba)${vipEnvio().includes("SEGUNDA_LINEA") ? "" : " — <i>en seguimiento: se mide, no se envía</i>"}.` : ""}<br/>· <b>Zona de valor</b> (con regla activa y estable hoy${vipSegConocida() ? "; las que tienen una señal de la segunda línea van allá" : ""}): cuota entre ${Number(pol.cuota_min).toFixed(2)} y ${Number(pol.cuota_max).toFixed(2)}${vipEnvio().includes("ZONA_VALOR") ? "" : " — <i>en seguimiento: se mide, no se envía</i>"}.</p>
       <p>${pol.solo_vip_en_telegram ? "El Telegram avisa <b>solo</b> de la Selección VIP (los demás JUGAR siguen en la página, marcados \"sin ventaja de precio\")." : "El Telegram avisa de todos los JUGAR (filtro VIP desactivado)."}</p>
@@ -3956,6 +4057,7 @@ function renderVip(data, picks){
 
   return `
     <section>${titulo}${hoyHtml}</section>
+    ${renderObservacionVip(data)}
     ${renderCandidatasVip(data)}
     ${vipApagadosHtml(V) ? `<section><p class="section-title">⛔ Apagados por tendencia perdedora · no se envían</p>${vipApagadosHtml(V)}</section>` : ""}
     ${vipMovCuotaHtml(V) ? `<section><p class="section-title">📈 Qué hace la cuota: si sube se frena, si baja se mantiene</p>${vipMovCuotaHtml(V)}</section>` : ""}
@@ -4005,7 +4107,8 @@ function elegirMejoresPorMercado(picks){
     // tier "VIP" (700), pero medido contra el mercado en su misma banda de cuota
     // rinde 13 puntos MENOS que el promedio, asi que ya no se prioriza.
     // 31 oct 2026: la segunda linea no exige que la primaria este "validada" (se define por sus propias señales encendidas)
-    const bttsOk = p.nivel_final === "JUGAR" && (esValidadaReal(p.motivo_btts) || vipClase(p) === "SEGUNDA_LINEA") && (!exigeVipBtts || vipClase(p));
+    // 28 nov 2026: con la Selección VIP activa, el destacado de BTTS sale solo de lo que se envía (no de observación)
+    const bttsOk = p.nivel_final === "JUGAR" && (esValidadaReal(p.motivo_btts) || vipClase(p) === "SEGUNDA_LINEA") && (!exigeVipBtts || (vipClase(p) && !vipObservacion(p)));
     if(bttsOk && p.vip_btts === "RESPALDADA") actualizar("Ambos Marcan", 1200 + (probBtts(p)||0), p, "💎 VIP · Respaldada");
     else if(bttsOk && vipClase(p) === "SEGUNDA_LINEA") actualizar("Ambos Marcan", 1150 + (probBtts(p)||0), p, "🥈 VIP · Segunda línea");
     else if(bttsOk && p.vip_btts === "ZONA_VALOR") actualizar("Ambos Marcan", 1100 + (probBtts(p)||0), p, "💎 VIP · Zona de valor");
@@ -4123,7 +4226,7 @@ function renderTableroVip(data){
     const filaMk = (r, nom) => (r && (r.n || r.pendientes)) ? `<tr><td style="white-space:normal;">${nom}</td><td class="num">${vipN(r.n || 0)}</td><td class="num">${r.n ? vipFmt(r.acierto, 1, false) + "%" : "—"}</td><td class="num"><b style="color:${vipCol(r.uds)};">${r.n ? vipFmt(r.uds, 2) + " u" : "—"}</b><div class="vip-dim" style="font-size:11px;">ROI ${r.n ? vipPct(r.roi) : "—"}${r.n ? ` · apostado ${vipFmt(r.apostado, 1, false)} u` : ""}</div></td><td class="num" style="color:${vipCol(r.uds_1u)};">${r.n ? vipFmt(r.uds_1u, 2) + " u" : "—"}<div class="vip-dim" style="font-size:11px;">ROI ${r.n ? vipPct(r.roi_1u) : "—"}</div></td><td class="num">${vipN(r.pendientes || 0)}</td></tr>` : "";
     const sem = (E.semanas || []).slice(-6).map(w => `<span>sem. ${vipFechaCorta(w.semana)}: <b style="color:${vipCol((w.todo || {}).uds)};">${vipFmt((w.todo || {}).uds, 1)} u</b> (${vipN((w.todo || {}).n || 0)})</span>`).join("");
     const G = E.grupos || {};
-    const filaG = (x) => `<tr><td style="white-space:normal;">${vipEsc(x.nombre)}${x.apagado ? ' <span class="vip-dim">· ya no se envía</span>' : ""}</td><td class="num">${vipN(x.n || 0)}</td><td class="num">${x.n ? vipFmt(x.acierto, 1, false) + "%" : "—"}</td><td class="num" style="color:${vipCol(x.roi_1u)};">${x.n ? vipPct(x.roi_1u) : "—"}</td><td class="num" style="color:${vipCol(x.uds)};">${x.n ? vipFmt(x.uds, 2) + " u" : "—"}</td><td class="num">${vipN(x.pendientes || 0)}</td></tr>`;
+    const filaG = (x) => `<tr><td style="white-space:normal;">${vipEsc(x.nombre)}${x.apagado ? ' <span class="vip-dim">· ya no se envía</span>' : (x.observacion ? ' <span style="color:var(--amber);">· 🔬 en observación, ya no se envía</span>' : "")}</td><td class="num">${vipN(x.n || 0)}</td><td class="num">${x.n ? vipFmt(x.acierto, 1, false) + "%" : "—"}</td><td class="num" style="color:${vipCol(x.roi_1u)};">${x.n ? vipPct(x.roi_1u) : "—"}</td><td class="num" style="color:${vipCol(x.uds)};">${x.n ? vipFmt(x.uds, 2) + " u" : "—"}</td><td class="num">${vipN(x.pendientes || 0)}</td></tr>`;
     const tablaG = (k, nom) => (G[k] || []).length ? `<tr><td colspan="6" style="padding-top:10px;"><b>${nom}</b></td></tr>${G[k].map(filaG).join("")}` : "";
     return `<div class="tb-grid">
       <div class="tb-tile" style="grid-column:1 / -1;"><div class="tb-k">Todo lo enviado · Ambos Marcan + Over 2.5 + Combinada · desde el ${vipFechaCorta(E.desde)}</div>
@@ -4131,7 +4234,7 @@ function renderTableroVip(data){
         <div class="tb-s">${vipN(ET.n)} picks jugados · ganó ${vipN(ET.ganados)} (${vipFmt(ET.acierto, 0, false)}%) · ROI <b style="color:${vipCol(ET.roi)};">${vipPct(ET.roi)}</b> con el stake de cada mensaje (apostado ${vipFmt(ET.apostado, 1, false)} u) · a 1 unidad cada uno: <b style="color:${vipCol(ET.uds_1u)};">${vipFmt(ET.uds_1u, 1)} u</b> (ROI ${vipPct(ET.roi_1u)})${ET.pendientes ? ` · ${vipN(ET.pendientes)} sin jugar todavía` : ""}</div></div>
     </div>
     <div class="vip-scroll" style="margin:0 0 10px;"><table class="cmp-table"><thead><tr><th>Mercado</th><th class="num">Jugados</th><th class="num">Acierto</th><th class="num" style="white-space:normal;">Con el stake del mensaje</th><th class="num" style="white-space:normal;">A 1 unidad</th><th class="num">Pendientes</th></tr></thead><tbody>
-      ${filaMk(EM.btts, "Ambos Marcan")}${filaMk(EM.o25, "Over 2.5")}${filaMk(EM.combo, "Combinada <span class=\"vip-dim\">(cuota estimada; ya no se envía)</span>")}
+      ${filaMk(EM.btts, "Ambos Marcan")}${filaMk(EM.o25, "Over 2.5" + (vipPol().o25_telegram === false ? ' <span class="vip-dim">(ya no se envía: en observación)</span>' : ""))}${filaMk(EM.combo, "Combinada <span class=\"vip-dim\">(cuota estimada; ya no se envía)</span>")}
       <tr><td><b>Total</b></td><td class="num"><b>${vipN(ET.n)}</b></td><td class="num">${vipFmt(ET.acierto, 1, false)}%</td><td class="num"><b style="color:${vipCol(ET.uds)};">${vipFmt(ET.uds, 2)} u</b><div class="vip-dim" style="font-size:11px;">ROI ${vipPct(ET.roi)}</div></td><td class="num" style="color:${vipCol(ET.uds_1u)};">${vipFmt(ET.uds_1u, 2)} u<div class="vip-dim" style="font-size:11px;">ROI ${vipPct(ET.roi_1u)}</div></td><td class="num">${vipN(ET.pendientes || 0)}</td></tr>
     </tbody></table></div>
     ${sem ? `<div class="tb-semanas" style="margin-bottom:8px;">${sem}</div>` : ""}
@@ -4151,6 +4254,7 @@ function renderTableroVip(data){
         <div class="tb-s">Lo enviado sin margen: <b style="color:${vipCol(e.roi_sin_margen)};">${vipPct(e.roi_sin_margen)}</b>${e.se ? ` (±${vipFmt(1.96 * e.se, 0, false)})` : ""} · margen de la casa ${e.n ? vipFmt(e.margen_pct, 1, false) + "%" : "—"}<br>Precio contra el cierre (CLV): <b style="color:${vipCol(CV.medio_pct)};">${CV.n ? vipFmt(CV.medio_pct, 2) + "%" : "—"}</b></div></div>
     </div>
     <div class="vip-verdict" style="margin:0;">
+      ${vipGruposTelegram() !== null ? `<p><b>Desde el ${vipFechaCorta(vipObsDesde())} al Telegram solo va el núcleo de Ambos Marcan</b> (${vipEsc(vipNombresNucleo())}). El VIP de Over 2.5 y los demás grupos quedan en observación (pestaña Selección VIP, «🔬 En observación»): no se envían y no suman aquí.</p>` : ""}
       <p><b>Cómo leerlo:</b> arriba va TODO lo que salió al Telegram (Ambos Marcan, Over 2.5 y Combinada), a la cuota del mensaje, con el stake que decía cada mensaje (🟢 1 u · 🟡 ½ u; la combinada siempre ½ u y con cuota estimada) y también a 1 unidad cada uno. Las tarjetas de abajo son solo Ambos Marcan, a 1 unidad cada una. El semáforo dice si la selección le gana al mercado <b>sin contar el margen de la casa</b>: 🟢 confirmada (todo el rango ± queda por encima de 0 y el precio no empeora antes del partido), 🟡 va bien pero falta muestra (+3% o más), 🟠 dudoso (entre 0% y +3%, o el precio empeora), 🔴 sin ventaja (negativo).</p>
       <p>Peor caída de lo enviado: <b>${B.caida_max_u != null ? vipFmt(B.caida_max_u, 1, false) + " u" : "—"}</b> · peor racha: ${B.peor_racha != null ? vipN(B.peor_racha) + " perdidas seguidas" : "—"} · peor día: ${B.peor_dia_u != null ? vipFmt(B.peor_dia_u, 1) + " u" : "—"}.</p>
       ${semanas ? `<div class="tb-semanas">${semanas}</div>` : ""}
@@ -4243,6 +4347,47 @@ function candidatasEnLista(picks, pos0){
     html += lista.map(p => candTarjeta(p, c)).join("");
   }
   return html;
+}
+
+// ============================================================================
+// 28 nov 2026 (aprobado por el usuario) · 🔬 EN OBSERVACIÓN (data.observacion_vip, backtest.observacion_vip_datos).
+// Al Telegram solo va el núcleo de Ambos Marcan. Los demás grupos del VIP y el VIP de Over 2.5 se anotan en el momento
+// en que habrían salido (grupo, cuota, nivel y hora, con los mismos filtros que lo enviado) y se miden aquí. Vuelven
+// con 30 picks jugados y ROI ≥ +3%, y solo si el usuario lo aprueba.
+// ============================================================================
+function renderObservacionVip(data){
+  const O = (data && data.observacion_vip) || {}, L = O.grupos || [];
+  if(!L.length) return O.error ? `<section><p class="section-title">🔬 En observación · no se envían al Telegram</p><div class="empty">No se pudo medir (${vipEsc(O.error)}).</div></section>` : "";
+  const meta = O.meta || 30, rmin = O.roi_min != null ? O.roi_min : 3;
+  const GB = ((((data || {}).vip_btts || {}).niveles || {}).grupos) || {}, GO = ((((data || {}).vip_goles || {}).o25 || {}).grupos) || {};
+  const linea = (r) => r && r.n ? `${vipN(r.n)} picks · ganó ${vipN(r.ganados)} (${vipFmt(r.acierto, 0, false)}%) · ROI <b style="color:${vipCol(r.roi)};">${vipPct(r.roi)}</b> · <span style="color:${vipCol(r.uds)};">${vipFmt(r.uds, 1)} u</span>` : '<span class="vip-dim">todavía sin picks jugados</span>';
+  const corto = (r) => r && r.n ? `<b style="color:${vipCol(r.roi)};">${vipPct(r.roi)}</b> (${vipN(r.n)})` : "—";
+  const tarjetas = L.map(x => {
+    const pr = x.prueba || {}, n = pr.n || 0;
+    const ref = x.mercado === "btts" ? (GB[String(x.grupo)] || {}) : (GO[String(x.grupo)] || {});
+    const est = x.estado === "lista" ? `<span class="tb-sem" style="background:var(--win);color:#0b1f14;">✅ Lista para proponer al Telegram · pídela y se agrega</span>`
+      : x.estado === "no_llega" ? `<span class="tb-sem" style="background:var(--loss);color:#fff;">⛔ Llegó a ${vipN(meta)} sin ${vipPct(rmin)}: sigue fuera</span>`
+      : `<span class="tb-sem" style="background:var(--amber);color:#1b1405;">⏳ En observación · ${vipN(n)} de ${vipN(meta)} jugados</span>`;
+    const jug = x.jugados || [];
+    return `<div class="cand-card">
+      <h4>${x.mercado === "o25" ? "⚽ Over 2.5 · " : "Ambos Marcan · "}${vipEsc(x.nombre)}</h4>
+      <div>${est}</div>
+      <div class="cand-bar"><span style="width:${Math.min(100, Math.round(n / meta * 100))}%;"></span></div>
+      <p style="margin:8px 0 2px;"><b>Desde el ${vipFechaCorta(O.desde)} (lo que habría salido):</b><br>${linea(pr)}${x.pendientes ? `<br><span class="vip-dim">${vipN(x.pendientes)} por jugar</span>` : ""}</p>
+      ${pr.n && pr.roi_stake != null && Math.abs((pr.uds_stake || 0) - (pr.uds || 0)) > 0.005 ? `<p class="vip-dim" style="margin:4px 0;font-size:12px;">Con el stake que habría tenido (🟢 1 u · 🟡 ½ u): ${vipFmt(pr.uds_stake, 1)} u · ROI ${vipPct(pr.roi_stake)}</p>` : ""}
+      <p class="vip-dim" style="margin:4px 0;font-size:12px;">Referencia · cuando se enviaba: ${corto(ref.en_vivo)} · histórico con las reglas de hoy (optimista): ${corto(ref.total)}</p>
+      ${jug.length ? `<details class="vip-det" style="margin-top:6px;"><summary>Ver los ${vipN(jug.length)} últimos jugados</summary><div style="margin-top:6px;font-size:12px;line-height:1.6;">${jug.map(j => `${j.gano ? '<span style="color:var(--win);">✓</span>' : '<span style="color:var(--loss);">✕</span>'} ${vipFechaCorta(j.fecha)} · ${vipEsc(j.partido)} · ${Number(j.cuota).toFixed(2)}`).join("<br>")}</div></details>` : ""}
+    </div>`;
+  }).join("");
+  const T = O.total || {};
+  const nom = (O.btts_telegram_nombres || []);
+  return `<section><p class="section-title">🔬 En observación · no se envían al Telegram</p>
+    <div class="vip-verdict" style="margin:0 0 12px;">
+      <p>Desde el <b>${vipFechaCorta(O.desde)}</b> al Telegram solo va el <b>núcleo de Ambos Marcan</b>${nom.length ? ` (${vipEsc(nom.join(", "))})` : ""}. Estos grupos <b>no se envían</b>: en cada corrida se anota lo que <b>habría salido</b>, con los mismos filtros que lo enviado (freno por alza incluido) y la cuota de ese momento. Se mide a 1 unidad, solo con partidos jugados.</p>
+      <p>Un grupo queda <b>listo para proponerlo</b> al Telegram cuando junta <b>${vipN(meta)} picks jugados</b> con ROI de <b>${vipPct(rmin)} o más</b>. Entra solo si tú lo apruebas. «Cuando se enviaba» y el histórico son solo referencia: con esos datos se armaron los grupos.</p>
+      ${(T.btts && T.btts.n) || (T.o25 && T.o25.n) ? `<p class="vip-dim" style="font-size:12px;">Todo Ambos Marcan en observación: ${corto(T.btts)} · todo el Over 2.5: ${corto(T.o25)}</p>` : ""}
+    </div>
+    <div class="cand-grid">${tarjetas}</div></section>`;
 }
 
 function renderCandidatasVip(data){
