@@ -1,5 +1,5 @@
 {
-  "actualizado": "2026-11-28T12:37:16.706102-05:00",
+  "actualizado": "2026-11-28T12:43:09.398175-05:00",
   "hoy_referencia": "2026-11-28",
   "manana_referencia": "2026-11-29",
   "pasado_manana_referencia": "2026-11-30",
@@ -16,7 +16,7 @@
     "combo_banda_media": 0.6522,
     "perfil_goleador_combo": 0.6942,
     "combo_btts_barato_gf_xga": 0.7199,
-    "combo_banda_baja": 0.7358,
+    "combo_banda_baja": 0.7344,
     "nueva_cuota_combo": 1.117,
     "combo_vip_plus": 0.7221,
     "combo_diamante_elite": 0.6702,
@@ -129,17 +129,17 @@
           "total_detectado": 11
         },
         "Fuerte": {
-          "total": 19,
-          "ganados": 8,
-          "acierto_pct": 42.10526315789473,
-          "profit_u": -6.49,
+          "total": 20,
+          "ganados": 9,
+          "acierto_pct": 45.0,
+          "profit_u": -6.050000000000001,
           "total_detectado": 44
         },
         "ORO_FUERTE": {
-          "total": 5,
-          "ganados": 4,
-          "acierto_pct": 80.0,
-          "profit_u": 1.4300000000000002,
+          "total": 6,
+          "ganados": 5,
+          "acierto_pct": 83.33333333333334,
+          "profit_u": 1.87,
           "total_detectado": 8
         },
         "ORO_BTTS": {
@@ -150,10 +150,10 @@
           "total_detectado": 1
         },
         "ÉLITE": {
-          "total": 4,
-          "ganados": 3,
-          "acierto_pct": 75.0,
-          "profit_u": 0.8800000000000001,
+          "total": 5,
+          "ganados": 4,
+          "acierto_pct": 80.0,
+          "profit_u": 1.32,
           "total_detectado": 7
         },
         "PLATA": {
@@ -180,12 +180,12 @@
       },
       "motivos": {
         "rescate_xg_alto_btts_historico_alto": {
-          "total": 1,
-          "ganados": 0,
-          "acierto_pct": 0.0,
-          "profit_u": -1.0,
-          "n_reciente": 1,
-          "roi_reciente": -100.0,
+          "total": 2,
+          "ganados": 1,
+          "acierto_pct": 50.0,
+          "profit_u": -0.56,
+          "n_reciente": 2,
+          "roi_reciente": -28.000000000000004,
           "total_detectado": 4,
           "activa": true,
           "penalizacion_inestabilidad": 0.0,
@@ -282,21 +282,21 @@
           "roi_mitad2": null
         },
         "stake9": {
-          "total": 17,
-          "ganados": 10,
-          "acierto_pct": 58.82352941176471,
-          "profit_u": -2.4899999999999993,
-          "n_reciente": 17,
-          "roi_reciente": -14.647058823529408,
+          "total": 18,
+          "ganados": 11,
+          "acierto_pct": 61.111111111111114,
+          "profit_u": -2.0499999999999994,
+          "n_reciente": 18,
+          "roi_reciente": -11.388888888888886,
           "total_detectado": 62,
           "activa": true,
-          "penalizacion_inestabilidad": 18.960416666666667,
+          "penalizacion_inestabilidad": 22.55,
           "bloques_n": null,
           "bloques_pos": null,
           "bloque_ultimo_roi": null,
           "frac_roi_pos": 0.0,
-          "roi_mitad1": -28.625,
-          "roi_mitad2": -2.222222222222219
+          "roi_mitad1": -36.55555555555556,
+          "roi_mitad2": 13.77777777777778
         },
         "estable_btts_fallo": {
           "total": 11,
@@ -367,21 +367,21 @@
           "roi_mitad2": null
         },
         "idx_btts_top20": {
-          "total": 55,
-          "ganados": 31,
-          "acierto_pct": 56.36363636363636,
-          "profit_u": -8.259999999999998,
-          "n_reciente": 55,
-          "roi_reciente": -15.018181818181814,
+          "total": 56,
+          "ganados": 32,
+          "acierto_pct": 57.14285714285714,
+          "profit_u": -7.819999999999999,
+          "n_reciente": 56,
+          "roi_reciente": -13.964285714285712,
           "total_detectado": 152,
           "activa": true,
-          "penalizacion_inestabilidad": 15.070833333333333,
+          "penalizacion_inestabilidad": 16.15714285714286,
           "bloques_n": 5,
-          "bloques_pos": 0,
-          "bloque_ultimo_roi": -9.272727272727268,
+          "bloques_pos": 1,
+          "bloque_ultimo_roi": 5.818181818181819,
           "frac_roi_pos": 0.0,
-          "roi_mitad1": -14.777777777777779,
-          "roi_mitad2": -15.249999999999995
+          "roi_mitad1": -17.821428571428573,
+          "roi_mitad2": -10.107142857142856
         },
         "idx_btts_top10": {
           "total": 28,
@@ -1947,20 +1947,38 @@
           "roi_mitad2": null
         },
         "rescate_elite": {
-          "total": 0,
-          "ganados": 0,
-          "acierto_pct": null,
-          "profit_u": 0.0,
+          "total": 1,
+          "ganados": 1,
+          "acierto_pct": 100.0,
+          "profit_u": 0.43999999999999995,
+          "n_reciente": 1,
+          "roi_reciente": 43.99999999999999,
           "total_detectado": 2,
-          "activa": null
+          "activa": false,
+          "penalizacion_inestabilidad": 0.0,
+          "bloques_n": null,
+          "bloques_pos": null,
+          "bloque_ultimo_roi": null,
+          "frac_roi_pos": null,
+          "roi_mitad1": null,
+          "roi_mitad2": null
         },
         "rescate_oro_fuerte": {
-          "total": 0,
-          "ganados": 0,
-          "acierto_pct": null,
-          "profit_u": 0.0,
+          "total": 1,
+          "ganados": 1,
+          "acierto_pct": 100.0,
+          "profit_u": 0.43999999999999995,
+          "n_reciente": 1,
+          "roi_reciente": 43.99999999999999,
           "total_detectado": 2,
-          "activa": null
+          "activa": false,
+          "penalizacion_inestabilidad": 0.0,
+          "bloques_n": null,
+          "bloques_pos": null,
+          "bloque_ultimo_roi": null,
+          "frac_roi_pos": null,
+          "roi_mitad1": null,
+          "roi_mitad2": null
         },
         "rescate_oro_btts": {
           "total": 0,
@@ -2494,21 +2512,21 @@
       },
       "motivos_ht05": {
         "camino_normal_ht05": {
-          "total": 155,
-          "ganados": 118,
-          "acierto_pct": 76.12903225806451,
-          "profit_u": -8.830000000000002,
-          "n_reciente": 155,
-          "roi_reciente": -5.696774193548388,
+          "total": 156,
+          "ganados": 119,
+          "acierto_pct": 76.28205128205127,
+          "profit_u": -8.64,
+          "n_reciente": 156,
+          "roi_reciente": -5.538461538461538,
           "total_detectado": 382,
           "activa": false,
-          "penalizacion_inestabilidad": 16.085264735264737,
+          "penalizacion_inestabilidad": 15.996153846153845,
           "bloques_n": 7,
-          "bloques_pos": 1,
-          "bloque_ultimo_roi": -1.1363636363636382,
-          "frac_roi_pos": 0.013793103448275862,
-          "roi_mitad1": -9.337662337662337,
-          "roi_mitad2": -2.1025641025641035
+          "bloques_pos": 3,
+          "bloque_ultimo_roi": 4.272727272727271,
+          "frac_roi_pos": 0.0,
+          "roi_mitad1": -8.85897435897436,
+          "roi_mitad2": -2.2179487179487185
         },
         "ninguno_evitar_ht05": {
           "total": 69,
@@ -2547,21 +2565,21 @@
           "roi_mitad2": -15.507919999999997
         },
         "combo_banda_baja": {
-          "total": 33,
-          "ganados": 21,
-          "acierto_pct": 63.63636363636363,
-          "profit_u": 3.532712,
-          "n_reciente": 33,
-          "roi_reciente": 10.705187878787878,
+          "total": 34,
+          "ganados": 22,
+          "acierto_pct": 64.70588235294117,
+          "profit_u": 4.1583760000000005,
+          "n_reciente": 34,
+          "roi_reciente": 12.230517647058825,
           "total_detectado": 68,
           "activa": false,
-          "penalizacion_inestabilidad": 2.4932894117647053,
+          "penalizacion_inestabilidad": 3.1935741176470587,
           "bloques_n": 3,
-          "bloques_pos": 2,
-          "bloque_ultimo_roi": -4.046945454545452,
+          "bloques_pos": 3,
+          "bloque_ultimo_roi": 9.187418181818185,
           "frac_roi_pos": 1.0,
-          "roi_mitad1": 19.268,
-          "roi_mitad2": 2.646070588235297
+          "roi_mitad1": 22.875764705882354,
+          "roi_mitad2": 1.5852705882352964
         },
         "idx_combo_top20": {
           "total": 55,
@@ -3074,19 +3092,19 @@
         }
       },
       "marcador_exacto": {
-        "total": 233,
+        "total": 234,
         "aciertos": 22,
-        "acierto_pct": 9.44206008583691
+        "acierto_pct": 9.401709401709402
       },
       "calibracion": {
         "BTTS": [
           {
             "rango": "50-60%",
-            "total": 180,
-            "aciertos": 106,
-            "acierto_pct": 58.88888888888889,
-            "prob_dicha_prom": 55.145769249346145,
-            "diferencia": 3.7431196395427477
+            "total": 181,
+            "aciertos": 107,
+            "acierto_pct": 59.11602209944752,
+            "prob_dicha_prom": 55.14114340371042,
+            "diferencia": 3.9748786957370967
           },
           {
             "rango": "60-70%",
@@ -3108,11 +3126,11 @@
           },
           {
             "rango": "70-80%",
-            "total": 142,
-            "aciertos": 108,
-            "acierto_pct": 76.05633802816901,
-            "prob_dicha_prom": 76.11218447751305,
-            "diferencia": -0.05584644934404537
+            "total": 143,
+            "aciertos": 109,
+            "acierto_pct": 76.22377622377621,
+            "prob_dicha_prom": 76.12593122168505,
+            "diferencia": 0.09784500209116231
           },
           {
             "rango": "80-90%",
@@ -3134,11 +3152,11 @@
         "Over 2.5": [
           {
             "rango": "50-60%",
-            "total": 132,
-            "aciertos": 80,
-            "acierto_pct": 60.60606060606061,
-            "prob_dicha_prom": 54.91536416807309,
-            "diferencia": 5.690696437987519
+            "total": 133,
+            "aciertos": 81,
+            "acierto_pct": 60.902255639097746,
+            "prob_dicha_prom": 54.91012033033038,
+            "diferencia": 5.9921353087673666
           },
           {
             "rango": "60-70%",
@@ -3176,11 +3194,11 @@
           },
           {
             "rango": "70-80%",
-            "total": 86,
-            "aciertos": 64,
-            "acierto_pct": 74.4186046511628,
-            "prob_dicha_prom": 71.0489085908618,
-            "diferencia": 3.3696960603009956
+            "total": 87,
+            "aciertos": 65,
+            "acierto_pct": 74.71264367816092,
+            "prob_dicha_prom": 71.04419421243252,
+            "diferencia": 3.6684494657284006
           }
         ],
         "Over 1.5 1er tiempo (nota)": [
@@ -3228,7 +3246,7 @@
           "acierto_pct": 0.0
         }
       },
-      "total_partidos_evaluados": 233
+      "total_partidos_evaluados": 234
     },
     "recientes": {
       "mercados": {
@@ -3296,17 +3314,17 @@
           "total_detectado": 35
         },
         "Fuerte": {
-          "total": 81,
-          "ganados": 46,
-          "acierto_pct": 56.79012345679012,
-          "profit_u": -10.239999999999998,
+          "total": 82,
+          "ganados": 47,
+          "acierto_pct": 57.3170731707317,
+          "profit_u": -9.799999999999999,
           "total_detectado": 112
         },
         "ORO_FUERTE": {
-          "total": 14,
-          "ganados": 9,
-          "acierto_pct": 64.28571428571429,
-          "profit_u": 0.12000000000000055,
+          "total": 15,
+          "ganados": 10,
+          "acierto_pct": 66.66666666666666,
+          "profit_u": 0.5600000000000005,
           "total_detectado": 18
         },
         "ORO_BTTS": {
@@ -3317,10 +3335,10 @@
           "total_detectado": 2
         },
         "ÉLITE": {
-          "total": 13,
-          "ganados": 8,
-          "acierto_pct": 61.53846153846154,
-          "profit_u": -0.4299999999999995,
+          "total": 14,
+          "ganados": 9,
+          "acierto_pct": 64.28571428571429,
+          "profit_u": 0.010000000000000453,
           "total_detectado": 17
         },
         "PLATA": {
@@ -3466,21 +3484,21 @@
           "roi_mitad2": -34.099999999999994
         },
         "idx_btts_top20": {
-          "total": 306,
-          "ganados": 177,
-          "acierto_pct": 57.84313725490197,
-          "profit_u": -36.15,
-          "n_reciente": 306,
-          "roi_reciente": -11.813725490196077,
+          "total": 307,
+          "ganados": 178,
+          "acierto_pct": 57.98045602605863,
+          "profit_u": -35.709999999999994,
+          "n_reciente": 307,
+          "roi_reciente": -11.631921824104232,
           "total_detectado": 405,
           "activa": true,
-          "penalizacion_inestabilidad": 15.967647058823529,
+          "penalizacion_inestabilidad": 16.01886936592819,
           "bloques_n": 15,
-          "bloques_pos": 4,
-          "bloque_ultimo_roi": -19.400000000000002,
-          "frac_roi_pos": 0.21621621621621623,
+          "bloques_pos": 5,
+          "bloque_ultimo_roi": -12.899999999999997,
+          "frac_roi_pos": 0.21548821548821548,
           "roi_mitad1": -15.03921568627451,
-          "roi_mitad2": -8.588235294117649
+          "roi_mitad2": -8.246753246753249
         },
         "idx_btts_top10": {
           "total": 164,
@@ -3534,21 +3552,21 @@
           "roi_mitad2": -18.0
         },
         "stake9": {
-          "total": 111,
-          "ganados": 71,
-          "acierto_pct": 63.96396396396396,
-          "profit_u": -6.39,
-          "n_reciente": 111,
-          "roi_reciente": -5.756756756756756,
+          "total": 112,
+          "ganados": 72,
+          "acierto_pct": 64.28571428571429,
+          "profit_u": -5.949999999999999,
+          "n_reciente": 112,
+          "roi_reciente": -5.312499999999999,
           "total_detectado": 164,
           "activa": true,
-          "penalizacion_inestabilidad": 16.662954545454546,
+          "penalizacion_inestabilidad": 16.70625,
           "bloques_n": 5,
-          "bloques_pos": 2,
-          "bloque_ultimo_roi": -11.5,
-          "frac_roi_pos": 0.42574257425742573,
-          "roi_mitad1": -0.16363636363636258,
-          "roi_mitad2": -11.250000000000002
+          "bloques_pos": 1,
+          "bloque_ultimo_roi": -12.499999999999998,
+          "frac_roi_pos": 0.43137254901960786,
+          "roi_mitad1": 0.3750000000000031,
+          "roi_mitad2": -11.0
         },
         "idx_btts_top05": {
           "total": 87,
@@ -5149,12 +5167,12 @@
           "roi_mitad2": -10.222222222222225
         },
         "rescate_xg_alto_btts_historico_alto": {
-          "total": 6,
-          "ganados": 3,
-          "acierto_pct": 50.0,
-          "profit_u": -1.6600000000000001,
-          "n_reciente": 6,
-          "roi_reciente": -27.666666666666668,
+          "total": 7,
+          "ganados": 4,
+          "acierto_pct": 57.14285714285714,
+          "profit_u": -1.2200000000000002,
+          "n_reciente": 7,
+          "roi_reciente": -17.42857142857143,
           "total_detectado": 9,
           "activa": true,
           "penalizacion_inestabilidad": 0.0,
@@ -5472,12 +5490,12 @@
           "roi_mitad2": -17.444444444444443
         },
         "rescate_elite": {
-          "total": 1,
-          "ganados": 0,
-          "acierto_pct": 0.0,
-          "profit_u": -1.0,
-          "n_reciente": 1,
-          "roi_reciente": -100.0,
+          "total": 2,
+          "ganados": 1,
+          "acierto_pct": 50.0,
+          "profit_u": -0.56,
+          "n_reciente": 2,
+          "roi_reciente": -28.000000000000004,
           "total_detectado": 3,
           "activa": false,
           "penalizacion_inestabilidad": 0.0,
@@ -5489,12 +5507,12 @@
           "roi_mitad2": null
         },
         "rescate_oro_fuerte": {
-          "total": 1,
-          "ganados": 0,
-          "acierto_pct": 0.0,
-          "profit_u": -1.0,
-          "n_reciente": 1,
-          "roi_reciente": -100.0,
+          "total": 2,
+          "ganados": 1,
+          "acierto_pct": 50.0,
+          "profit_u": -0.56,
+          "n_reciente": 2,
+          "roi_reciente": -28.000000000000004,
           "total_detectado": 3,
           "activa": false,
           "penalizacion_inestabilidad": 0.0,
@@ -5987,40 +6005,40 @@
           "roi_mitad2": -8.281437125748504
         },
         "camino_normal_ht05": {
-          "total": 707,
-          "ganados": 514,
-          "acierto_pct": 72.7015558698727,
-          "profit_u": -70.21000000000001,
-          "n_reciente": 707,
-          "roi_reciente": -9.930693069306932,
+          "total": 708,
+          "ganados": 515,
+          "acierto_pct": 72.74011299435028,
+          "profit_u": -70.02000000000001,
+          "n_reciente": 708,
+          "roi_reciente": -9.889830508474578,
           "total_detectado": 961,
           "activa": false,
-          "penalizacion_inestabilidad": 15.709873001392424,
+          "penalizacion_inestabilidad": 15.797457627118645,
           "bloques_n": 35,
-          "bloques_pos": 7,
-          "bloque_ultimo_roi": 2.3999999999999977,
-          "frac_roi_pos": 0.04878048780487805,
-          "roi_mitad1": -12.300283286118981,
-          "roi_mitad2": -7.567796610169491
+          "bloques_pos": 8,
+          "bloque_ultimo_roi": 2.2499999999999973,
+          "frac_roi_pos": 0.04871060171919771,
+          "roi_mitad1": -12.548022598870057,
+          "roi_mitad2": -7.231638418079096
         }
       },
       "motivos_combo": {
         "combo_banda_baja": {
-          "total": 118,
-          "ganados": 63,
-          "acierto_pct": 53.38983050847458,
-          "profit_u": -9.195019999999998,
-          "n_reciente": 118,
-          "roi_reciente": -7.792389830508473,
+          "total": 119,
+          "ganados": 64,
+          "acierto_pct": 53.78151260504202,
+          "profit_u": -8.569355999999997,
+          "n_reciente": 119,
+          "roi_reciente": -7.2011394957983175,
           "total_detectado": 154,
           "activa": false,
-          "penalizacion_inestabilidad": 17.210213898305085,
+          "penalizacion_inestabilidad": 17.367692423728812,
           "bloques_n": 5,
-          "bloques_pos": 2,
-          "bloque_ultimo_roi": 1.671433333333333,
-          "frac_roi_pos": 0.06481481481481481,
+          "bloques_pos": 1,
+          "bloque_ultimo_roi": -5.901016666666666,
+          "frac_roi_pos": 0.009174311926605505,
           "roi_mitad1": -15.159769491525424,
-          "roi_mitad2": -0.4250101694915235
+          "roi_mitad2": 0.6248466666666667
         },
         "combo_producto_alto": {
           "total": 36,
@@ -6559,19 +6577,19 @@
         }
       },
       "marcador_exacto": {
-        "total": 1080,
+        "total": 1081,
         "aciertos": 111,
-        "acierto_pct": 10.277777777777777
+        "acierto_pct": 10.26827012025902
       },
       "calibracion": {
         "BTTS": [
           {
             "rango": "50-60%",
-            "total": 758,
-            "aciertos": 418,
-            "acierto_pct": 55.145118733509236,
-            "prob_dicha_prom": 54.8391460232932,
-            "diferencia": 0.30597271021603234
+            "total": 759,
+            "aciertos": 419,
+            "acierto_pct": 55.20421607378129,
+            "prob_dicha_prom": 54.838446873314275,
+            "diferencia": 0.3657692004670139
           },
           {
             "rango": "60-70%",
@@ -6617,11 +6635,11 @@
           },
           {
             "rango": "70-80%",
-            "total": 632,
-            "aciertos": 495,
-            "acierto_pct": 78.32278481012658,
-            "prob_dicha_prom": 75.78713835083536,
-            "diferencia": 2.5356464592912147
+            "total": 633,
+            "aciertos": 496,
+            "acierto_pct": 78.35703001579779,
+            "prob_dicha_prom": 75.79075735643296,
+            "diferencia": 2.5662726593648273
           },
           {
             "rango": "80-90%",
@@ -6643,11 +6661,11 @@
         "Over 2.5": [
           {
             "rango": "50-60%",
-            "total": 535,
-            "aciertos": 310,
-            "acierto_pct": 57.943925233644855,
-            "prob_dicha_prom": 54.85766024246619,
-            "diferencia": 3.086264991178666
+            "total": 536,
+            "aciertos": 311,
+            "acierto_pct": 58.02238805970149,
+            "prob_dicha_prom": 54.8564667228875,
+            "diferencia": 3.1659213368139945
           },
           {
             "rango": "60-70%",
@@ -6693,11 +6711,11 @@
           },
           {
             "rango": "70-80%",
-            "total": 427,
-            "aciertos": 305,
-            "acierto_pct": 71.42857142857143,
-            "prob_dicha_prom": 71.05967840506952,
-            "diferencia": 0.36889302350191144
+            "total": 428,
+            "aciertos": 306,
+            "acierto_pct": 71.49532710280374,
+            "prob_dicha_prom": 71.05869494540232,
+            "diferencia": 0.43663215740141936
           }
         ],
         "Over 1.5 1er tiempo (nota)": [
@@ -6835,7 +6853,7 @@
           "acierto_pct": 27.77777777777778
         }
       },
-      "total_partidos_evaluados": 1080
+      "total_partidos_evaluados": 1081
     },
     "historico": {
       "mercados": {
@@ -6903,17 +6921,17 @@
           "total_detectado": 254
         },
         "Fuerte": {
-          "total": 916,
-          "ganados": 549,
-          "acierto_pct": 59.93449781659389,
-          "profit_u": -58.99999999999999,
+          "total": 917,
+          "ganados": 550,
+          "acierto_pct": 59.97818974918212,
+          "profit_u": -58.559999999999995,
           "total_detectado": 1013
         },
         "ORO_FUERTE": {
-          "total": 144,
-          "ganados": 93,
-          "acierto_pct": 64.58333333333334,
-          "profit_u": 1.0499999999999998,
+          "total": 145,
+          "ganados": 94,
+          "acierto_pct": 64.82758620689654,
+          "profit_u": 1.4899999999999993,
           "total_detectado": 157
         },
         "ORO_BTTS": {
@@ -6924,10 +6942,10 @@
           "total_detectado": 51
         },
         "ÉLITE": {
-          "total": 133,
-          "ganados": 84,
-          "acierto_pct": 63.1578947368421,
-          "profit_u": -2.9700000000000006,
+          "total": 134,
+          "ganados": 85,
+          "acierto_pct": 63.43283582089553,
+          "profit_u": -2.530000000000001,
           "total_detectado": 146
         },
         "PLATA": {
@@ -7600,21 +7618,21 @@
           "roi_mitad2": -5.202797202797204
         },
         "rescate_xg_alto_btts_historico_alto": {
-          "total": 79,
-          "ganados": 50,
-          "acierto_pct": 63.29113924050633,
-          "profit_u": -2.21,
-          "n_reciente": 40,
-          "roi_reciente": -0.12500000000000122,
+          "total": 80,
+          "ganados": 51,
+          "acierto_pct": 63.74999999999999,
+          "profit_u": -1.7700000000000005,
+          "n_reciente": 41,
+          "roi_reciente": 0.9512195121951207,
           "total_detectado": 95,
           "activa": true,
           "penalizacion_inestabilidad": 0.0,
-          "bloques_n": 3,
-          "bloques_pos": 1,
-          "bloque_ultimo_roi": 5.423076923076923,
-          "frac_roi_pos": 0.21739130434782608,
-          "roi_mitad1": -5.538461538461538,
-          "roi_mitad2": -0.12500000000000178
+          "bloques_n": 4,
+          "bloques_pos": 2,
+          "bloque_ultimo_roi": 7.399999999999999,
+          "frac_roi_pos": 0.21428571428571427,
+          "roi_mitad1": -7.9,
+          "roi_mitad2": 3.4749999999999988
         },
         "premium": {
           "total": 233,
@@ -7804,38 +7822,38 @@
           "roi_mitad2": -15.890410958904106
         },
         "rescate_elite": {
-          "total": 32,
-          "ganados": 23,
-          "acierto_pct": 71.875,
-          "profit_u": 2.0599999999999987,
-          "n_reciente": 16,
-          "roi_reciente": 19.75,
+          "total": 33,
+          "ganados": 24,
+          "acierto_pct": 72.72727272727273,
+          "profit_u": 2.499999999999999,
+          "n_reciente": 17,
+          "roi_reciente": 21.176470588235293,
           "total_detectado": 39,
           "activa": true,
-          "penalizacion_inestabilidad": 18.99375,
+          "penalizacion_inestabilidad": 19.207720588235293,
           "bloques_n": 3,
           "bloques_pos": 1,
-          "bloque_ultimo_roi": 34.81818181818182,
-          "frac_roi_pos": 0.36363636363636365,
+          "bloque_ultimo_roi": 34.54545454545455,
+          "frac_roi_pos": 0.391304347826087,
           "roi_mitad1": -6.874999999999999,
-          "roi_mitad2": 19.75
+          "roi_mitad2": 21.176470588235293
         },
         "rescate_oro_fuerte": {
-          "total": 29,
-          "ganados": 21,
-          "acierto_pct": 72.41379310344827,
-          "profit_u": 2.2099999999999995,
-          "n_reciente": 16,
-          "roi_reciente": 19.75,
+          "total": 30,
+          "ganados": 22,
+          "acierto_pct": 73.33333333333333,
+          "profit_u": 2.6499999999999995,
+          "n_reciente": 17,
+          "roi_reciente": 21.176470588235293,
           "total_detectado": 32,
           "activa": true,
-          "penalizacion_inestabilidad": 18.142142857142858,
-          "bloques_n": null,
-          "bloques_pos": null,
-          "bloque_ultimo_roi": null,
-          "frac_roi_pos": 0.47368421052631576,
-          "roi_mitad1": -3.214285714285714,
-          "roi_mitad2": 17.733333333333334
+          "penalizacion_inestabilidad": 20.55,
+          "bloques_n": 3,
+          "bloques_pos": 2,
+          "bloque_ultimo_roi": 33.300000000000004,
+          "frac_roi_pos": 0.5,
+          "roi_mitad1": -9.666666666666666,
+          "roi_mitad2": 27.333333333333332
         },
         "franja1.8-1.9_bronce": {
           "total": 21,
@@ -8059,21 +8077,21 @@
           "roi_mitad2": -14.526470588235293
         },
         "stake9": {
-          "total": 710,
-          "ganados": 436,
-          "acierto_pct": 61.408450704225345,
-          "profit_u": -62.58999999999999,
-          "n_reciente": 637,
-          "roi_reciente": -9.924646781789638,
+          "total": 711,
+          "ganados": 437,
+          "acierto_pct": 61.46272855133614,
+          "profit_u": -62.14999999999999,
+          "n_reciente": 638,
+          "roi_reciente": -9.84012539184953,
           "total_detectado": 810,
           "activa": true,
-          "penalizacion_inestabilidad": 15.33507042253521,
+          "penalizacion_inestabilidad": 15.312346099066309,
           "bloques_n": 35,
-          "bloques_pos": 8,
-          "bloque_ultimo_roi": -11.5,
-          "frac_roi_pos": 0.14142857142857143,
+          "bloques_pos": 9,
+          "bloque_ultimo_roi": -12.599999999999994,
+          "frac_roi_pos": 0.14122681883024252,
           "roi_mitad1": -7.698591549295775,
-          "roi_mitad2": -9.932394366197181
+          "roi_mitad2": -9.780898876404494
         },
         "bastion_elite": {
           "total": 241,
@@ -8824,21 +8842,21 @@
           "roi_mitad2": -22.460317460317462
         },
         "idx_btts_top20": {
-          "total": 963,
-          "ganados": 589,
-          "acierto_pct": 61.163032191069576,
-          "profit_u": -62.620000000000005,
-          "n_reciente": 963,
-          "roi_reciente": -6.502596053997924,
+          "total": 964,
+          "ganados": 590,
+          "acierto_pct": 61.20331950207469,
+          "profit_u": -62.18,
+          "n_reciente": 964,
+          "roi_reciente": -6.450207468879668,
           "total_detectado": 1062,
           "activa": true,
-          "penalizacion_inestabilidad": 16.024766651426404,
+          "penalizacion_inestabilidad": 16.046265560165974,
           "bloques_n": 48,
           "bloques_pos": 19,
-          "bloque_ultimo_roi": -19.400000000000002,
-          "frac_roi_pos": 0.06820566631689402,
-          "roi_mitad1": -3.0831600831600827,
-          "roi_mitad2": -9.914937759336098
+          "bloque_ultimo_roi": -19.549999999999997,
+          "frac_roi_pos": 0.06813417190775681,
+          "roi_mitad1": -2.9626556016597507,
+          "roi_mitad2": -9.937759336099585
         },
         "idx_btts_top10": {
           "total": 505,
@@ -9646,21 +9664,21 @@
       },
       "motivos_ht05": {
         "camino_normal_ht05": {
-          "total": 7572,
-          "ganados": 5663,
-          "acierto_pct": 74.78869519281564,
-          "profit_u": -451.39,
-          "n_reciente": 4286,
-          "roi_reciente": -6.874475034997666,
+          "total": 7573,
+          "ganados": 5664,
+          "acierto_pct": 74.79202429684405,
+          "profit_u": -451.20000000000005,
+          "n_reciente": 4287,
+          "roi_reciente": -6.868439468159552,
           "total_detectado": 8432,
           "activa": true,
-          "penalizacion_inestabilidad": 15.226109350237717,
+          "penalizacion_inestabilidad": 15.225090799829427,
           "bloques_n": 378,
-          "bloques_pos": 120,
-          "bloque_ultimo_roi": 8.499999999999998,
+          "bloques_pos": 121,
+          "bloque_ultimo_roi": 8.349999999999998,
           "frac_roi_pos": 0.0,
           "roi_mitad1": -5.207606973058638,
-          "roi_mitad2": -6.715002641310091
+          "roi_mitad2": -6.708212305254821
         },
         "ninguno_evitar_ht05": {
           "total": 5406,
@@ -9852,21 +9870,21 @@
           "roi_mitad2": -14.408134954407295
         },
         "combo_banda_baja": {
-          "total": 926,
-          "ganados": 457,
-          "acierto_pct": 49.35205183585313,
-          "profit_u": -137.54706,
-          "n_reciente": 612,
-          "roi_reciente": -14.83072679738562,
+          "total": 927,
+          "ganados": 458,
+          "acierto_pct": 49.4066882416397,
+          "profit_u": -136.921396,
+          "n_reciente": 613,
+          "roi_reciente": -14.704467210440455,
           "total_detectado": 962,
           "activa": false,
-          "penalizacion_inestabilidad": 15.404465183585312,
+          "penalizacion_inestabilidad": 15.429057449821256,
           "bloques_n": 46,
-          "bloques_pos": 9,
-          "bloque_ultimo_roi": -3.6987399999999964,
+          "bloques_pos": 8,
+          "bloque_ultimo_roi": -3.698739999999997,
           "frac_roi_pos": 0.0,
           "roi_mitad1": -16.20211144708423,
-          "roi_mitad2": -13.50567688984881
+          "roi_mitad2": -13.341728448275859
         },
         "nueva_cuota_combo": {
           "total": 56,
@@ -10237,19 +10255,19 @@
         }
       },
       "marcador_exacto": {
-        "total": 15283,
+        "total": 15284,
         "aciertos": 1639,
-        "acierto_pct": 10.72433422757312
+        "acierto_pct": 10.723632556922272
       },
       "calibracion": {
         "BTTS": [
           {
             "rango": "50-60%",
-            "total": 8550,
-            "aciertos": 4970,
-            "acierto_pct": 58.12865497076023,
-            "prob_dicha_prom": 54.491731231885076,
-            "diferencia": 3.6369237388751543
+            "total": 8551,
+            "aciertos": 4971,
+            "acierto_pct": 58.13355163138814,
+            "prob_dicha_prom": 54.49170980280748,
+            "diferencia": 3.6418418285806595
           },
           {
             "rango": "60-70%",
@@ -10295,11 +10313,11 @@
           },
           {
             "rango": "70-80%",
-            "total": 7500,
-            "aciertos": 5893,
-            "acierto_pct": 78.57333333333332,
-            "prob_dicha_prom": 75.62012395239756,
-            "diferencia": 2.9532093809357605
+            "total": 7501,
+            "aciertos": 5894,
+            "acierto_pct": 78.57618984135448,
+            "prob_dicha_prom": 75.62045162136728,
+            "diferencia": 2.9557382199871967
           },
           {
             "rango": "80-90%",
@@ -10321,11 +10339,11 @@
         "Over 2.5": [
           {
             "rango": "50-60%",
-            "total": 6125,
-            "aciertos": 3564,
-            "acierto_pct": 58.18775510204082,
-            "prob_dicha_prom": 54.64538240672968,
-            "diferencia": 3.542372695311137
+            "total": 6126,
+            "aciertos": 3565,
+            "acierto_pct": 58.194580476656874,
+            "prob_dicha_prom": 54.64531263058563,
+            "diferencia": 3.5492678460712455
           },
           {
             "rango": "60-70%",
@@ -10371,11 +10389,11 @@
           },
           {
             "rango": "70-80%",
-            "total": 5200,
-            "aciertos": 3858,
-            "acierto_pct": 74.1923076923077,
-            "prob_dicha_prom": 71.15526318996095,
-            "diferencia": 3.0370445023467454
+            "total": 5201,
+            "aciertos": 3859,
+            "acierto_pct": 74.19726975581618,
+            "prob_dicha_prom": 71.15516388107372,
+            "diferencia": 3.042105874742461
           },
           {
             "rango": "80-90%",
@@ -11870,7 +11888,7 @@
           "acierto_pct": 61.15107913669065
         }
       },
-      "total_partidos_evaluados": 15341
+      "total_partidos_evaluados": 15342
     },
     "mercados_activos_hoy": {
       "BTTS": {
@@ -13591,18 +13609,18 @@
       "vip_desde_vivo": "2026-10-30",
       "rango_todas": {
         "partidos": {
-          "bets": 1675,
-          "wins": 1103,
+          "bets": 1689,
+          "wins": 1113,
           "acierto_pct": 65.9,
-          "profit_u": 107.9,
+          "profit_u": 108.3,
           "roi_pct": 6.4,
           "cuota_prom": 1.63
         },
         "senales": {
-          "bets": 3383,
-          "wins": 2337,
+          "bets": 3412,
+          "wins": 2359,
           "acierto_pct": 69.1,
-          "profit_u": 331.4,
+          "profit_u": 335.1,
           "roi_pct": 9.8,
           "cuota_prom": 1.6
         },
@@ -13622,15 +13640,15 @@
           "roi_pct": -7.9,
           "cuota_prom": 1.56
         },
-        "n_senales": 77,
+        "n_senales": 78,
         "desde": "2026-07-18",
         "hasta": "2026-11-28",
         "jugar_partidos": {
-          "bets": 957,
-          "wins": 633,
+          "bets": 965,
+          "wins": 638,
           "acierto_pct": 66.1,
-          "profit_u": 62.5,
-          "roi_pct": 6.5,
+          "profit_u": 61.8,
+          "roi_pct": 6.4,
           "cuota_prom": 1.62
         },
         "jugar_partidos_semana": {
@@ -14245,8 +14263,8 @@
             1.8,
             2.05
           ],
-          "azar_prob": 24.2,
-          "n_total": 963,
+          "azar_prob": 24.7,
+          "n_total": 964,
           "roi_total": -6.5,
           "n": 66,
           "acierto": 62.1,
@@ -15157,9 +15175,9 @@
             1.6,
             1.69
           ],
-          "azar_prob": 61.1,
-          "n_total": 710,
-          "roi_total": -8.8,
+          "azar_prob": 60.7,
+          "n_total": 711,
+          "roi_total": -8.7,
           "n": 84,
           "acierto": 65.5,
           "cuota_media": 1.64,
@@ -15627,6 +15645,54 @@
             "n": 1,
             "roi": -100.0,
             "uds": -1.0
+          }
+        },
+        {
+          "senal": "rescate_elite",
+          "estado": "apagada",
+          "veredicto": "a_medias",
+          "rango": [
+            1.4,
+            1.62
+          ],
+          "azar_prob": 80.4,
+          "n_total": 33,
+          "roi_total": 7.6,
+          "n": 31,
+          "acierto": 74.2,
+          "cuota_media": 1.48,
+          "roi": 10.1,
+          "uds": 3.1,
+          "tramos": [
+            10.5,
+            -5.5,
+            12.6,
+            24.7
+          ],
+          "tramos_desde": [
+            "2026-08-22",
+            "2026-09-18",
+            "2026-10-09",
+            "2026-11-06"
+          ],
+          "tramos_pos": 3,
+          "semanas": 6,
+          "semanas_pos": 5,
+          "n30": 9,
+          "roi30": 33.0,
+          "sin_trampa_n": 1,
+          "sin_trampa_roi": -100.0,
+          "jugar_pct": 65.0,
+          "desde": "2026-08-22",
+          "vip_dentro": {
+            "n": 0,
+            "roi": null,
+            "uds": null
+          },
+          "vip_fuera": {
+            "n": 0,
+            "roi": null,
+            "uds": null
           }
         },
         {
@@ -17041,7 +17107,7 @@
             ],
             "acierto_necesario": 68.0,
             "brecha_pp": -11.2,
-            "alfa": -4.6,
+            "alfa": -4.7,
             "alfa_se": 11.1,
             "max_caida_u": 9.2,
             "dias_con_picks": 14,
@@ -17065,7 +17131,7 @@
             ],
             "acierto_necesario": 68.0,
             "brecha_pp": -11.2,
-            "alfa": -4.6,
+            "alfa": -4.7,
             "alfa_se": 11.1,
             "max_caida_u": 9.2,
             "dias_con_picks": 14,
@@ -17089,7 +17155,7 @@
             ],
             "acierto_necesario": 68.0,
             "brecha_pp": -11.2,
-            "alfa": -4.6,
+            "alfa": -4.7,
             "alfa_se": 11.1,
             "max_caida_u": 9.2,
             "dias_con_picks": 14,
@@ -17497,7 +17563,7 @@
             ],
             "acierto_necesario": 67.0,
             "brecha_pp": -7.0,
-            "alfa": 0.0,
+            "alfa": -0.0,
             "alfa_se": 37.0,
             "max_caida_u": 2.0,
             "dias_con_picks": 2,
@@ -17520,7 +17586,7 @@
             ],
             "acierto_necesario": 68.0,
             "brecha_pp": -11.2,
-            "alfa": -4.6,
+            "alfa": -4.7,
             "alfa_se": 11.1,
             "max_caida_u": 9.2,
             "dias_con_picks": 14,
@@ -18237,7 +18303,7 @@
           "marcados": 0,
           "a_jugar": 0,
           "entrenado_con": 13778,
-          "hora": "2026-11-28 12:35",
+          "hora": "2026-11-28 12:41",
           "en_franja": 21,
           "ev_min": 0.15,
           "mejores": [
@@ -18512,12 +18578,12 @@
       "hasta": "2026-11-28"
     },
     "mercado": {
-      "n": 13778,
-      "ganados": 7797,
+      "n": 13779,
+      "ganados": 7798,
       "acierto": 56.6,
       "cuota_media": 1.64,
       "roi": -8.1,
-      "uds": -1115.6,
+      "uds": -1115.2,
       "se": 0.7,
       "ic95": [
         -9.5,
@@ -18527,7 +18593,7 @@
       "brecha_pp": -5.1,
       "alfa": 0.0,
       "alfa_se": 0.7,
-      "max_caida_u": 1123.1,
+      "max_caida_u": 1122.7,
       "dias_con_picks": 133,
       "picks_por_dia": 103.6,
       "sd_apuesta": 0.82,
@@ -18617,7 +18683,7 @@
       ],
       "acierto_necesario": 67.6,
       "brecha_pp": -3.7,
-      "alfa": 5.6,
+      "alfa": 5.5,
       "alfa_se": 8.4,
       "max_caida_u": 9.6,
       "dias_con_picks": 22,
@@ -19522,7 +19588,7 @@
         "banda": "1.40 – 1.50",
         "lo": 1.4,
         "hi": 1.5,
-        "n_mercado": 2104,
+        "n_mercado": 2105,
         "acierto_mercado": 63.2,
         "implicita_mercado": 69.4,
         "roi_mercado": -9.0,
@@ -19686,10 +19752,10 @@
         "hasta": "2026-11-28"
       },
       "mercado": {
-        "n": 3345,
+        "n": 3346,
         "margen_pct": 8.5,
         "roi": -10.6,
-        "roi_sin_margen": -3.1,
+        "roi_sin_margen": -3.0,
         "se": 1.5,
         "desde": "2026-10-29",
         "hasta": "2026-11-28"
@@ -19875,7 +19941,7 @@
       "etiquetas": 40,
       "Q": 40.0,
       "gl": 39,
-      "p": 0.425,
+      "p": 0.426,
       "tau_pts": 1.6
     },
     "formula": {
@@ -20140,7 +20206,7 @@
     }
   },
   "comparador_cuotas": {
-    "actualizado": "2026-11-28 12:35",
+    "actualizado": "2026-11-28 12:41",
     "dia": "2026-11-28",
     "consultas_hoy": 0,
     "ultima_consulta": "2026-11-26 08:45",
@@ -21023,13 +21089,13 @@
       },
       "mercado": {
         "total": {
-          "n": 14372,
-          "ganados": 8192,
+          "n": 14373,
+          "ganados": 8193,
           "acierto": 57.0,
           "cuota_media": 1.69,
           "roi": -6.0,
-          "uds": -865.3,
-          "jugadas": 14372.0,
+          "uds": -864.8,
+          "jugadas": 14373.0,
           "se": 0.7,
           "mitades": [
             -5.5,
@@ -21551,13 +21617,13 @@
       },
       "mercado": {
         "total": {
-          "n": 13773,
-          "ganados": 6328,
+          "n": 13774,
+          "ganados": 6329,
           "acierto": 45.9,
           "cuota_media": 1.95,
           "roi": -13.4,
-          "uds": -1843.6,
-          "jugadas": 13773.0,
+          "uds": -1843.0,
+          "jugadas": 13774.0,
           "se": 0.8,
           "mitades": [
             -11.8,
@@ -21574,14 +21640,14 @@
       {
         "clave": "u35",
         "nombre": "Menos de 3.5",
-        "n": 3346,
+        "n": 3347,
         "roi": -3.5,
-        "acierto": 65.2,
+        "acierto": 65.1,
         "cuota_media": 1.51,
         "desde": "2026-10-29",
         "hasta": "2026-11-28",
         "roi_30d": -3.7,
-        "n_30d": 3313,
+        "n_30d": 3314,
         "por_mes": [
           {
             "mes": "2026-10",
@@ -21590,14 +21656,14 @@
           },
           {
             "mes": "2026-11",
-            "n": 2781,
-            "roi": -2.8
+            "n": 2782,
+            "roi": -2.9
           }
         ],
-        "n_margen": 3346,
+        "n_margen": 3347,
         "margen": 8.4,
         "roi_margen_n": -3.5,
-        "roi_sin_margen": 4.6,
+        "roi_sin_margen": 4.5,
         "rangos": [
           {
             "desde": 1.0,
@@ -21622,11 +21688,11 @@
           {
             "desde": 1.45,
             "hasta": 1.6,
-            "n": 816,
-            "roi": -3.7,
+            "n": 817,
+            "roi": -3.8,
             "meses": 2,
             "meses_pos": 0,
-            "peor_mes": -4.3,
+            "peor_mes": -4.5,
             "mejor_mes": -0.4
           },
           {
@@ -21664,14 +21730,14 @@
       {
         "clave": "btts_no",
         "nombre": "Ambos marcan · NO",
-        "n": 3346,
+        "n": 3347,
         "roi": -3.7,
         "acierto": 43.8,
         "cuota_media": 2.24,
         "desde": "2026-10-29",
         "hasta": "2026-11-28",
         "roi_30d": -4.0,
-        "n_30d": 3313,
+        "n_30d": 3314,
         "por_mes": [
           {
             "mes": "2026-10",
@@ -21680,11 +21746,11 @@
           },
           {
             "mes": "2026-11",
-            "n": 2780,
+            "n": 2781,
             "roi": -3.2
           }
         ],
-        "n_margen": 3346,
+        "n_margen": 3347,
         "margen": 8.5,
         "roi_margen_n": -3.7,
         "roi_sin_margen": 4.4,
@@ -21722,36 +21788,36 @@
           {
             "desde": 2.5,
             "hasta": 3.5,
-            "n": 619,
-            "roi": 1.5,
+            "n": 620,
+            "roi": 1.3,
             "meses": 2,
             "meses_pos": 1,
             "peor_mes": -1.9,
-            "mejor_mes": 2.1
+            "mejor_mes": 1.9
           }
         ],
         "mejor_rango": {
           "desde": 2.5,
           "hasta": 3.5,
-          "n": 619,
-          "roi": 1.5,
+          "n": 620,
+          "roi": 1.3,
           "meses": 2,
           "meses_pos": 1,
           "peor_mes": -1.9,
-          "mejor_mes": 2.1
+          "mejor_mes": 1.9
         }
       },
       {
         "clave": "2h05",
         "nombre": "2º tiempo · más de 0.5",
-        "n": 3312,
+        "n": 3313,
         "roi": -5.4,
         "acierto": 81.6,
         "cuota_media": 1.16,
         "desde": "2026-10-29",
         "hasta": "2026-11-28",
         "roi_30d": -5.3,
-        "n_30d": 3279,
+        "n_30d": 3280,
         "por_mes": [
           {
             "mes": "2026-10",
@@ -21760,7 +21826,7 @@
           },
           {
             "mes": "2026-11",
-            "n": 2752,
+            "n": 2753,
             "roi": -5.6
           }
         ],
@@ -21768,7 +21834,7 @@
           {
             "desde": 1.0,
             "hasta": 1.3,
-            "n": 3269,
+            "n": 3270,
             "roi": -5.4,
             "meses": 2,
             "meses_pos": 0,
@@ -21779,7 +21845,7 @@
         "mejor_rango": {
           "desde": 1.0,
           "hasta": 1.3,
-          "n": 3269,
+          "n": 3270,
           "roi": -5.4,
           "meses": 2,
           "meses_pos": 0,
@@ -21790,14 +21856,14 @@
       {
         "clave": "o25",
         "nombre": "Más de 2.5",
-        "n": 14369,
+        "n": 14370,
         "roi": -6.0,
         "acierto": 57.0,
         "cuota_media": 1.69,
         "desde": "2026-07-18",
         "hasta": "2026-11-28",
         "roi_30d": -7.2,
-        "n_30d": 3377,
+        "n_30d": 3378,
         "por_mes": [
           {
             "mes": "2026-07",
@@ -21821,14 +21887,14 @@
           },
           {
             "mes": "2026-11",
-            "n": 2833,
+            "n": 2834,
             "roi": -8.5
           }
         ],
-        "n_margen": 3411,
+        "n_margen": 3412,
         "margen": 7.7,
-        "roi_margen_n": -7.5,
-        "roi_sin_margen": -0.4,
+        "roi_margen_n": -7.4,
+        "roi_sin_margen": -0.3,
         "rangos": [
           {
             "desde": 1.0,
@@ -21853,7 +21919,7 @@
           {
             "desde": 1.45,
             "hasta": 1.6,
-            "n": 3042,
+            "n": 3043,
             "roi": -6.3,
             "meses": 5,
             "meses_pos": 0,
@@ -21915,14 +21981,14 @@
       {
         "clave": "o15",
         "nombre": "Más de 1.5",
-        "n": 13628,
+        "n": 13629,
         "roi": -6.2,
         "acierto": 78.9,
         "cuota_media": 1.2,
         "desde": "2026-07-18",
         "hasta": "2026-11-28",
         "roi_30d": -7.7,
-        "n_30d": 3261,
+        "n_30d": 3262,
         "por_mes": [
           {
             "mes": "2026-07",
@@ -21946,19 +22012,19 @@
           },
           {
             "mes": "2026-11",
-            "n": 2736,
+            "n": 2737,
             "roi": -8.3
           }
         ],
-        "n_margen": 3294,
+        "n_margen": 3295,
         "margen": 8.8,
         "roi_margen_n": -7.8,
-        "roi_sin_margen": 0.2,
+        "roi_sin_margen": 0.3,
         "rangos": [
           {
             "desde": 1.0,
             "hasta": 1.3,
-            "n": 11812,
+            "n": 11813,
             "roi": -6.3,
             "meses": 5,
             "meses_pos": 0,
@@ -22000,14 +22066,14 @@
       {
         "clave": "ht05",
         "nombre": "1er tiempo · más de 0.5",
-        "n": 12977,
+        "n": 12978,
         "roi": -6.3,
         "acierto": 73.1,
         "cuota_media": 1.29,
         "desde": "2026-08-02",
         "hasta": "2026-11-28",
         "roi_30d": -8.3,
-        "n_30d": 3288,
+        "n_30d": 3289,
         "por_mes": [
           {
             "mes": "2026-08",
@@ -22026,15 +22092,15 @@
           },
           {
             "mes": "2026-11",
-            "n": 2760,
-            "roi": -9.2
+            "n": 2761,
+            "roi": -9.1
           }
         ],
         "rangos": [
           {
             "desde": 1.0,
             "hasta": 1.3,
-            "n": 8273,
+            "n": 8274,
             "roi": -6.0,
             "meses": 4,
             "meses_pos": 0,
@@ -22074,106 +22140,16 @@
         }
       },
       {
-        "clave": "u25",
-        "nombre": "Menos de 2.5",
-        "n": 3412,
-        "roi": -7.7,
-        "acierto": 42.0,
-        "cuota_media": 2.31,
-        "desde": "2026-10-29",
-        "hasta": "2026-11-28",
-        "roi_30d": -8.0,
-        "n_30d": 3378,
-        "por_mes": [
-          {
-            "mes": "2026-10",
-            "n": 578,
-            "roi": -14.2
-          },
-          {
-            "mes": "2026-11",
-            "n": 2834,
-            "roi": -6.4
-          }
-        ],
-        "n_margen": 3411,
-        "margen": 7.7,
-        "roi_margen_n": -7.7,
-        "roi_sin_margen": -0.7,
-        "rangos": [
-          {
-            "desde": 1.6,
-            "hasta": 1.75,
-            "n": 235,
-            "roi": -5.1,
-            "meses": 1,
-            "meses_pos": 0,
-            "peor_mes": -7.4,
-            "mejor_mes": -7.4
-          },
-          {
-            "desde": 1.75,
-            "hasta": 1.9,
-            "n": 386,
-            "roi": 1.6,
-            "meses": 2,
-            "meses_pos": 1,
-            "peor_mes": -5.4,
-            "mejor_mes": 3.0
-          },
-          {
-            "desde": 1.9,
-            "hasta": 2.1,
-            "n": 716,
-            "roi": -7.4,
-            "meses": 2,
-            "meses_pos": 0,
-            "peor_mes": -9.3,
-            "mejor_mes": -7.0
-          },
-          {
-            "desde": 2.1,
-            "hasta": 2.5,
-            "n": 1156,
-            "roi": -8.5,
-            "meses": 2,
-            "meses_pos": 0,
-            "peor_mes": -21.5,
-            "mejor_mes": -5.9
-          },
-          {
-            "desde": 2.5,
-            "hasta": 3.5,
-            "n": 752,
-            "roi": -10.4,
-            "meses": 2,
-            "meses_pos": 0,
-            "peor_mes": -14.9,
-            "mejor_mes": -9.5
-          }
-        ],
-        "mejor_rango": {
-          "desde": 1.75,
-          "hasta": 1.9,
-          "n": 386,
-          "roi": 1.6,
-          "meses": 2,
-          "meses_pos": 1,
-          "peor_mes": -5.4,
-          "mejor_mes": 3.0
-        }
-      },
-      {
         "clave": "local",
         "nombre": "Gana el local",
-        "n": 11622,
+        "n": 11623,
         "roi": -7.7,
         "acierto": 44.6,
         "cuota_media": 2.53,
         "desde": "2026-08-07",
         "hasta": "2026-11-28",
-        "roi_30d": -3.1,
-        "n_30d": 2744,
+        "roi_30d": -3.2,
+        "n_30d": 2745,
         "por_mes": [
           {
             "mes": "2026-08",
@@ -22192,14 +22168,14 @@
           },
           {
             "mes": "2026-11",
-            "n": 2325,
-            "roi": -5.0
+            "n": 2326,
+            "roi": -5.1
           }
         ],
-        "n_margen": 2765,
+        "n_margen": 2766,
         "margen": 10.2,
         "roi_margen_n": -3.1,
-        "roi_sin_margen": 6.3,
+        "roi_sin_margen": 6.2,
         "rangos": [
           {
             "desde": 1.0,
@@ -22274,8 +22250,8 @@
           {
             "desde": 2.5,
             "hasta": 3.5,
-            "n": 2294,
-            "roi": -10.2,
+            "n": 2295,
+            "roi": -10.3,
             "meses": 4,
             "meses_pos": 0,
             "peor_mes": -19.4,
@@ -22304,16 +22280,106 @@
         }
       },
       {
+        "clave": "u25",
+        "nombre": "Menos de 2.5",
+        "n": 3413,
+        "roi": -7.8,
+        "acierto": 42.0,
+        "cuota_media": 2.31,
+        "desde": "2026-10-29",
+        "hasta": "2026-11-28",
+        "roi_30d": -8.0,
+        "n_30d": 3379,
+        "por_mes": [
+          {
+            "mes": "2026-10",
+            "n": 578,
+            "roi": -14.2
+          },
+          {
+            "mes": "2026-11",
+            "n": 2835,
+            "roi": -6.4
+          }
+        ],
+        "n_margen": 3412,
+        "margen": 7.7,
+        "roi_margen_n": -7.7,
+        "roi_sin_margen": -0.7,
+        "rangos": [
+          {
+            "desde": 1.6,
+            "hasta": 1.75,
+            "n": 235,
+            "roi": -5.1,
+            "meses": 1,
+            "meses_pos": 0,
+            "peor_mes": -7.4,
+            "mejor_mes": -7.4
+          },
+          {
+            "desde": 1.75,
+            "hasta": 1.9,
+            "n": 386,
+            "roi": 1.6,
+            "meses": 2,
+            "meses_pos": 1,
+            "peor_mes": -5.4,
+            "mejor_mes": 3.0
+          },
+          {
+            "desde": 1.9,
+            "hasta": 2.1,
+            "n": 716,
+            "roi": -7.4,
+            "meses": 2,
+            "meses_pos": 0,
+            "peor_mes": -9.3,
+            "mejor_mes": -7.0
+          },
+          {
+            "desde": 2.1,
+            "hasta": 2.5,
+            "n": 1157,
+            "roi": -8.6,
+            "meses": 2,
+            "meses_pos": 0,
+            "peor_mes": -21.5,
+            "mejor_mes": -6.0
+          },
+          {
+            "desde": 2.5,
+            "hasta": 3.5,
+            "n": 752,
+            "roi": -10.4,
+            "meses": 2,
+            "meses_pos": 0,
+            "peor_mes": -14.9,
+            "mejor_mes": -9.5
+          }
+        ],
+        "mejor_rango": {
+          "desde": 1.75,
+          "hasta": 1.9,
+          "n": 386,
+          "roi": 1.6,
+          "meses": 2,
+          "meses_pos": 1,
+          "peor_mes": -5.4,
+          "mejor_mes": 3.0
+        }
+      },
+      {
         "clave": "btts",
         "nombre": "Ambos marcan · SÍ",
-        "n": 13778,
+        "n": 13779,
         "roi": -8.1,
         "acierto": 56.6,
         "cuota_media": 1.65,
         "desde": "2026-07-18",
         "hasta": "2026-11-28",
-        "roi_30d": -10.3,
-        "n_30d": 3313,
+        "roi_30d": -10.2,
+        "n_30d": 3314,
         "por_mes": [
           {
             "mes": "2026-07",
@@ -22337,11 +22403,11 @@
           },
           {
             "mes": "2026-11",
-            "n": 2780,
+            "n": 2781,
             "roi": -10.8
           }
         ],
-        "n_margen": 3346,
+        "n_margen": 3347,
         "margen": 8.5,
         "roi_margen_n": -10.5,
         "roi_sin_margen": -2.9,
@@ -22359,7 +22425,7 @@
           {
             "desde": 1.3,
             "hasta": 1.45,
-            "n": 2203,
+            "n": 2204,
             "roi": -9.9,
             "meses": 5,
             "meses_pos": 0,
@@ -22431,14 +22497,14 @@
       {
         "clave": "2h15",
         "nombre": "2º tiempo · más de 1.5",
-        "n": 3345,
+        "n": 3346,
         "roi": -9.1,
-        "acierto": 50.3,
+        "acierto": 50.4,
         "cuota_media": 1.84,
         "desde": "2026-10-29",
         "hasta": "2026-11-28",
         "roi_30d": -8.9,
-        "n_30d": 3312,
+        "n_30d": 3313,
         "por_mes": [
           {
             "mes": "2026-10",
@@ -22447,8 +22513,8 @@
           },
           {
             "mes": "2026-11",
-            "n": 2779,
-            "roi": -9.8
+            "n": 2780,
+            "roi": -9.7
           }
         ],
         "rangos": [
@@ -22465,11 +22531,11 @@
           {
             "desde": 1.6,
             "hasta": 1.75,
-            "n": 841,
-            "roi": -6.8,
+            "n": 842,
+            "roi": -6.7,
             "meses": 2,
             "meses_pos": 1,
-            "peor_mes": -10.2,
+            "peor_mes": -10.0,
             "mejor_mes": 7.9
           },
           {
@@ -22517,14 +22583,14 @@
       {
         "clave": "ht15",
         "nombre": "1er tiempo · más de 1.5",
-        "n": 11606,
+        "n": 11607,
         "roi": -9.5,
         "acierto": 38.7,
         "cuota_media": 2.4,
         "desde": "2026-08-16",
         "hasta": "2026-11-28",
         "roi_30d": -12.3,
-        "n_30d": 3313,
+        "n_30d": 3314,
         "por_mes": [
           {
             "mes": "2026-08",
@@ -22543,8 +22609,8 @@
           },
           {
             "mes": "2026-11",
-            "n": 2782,
-            "roi": -13.8
+            "n": 2783,
+            "roi": -13.7
           }
         ],
         "rangos": [
@@ -22581,11 +22647,11 @@
           {
             "desde": 2.1,
             "hasta": 2.5,
-            "n": 5169,
-            "roi": -10.6,
+            "n": 5170,
+            "roi": -10.5,
             "meses": 4,
             "meses_pos": 0,
-            "peor_mes": -14.3,
+            "peor_mes": -14.2,
             "mejor_mes": -4.3
           },
           {
@@ -22613,14 +22679,14 @@
       {
         "clave": "u15",
         "nombre": "Menos de 1.5",
-        "n": 3309,
+        "n": 3310,
         "roi": -9.7,
         "acierto": 21.2,
         "cuota_media": 4.64,
         "desde": "2026-10-29",
         "hasta": "2026-11-28",
         "roi_30d": -9.9,
-        "n_30d": 3276,
+        "n_30d": 3277,
         "por_mes": [
           {
             "mes": "2026-10",
@@ -22629,14 +22695,14 @@
           },
           {
             "mes": "2026-11",
-            "n": 2748,
+            "n": 2749,
             "roi": -7.9
           }
         ],
-        "n_margen": 3294,
+        "n_margen": 3295,
         "margen": 8.8,
         "roi_margen_n": -9.3,
-        "roi_sin_margen": -1.4,
+        "roi_sin_margen": -1.5,
         "rangos": [
           {
             "desde": 2.5,
@@ -22651,7 +22717,7 @@
           {
             "desde": 3.5,
             "hasta": 100.0,
-            "n": 2602,
+            "n": 2603,
             "roi": -9.9,
             "meses": 2,
             "meses_pos": 0,
@@ -22673,14 +22739,14 @@
       {
         "clave": "visitante",
         "nombre": "Gana el visitante",
-        "n": 11618,
-        "roi": -11.8,
+        "n": 11619,
+        "roi": -11.7,
         "acierto": 32.2,
         "cuota_media": 3.56,
         "desde": "2026-08-07",
         "hasta": "2026-11-28",
-        "roi_30d": -14.2,
-        "n_30d": 2746,
+        "roi_30d": -14.1,
+        "n_30d": 2747,
         "por_mes": [
           {
             "mes": "2026-08",
@@ -22699,14 +22765,14 @@
           },
           {
             "mes": "2026-11",
-            "n": 2326,
+            "n": 2327,
             "roi": -13.1
           }
         ],
-        "n_margen": 2765,
+        "n_margen": 2766,
         "margen": 10.2,
         "roi_margen_n": -13.9,
-        "roi_sin_margen": -5.1,
+        "roi_sin_margen": -5.0,
         "rangos": [
           {
             "desde": 1.0,
@@ -22771,7 +22837,7 @@
           {
             "desde": 2.1,
             "hasta": 2.5,
-            "n": 1741,
+            "n": 1742,
             "roi": -8.6,
             "meses": 4,
             "meses_pos": 0,
@@ -22813,14 +22879,14 @@
       {
         "clave": "dc_x2",
         "nombre": "Doble oportunidad X2",
-        "n": 3333,
+        "n": 3334,
         "roi": -13.2,
         "acierto": 53.6,
         "cuota_media": 1.86,
         "desde": "2026-10-29",
         "hasta": "2026-11-28",
         "roi_30d": -13.1,
-        "n_30d": 3300,
+        "n_30d": 3301,
         "por_mes": [
           {
             "mes": "2026-10",
@@ -22829,7 +22895,7 @@
           },
           {
             "mes": "2026-11",
-            "n": 2770,
+            "n": 2771,
             "roi": -13.1
           }
         ],
@@ -22847,12 +22913,12 @@
           {
             "desde": 1.3,
             "hasta": 1.45,
-            "n": 555,
-            "roi": -12.2,
+            "n": 556,
+            "roi": -12.1,
             "meses": 2,
             "meses_pos": 0,
             "peor_mes": -16.4,
-            "mejor_mes": -11.3
+            "mejor_mes": -11.1
           },
           {
             "desde": 1.45,
@@ -22927,16 +22993,106 @@
         }
       },
       {
+        "clave": "o35",
+        "nombre": "Más de 3.5",
+        "n": 3347,
+        "roi": -15.1,
+        "acierto": 34.9,
+        "cuota_media": 2.58,
+        "desde": "2026-10-29",
+        "hasta": "2026-11-28",
+        "roi_30d": -14.7,
+        "n_30d": 3314,
+        "por_mes": [
+          {
+            "mes": "2026-10",
+            "n": 565,
+            "roi": -8.1
+          },
+          {
+            "mes": "2026-11",
+            "n": 2782,
+            "roi": -16.6
+          }
+        ],
+        "n_margen": 3347,
+        "margen": 8.4,
+        "roi_margen_n": -15.1,
+        "roi_sin_margen": -8.1,
+        "rangos": [
+          {
+            "desde": 1.75,
+            "hasta": 1.9,
+            "n": 184,
+            "roi": -10.9,
+            "meses": 1,
+            "meses_pos": 0,
+            "peor_mes": -10.5,
+            "mejor_mes": -10.5
+          },
+          {
+            "desde": 1.9,
+            "hasta": 2.1,
+            "n": 378,
+            "roi": -7.8,
+            "meses": 2,
+            "meses_pos": 0,
+            "peor_mes": -8.9,
+            "mejor_mes": -4.0
+          },
+          {
+            "desde": 2.1,
+            "hasta": 2.5,
+            "n": 1037,
+            "roi": -12.7,
+            "meses": 2,
+            "meses_pos": 0,
+            "peor_mes": -13.6,
+            "mejor_mes": -12.5
+          },
+          {
+            "desde": 2.5,
+            "hasta": 3.5,
+            "n": 1355,
+            "roi": -17.6,
+            "meses": 2,
+            "meses_pos": 0,
+            "peor_mes": -20.9,
+            "mejor_mes": -1.4
+          },
+          {
+            "desde": 3.5,
+            "hasta": 100.0,
+            "n": 251,
+            "roi": -25.7,
+            "meses": 1,
+            "meses_pos": 0,
+            "peor_mes": -25.8,
+            "mejor_mes": -25.8
+          }
+        ],
+        "mejor_rango": {
+          "desde": 1.9,
+          "hasta": 2.1,
+          "n": 378,
+          "roi": -7.8,
+          "meses": 2,
+          "meses_pos": 0,
+          "peor_mes": -8.9,
+          "mejor_mes": -4.0
+        }
+      },
+      {
         "clave": "dc_1x",
         "nombre": "Doble oportunidad 1X",
-        "n": 3323,
+        "n": 3324,
         "roi": -15.1,
         "acierto": 68.1,
         "cuota_media": 1.28,
         "desde": "2026-10-29",
         "hasta": "2026-11-28",
-        "roi_30d": -15.0,
-        "n_30d": 3290,
+        "roi_30d": -15.1,
+        "n_30d": 3291,
         "por_mes": [
           {
             "mes": "2026-10",
@@ -22945,7 +23101,7 @@
           },
           {
             "mes": "2026-11",
-            "n": 2757,
+            "n": 2758,
             "roi": -15.4
           }
         ],
@@ -22983,106 +23139,16 @@
         }
       },
       {
-        "clave": "o35",
-        "nombre": "Más de 3.5",
-        "n": 3346,
-        "roi": -15.2,
-        "acierto": 34.8,
-        "cuota_media": 2.58,
-        "desde": "2026-10-29",
-        "hasta": "2026-11-28",
-        "roi_30d": -14.7,
-        "n_30d": 3313,
-        "por_mes": [
-          {
-            "mes": "2026-10",
-            "n": 565,
-            "roi": -8.1
-          },
-          {
-            "mes": "2026-11",
-            "n": 2781,
-            "roi": -16.6
-          }
-        ],
-        "n_margen": 3346,
-        "margen": 8.4,
-        "roi_margen_n": -15.2,
-        "roi_sin_margen": -8.2,
-        "rangos": [
-          {
-            "desde": 1.75,
-            "hasta": 1.9,
-            "n": 184,
-            "roi": -10.9,
-            "meses": 1,
-            "meses_pos": 0,
-            "peor_mes": -10.5,
-            "mejor_mes": -10.5
-          },
-          {
-            "desde": 1.9,
-            "hasta": 2.1,
-            "n": 378,
-            "roi": -7.8,
-            "meses": 2,
-            "meses_pos": 0,
-            "peor_mes": -8.9,
-            "mejor_mes": -4.0
-          },
-          {
-            "desde": 2.1,
-            "hasta": 2.5,
-            "n": 1036,
-            "roi": -12.9,
-            "meses": 2,
-            "meses_pos": 0,
-            "peor_mes": -13.6,
-            "mejor_mes": -12.7
-          },
-          {
-            "desde": 2.5,
-            "hasta": 3.5,
-            "n": 1355,
-            "roi": -17.6,
-            "meses": 2,
-            "meses_pos": 0,
-            "peor_mes": -20.9,
-            "mejor_mes": -1.4
-          },
-          {
-            "desde": 3.5,
-            "hasta": 100.0,
-            "n": 251,
-            "roi": -25.7,
-            "meses": 1,
-            "meses_pos": 0,
-            "peor_mes": -25.8,
-            "mejor_mes": -25.8
-          }
-        ],
-        "mejor_rango": {
-          "desde": 1.9,
-          "hasta": 2.1,
-          "n": 378,
-          "roi": -7.8,
-          "meses": 2,
-          "meses_pos": 0,
-          "peor_mes": -8.9,
-          "mejor_mes": -4.0
-        }
-      },
-      {
         "clave": "empate",
         "nombre": "Empate",
-        "n": 3441,
-        "roi": -18.4,
+        "n": 3442,
+        "roi": -18.5,
         "acierto": 22.0,
         "cuota_media": 3.93,
         "desde": "2026-10-29",
         "hasta": "2026-11-28",
         "roi_30d": -18.1,
-        "n_30d": 3407,
+        "n_30d": 3408,
         "por_mes": [
           {
             "mes": "2026-10",
@@ -23091,14 +23157,14 @@
           },
           {
             "mes": "2026-11",
-            "n": 2850,
+            "n": 2851,
             "roi": -18.5
           }
         ],
-        "n_margen": 2765,
+        "n_margen": 2766,
         "margen": 10.2,
         "roi_margen_n": -18.4,
-        "roi_sin_margen": -10.1,
+        "roi_sin_margen": -10.2,
         "rangos": [
           {
             "desde": 2.5,
@@ -23113,8 +23179,8 @@
           {
             "desde": 3.5,
             "hasta": 100.0,
-            "n": 1993,
-            "roi": -23.3,
+            "n": 1994,
+            "roi": -23.4,
             "meses": 2,
             "meses_pos": 0,
             "peor_mes": -25.5,
@@ -23135,14 +23201,14 @@
       {
         "clave": "ht25",
         "nombre": "1er tiempo · más de 2.5",
-        "n": 3321,
-        "roi": -24.7,
-        "acierto": 14.9,
+        "n": 3322,
+        "roi": -24.5,
+        "acierto": 15.0,
         "cuota_media": 5.36,
         "desde": "2026-10-29",
         "hasta": "2026-11-28",
-        "roi_30d": -24.2,
-        "n_30d": 3288,
+        "roi_30d": -24.1,
+        "n_30d": 3289,
         "por_mes": [
           {
             "mes": "2026-10",
@@ -23151,8 +23217,8 @@
           },
           {
             "mes": "2026-11",
-            "n": 2759,
-            "roi": -26.0
+            "n": 2760,
+            "roi": -25.9
           }
         ],
         "rangos": [
@@ -23169,11 +23235,11 @@
           {
             "desde": 3.5,
             "hasta": 100.0,
-            "n": 3147,
-            "roi": -26.1,
+            "n": 3148,
+            "roi": -26.0,
             "meses": 2,
             "meses_pos": 0,
-            "peor_mes": -27.6,
+            "peor_mes": -27.5,
             "mejor_mes": -18.8
           }
         ],
@@ -23193,12 +23259,12 @@
     "observacion": {
       "corners": {
         "con_cuota": 471,
-        "con_resultado": 291,
-        "con_ambos": 231
+        "con_resultado": 292,
+        "con_ambos": 232
       },
       "tarjetas": {
         "con_cuota": 0,
-        "con_resultado": 255,
+        "con_resultado": 256,
         "con_ambos": 0
       },
       "potenciales": 667
@@ -24522,11 +24588,11 @@
     ],
     "mercado": {
       "prueba": {
-        "n": 349,
+        "n": 350,
         "ganados": 154,
-        "acierto": 44.1,
-        "roi": -1.5,
-        "uds": -5.14
+        "acierto": 44.0,
+        "roi": -1.8,
+        "uds": -6.14
       },
       "antes": {
         "n": 2951,
@@ -26209,6 +26275,68 @@
         ]
       },
       {
+        "motivo": "rescate_oro_fuerte",
+        "estado": "apagada",
+        "n": 30,
+        "ganados": 22,
+        "acierto": 73.3,
+        "uds": 2.65,
+        "roi": 8.8,
+        "meses": {
+          "2026-09": {
+            "n": 13,
+            "uds": -0.95
+          },
+          "2026-10": {
+            "n": 8,
+            "uds": 0.89
+          },
+          "2026-11": {
+            "n": 9,
+            "uds": 2.71
+          }
+        },
+        "meses_contados": [
+          "2026-09"
+        ],
+        "meses_perdidos": [
+          "2026-09"
+        ]
+      },
+      {
+        "motivo": "rescate_elite",
+        "estado": "apagada",
+        "n": 33,
+        "ganados": 24,
+        "acierto": 72.7,
+        "uds": 2.5,
+        "roi": 7.6,
+        "meses": {
+          "2026-08": {
+            "n": 4,
+            "uds": 0.45
+          },
+          "2026-09": {
+            "n": 12,
+            "uds": -1.55
+          },
+          "2026-10": {
+            "n": 8,
+            "uds": 0.89
+          },
+          "2026-11": {
+            "n": 9,
+            "uds": 2.71
+          }
+        },
+        "meses_contados": [
+          "2026-09"
+        ],
+        "meses_perdidos": [
+          "2026-09"
+        ]
+      },
+      {
         "motivo": "centinela_plus",
         "estado": "en_prueba",
         "n": 94,
@@ -26235,35 +26363,6 @@
         ]
       },
       {
-        "motivo": "rescate_oro_fuerte",
-        "estado": "apagada",
-        "n": 29,
-        "ganados": 21,
-        "acierto": 72.4,
-        "uds": 2.21,
-        "roi": 7.6,
-        "meses": {
-          "2026-09": {
-            "n": 13,
-            "uds": -0.95
-          },
-          "2026-10": {
-            "n": 8,
-            "uds": 0.89
-          },
-          "2026-11": {
-            "n": 8,
-            "uds": 2.27
-          }
-        },
-        "meses_contados": [
-          "2026-09"
-        ],
-        "meses_perdidos": [
-          "2026-09"
-        ]
-      },
-      {
         "motivo": "bastion_plus",
         "estado": "en_prueba",
         "n": 120,
@@ -26287,39 +26386,6 @@
         ],
         "meses_perdidos": [
           "2026-11"
-        ]
-      },
-      {
-        "motivo": "rescate_elite",
-        "estado": "apagada",
-        "n": 32,
-        "ganados": 23,
-        "acierto": 71.9,
-        "uds": 2.06,
-        "roi": 6.4,
-        "meses": {
-          "2026-08": {
-            "n": 4,
-            "uds": 0.45
-          },
-          "2026-09": {
-            "n": 12,
-            "uds": -1.55
-          },
-          "2026-10": {
-            "n": 8,
-            "uds": 0.89
-          },
-          "2026-11": {
-            "n": 8,
-            "uds": 2.27
-          }
-        },
-        "meses_contados": [
-          "2026-09"
-        ],
-        "meses_perdidos": [
-          "2026-09"
         ]
       },
       {
@@ -27491,9 +27557,9 @@
         "se_mantuvo": true
       },
       "idx_btts_top20": {
-        "n_total": 963,
+        "n_total": 964,
         "roi_total": -6.5,
-        "uds_total": -62.6,
+        "uds_total": -62.2,
         "acierto_total": 61.2,
         "rango": [
           1.8,
@@ -27503,9 +27569,9 @@
         "acierto": 62.1,
         "roi": 16.8,
         "uds": 11.1,
-        "n_fuera": 897,
+        "n_fuera": 898,
         "roi_fuera": -8.2,
-        "uds_fuera": -73.7,
+        "uds_fuera": -73.3,
         "mitad1": {
           "n": 31,
           "roi": 15.3
@@ -28225,30 +28291,30 @@
         "se_mantuvo": false
       },
       "rescate_elite": {
-        "n_total": 32,
-        "roi_total": 6.4,
-        "uds_total": 2.1,
-        "acierto_total": 71.9,
+        "n_total": 33,
+        "roi_total": 7.6,
+        "uds_total": 2.5,
+        "acierto_total": 72.7,
         "rango": [
-          1.46,
+          1.4,
           1.62
         ],
-        "n": 17,
-        "acierto": 76.5,
-        "roi": 17.0,
-        "uds": 2.9,
-        "n_fuera": 15,
-        "roi_fuera": -5.5,
-        "uds_fuera": -0.8,
+        "n": 31,
+        "acierto": 74.2,
+        "roi": 10.1,
+        "uds": 3.1,
+        "n_fuera": 2,
+        "roi_fuera": -32.0,
+        "uds_fuera": -0.6,
         "mitad1": {
-          "n": 10,
-          "roi": 6.4
+          "n": 15,
+          "roi": -0.7
         },
         "mitad2": {
-          "n": 7,
-          "roi": 32.1
+          "n": 16,
+          "roi": 20.2
         },
-        "se_mantuvo": true
+        "se_mantuvo": false
       },
       "rescate_evitar_edge_bajo_prob_baja": {
         "n_total": 165,
@@ -28302,6 +28368,32 @@
         },
         "se_mantuvo": false
       },
+      "rescate_oro_fuerte": {
+        "n_total": 30,
+        "roi_total": 8.8,
+        "uds_total": 2.7,
+        "acierto_total": 73.3,
+        "rango": [
+          1.47,
+          1.62
+        ],
+        "n": 15,
+        "acierto": 80.0,
+        "roi": 23.1,
+        "uds": 3.5,
+        "n_fuera": 15,
+        "roi_fuera": -5.4,
+        "uds_fuera": -0.8,
+        "mitad1": {
+          "n": 9,
+          "roi": 19.0
+        },
+        "mitad2": {
+          "n": 6,
+          "roi": 29.2
+        },
+        "se_mantuvo": true
+      },
       "rescate_paridad_ofensiva_base": {
         "n_total": 90,
         "roi_total": -15.5,
@@ -28329,10 +28421,10 @@
         "se_mantuvo": false
       },
       "rescate_xg_alto_btts_historico_alto": {
-        "n_total": 79,
-        "roi_total": -2.8,
-        "uds_total": -2.2,
-        "acierto_total": 63.3,
+        "n_total": 80,
+        "roi_total": -2.2,
+        "uds_total": -1.8,
+        "acierto_total": 63.7,
         "rango": [
           1.6,
           1.84
@@ -28341,9 +28433,9 @@
         "acierto": 70.6,
         "roi": 20.2,
         "uds": 3.4,
-        "n_fuera": 62,
-        "roi_fuera": -9.1,
-        "uds_fuera": -5.6,
+        "n_fuera": 63,
+        "roi_fuera": -8.3,
+        "uds_fuera": -5.2,
         "mitad1": {
           "n": 10,
           "roi": 21.4
@@ -28461,10 +28553,10 @@
         "rango": null
       },
       "stake9": {
-        "n_total": 710,
-        "roi_total": -8.8,
-        "uds_total": -62.6,
-        "acierto_total": 61.4,
+        "n_total": 711,
+        "roi_total": -8.7,
+        "uds_total": -62.1,
+        "acierto_total": 61.5,
         "rango": [
           1.6,
           1.69
@@ -28473,9 +28565,9 @@
         "acierto": 65.5,
         "roi": 7.5,
         "uds": 6.3,
-        "n_fuera": 626,
-        "roi_fuera": -11.0,
-        "uds_fuera": -68.9,
+        "n_fuera": 627,
+        "roi_fuera": -10.9,
+        "uds_fuera": -68.4,
         "mitad1": {
           "n": 42,
           "roi": 9.6
@@ -28685,9 +28777,9 @@
         "se_mantuvo": false
       },
       "combo_banda_baja": {
-        "n_total": 926,
-        "roi_total": -14.9,
-        "uds_total": -137.5,
+        "n_total": 927,
+        "roi_total": -14.8,
+        "uds_total": -136.9,
         "acierto_total": 49.4,
         "rango": null
       },
@@ -29741,18 +29833,18 @@
     "resumen": {
       "BTTS": {
         "partidos": {
-          "bets": 1675,
-          "wins": 1103,
+          "bets": 1689,
+          "wins": 1113,
           "acierto_pct": 65.9,
-          "profit_u": 107.9,
+          "profit_u": 108.3,
           "roi_pct": 6.4,
           "cuota_prom": 1.63
         },
         "senales": {
-          "bets": 3383,
-          "wins": 2337,
+          "bets": 3412,
+          "wins": 2359,
           "acierto_pct": 69.1,
-          "profit_u": 331.4,
+          "profit_u": 335.1,
           "roi_pct": 9.8,
           "cuota_prom": 1.6
         },
@@ -29772,15 +29864,15 @@
           "roi_pct": -7.9,
           "cuota_prom": 1.56
         },
-        "n_senales": 77,
+        "n_senales": 78,
         "desde": "2026-07-18",
         "hasta": "2026-11-28",
         "jugar_partidos": {
-          "bets": 957,
-          "wins": 633,
+          "bets": 965,
+          "wins": 638,
           "acierto_pct": 66.1,
-          "profit_u": 62.5,
-          "roi_pct": 6.5,
+          "profit_u": 61.8,
+          "roi_pct": 6.4,
           "cuota_prom": 1.62
         },
         "jugar_partidos_semana": {
@@ -37532,11 +37624,18 @@
             "vip": null,
             "s": [
               [
-                "rescate_elite",
-                1.46,
+                "rescate_oro_fuerte",
+                1.47,
                 1.62,
-                17.0,
+                23.1,
                 true
+              ],
+              [
+                "rescate_elite",
+                1.4,
+                1.62,
+                10.1,
+                false
               ]
             ]
           },
@@ -43805,6 +43904,30 @@
         }
       },
       {
+        "mid": 8561364,
+        "fecha": "2026-11-28",
+        "local": "MTK Budapest FC",
+        "visitante": "Újpest FC",
+        "liga": "Hungary NB I",
+        "m": {
+          "BTTS": {
+            "cuota": 1.44,
+            "res": true,
+            "dec": "EVITAR",
+            "vip": null,
+            "s": [
+              [
+                "rescate_elite",
+                1.4,
+                1.62,
+                10.1,
+                false
+              ]
+            ]
+          }
+        }
+      },
+      {
         "mid": 8617883,
         "fecha": "2026-11-28",
         "local": "MKS Polonia Lidzbark Warmiński",
@@ -46325,11 +46448,18 @@
             "vip": null,
             "s": [
               [
-                "rescate_elite",
-                1.46,
+                "rescate_oro_fuerte",
+                1.47,
                 1.62,
-                17.0,
+                23.1,
                 true
+              ],
+              [
+                "rescate_elite",
+                1.4,
+                1.62,
+                10.1,
+                false
               ],
               [
                 "diamante_amplio",
@@ -51041,15 +51171,15 @@
         },
         "rescate_elite": {
           "rango": [
-            1.46,
+            1.4,
             1.62
           ],
           "atras": {
-            "n": 17,
-            "acierto": 76.5,
-            "roi": 17.0,
-            "uds": 2.9,
-            "cuota": 1.53
+            "n": 31,
+            "acierto": 74.2,
+            "roi": 10.1,
+            "uds": 3.1,
+            "cuota": 1.48
           },
           "dia": {
             "n": 1,
@@ -51158,6 +51288,26 @@
               1.72,
               1.95
             ],
+            "desde": "2026-10-29"
+          }
+        },
+        "rescate_oro_fuerte": {
+          "rango": [
+            1.47,
+            1.62
+          ],
+          "atras": {
+            "n": 15,
+            "acierto": 80.0,
+            "roi": 23.1,
+            "uds": 3.5,
+            "cuota": 1.54
+          },
+          "dia": {
+            "n": 0
+          },
+          "reciente": {
+            "n": 0,
             "desde": "2026-10-29"
           }
         },
@@ -54192,8 +54342,8 @@
       },
       "_resumen": {
         "BTTS": {
-          "senales": 77,
-          "atras_positivas": 77,
+          "senales": 78,
+          "atras_positivas": 78,
           "justa_positivas": 10,
           "las_que_aguantan": {
             "n": 621,
@@ -56239,6 +56389,14 @@
       "cuota_confianza": {
         "BTTS": [
           {
+            "senal": "idx_btts_top10",
+            "rango": [
+              1.75,
+              2.1
+            ],
+            "roi": 21.6
+          },
+          {
             "senal": "idx_btts_top20",
             "rango": [
               1.8,
@@ -56255,14 +56413,6 @@
             "roi": 21.2
           },
           {
-            "senal": "idx_btts_top05",
-            "rango": [
-              1.8,
-              2.25
-            ],
-            "roi": 42.2
-          },
-          {
             "senal": "topacio",
             "rango": [
               1.65,
@@ -56271,12 +56421,12 @@
             "roi": 15.5
           },
           {
-            "senal": "idx_btts_top10",
+            "senal": "idx_btts_top05",
             "rango": [
-              1.75,
-              2.1
+              1.8,
+              2.25
             ],
-            "roi": 21.6
+            "roi": 42.2
           }
         ]
       },
@@ -59751,20 +59901,20 @@
       "cuota_confianza": {
         "BTTS": [
           {
-            "senal": "idx_btts_top10",
-            "rango": [
-              1.75,
-              2.1
-            ],
-            "roi": 21.6
-          },
-          {
             "senal": "idx_btts_top20",
             "rango": [
               1.8,
               2.05
             ],
             "roi": 16.8
+          },
+          {
+            "senal": "idx_btts_top10",
+            "rango": [
+              1.75,
+              2.1
+            ],
+            "roi": 21.6
           },
           {
             "senal": "idx_btts_top05",
@@ -60370,6 +60520,14 @@
       "cuota_confianza": {
         "BTTS": [
           {
+            "senal": "idx_btts_top10",
+            "rango": [
+              1.75,
+              2.1
+            ],
+            "roi": 21.6
+          },
+          {
             "senal": "apuesta_top_btts_gcmin",
             "rango": [
               1.5,
@@ -60384,14 +60542,6 @@
               2.03
             ],
             "roi": 15.5
-          },
-          {
-            "senal": "idx_btts_top10",
-            "rango": [
-              1.75,
-              2.1
-            ],
-            "roi": 21.6
           }
         ]
       },
@@ -63828,20 +63978,20 @@
       "cuota_confianza": {
         "BTTS": [
           {
-            "senal": "topacio",
-            "rango": [
-              1.65,
-              2.03
-            ],
-            "roi": 15.5
-          },
-          {
             "senal": "idx_btts_top10",
             "rango": [
               1.75,
               2.1
             ],
             "roi": 21.6
+          },
+          {
+            "senal": "topacio",
+            "rango": [
+              1.65,
+              2.03
+            ],
+            "roi": 15.5
           }
         ]
       },
@@ -64598,12 +64748,12 @@
       "cuota_confianza": {
         "BTTS": [
           {
-            "senal": "rescate_elite",
+            "senal": "rescate_oro_fuerte",
             "rango": [
-              1.46,
+              1.47,
               1.62
             ],
-            "roi": 17.0
+            "roi": 23.1
           }
         ]
       },
@@ -64945,28 +65095,12 @@
       "cuota_confianza": {
         "BTTS": [
           {
-            "senal": "camino_normal_VIP+",
-            "rango": [
-              1.45,
-              1.69
-            ],
-            "roi": 8.7
-          },
-          {
             "senal": "VIP_reforzado",
             "rango": [
               1.45,
               1.54
             ],
             "roi": 17.2
-          },
-          {
-            "senal": "estable_gc_fallo_plus",
-            "rango": [
-              1.45,
-              1.54
-            ],
-            "roi": 10.4
           },
           {
             "senal": "cumbre_xga137_fallo20",
@@ -64977,12 +65111,28 @@
             "roi": 11.8
           },
           {
+            "senal": "camino_normal_VIP+",
+            "rango": [
+              1.45,
+              1.69
+            ],
+            "roi": 8.7
+          },
+          {
             "senal": "corona",
             "rango": [
               1.45,
               1.55
             ],
             "roi": 23.3
+          },
+          {
+            "senal": "estable_gc_fallo_plus",
+            "rango": [
+              1.45,
+              1.54
+            ],
+            "roi": 10.4
           }
         ]
       },
@@ -69545,12 +69695,28 @@
       "cuota_confianza": {
         "BTTS": [
           {
+            "senal": "idx_btts_top10",
+            "rango": [
+              1.75,
+              2.1
+            ],
+            "roi": 21.6
+          },
+          {
             "senal": "idx_btts_top20",
             "rango": [
               1.8,
               2.05
             ],
             "roi": 16.8
+          },
+          {
+            "senal": "camino_normal_VIP_Fuerte_edge_ok",
+            "rango": [
+              1.8,
+              2.09
+            ],
+            "roi": 30.0
           },
           {
             "senal": "idx_btts_top05",
@@ -69567,22 +69733,6 @@
               2.0
             ],
             "roi": 10.6
-          },
-          {
-            "senal": "camino_normal_VIP_Fuerte_edge_ok",
-            "rango": [
-              1.8,
-              2.09
-            ],
-            "roi": 30.0
-          },
-          {
-            "senal": "idx_btts_top10",
-            "rango": [
-              1.75,
-              2.1
-            ],
-            "roi": 21.6
           }
         ]
       },
@@ -71134,12 +71284,12 @@
       "cuota_confianza": {
         "BTTS": [
           {
-            "senal": "premium",
+            "senal": "s2_rescate_valor",
             "rango": [
               1.65,
-              1.74
+              1.87
             ],
-            "roi": 13.2
+            "roi": 21.8
           },
           {
             "senal": "rescate_ataque_balanceado_alta_failed_bajo",
@@ -71150,12 +71300,12 @@
             "roi": 16.9
           },
           {
-            "senal": "s2_rescate_valor",
+            "senal": "premium",
             "rango": [
               1.65,
-              1.87
+              1.74
             ],
-            "roi": 21.8
+            "roi": 13.2
           }
         ]
       },
@@ -71338,14 +71488,6 @@
       "cuota_confianza": {
         "BTTS": [
           {
-            "senal": "avg2h_parejo_15",
-            "rango": [
-              1.35,
-              1.44
-            ],
-            "roi": 4.4
-          },
-          {
             "senal": "perfil_gc_xga_gf",
             "rango": [
               1.35,
@@ -71354,17 +71496,25 @@
             "roi": 1.9
           },
           {
-            "senal": "avg2h_parejo_14",
+            "senal": "ambar",
             "rango": [
-              1.35,
+              1.24,
               1.44
             ],
             "roi": 9.1
           },
           {
-            "senal": "ambar",
+            "senal": "avg2h_parejo_15",
             "rango": [
-              1.24,
+              1.35,
+              1.44
+            ],
+            "roi": 4.4
+          },
+          {
+            "senal": "avg2h_parejo_14",
+            "rango": [
+              1.35,
               1.44
             ],
             "roi": 9.1
@@ -72740,7 +72890,7 @@
       "combo_prob_casa": null,
       "cuota_combo_casa": null,
       "cuota_ht_over05": 1.2,
-      "cuota_ht_over15": 2.08,
+      "cuota_ht_over15": 1.96,
       "resultado_over15_ht": null,
       "cuota_ht_over05_actual": 1.2,
       "movimiento_ht05_pp": null,
@@ -73027,7 +73177,7 @@
       "vip_elite": null,
       "oro": null,
       "nivel_confianza": null,
-      "marcador_exacto_sugerido": "1-0",
+      "marcador_exacto_sugerido": "1-1",
       "marcador_exacto_real": null,
       "usa_temporada_anterior": false,
       "usa_promedio_general": false,
@@ -73098,8 +73248,6 @@
       "cuota_btts_alerta": null,
       "fecha_alerta": null,
       "aviso_cuota_btts": null,
-      "alza_previa_pct": 0.0,
-      "frenado_alza": false,
       "prob_btts": 0.6717150019415712,
       "prob_btts_calibrada": 0.5430849118928219,
       "btts_min_alto": null,
@@ -73108,7 +73256,7 @@
       "cuota_btts_inicial": 1.44,
       "movimiento_btts_pp": null,
       "alza_btts_pct": null,
-      "resultado_btts": null,
+      "resultado_btts": true,
       "senal_o15_tier": "VIP",
       "sug_o15": "EVITAR",
       "motivo_o15": "ninguno_evitar_o15",
@@ -73118,7 +73266,7 @@
       "cuota_o15_inicial": 1.11,
       "movimiento_o15_pp": null,
       "alza_o15_pct": null,
-      "resultado_o15": null,
+      "resultado_o15": true,
       "senal_o25": "Evitar",
       "sug_o25": "EVITAR",
       "motivo_o25": "ninguno_evitar_o25",
@@ -73129,16 +73277,16 @@
       "cuota_o25_inicial": 1.48,
       "movimiento_o25_pp": null,
       "alza_o25_pct": null,
-      "resultado_o25": null,
+      "resultado_o25": true,
       "senal_btts_o25": "—",
       "motivo_combo": "combo_banda_baja",
       "motivos_combo_todos": "combo_banda_baja",
-      "resultado_combo": null,
+      "resultado_combo": true,
       "vip_elite": null,
       "oro": "ORO_FUERTE",
       "nivel_confianza": "ÉLITE",
       "marcador_exacto_sugerido": "1-1",
-      "marcador_exacto_real": null,
+      "marcador_exacto_real": "2-3",
       "usa_temporada_anterior": false,
       "usa_promedio_general": false,
       "es_equipo_filial": false,
@@ -73164,11 +73312,11 @@
       "cuota_combo_casa": null,
       "cuota_ht_over05": 1.19,
       "cuota_ht_over15": 2.17,
-      "resultado_over15_ht": null,
+      "resultado_over15_ht": true,
       "cuota_ht_over05_actual": 1.19,
       "movimiento_ht05_pp": null,
       "alza_ht05_pct": null,
-      "resultado_ht05": null,
+      "resultado_ht05": true,
       "vip_o25_grupo": null,
       "vip_o25_nivel": null,
       "cuota_o25_vip": 1.53,
@@ -74866,20 +75014,20 @@
       "cuota_confianza": {
         "Over 2.5": [
           {
-            "senal": "o25_gf_max_btts_xg",
-            "rango": [
-              1.65,
-              1.74
-            ],
-            "roi": 8.2
-          },
-          {
             "senal": "o25_gf_max_btts_xg_xgamax",
             "rango": [
               1.65,
               1.89
             ],
             "roi": 9.3
+          },
+          {
+            "senal": "o25_gf_max_btts_xg",
+            "rango": [
+              1.65,
+              1.74
+            ],
+            "roi": 8.2
           }
         ]
       },
@@ -77281,31 +77429,23 @@
       "cuota_confianza": {
         "BTTS": [
           {
-            "senal": "topacio",
-            "rango": [
-              1.65,
-              2.03
-            ],
-            "roi": 15.5
-          },
-          {
             "senal": "idx_btts_top10",
             "rango": [
               1.75,
               2.1
             ],
             "roi": 21.6
+          },
+          {
+            "senal": "topacio",
+            "rango": [
+              1.65,
+              2.03
+            ],
+            "roi": 15.5
           }
         ],
         "Over 2.5": [
-          {
-            "senal": "idx_o25_top20",
-            "rango": [
-              1.75,
-              1.89
-            ],
-            "roi": 4.7
-          },
           {
             "senal": "o25_gf_max_btts_xg_xgamax",
             "rango": [
@@ -77313,6 +77453,14 @@
               1.89
             ],
             "roi": 9.3
+          },
+          {
+            "senal": "idx_o25_top20",
+            "rango": [
+              1.75,
+              1.89
+            ],
+            "roi": 4.7
           }
         ]
       },
@@ -80339,20 +80487,20 @@
       "cuota_confianza": {
         "BTTS": [
           {
-            "senal": "ambar",
-            "rango": [
-              1.24,
-              1.44
-            ],
-            "roi": 9.1
-          },
-          {
             "senal": "perfil_gc_xga_gf",
             "rango": [
               1.35,
               1.44
             ],
             "roi": 1.9
+          },
+          {
+            "senal": "ambar",
+            "rango": [
+              1.24,
+              1.44
+            ],
+            "roi": 9.1
           }
         ]
       },
@@ -81245,20 +81393,20 @@
       "cuota_confianza": {
         "BTTS": [
           {
+            "senal": "idx_btts_top10",
+            "rango": [
+              1.75,
+              2.1
+            ],
+            "roi": 21.6
+          },
+          {
             "senal": "idx_btts_top20",
             "rango": [
               1.8,
               2.05
             ],
             "roi": 16.8
-          },
-          {
-            "senal": "idx_btts_top05",
-            "rango": [
-              1.8,
-              2.25
-            ],
-            "roi": 42.2
           },
           {
             "senal": "topacio",
@@ -81269,12 +81417,12 @@
             "roi": 15.5
           },
           {
-            "senal": "idx_btts_top10",
+            "senal": "idx_btts_top05",
             "rango": [
-              1.75,
-              2.1
+              1.8,
+              2.25
             ],
-            "roi": 21.6
+            "roi": 42.2
           }
         ]
       },
@@ -81683,14 +81831,6 @@
       "cuota_confianza": {
         "BTTS": [
           {
-            "senal": "premium",
-            "rango": [
-              1.65,
-              1.74
-            ],
-            "roi": 13.2
-          },
-          {
             "senal": "apuesta_top_btts_gcmin",
             "rango": [
               1.5,
@@ -81705,6 +81845,14 @@
               2.03
             ],
             "roi": 15.5
+          },
+          {
+            "senal": "premium",
+            "rango": [
+              1.65,
+              1.74
+            ],
+            "roi": 13.2
           }
         ]
       },
@@ -85011,20 +85159,20 @@
       "cuota_confianza": {
         "BTTS": [
           {
-            "senal": "rescate_ataque_balanceado_alta_failed_bajo",
-            "rango": [
-              1.5,
-              1.87
-            ],
-            "roi": 16.9
-          },
-          {
             "senal": "s2_rescate_valor",
             "rango": [
               1.65,
               1.87
             ],
             "roi": 21.8
+          },
+          {
+            "senal": "rescate_ataque_balanceado_alta_failed_bajo",
+            "rango": [
+              1.5,
+              1.87
+            ],
+            "roi": 16.9
           }
         ],
         "Over 2.5": [
@@ -85453,20 +85601,20 @@
       "cuota_confianza": {
         "BTTS": [
           {
-            "senal": "estable_btts_fallo",
-            "rango": [
-              1.45,
-              1.49
-            ],
-            "roi": 7.0
-          },
-          {
             "senal": "mezcla_07",
             "rango": [
               1.4,
               1.48
             ],
             "roi": 11.8
+          },
+          {
+            "senal": "estable_btts_fallo",
+            "rango": [
+              1.45,
+              1.49
+            ],
+            "roi": 7.0
           }
         ]
       },
@@ -86020,12 +86168,12 @@
       "cuota_confianza": {
         "BTTS": [
           {
-            "senal": "s1_vip_valor",
+            "senal": "VIP_reforzado",
             "rango": [
               1.45,
-              1.49
+              1.54
             ],
-            "roi": 12.2
+            "roi": 17.2
           },
           {
             "senal": "camino_normal_VIP+",
@@ -86036,20 +86184,12 @@
             "roi": 8.7
           },
           {
-            "senal": "VIP_reforzado",
+            "senal": "s1_vip_valor",
             "rango": [
               1.45,
-              1.54
+              1.49
             ],
-            "roi": 17.2
-          },
-          {
-            "senal": "estable_gc_fallo_plus",
-            "rango": [
-              1.45,
-              1.54
-            ],
-            "roi": 10.4
+            "roi": 12.2
           },
           {
             "senal": "corona",
@@ -86058,6 +86198,14 @@
               1.55
             ],
             "roi": 23.3
+          },
+          {
+            "senal": "estable_gc_fallo_plus",
+            "rango": [
+              1.45,
+              1.54
+            ],
+            "roi": 10.4
           }
         ]
       },
@@ -86880,20 +87028,20 @@
       "cuota_confianza": {
         "BTTS": [
           {
-            "senal": "rescate_ataque_balanceado_alta_failed_bajo",
-            "rango": [
-              1.5,
-              1.87
-            ],
-            "roi": 16.9
-          },
-          {
             "senal": "s2_rescate_valor",
             "rango": [
               1.65,
               1.87
             ],
             "roi": 21.8
+          },
+          {
+            "senal": "rescate_ataque_balanceado_alta_failed_bajo",
+            "rango": [
+              1.5,
+              1.87
+            ],
+            "roi": 16.9
           }
         ],
         "Combinada": [
@@ -90657,6 +90805,22 @@
       "cuota_confianza": {
         "BTTS": [
           {
+            "senal": "idx_btts_top10",
+            "rango": [
+              1.75,
+              2.1
+            ],
+            "roi": 21.6
+          },
+          {
+            "senal": "camino_normal_VIP_Fuerte_edge_ok",
+            "rango": [
+              1.8,
+              2.09
+            ],
+            "roi": 30.0
+          },
+          {
             "senal": "idx_btts_top20",
             "rango": [
               1.8,
@@ -90679,22 +90843,6 @@
               2.0
             ],
             "roi": 10.6
-          },
-          {
-            "senal": "camino_normal_VIP_Fuerte_edge_ok",
-            "rango": [
-              1.8,
-              2.09
-            ],
-            "roi": 30.0
-          },
-          {
-            "senal": "idx_btts_top10",
-            "rango": [
-              1.75,
-              2.1
-            ],
-            "roi": 21.6
           }
         ]
       },
@@ -93240,28 +93388,12 @@
       "cuota_confianza": {
         "BTTS": [
           {
-            "senal": "perfil_avg2h_o25btts",
+            "senal": "idx_btts_top10",
             "rango": [
               1.75,
-              1.87
+              2.1
             ],
-            "roi": 5.1
-          },
-          {
-            "senal": "idx_btts_top20",
-            "rango": [
-              1.8,
-              2.05
-            ],
-            "roi": 16.8
-          },
-          {
-            "senal": "idx_btts_top05",
-            "rango": [
-              1.8,
-              2.25
-            ],
-            "roi": 42.2
+            "roi": 21.6
           },
           {
             "senal": "avg2h_edge",
@@ -93272,12 +93404,28 @@
             "roi": 26.4
           },
           {
-            "senal": "idx_btts_top10",
+            "senal": "idx_btts_top20",
+            "rango": [
+              1.8,
+              2.05
+            ],
+            "roi": 16.8
+          },
+          {
+            "senal": "perfil_avg2h_o25btts",
             "rango": [
               1.75,
-              2.1
+              1.87
             ],
-            "roi": 21.6
+            "roi": 5.1
+          },
+          {
+            "senal": "idx_btts_top05",
+            "rango": [
+              1.8,
+              2.25
+            ],
+            "roi": 42.2
           }
         ]
       },
@@ -100886,20 +101034,20 @@
       "cuota_confianza": {
         "BTTS": [
           {
-            "senal": "avg2h_edge",
-            "rango": [
-              1.4,
-              1.87
-            ],
-            "roi": 26.4
-          },
-          {
             "senal": "granate",
             "rango": [
               1.6,
               1.85
             ],
             "roi": 11.3
+          },
+          {
+            "senal": "avg2h_edge",
+            "rango": [
+              1.4,
+              1.87
+            ],
+            "roi": 26.4
           }
         ]
       },
@@ -101583,6 +101731,22 @@
       "cuota_confianza": {
         "BTTS": [
           {
+            "senal": "VIP_reforzado",
+            "rango": [
+              1.45,
+              1.54
+            ],
+            "roi": 17.2
+          },
+          {
+            "senal": "camino_normal_VIP+",
+            "rango": [
+              1.45,
+              1.69
+            ],
+            "roi": 8.7
+          },
+          {
             "senal": "estable_btts_fallo",
             "rango": [
               1.45,
@@ -101599,20 +101763,12 @@
             "roi": 12.2
           },
           {
-            "senal": "camino_normal_VIP+",
+            "senal": "corona",
             "rango": [
               1.45,
-              1.69
+              1.55
             ],
-            "roi": 8.7
-          },
-          {
-            "senal": "VIP_reforzado",
-            "rango": [
-              1.45,
-              1.54
-            ],
-            "roi": 17.2
+            "roi": 23.3
           },
           {
             "senal": "estable_gc_fallo_plus",
@@ -101621,14 +101777,6 @@
               1.54
             ],
             "roi": 10.4
-          },
-          {
-            "senal": "corona",
-            "rango": [
-              1.45,
-              1.55
-            ],
-            "roi": 23.3
           }
         ]
       },
@@ -110079,14 +110227,6 @@
       "cuota_confianza": {
         "BTTS": [
           {
-            "senal": "premium",
-            "rango": [
-              1.65,
-              1.74
-            ],
-            "roi": 13.2
-          },
-          {
             "senal": "apuesta_top_btts_gcmin",
             "rango": [
               1.5,
@@ -110101,6 +110241,14 @@
               2.03
             ],
             "roi": 15.5
+          },
+          {
+            "senal": "premium",
+            "rango": [
+              1.65,
+              1.74
+            ],
+            "roi": 13.2
           }
         ]
       },
@@ -110286,20 +110434,20 @@
       "cuota_confianza": {
         "BTTS": [
           {
-            "senal": "premium",
-            "rango": [
-              1.65,
-              1.74
-            ],
-            "roi": 13.2
-          },
-          {
             "senal": "topacio",
             "rango": [
               1.65,
               2.03
             ],
             "roi": 15.5
+          },
+          {
+            "senal": "premium",
+            "rango": [
+              1.65,
+              1.74
+            ],
+            "roi": 13.2
           }
         ]
       },
@@ -117178,6 +117326,14 @@
       "cuota_confianza": {
         "BTTS": [
           {
+            "senal": "idx_btts_top10",
+            "rango": [
+              1.75,
+              2.1
+            ],
+            "roi": 21.6
+          },
+          {
             "senal": "idx_btts_top20",
             "rango": [
               1.8,
@@ -117192,14 +117348,6 @@
               2.25
             ],
             "roi": 42.2
-          },
-          {
-            "senal": "idx_btts_top10",
-            "rango": [
-              1.75,
-              2.1
-            ],
-            "roi": 21.6
           }
         ]
       },
@@ -117909,20 +118057,20 @@
       "cuota_confianza": {
         "BTTS": [
           {
-            "senal": "rescate_ataque_balanceado_alta_gf_btts",
-            "rango": [
-              1.45,
-              1.83
-            ],
-            "roi": 8.9
-          },
-          {
             "senal": "america_amplia",
             "rango": [
               1.35,
               1.59
             ],
             "roi": 7.3
+          },
+          {
+            "senal": "rescate_ataque_balanceado_alta_gf_btts",
+            "rango": [
+              1.45,
+              1.83
+            ],
+            "roi": 8.9
           }
         ]
       },
@@ -120238,20 +120386,20 @@
       "cuota_confianza": {
         "BTTS": [
           {
-            "senal": "rescate_ataque_balanceado_alta_gf_btts",
-            "rango": [
-              1.45,
-              1.83
-            ],
-            "roi": 8.9
-          },
-          {
             "senal": "s2_rescate_valor",
             "rango": [
               1.65,
               1.87
             ],
             "roi": 21.8
+          },
+          {
+            "senal": "rescate_ataque_balanceado_alta_gf_btts",
+            "rango": [
+              1.45,
+              1.83
+            ],
+            "roi": 8.9
           }
         ]
       },
@@ -124609,20 +124757,20 @@
       "cuota_confianza": {
         "BTTS": [
           {
-            "senal": "rescate_ataque_balanceado_alta_failed_bajo",
-            "rango": [
-              1.5,
-              1.87
-            ],
-            "roi": 16.9
-          },
-          {
             "senal": "s2_rescate_valor",
             "rango": [
               1.65,
               1.87
             ],
             "roi": 21.8
+          },
+          {
+            "senal": "rescate_ataque_balanceado_alta_failed_bajo",
+            "rango": [
+              1.5,
+              1.87
+            ],
+            "roi": 16.9
           }
         ],
         "Combinada": [
@@ -126612,7 +126760,7 @@
       "sug_ht05": "EVITAR",
       "cuota_ht_over05": 1.2,
       "resultado_ht05": null,
-      "cuota_ht_over15": 2.08,
+      "cuota_ht_over15": 1.96,
       "prob_over15_ht_v2": 0.3201411274235787,
       "resultado_over15_ht": null,
       "prob_combo_v2": null,
@@ -129000,20 +129148,20 @@
       "cuota_confianza": {
         "BTTS": [
           {
-            "senal": "ambar",
-            "rango": [
-              1.24,
-              1.44
-            ],
-            "roi": 9.1
-          },
-          {
             "senal": "perfil_gc_xga_gf",
             "rango": [
               1.35,
               1.44
             ],
             "roi": 1.9
+          },
+          {
+            "senal": "ambar",
+            "rango": [
+              1.24,
+              1.44
+            ],
+            "roi": 9.1
           }
         ]
       },
@@ -133066,20 +133214,20 @@
       "cuota_confianza": {
         "BTTS": [
           {
-            "senal": "rescate_ataque_balanceado_alta_gf_btts",
-            "rango": [
-              1.45,
-              1.83
-            ],
-            "roi": 8.9
-          },
-          {
             "senal": "america_amplia",
             "rango": [
               1.35,
               1.59
             ],
             "roi": 7.3
+          },
+          {
+            "senal": "rescate_ataque_balanceado_alta_gf_btts",
+            "rango": [
+              1.45,
+              1.83
+            ],
+            "roi": 8.9
           }
         ]
       },
@@ -134188,20 +134336,20 @@
       "cuota_confianza": {
         "BTTS": [
           {
-            "senal": "rescate_ataque_balanceado_alta_failed_bajo",
-            "rango": [
-              1.5,
-              1.87
-            ],
-            "roi": 16.9
-          },
-          {
             "senal": "s2_rescate_valor",
             "rango": [
               1.65,
               1.87
             ],
             "roi": 21.8
+          },
+          {
+            "senal": "rescate_ataque_balanceado_alta_failed_bajo",
+            "rango": [
+              1.5,
+              1.87
+            ],
+            "roi": 16.9
           }
         ],
         "Over 2.5": [
@@ -138771,6 +138919,14 @@
       "cuota_confianza": {
         "BTTS": [
           {
+            "senal": "idx_btts_top10",
+            "rango": [
+              1.75,
+              2.1
+            ],
+            "roi": 21.6
+          },
+          {
             "senal": "apuesta_top_btts_gcmin",
             "rango": [
               1.5,
@@ -138785,14 +138941,6 @@
               2.03
             ],
             "roi": 15.5
-          },
-          {
-            "senal": "idx_btts_top10",
-            "rango": [
-              1.75,
-              2.1
-            ],
-            "roi": 21.6
           }
         ]
       },
@@ -138887,12 +139035,12 @@
       "cuota_confianza": {
         "BTTS": [
           {
-            "senal": "premium",
+            "senal": "s2_rescate_valor",
             "rango": [
               1.65,
-              1.74
+              1.87
             ],
-            "roi": 13.2
+            "roi": 21.8
           },
           {
             "senal": "rescate_ataque_balanceado_alta_failed_bajo",
@@ -138903,12 +139051,12 @@
             "roi": 16.9
           },
           {
-            "senal": "s2_rescate_valor",
+            "senal": "premium",
             "rango": [
               1.65,
-              1.87
+              1.74
             ],
-            "roi": 21.8
+            "roi": 13.2
           }
         ]
       },
@@ -139001,12 +139149,12 @@
       "cuota_confianza": {
         "BTTS": [
           {
-            "senal": "rescate_elite",
+            "senal": "rescate_oro_fuerte",
             "rango": [
-              1.46,
+              1.47,
               1.62
             ],
-            "roi": 17.0
+            "roi": 23.1
           }
         ]
       },
@@ -139291,6 +139439,22 @@
       "cuota_confianza": {
         "BTTS": [
           {
+            "senal": "idx_btts_top10",
+            "rango": [
+              1.75,
+              2.1
+            ],
+            "roi": 21.6
+          },
+          {
+            "senal": "camino_normal_VIP_Fuerte_edge_ok",
+            "rango": [
+              1.8,
+              2.09
+            ],
+            "roi": 30.0
+          },
+          {
             "senal": "idx_btts_top20",
             "rango": [
               1.8,
@@ -139313,22 +139477,6 @@
               2.0
             ],
             "roi": 10.6
-          },
-          {
-            "senal": "camino_normal_VIP_Fuerte_edge_ok",
-            "rango": [
-              1.8,
-              2.09
-            ],
-            "roi": 30.0
-          },
-          {
-            "senal": "idx_btts_top10",
-            "rango": [
-              1.75,
-              2.1
-            ],
-            "roi": 21.6
           }
         ]
       },
@@ -140233,6 +140381,14 @@
       "cuota_confianza": {
         "BTTS": [
           {
+            "senal": "idx_btts_top10",
+            "rango": [
+              1.75,
+              2.1
+            ],
+            "roi": 21.6
+          },
+          {
             "senal": "idx_btts_top20",
             "rango": [
               1.8,
@@ -140249,14 +140405,6 @@
             "roi": 21.2
           },
           {
-            "senal": "idx_btts_top05",
-            "rango": [
-              1.8,
-              2.25
-            ],
-            "roi": 42.2
-          },
-          {
             "senal": "topacio",
             "rango": [
               1.65,
@@ -140265,12 +140413,12 @@
             "roi": 15.5
           },
           {
-            "senal": "idx_btts_top10",
+            "senal": "idx_btts_top05",
             "rango": [
-              1.75,
-              2.1
+              1.8,
+              2.25
             ],
-            "roi": 21.6
+            "roi": 42.2
           }
         ]
       },
@@ -140366,20 +140514,20 @@
       "cuota_confianza": {
         "BTTS": [
           {
-            "senal": "premium",
-            "rango": [
-              1.65,
-              1.74
-            ],
-            "roi": 13.2
-          },
-          {
             "senal": "topacio",
             "rango": [
               1.65,
               2.03
             ],
             "roi": 15.5
+          },
+          {
+            "senal": "premium",
+            "rango": [
+              1.65,
+              1.74
+            ],
+            "roi": 13.2
           }
         ]
       },
