@@ -2067,6 +2067,38 @@ function ccTablaHtml(data){
     <p class="vip-dim" style="font-size:12px;line-height:1.55;margin:10px 0 0;">El rango de hoy es el que más unidades ganó en todo el historial de la señal (mínimo 15 partidos y ROI positivo), medido con la cuota con la que se disparó. Los picks con JUGAR cuya cuota cae en ese rango llevan la etiqueta <b>🎯 CUOTA DE MAYOR CONFIANZA</b> solo si el rango ganó en las dos mitades de su historia («¿Se mantuvo?») y, desde el 23 nov, solo si el partido <b>es VIP</b> en ese mercado y su <b>prueba justa</b> gana (con 20+ partidos). Fuera del VIP no sale nunca: quedarse cada semana con las señales que iban bien en la prueba justa perdió entre −4% y −12% (1 sep–22 nov), aun con la regla más estricta. En cada tarjeta, junto a cada señal, sale ahora la prueba justa (no el ROI mirando hacia atrás, que queda en el globo). Aun así es una pista, no una regla segura: quedarse cada semana con las ✅ tampoco ganó la semana siguiente (ver «En su rango»). No es garantía ni consejo financiero.</p></section>`;
 }
 
+// 28 nov 2026 (pedido del usuario: "en la pestaña de estadísticas esté de primero las estadísticas de todas nuestras
+// señales del VIP"): cada grupo del VIP de cada mercado, con lo que de verdad se envió, su estado (se envía / en
+// observación / apagado), el histórico con las reglas de hoy (optimista) y lo que va en observación desde el 28 nov.
+function statsVipHtml(data){
+  const VB = (data && data.vip_btts) || {}, NB = VB.niveles || {}, GB = NB.grupos || {}, AB = NB.apagados || {};
+  const VG = (data && data.vip_goles) || {}, O = VG.o25 || {}, GO = O.grupos || {}, AO = O.apagados || {}, C = VG.combo || {}, GC = C.grupos || {};
+  const OB = {}; (((data || {}).observacion_vip || {}).grupos || []).forEach(x => { OB[x.mercado + ":" + x.grupo] = x; });
+  const E = (data && data.enviado_total) || {}, EM = E.mercados || {}, ET = E.todo || {};
+  if(!Object.keys(GB).length && !Object.keys(GO).length) return "";
+  const meta = ((data || {}).observacion_vip || {}).meta || 30;
+  const rec = (r) => r && r.n ? `<b style="color:${vipCol(r.roi)};">${vipPct(r.roi)}</b><div class="vip-dim" style="font-size:11px;">${vipN(r.n)} · ${vipFmt(r.acierto, 0, false)}% · ${vipFmt(r.uds, 1)} u</div>` : '<span class="vip-dim">—</span>';
+  const est = (k) => k === "tg" ? '<span style="color:var(--win);font-weight:700;">📨 se envía</span>'
+    : (k === "off" ? '<span style="color:var(--loss);">⛔ apagado</span>' : (k === "no" ? '<span class="vip-dim">no se envía</span>' : '<span style="color:var(--amber);">🔬 en observación</span>'));
+  const obs = (x) => !x ? '<span class="vip-dim">—</span>' : (x.prueba && x.prueba.n ? `${rec(x.prueba)}<div class="vip-dim" style="font-size:11px;">${vipN(x.prueba.n)} de ${vipN(meta)}</div>` : `<span class="vip-dim">0 de ${vipN(meta)}</span>`);
+  const fila = (nom, k, env, hist, ob) => `<tr><td style="white-space:normal;min-width:170px;">${vipEsc(nom)}</td><td style="white-space:normal;">${est(k)}</td><td class="num">${rec(env)}</td><td class="num">${rec(hist)}</td><td class="num">${obs(ob)}</td></tr>`;
+  const ord = (o) => Object.keys(o).sort((a, b) => Number(a) - Number(b));
+  const btts = ord(GB).map(g => { const G = GB[g]; const k = G.al_telegram ? "tg" : (AB[g] ? "off" : "obs"); return {k, h: fila(G.nombre, k, G.en_vivo, G.total, OB["btts:" + g])}; });
+  const o25 = ord(GO).map(g => { const G = GO[g]; const k = (AO[g] && AO[g].apagado) ? "off" : (vipPol().o25_telegram === false ? "obs" : "tg"); return {k, h: fila(G.nombre, k, G.en_vivo, G.total, OB["o25:" + g])}; });
+  const combo = ord(GC).map(g => ({k: "no", h: fila(GC[g].nombre, "no", GC[g].en_vivo, GC[g].total, null)}));
+  const pri = {tg: 0, obs: 1, off: 2, no: 3};
+  const bloque = (tit, L, tot) => L.length ? `<tr><td colspan="5" style="padding-top:12px;"><b>${tit}</b>${tot && tot.n ? ` <span class="vip-dim">· todo lo enviado: ${vipN(tot.n)} picks, ROI a 1 u <b style="color:${vipCol(tot.roi_1u)};">${vipPct(tot.roi_1u)}</b> (${vipFmt(tot.uds_1u, 1)} u)</span>` : ""}</td></tr>${L.sort((a, b) => pri[a.k] - pri[b.k]).map(x => x.h).join("")}` : "";
+  const EN = vipEnviadoNucleo();
+  return `<section><p class="section-title">💎 Señales del VIP · todas, con lo que de verdad dieron</p>
+    <div class="vip-verdict" style="margin:0 0 12px;">
+      <p>${EN ? `<b>Lo que se envía hoy (el núcleo de Ambos Marcan):</b> lo enviado de esos grupos dio <b>${vipN(EN.n)}</b> picks, ${vipFmt(EN.acierto, 1, false)}% de acierto, ROI <b style="color:${vipCol(EN.roi)};">${vipPct(EN.roi)}</b>. ` : ""}${ET.n ? `Todo lo enviado desde el ${vipFechaCorta(E.desde)} (todos los mercados): ${vipN(ET.n)} picks, ROI a 1 u <b style="color:${vipCol(ET.roi_1u)};">${vipPct(ET.roi_1u)}</b>.` : ""}</p>
+      <p class="vip-dim" style="font-size:12px;"><b>Enviado</b> = lo que salió al Telegram, a la cuota del mensaje y a 1 unidad (lo real). <b>Histórico</b> = las reglas de hoy aplicadas hacia atrás: sale mejor que la realidad. <b>Observación</b> = lo que habría salido desde el ${vipFechaCorta(vipObsDesde())}; con ${vipN(meta)} picks y ${vipPct(vipObsRoiMin())} o más, el grupo se puede proponer al Telegram.</p>
+    </div>
+    <div class="vip-scroll"><table class="cmp-table"><thead><tr><th>Grupo</th><th>Estado</th><th class="num">Enviado<div class="vip-dim" style="font-size:10px;text-transform:none;">lo real</div></th><th class="num">Histórico<div class="vip-dim" style="font-size:10px;text-transform:none;">reglas de hoy, optimista</div></th><th class="num">Observación<div class="vip-dim" style="font-size:10px;text-transform:none;">desde el ${vipFechaCorta(vipObsDesde())}</div></th></tr></thead><tbody>
+      ${bloque("Ambos Marcan", btts, EM.btts)}${bloque("Over 2.5", o25, EM.o25)}${bloque("Combinada", combo, EM.combo)}
+    </tbody></table></div></section>`;
+}
+
 function renderEstadisticas(data){
   const comparativo = data.comparativo;
   return `
@@ -4624,8 +4656,8 @@ function renderMapaMercados(data){
 // recuerda en este navegador (la página se vuelve a dibujar cada 5 minutos).
 // ============================================================================
 const PLG_ABIERTAS_DEF = {
-  vip: [/tablero del vip/i, /^💎 selección vip · ambos marcan/i, /candidatas al vip/i, /en vivo \(la prueba que cuenta\)/i, /elegimos bien/i],
-  stats: [/mapa de mercados/i, /señales activas y estables de btts/i, /por mercado/i, /hoy · 7 días · histórico/i],
+  vip: [/tablero del vip/i, /^💎 selección vip · ambos marcan/i, /en observación · no se envían al telegram/i, /candidatas al vip/i, /en vivo \(la prueba que cuenta\)/i, /elegimos bien/i],
+  stats: [/señales del vip · todas/i, /mapa de mercados/i, /señales activas y estables de btts/i, /por mercado/i, /hoy · 7 días · histórico/i],
 };
 let PLG_ESTADO = null;
 function plgClave(t){ return String(t || "").toLowerCase().replace(/[0-9]+/g, "#").replace(/\s+/g, " ").trim().slice(0, 80); }
@@ -4766,7 +4798,7 @@ function render(data){
     ht05: notaHt05 + renderValorObs(data, picks, "ht05") + renderMercado(picks, "prob_over05_ht_calibrada", "sug_ht05", "senal_ht05_tier", "cuota_ht_over05", "¿Gol antes del descanso?", "resultado_ht05", "ht05", "motivo_ht05") + historialHt05,
     ht15: renderHt15Nota(picks),
     score: renderMarcadorExacto(picks, data.comparativo.historico.marcador_exacto),
-    stats: renderMapaMercados(data) + renderEstadisticas(data),      // 26 nov 2026: mapa de mercados arriba
+    stats: statsVipHtml(data) + renderMapaMercados(data) + renderEstadisticas(data),      // 28 nov 2026: primero las señales del VIP
   };
 
   document.getElementById("app").innerHTML = TABS.map((t) =>
